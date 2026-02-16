@@ -1,5 +1,5 @@
 // ============================================================================
-// DIANA CORPORAÇÃO SENCIENTE - PM2 Ecosystem Config
+// DIANA CORPORAÇÃO SENCIENTE - PM2 Ecosystem Config (BACKUP)
 // ============================================================================
 // Single source of truth para todos os processos do sistema.
 // Portas centralizadas via .env.ports (faixa 21300-21399).
@@ -124,14 +124,9 @@ module.exports = {
       cwd: ROOT,
       instances: 1,
       autorestart: true,
-      max_restarts: 10,
-      min_uptime: '60s',
-      restart_delay: 5000,
       env: {
         PORT: 21340
-      },
-      // Memory leak mitigation: auto-restart after 10 crashes with 1min uptime threshold
-      // Prevents frontend from crashing during long operations
+      }
     },
     {
       name: 'whatsapp-bridge',

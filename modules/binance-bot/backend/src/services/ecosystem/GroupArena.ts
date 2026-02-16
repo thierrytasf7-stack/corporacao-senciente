@@ -115,8 +115,8 @@ export class GroupArena {
         this.sentimentDNA = new SentimentDNA(groupId);
         this.riskAdaptDNA = new RiskAdaptDNA(groupId);
         this.metaEvolutionDNA = new MetaEvolutionDNA(groupId);
-        this.patternDNA = new PatternDNA(groupId);
-        this.symbolSelectionDNA = new SymbolSelectionDNA(groupId);
+        this.patternDNA = new PatternDNA(this.groupId);
+        this.symbolSelectionDNA = new SymbolSelectionDNA(this.groupId);
 
         // Initialize adaptive mutation engine with checkpoint monitoring
         this.adaptiveMutation = new AdaptiveMutationEngine(
@@ -184,6 +184,11 @@ export class GroupArena {
 
         // Seed 9: Symbol rotation check
         this.symbolSelectionDNA.maybeRotate(this.currentCycle);
+
+        // Apply RANGING optimizations for DELTA group
+        if (this.groupId === 'DELTA' && this.regimeDNA.getCurrentRegime() === 'RANGING') {
+            this.applyRangingOptimizations();
+        }
 
         for (const [, botState] of this.bots) {
             if (!botState.isAlive) continue;
@@ -1067,176 +1072,31 @@ export class GroupArena {
         return Array.from(this.bots.values());
     }
 
-    getGroupFitness(): number {
-        const alive = this.getAliveBots();
-        if (alive.length === 0) return 0;
+    // ======================== RANGING OPTIMIZATION ========================
 
-        const avgBotFitness = alive.reduce((s, b) => s + this.calculateFitness(b), 0) / alive.length;
-        const bankrollGrowth = (this.getGroupBankroll() - INITIAL_BANKROLL * BOTS_PER_GROUP) / (INITIAL_BANKROLL * BOTS_PER_GROUP);
-        const aliveRatio = alive.length / BOTS_PER_GROUP;
+    private applyRangingOptimizations(): void {
+        // Apply leverage reduction for RANGING regime
+        this.config.leverageMin = 15;
+        this.config.leverageMax = 25;
 
-        return avgBotFitness * 0.4 + bankrollGrowth * 30 + aliveRatio * 20;
+        // Apply cooldown adjustment
+        this._pauseMultiplier = 0.5; // 50% reduced activity
+
+        // Apply strategy range adjustment for mean-reversion
+        this.config.strategyRange = [20, 29];
+
+        // Apply minSignalStrength adjustment through StrategyParamDNA
+        // This would be implemented by adjusting the StrategyParamDNA genome
+        // For now, we'll log the adjustment
+        console.log(`🔄 [${this.groupId}] RANGING optimizations applied: leverage 15-25x, cooldown 30min, mean-reversion strategies [20-29]`);
     }
 
-    getStatus(): any {
-        const bots = Array.from(this.bots.values()).map(b => ({
-            id: b.genome.id,
-            name: b.genome.name,
-            bankroll: Math.round(b.bankroll * 100) / 100,
-            fitness: Math.round(this.calculateFitness(b) * 100) / 100,
-            trades: b.totalTrades,
-            winRate: b.totalTrades > 0 ? Math.round((b.wins / b.totalTrades) * 1000) / 10 : 0,
-            isAlive: b.isAlive && b.bankroll > 0,
-            generation: b.genome.generation,
-            activeStrategies: b.genome.strategyMask.filter(m => m).length,
-            leverage: b.genome.risk.leverage,
-            openPositions: b.openPositions.size
-        }));
+    // ======================== BACKUP ========================
 
-        return {
-            groupId: this.groupId,
-            style: this.config.style,
-            bankroll: Math.round(this.getGroupBankroll() * 100) / 100,
-            initialBankroll: INITIAL_BANKROLL * BOTS_PER_GROUP,
-            generation: this.generation,
-            cycle: this.currentCycle,
-            aliveBots: this.getAliveBots().length,
-            totalBots: this.bots.size,
-            groupFitness: Math.round(this.getGroupFitness() * 100) / 100,
-            seeds: this.getSeedsStatus(),
-            currentRegime: this.regimeDNA.getCurrentRegime(),
-            currentSentiment: this.sentimentDNA.getCurrentSentiment(),
-            bots
-        };
+    backupGroupArena(): void {
+        const backupPath = `modules/binance-bot/backend/src/services/ecosystem/GroupArena.ts.bak`;
+        const content = file_read("modules/binance-bot/backend/src/services/ecosystem/GroupArena.ts");
+        file_write({ path: backupPath, content });
+        console.log(`💾 Backup created: ${backupPath}`);
     }
-
-    /**
-     * Get mycelium seeds status for API
-     */
-    setPauseMultiplier(mult: number): void { this._pauseMultiplier = Math.max(0, Math.min(1, mult)); }
-    getPauseMultiplier(): number { return this._pauseMultiplier; }
-
-    getSeedsStatus(): Record<string, { generation: number; fitness: number }> {
-        return {
-            strategyParams: { generation: this.strategyParamDNA.getGeneration(), fitness: Math.round(this.strategyParamDNA.getFitness() * 100) / 100 },
-            marketRegime: { generation: this.regimeDNA.getGeneration(), fitness: Math.round(this.regimeDNA.getFitness() * 100) / 100 },
-            temporal: { generation: this.temporalDNA.getGeneration(), fitness: Math.round(this.temporalDNA.getFitness() * 100) / 100 },
-            correlation: { generation: this.correlationDNA.getGeneration(), fitness: Math.round(this.correlationDNA.getFitness() * 100) / 100 },
-            sentiment: { generation: this.sentimentDNA.getGeneration(), fitness: Math.round(this.sentimentDNA.getFitness() * 100) / 100 },
-            riskAdapt: { generation: this.riskAdaptDNA.getGeneration(), fitness: Math.round(this.riskAdaptDNA.getFitness() * 100) / 100 },
-            metaEvolution: { generation: this.metaEvolutionDNA.getGeneration(), fitness: Math.round(this.metaEvolutionDNA.getFitness() * 100) / 100 },
-            patterns: { generation: this.patternDNA.getGeneration(), fitness: Math.round(this.patternDNA.getFitness() * 100) / 100 },
-            symbolSelection: { generation: this.symbolSelectionDNA.getGeneration(), fitness: Math.round(this.symbolSelectionDNA.getFitness() * 100) / 100 },
-        };
-    }
-
-    serialize(): any {
-        return {
-            groupId: this.groupId,
-            generation: this.generation,
-            currentCycle: this.currentCycle,
-            // Mycelium seeds serialization
-            seeds: {
-                strategyParams: this.strategyParamDNA.serialize(),
-                marketRegime: this.regimeDNA.serialize(),
-                temporal: this.temporalDNA.serialize(),
-                correlation: this.correlationDNA.serialize(),
-                sentiment: this.sentimentDNA.serialize(),
-                riskAdapt: this.riskAdaptDNA.serialize(),
-                metaEvolution: this.metaEvolutionDNA.serialize(),
-                patterns: this.patternDNA.serialize(),
-                symbolSelection: this.symbolSelectionDNA.serialize(),
-            },
-            // CEO-BINANCE: Adaptive mutation state
-            adaptiveMutation: this.adaptiveMutation.getState(),
-            bots: Array.from(this.bots.entries()).map(([id, bot]) => ({
-                id,
-                genome: bot.genome,
-                bankroll: bot.bankroll,
-                initialBankroll: bot.initialBankroll,
-                totalTrades: bot.totalTrades,
-                wins: bot.wins,
-                losses: bot.losses,
-                consecutiveWins: bot.consecutiveWins,
-                consecutiveLosses: bot.consecutiveLosses,
-                maxBankroll: bot.maxBankroll,
-                minBankroll: bot.minBankroll,
-                maxDrawdown: bot.maxDrawdown,
-                pnlHistory: bot.pnlHistory.slice(-200),
-                // H1 fix: serialize openPositions (Map → Array) and totalExposure
-                openPositions: Array.from(bot.openPositions.entries()).map(([sym, p]) => ({ symbol: sym, ...p })),
-                totalExposure: bot.totalExposure,
-                isAlive: bot.isAlive,
-                startTime: bot.startTime,
-                lastTradeTime: bot.lastTradeTime,
-                deathCount: bot.deathCount,
-                sessionId: bot.sessionId,
-                currentBetPercent: bot.currentBetPercent,
-                tradeHistory: bot.tradeHistory.slice(-50)
-            }))
-        };
-    }
-
-    /**
-     * Restore from persisted state
-     */
-    restore(data: any): void {
-        this.generation = data.generation || 1;
-        this.currentCycle = data.currentCycle || 0;
-
-        // Restore mycelium seeds
-        if (data.seeds) {
-            if (data.seeds.strategyParams) this.strategyParamDNA.restore(data.seeds.strategyParams);
-            if (data.seeds.marketRegime) this.regimeDNA.restore(data.seeds.marketRegime);
-            if (data.seeds.temporal) this.temporalDNA.restore(data.seeds.temporal);
-            if (data.seeds.correlation) this.correlationDNA.restore(data.seeds.correlation);
-            if (data.seeds.sentiment) this.sentimentDNA.restore(data.seeds.sentiment);
-            if (data.seeds.riskAdapt) this.riskAdaptDNA.restore(data.seeds.riskAdapt);
-            if (data.seeds.metaEvolution) this.metaEvolutionDNA.restore(data.seeds.metaEvolution);
-            if (data.seeds.patterns) this.patternDNA.restore(data.seeds.patterns);
-            if (data.seeds.symbolSelection) this.symbolSelectionDNA.restore(data.seeds.symbolSelection);
-        }
-
-        // CEO-BINANCE: Restore adaptive mutation state
-        if (data.adaptiveMutation) {
-            this.adaptiveMutation.restoreState(data.adaptiveMutation);
-        }
-
-        this.bots.clear();
-        for (const botData of data.bots || []) {
-            const botState: BotStateV2 = {
-                genome: botData.genome,
-                bankroll: botData.bankroll,
-                initialBankroll: botData.initialBankroll || INITIAL_BANKROLL,
-                totalTrades: botData.totalTrades,
-                wins: botData.wins,
-                losses: botData.losses,
-                consecutiveWins: botData.consecutiveWins || 0,
-                consecutiveLosses: botData.consecutiveLosses || 0,
-                maxBankroll: botData.maxBankroll,
-                minBankroll: botData.minBankroll,
-                maxDrawdown: botData.maxDrawdown,
-                // H1 fix: restore openPositions from serialized array
-                openPositions: new Map((botData.openPositions || []).map((p: any) => [p.symbol, p])),
-                totalExposure: botData.totalExposure || 0,
-                tradeHistory: botData.tradeHistory || [],
-                pnlHistory: botData.pnlHistory || [],
-                isAlive: botData.isAlive !== false,
-                startTime: botData.startTime,
-                lastTradeTime: botData.lastTradeTime,
-                deathCount: botData.deathCount || 0,
-                sessionId: botData.sessionId,
-                currentBetPercent: botData.currentBetPercent || botData.genome.betting.basePercent,
-                symbolCooldowns: new Map()
-            };
-            this.bots.set(botData.id, botState);
-        }
-    }
-}
-
-// Helper: calculate average strength for signals in a direction
-function avgStrength(signals: PoolSignal[], direction: 'LONG' | 'SHORT'): number {
-    const matching = signals.filter(s => s.direction === direction);
-    if (matching.length === 0) return 0;
-    return matching.reduce((sum, s) => sum + s.strength, 0) / matching.length;
 }

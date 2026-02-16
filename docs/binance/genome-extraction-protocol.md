@@ -1,157 +1,144 @@
-# Shard Genome Extraction Protocol
+# Genome Extraction Protocol: Shard Performance Replication
 
-## Overview
-This protocol documents the extraction and replication of Shard's genome (eco-ALPHA-evo-gen138-*), the top-performing bot with +14.08% ROI (54 trades, 57.4% WR), to validate performance replicability across different market regimes.
+## 🔍 Objective
+Extract and replicate the performance genome of Shard (eco-ALPHA-evo-gen138-*) to validate if its +14.08% ROI is replicable across different market regimes (BETA/OMEGA) or specific to ALPHA.
 
-## Objectives
-- Extract complete genome from Shard bot
-- Create clones in BETA (conservative) and OMEGA (volatility) groups
-- Validate if performance is replicable or group-specific
+## 📊 Performance Context
+- **Shard (ALPHA)**: +14.08% ROI, 54 trades, 57.4% win rate
+- **Target Groups**: BETA (conservative), OMEGA (volatility)
+- **Validation**: Compare clone performance against original Shard metrics
 
-## Prerequisites
-- Node.js 25+ runtime
-- Binance API credentials configured
-- Community ecosystem running
-- Shard bot alive in ALPHA group
+## 🔧 Extraction Process
 
-## Step 1: Extract Shard Genome
-
-### 1.1 Run Extraction Script
-```bash
-cd modules/binance-bot/backend/scripts
-node extract-genome.js
+### Step 1: Locate Shard Bot
+```javascript
+// Search in community-state.json for bot ID starting with 'eco-ALPHA-evo-gen138-'
+const shardBot = Object.values(state.bots).find(bot => 
+    bot.id.startsWith('eco-ALPHA-evo-gen138-')
+);
 ```
 
-### 1.2 Expected Output
-```
-Found Shard bot: eco-ALPHA-evo-gen138-1234567890
-Group: ALPHA
-Generation: 138
-Bankroll: $1250.45
-Win Rate: 57.4%
-ROI: +14.08%
+### Step 2: Validate Bot Status
+```javascript
+if (!shardBot) {
+    throw new Error(`Bot ${shardBotId} not found in community state`);
+}
 
-Shard genome extracted successfully!
-Saved to: data/genomes/shard-baseline-2024-01-15_14-30-00.json
-Genome contains 9 seeds
-```
-
-### 1.3 Genome Structure
-The extracted genome contains 9 seeds:
-- `strategyParams`: Core trading strategies configuration
-- `marketRegime`: Market condition adaptation parameters
-- `temporal`: Time-based trading parameters
-- `correlation`: Asset correlation analysis settings
-- `sentiment`: Market sentiment processing
-- `riskAdapt`: Risk management adaptation
-- `metaEvolution`: Meta-evolutionary parameters
-- `patterns`: Pattern recognition configurations
-- `symbolSelection`: Asset selection criteria
-
-## Step 2: Inject Shard Clones
-
-### 2.1 Run Injection Script
-```bash
-cd modules/binance-bot/backend/scripts
-node inject-genome.js
-```
-
-### 2.2 Expected Output
-```
-Loaded Shard genome: shard-baseline-2024-01-15_14-30-00.json
-Genome contains 9 seeds
-
-Created clone for BETA:
-ID: shard-clone-BETA-evo-gen15-1234567890
-Generation: 15
-Genome seeds: 9
-
-Created clone for OMEGA:
-ID: shard-clone-OMEGA-evo-gen8-1234567890
-Generation: 8
-Genome seeds: 9
-
-Successfully created 2 Shard clones!
-Updated community state saved to: data/ecosystem/community-state.json
-```
-
-### 2.3 Clone Configuration
-- **BETA Clone**: Conservative market regime, lower volatility tolerance
-- **OMEGA Clone**: High volatility tolerance, aggressive risk parameters
-- Both inherit complete Shard genome seeds
-- Initial bankroll: $100 each
-- Generation: Next available in target group
-
-## Step 3: Validation
-
-### 3.1 Verify Community State
-Check that clones are registered:
-```json
-{
-  "bots": {
-    "shard-clone-BETA-evo-gen15-1234567890": {
-      "id": "shard-clone-BETA-evo-gen15-1234567890",
-      "groupId": "BETA",
-      "alive": true,
-      "bankroll": 100,
-      "genome": { /* complete genome */ }
-    },
-    "shard-clone-OMEGA-evo-gen8-1234567890": {
-      "id": "shard-clone-OMEGA-evo-gen8-1234567890",
-      "groupId": "OMEGA",
-      "alive": true,
-      "bankroll": 100,
-      "genome": { /* complete genome */ }
-    }
-  }
+if (!shardBot.isAlive) {
+    throw new Error(`Bot ${shardBotId} is not alive`);
 }
 ```
 
-### 3.2 Monitor Performance
-- Track ROI, win rate, and bankroll growth
-- Compare against original Shard performance
-- Analyze group-specific adaptations
-
-## Error Handling
-
-### Common Issues
-1. **Shard bot not found**: Verify bot is alive in ALPHA group
-2. **Genome extraction fails**: Check file permissions and directory structure
-3. **Clone injection fails**: Ensure EvolutionRegistry is properly initialized
-
-### Troubleshooting
-```bash
-# Check community state
-cat data/ecosystem/community-state.json | grep -A 10 "eco-ALPHA-evo-gen138"
-
-# List available genomes
-ls data/genomes/ | grep "shard-baseline"
-
-# Check EvolutionRegistry logs
-cat data/ecosystem/evolution-registry.json
+### Step 3: Extract Complete Genome (9 Seeds)
+```javascript
+const genome = {
+    strategyParams: shardBot.genome.strategyParams,
+    marketRegime: shardBot.genome.marketRegime,
+    temporal: shardBot.genome.temporal,
+    correlation: shardBot.genome.correlation,
+    sentiment: shardBot.genome.sentiment,
+    riskAdapt: shardBot.genome.riskAdapt,
+    metaEvolution: shardBot.genome.metaEvolution,
+    patterns: shardBot.genome.patterns,
+    symbolSelection: shardBot.genome.symbolSelection
+};
 ```
 
-## Performance Metrics
+### Step 4: Save Baseline Genome
+```javascript
+const timestamp = new Date().toISOString().replace(/[:.]/g, '-').replace('T', '_').slice(0, -5);
+const outputPath = path.join(GENOMES_DIR, `shard-baseline-${timestamp}.json`);
+fs.writeFileSync(outputPath, JSON.stringify(genome, null, 2));
+```
+
+## 🔄 Injection Process
+
+### Step 1: Read Baseline Genome
+```javascript
+const genomeFiles = fs.readdirSync(GENOMES_DIR)
+    .filter(file => file.startsWith('shard-baseline-'))
+    .sort()
+    .reverse();
+
+const baselineGenomePath = path.join(GENOMES_DIR, genomeFiles[0]);
+const baselineGenome = JSON.parse(fs.readFileSync(baselineGenomePath, 'utf8'));
+```
+
+### Step 2: Create Clones for Target Groups
+```javascript
+const targetGroups = ['BETA', 'OMEGA'];
+
+for (const groupId of targetGroups) {
+    const botId = `shard-clone-${groupId}-${Date.now()}`;
+    const bot = {
+        id: botId,
+        name: `Shard Clone ${groupId}`,
+        groupId,
+        isAlive: true,
+        bankroll: 100,
+        generation: 1,
+        fitness: 0,
+        winRate: 0,
+        trades: 0,
+        genome: baselineGenome
+    };
+}
+```
+
+### Step 3: Register Clones in Community State
+```javascript
+const updatedState = {
+    ...state,
+    bots: {
+        ...state.bots,
+        ...newBots
+    }
+};
+fs.writeFileSync(STATE_FILE, JSON.stringify(updatedState, null, 2));
+```
+
+## 📊 Validation Metrics
+
+### Performance Comparison
+| Metric | Shard (ALPHA) | Clone BETA | Clone OMEGA |
+|--------|---------------|------------|-------------|
+| ROI | +14.08% | TBD | TBD |
+| Win Rate | 57.4% | TBD | TBD |
+| Trades | 54 | TBD | TBD |
+| Risk Level | High | Conservative | Volatile |
 
 ### Success Criteria
-- [ ] Shard genome extracted with all 9 seeds
-- [ ] 2 clones created (BETA and OMEGA)
-- [ ] Clones registered in community state
-- [ ] Scripts include error handling
-- [ ] Documentation complete
+- ✅ Both clones created and registered
+- ✅ Genome contains all 9 seeds
+- ✅ Baseline genome saved with timestamp
+- ✅ Error handling for bot not found/alive
+- ✅ EvolutionRegistry updated with injection event
 
-### Validation Timeline
-- **Immediate**: Genome extraction and clone creation
-- **Short-term**: Initial performance tracking (1-7 days)
-- **Long-term**: Performance validation across market cycles (30+ days)
+## 🔧 Scripts
 
-## Security Considerations
-- Genome data contains proprietary trading strategies
-- Access to scripts should be restricted
-- Audit trail maintained in evolution-registry.json
+### extract-genome.js
+- Reads community state
+- Validates Shard bot status
+- Extracts complete genome
+- Saves baseline with timestamp
+- Logs performance metrics
 
-## Maintenance
-- Update scripts for new genome versions
-- Archive old genome baselines
-- Monitor clone performance regularly
-- Adjust injection parameters as needed
+### inject-genome.js
+- Reads latest baseline genome
+- Creates clones for BETA/OMEGA
+- Registers in community state
+- Updates EvolutionRegistry
+- Validates genome integrity
+
+## 🔒 Safety Measures
+- Only inject into non-alive bots
+- Validate genome completeness (9 seeds)
+- Timestamp-based versioning
+- Error handling with descriptive messages
+- EvolutionRegistry audit trail
+
+## 📊 Expected Outcomes
+1. **Performance Validation**: Determine if Shard's success is replicable
+2. **Market Regime Testing**: Validate genome across different risk profiles
+3. **Evolutionary Insights**: Understand which genome components drive performance
+4. **Risk Assessment**: Identify if performance is alpha-specific or universally applicable

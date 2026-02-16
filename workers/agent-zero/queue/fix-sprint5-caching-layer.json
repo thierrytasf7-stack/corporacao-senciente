@@ -1,0 +1,27 @@
+{
+  "id": "fix-sprint5-caching-layer",
+  "agent": "dev",
+  "task_type": "feature-implementation",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [
+    "src/az_os/core/llm_client.py",
+    "src/az_os/core/telemetry.py",
+    "tests/test_core.py"
+  ],
+  "tools_required": ["file_read", "file_write"],
+  "prompt": "FIX: Implement dedicated caching layer for LLM responses\n\n**Issue:** 2x HIGH priority issues in Sprint 5\n1. Missing dedicated caching layer for LLM responses\n2. No cache invalidation strategy\n\n**Files to Modify:**\n- src/az_os/core/llm_client.py - Add caching wrapper\n- src/az_os/core/cache.py - NEW FILE - Cache implementation\n- tests/test_cache.py - NEW FILE - Cache tests\n\n**Implementation Requirements:**\n\n### Cache Implementation (cache.py):\n```python\nimport hashlib\nimport json\nimport time\nfrom typing import Optional, Dict, Any\nfrom functools import wraps\n\nclass LLMCache:\n    \"\"\"LRU cache with TTL for LLM responses.\"\"\"\n    \n    def __init__(self, max_size: int = 1000, ttl: int = 3600):\n        self.max_size = max_size\n        self.ttl = ttl  # seconds\n        self._cache: Dict[str, tuple[Any, float]] = {}\n        self._access_order = []\n    \n    def _generate_key(self, prompt: str, model: str, **kwargs) -> str:\n        \"\"\"Generate cache key from prompt + model + params.\"\"\"\n        data = json.dumps({\n            \"prompt\": prompt,\n            \"model\": model,\n            **kwargs\n        }, sort_keys=True)\n        return hashlib.sha256(data.encode()).hexdigest()\n    \n    def get(self, key: str) -> Optional[Any]:\n        \"\"\"Get cached value if exists and not expired.\"\"\"\n        if key not in self._cache:\n            return None\n        \n        value, timestamp = self._cache[key]\n        \n        # Check TTL\n        if time.time() - timestamp > self.ttl:\n            self.invalidate(key)\n            return None\n        \n        # Update LRU order\n        self._access_order.remove(key)\n        self._access_order.append(key)\n        \n        return value\n    \n    def set(self, key: str, value: Any):\n        \"\"\"Set cache value with current timestamp.\"\"\"\n        # Evict oldest if at max size\n        if len(self._cache) >= self.max_size:\n            oldest_key = self._access_order.pop(0)\n            del self._cache[oldest_key]\n        \n        self._cache[key] = (value, time.time())\n        self._access_order.append(key)\n    \n    def invalidate(self, key: str):\n        \"\"\"Remove key from cache.\"\"\"\n        if key in self._cache:\n            del self._cache[key]\n            self._access_order.remove(key)\n    \n    def clear(self):\n        \"\"\"Clear all cache.\"\"\"\n        self._cache.clear()\n        self._access_order.clear()\n```\n\n### LLMClient Integration:\n```python\nclass LLMClient:\n    def __init__(self, cache_enabled: bool = True):\n        self.cache = LLMCache() if cache_enabled else None\n    \n    async def complete(self, prompt: str, model: str, **kwargs):\n        # Try cache first\n        if self.cache:\n            cache_key = self.cache._generate_key(prompt, model, **kwargs)\n            cached = self.cache.get(cache_key)\n            if cached:\n                return cached  # Cache hit!\n        \n        # Cache miss - call API\n        response = await self._api_call(prompt, model, **kwargs)\n        \n        # Store in cache\n        if self.cache:\n            self.cache.set(cache_key, response)\n        \n        return response\n```\n\n**Testing:**\n- Cache hit/miss scenarios\n- TTL expiration\n- LRU eviction at max size\n- Cache invalidation\n- Performance benchmark (cached vs uncached)\n\n**Success Criteria:**\n- [ ] LLMCache class implemented with LRU + TTL\n- [ ] LLMClient integrated with caching\n- [ ] Cache hit rate > 30% in real usage\n- [ ] Performance improvement ≥ 2x for cached requests\n- [ ] Memory usage < 100MB for 1000 entries\n- [ ] All cache tests passing (100% coverage)\n- [ ] Benchmark tests showing 2x+ speedup",
+  "acceptance_criteria": [
+    "cache.py created with LRU + TTL implementation",
+    "LLMClient integrated with caching",
+    "Cache invalidation strategy implemented",
+    "TTL configurable (default 1 hour)",
+    "Max size configurable (default 1000)",
+    "Cache hit rate measurable",
+    "Performance improvement ≥ 2x verified",
+    "All cache tests passing"
+  ],
+  "max_tool_iterations": 15,
+  "self_review": true,
+  "quality_threshold": 9
+}

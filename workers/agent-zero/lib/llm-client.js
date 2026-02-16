@@ -23,7 +23,8 @@ class LLMClient {
       const envContent = fs.readFileSync(envPath, 'utf-8');
       const envVars = {};
       for (const line of envContent.split('\n')) {
-        const match = line.match(/^([A-Z_]+)=(.+)$/);
+        const trimmed = line.trim(); // FIX: trim Windows CRLF
+        const match = trimmed.match(/^([A-Z_0-9]+)=(.+)$/); // FIX: allow numbers in var names
         if (match) envVars[match[1]] = match[2].trim();
       }
 
@@ -42,11 +43,11 @@ class LLMClient {
       const rootEnv = path.resolve(__dirname, '..', '..', '..', '.env');
       if (fs.existsSync(rootEnv)) {
         const content = fs.readFileSync(rootEnv, 'utf-8');
-        const match = content.match(/OPENROUTER_FREE_KEYS=(.+)/);
+        const match = content.match(/OPENROUTER_FREE_KEYS=(.+)/m); // FIX: multiline mode
         if (match) {
-          keys.push(...match[1].split(',').map(k => k.trim()));
+          keys.push(...match[1].trim().split(',').map(k => k.trim())); // FIX: trim capture group
         }
-        const mainKey = content.match(/OPENROUTER_API_KEY=(.+)/);
+        const mainKey = content.match(/OPENROUTER_API_KEY=(.+)/m); // FIX: multiline mode
         if (mainKey) keys.push(mainKey[1].trim());
       }
     }
@@ -87,16 +88,17 @@ class LLMClient {
           this.stats.errors++;
           const isRateLimit = err.message.includes('429') || err.message.includes('rate');
           const isTimeout = err.message.includes('Timeout') || err.message.includes('ETIMEDOUT');
+          const isUnauthorized = err.message.includes('401') || err.message.includes('User not found');
 
-          if (isRateLimit && attempt < maxRetries - 1) {
-            // Rotate key and retry with backoff
+          // Retry with next key for: rate limit, unauthorized (invalid key)
+          if ((isRateLimit || isUnauthorized) && attempt < maxRetries - 1) {
             this.stats.retries++;
-            const delay = this.config.openrouter.retry_delay_ms * (attempt + 1);
+            const delay = isRateLimit ? this.config.openrouter.retry_delay_ms * (attempt + 1) : 0;
             await this._sleep(delay);
             continue;
           }
 
-          if (isTimeout || (isRateLimit && attempt === maxRetries - 1)) {
+          if (isTimeout || ((isRateLimit || isUnauthorized) && attempt === maxRetries - 1)) {
             // Move to next model in cascade
             break;
           }

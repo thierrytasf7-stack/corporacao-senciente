@@ -70,6 +70,8 @@ echo   Corp Frontend:  http://localhost:21303
 echo   Binance Front:  http://localhost:21340
 echo   Binance Back:   http://localhost:21341
 echo   WhatsApp:       http://localhost:21350
+echo   Betting Front:  http://localhost:21371
+echo   Betting Back:   http://localhost:21370
 echo ====================================================
 echo.
 echo   pm2 logs        = Ver logs em tempo real

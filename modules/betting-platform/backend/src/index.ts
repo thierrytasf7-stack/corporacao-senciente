@@ -2,7 +2,7 @@ import express from 'express';
 import PerformanceMonitor from './services/PerformanceMonitor';
 
 const app = express();
-const PORT = 21300;
+const PORT = process.env.PORT || 21370;
 
 // Initialize performance monitor
 PerformanceMonitor.initialize();

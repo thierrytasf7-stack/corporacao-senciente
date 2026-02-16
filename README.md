@@ -1,234 +1,185 @@
-# Historical Data Pipeline
+# AZ-OS (Agent Zero Operating System)
 
-ETL pipeline for loading 2+ years of historical betting data from Betfair API into PostgreSQL.
+**Version:** 1.0.0  
+**Status:** Foundation Complete  
 
-## Features
+---
 
-- **Data Extraction:** Fetches historical odds from Betfair API and match results from public APIs
-- **Data Transformation:** Validates and transforms data to internal schema format
-- **Data Loading:** Bulk loads data into PostgreSQL with upsert logic and error handling
-- **Performance:** Optimized for >10k records/minute with batch processing
-- **Reliability:** Transaction-based loading with rollback on failure
+## 🎯 VISION
 
-## Architecture
+Agent Zero Operating System is a CLI-first AI operating system that serves as the frontal cortex for autonomous agents, ensuring 100% autonomy, maximum performance, and complete technical sovereignty.
 
+**Key Innovation:** First CLI combining Level 10 autonomy + 60 FPS TUI + 90% cost optimization + native Agent Zero integration.
+
+---
+
+## 🚀 QUICK START
+
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/diana-corporacao-senciente/az-os.git
+cd az-os
+
+# Install dependencies
+pip install -e .
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Betfair API   │───▶│  HistoricalDataLoader │───▶│    PostgreSQL     │
-│  (Historical Odds) │    │     (ETL Pipeline)      │    │   (Database)     │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
-
-## Database Schema
-
-### Tables
-
-1. **sports** - Master data for sports and configurations
-2. **markets** - Master data for betting markets
-3. **match_results** - Historical match results with scores
-4. **historical_odds** - Historical odds data from Betfair
-
-### Key Features
-- **Performance Indexes:** Optimized for query performance
-- **Data Integrity:** Foreign keys and check constraints
-- **Audit Trail:** Created/updated timestamps on all tables
-- **Soft Deletes:** Active/inactive flags for records
-
-## Installation
-
-### Prerequisites
-- Node.js 18+
-- PostgreSQL 13+
-- Betfair API key
-- Football Data API key (optional)
-
-### Setup
-
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Copy environment variables:
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Configure your API keys in `.env`
-
-5. Create PostgreSQL database:
-   ```bash
-   createdb betting_platform
-   ```
-
-6. Run database migrations:
-   ```bash
-   npm run migrate
-   npm run constraints
-   ```
-
-## Usage
 
 ### Basic Usage
-
 ```bash
-npm start
+# Initialize the system
+az db init
+
+# Run a task
+az task run "create function isPrime" --model claude
+
+# Show dashboard
+az dashboard
+
+# List available tools
+az tools list
 ```
 
-### Development
+---
 
-```bash
-npm run dev
+## 📋 FEATURES
+
+### Core Features
+- **CLI Framework**: Typer-based command routing with auto-completion
+- **SQLite Persistence**: Task storage, logs, and state management
+- **LiteLLM Integration**: Multi-model AI orchestration with cost tracking
+- **MCP Client**: Filesystem and shell tool integration
+- **Command Execution**: Async processing with progress tracking
+
+### AI Features
+- **Multi-Model Support**: Claude, Gemini, DeepSeek, and free models
+- **Cost Optimization**: Smart routing and budget enforcement
+- **Tool Calling**: MCP protocol for external tool integration
+- **ReAct Engine**: Reasoning-Action-Observation self-correction
+
+### Data Features
+- **SQLite Database**: Structured data persistence
+- **ChromaDB Vector DB**: Semantic search and RAG
+- **Git Checkpointing**: Auto-commit task checkpoints
+- **Migration System**: Database schema management
+
+---
+
+## 🏗️ ARCHITECTURE
+
+### Component Diagram
+```mermaid
+graph TB
+    subgraph "CLI Layer"
+        CLI[Typer CLI Interface]
+        TUI[Textual TUI Dashboard]
+        Commands[Command Parser]
+    end
+    
+    subgraph "Core Layer"
+        Router[Command Router]
+        Executor[Execution Engine]
+        StateMgr[State Manager]
+        CostTracker[Cost Tracker]
+    end
+    
+    subgraph "AI Layer"
+        LiteLLM[LiteLLM Orchestrator]
+        MCP[MCP 2026 Client]
+        ReAct[ReAct Loop Engine]
+    end
+    
+    subgraph "Data Layer"
+        SQLite[SQLite Database]
+        ChromaDB[ChromaDB Vector DB]
+        Git[GitPython Checkpointing]
+    end
+    
+    subgraph "Tool Layer"
+        Tools[Filesystem Tools]
+        Shell[Shell Command Tools]
+        AI[AI Tools]
+    end
+    
+    CLI --> Commands
+    Commands --> Router
+    Router --> Executor
+    Executor --> LiteLLM
+    Executor --> MCP
+    Executor --> StateMgr
+    Executor --> CostTracker
+    LiteLLM --> Tools
+    MCP --> Tools
+    ReAct --> Executor
+    Executor --> SQLite
+    Executor --> ChromaDB
+    Executor --> Git
+    Tools --> SQLite
+    Tools --> ChromaDB
 ```
 
-### Manual Migration
-
-```bash
-npm run migrate
-npm run constraints
+### Package Structure
+```
+az_os/
+├── az_os/
+│   ├── __init__.py
+│   ├── __main__.py              # CLI entry point
+│   ├── core/                   # Core functionality
+│   │   ├── __init__.py
+│   │   ├── mcp_client.py       # MCP 2026 client
+│   │   └── execution_engine.py # Command execution engine
+│   ├── cli/                    # CLI interface
+│   │   ├── __init__.py
+│   │   ├── main.py             # CLI commands
+│   │   └── __main__.py          # CLI entry point
+│   ├── ai/                     # AI integration
+│   │   ├── __init__.py
+│   │   └── __main__.py          # AI entry point
+│   ├── data/                   # Data layer
+│   │   ├── __init__.py
+│   │   └── __main__.py          # Data entry point
+│   └── tools/                  # Tool layer
+│       ├── __init__.py
+│       └── __main__.py          # Tools entry point
+├── tests/                      # Test suite
+│   ├── __init__.py
+│   ├── conftest.py             # Test fixtures
+│   ├── test_execution.py       # Execution engine tests
+│   └── test_mcp_client.py      # MCP client tests
+├── docs/                       # Documentation
+│   ├── architecture/           # Architecture docs
+│   └── planning/               # Planning docs
+├── pyproject.toml              # Project configuration
+└── README.md                   # This file
 ```
 
-## Configuration
+---
 
-### Environment Variables
+## 🧪 TESTING
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `DATABASE_URL` | PostgreSQL connection string | Yes |
-| `BETFAIR_API_KEY` | Betfair API authentication | Yes |
-| `FOOTBALL_DATA_API_KEY` | Football data API key | No |
-| `DB_USER` | Database username | No (defaults to postgres) |
-| `DB_HOST` | Database host | No (defaults to localhost) |
-| `DB_NAME` | Database name | No (defaults to betting_platform) |
-| `DB_PASSWORD` | Database password | No (defaults to password) |
-| `DB_PORT` | Database port | No (defaults to 5432) |
-
-## API Integration
-
-### Betfair API
-- **Endpoint:** `https://api.betfair.com/exchange/betting/rest/v1.0`
-- **Authentication:** X-Authentication header with API key
-- **Data:** Historical odds via listMarketBook endpoint
-
-### Football Data API
-- **Endpoint:** `https://api.football-data.org/v4`
-- **Authentication:** X-Auth-Token header
-- **Data:** Match results and scores
-
-## Performance
-
-### Expected Throughput
-- **Historical Odds:** 5,000-10,000 records/minute
-- **Match Results:** 1,000-2,000 records/minute
-- **Total:** >10,000 records/minute
-
-### Optimization Strategies
-- **Batch Processing:** 1000 records per batch
-- **Connection Pooling:** 20 maximum connections
-- **Upsert Logic:** ON CONFLICT for existing records
-- **Indexing:** Composite indexes for query performance
-
-## Error Handling
-
-### Retry Logic
-- **API Calls:** Exponential backoff (1s, 2s, 4s, 8s)
-- **Database Operations:** Transaction rollback on failure
-- **Graceful Shutdown:** Clean database connection termination
-
-### Error Categories
-- **Network Errors:** API connectivity issues
-- **Data Errors:** Invalid or malformed data
-- **Database Errors:** Connection or constraint violations
-
-## Monitoring
-
-### Health Checks
-- Database connection status
-- API response times
-- Data load progress
-
-### Metrics
-- Records processed per minute
-- Error rates and types
-- Memory and CPU usage
-
-## Testing
-
-### Unit Tests
+Run the test suite:
 ```bash
-npm test
+pytest tests/
 ```
 
-### Type Checking
+---
+
+## 🔧 DEVELOPMENT
+
+### Code Quality
 ```bash
-npm run typecheck
+# Format code
+black src/
+
+# Sort imports
+isort src/
+
+# Type checking
+mypy src/
 ```
 
-## Deployment
+---
 
-### Production
-1. Build the application
-2. Configure environment variables
-3. Run database migrations
-4. Start the pipeline
+## 📄 LICENSE
 
-### Environment Setup
-- **Node.js:** Use process manager (PM2, systemd)
-- **Database:** Configure connection pooling
-- **Monitoring:** Set up logging and alerting
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Database Connection Failed**
-   - Check PostgreSQL is running
-   - Verify connection parameters
-   - Check network connectivity
-
-2. **API Authentication Failed**
-   - Verify API keys are correct
-   - Check API rate limits
-   - Ensure proper headers are set
-
-3. **Data Validation Errors**
-   - Check data format matches schema
-   - Verify required fields are present
-   - Handle null values appropriately
-
-### Logs
-- **Application Logs:** Console output and file logs
-- **Database Logs:** PostgreSQL log files
-- **API Logs:** External service response logs
-
-## Future Enhancements
-
-### Near-term
-- [ ] Add data compression for storage optimization
-- [ ] Implement data archiving strategy
-- [ ] Add real-time data streaming
-
-### Long-term
-- [ ] Multi-source data integration
-- [ ] Advanced data analytics and reporting
-- [ ] Machine learning for data quality
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
-## License
-
-MIT License - see LICENSE file for details
-
-## Support
-
-For issues and questions:
-- Create a GitHub issue
-- Check the troubleshooting section
-- Review the logs for error details
+MIT License - see LICENSE file for details.

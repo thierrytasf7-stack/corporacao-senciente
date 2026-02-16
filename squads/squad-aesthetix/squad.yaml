@@ -1,0 +1,28 @@
+id: squad-aesthetix
+name: Squad Aesthetix
+description: "Máquina de Consistência Perpétua para Design System e UI/UX."
+version: 1.0.0
+author: Athena (CEO-PLANEJAMENTO)
+team: Planejamento
+agents:
+  - id: ds-architect
+    name: The Lawmaker
+    description: "Define Design Tokens e Arquitetura CSS."
+  - id: ds-artist
+    name: The Crafter
+    description: "Cria UX Patterns e Interfaces."
+  - id: ds-blind-auditor
+    name: The Gatekeeper
+    description: "Audita acessibilidade (WCAG 2.2 AA)."
+tasks:
+  - id: task-create-component
+    name: Create Component
+    description: "Cria um novo componente seguindo o padrão Arete."
+knowledge:
+  - id: visual-arete
+    name: Visual Arete Manifesto
+    path: knowledge/visual-arete.md
+config:
+  tokens_path: tokens/
+  templates_path: templates/
+  checklists_path: checklists/

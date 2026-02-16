@@ -3,114 +3,109 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { CommunityEcosystem } from '../services/ecosystem/CommunityEcosystem';
-import { BinanceApiService } from '../BinanceApiService';
+import { EvolutionRegistry } from '../services/ecosystem/EvolutionRegistry';
 
 const DATA_DIR = path.join(process.cwd(), 'data', 'ecosystem');
-const GENOMES_DIR = path.join(process.cwd(), 'data', 'genomes');
+const STATE_FILE = path.join(DATA_DIR, 'community-state.json');
+const GENOMES_DIR = path.join(DATA_DIR, 'genomes');
 
-async function injectShardClones() {
+function injectGenome() {
     try {
-        // Initialize ecosystem
-        const binanceService = new BinanceApiService();
-        const ecosystem = new CommunityEcosystem(binanceService);
+        // Read community state
+        const state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
         
-        // Load community state
-        const statePath = path.join(DATA_DIR, 'community-state.json');
-        if (!fs.existsSync(statePath)) {
-            throw new Error('Community state file not found');
-        }
-        
-        const communityState = JSON.parse(fs.readFileSync(statePath, 'utf8'));
-        
-        // Load Shard baseline genome
-        const genomeFiles = fs.readdirSync(GENOMES_DIR).filter(file => 
-            file.startsWith('shard-baseline-')
-        );
-        
+        // Find baseline genome
+        const genomeFiles = fs.readdirSync(GENOMES_DIR)
+            .filter(file => file.startsWith('shard-baseline-'))
+            .sort()
+            .reverse();
+            
         if (genomeFiles.length === 0) {
-            throw new Error('No Shard baseline genome found');
+            throw new Error('No baseline genome found. Run extract-genome.js first.');
         }
         
-        const latestGenomeFile = genomeFiles.sort().reverse()[0];
-        const genomePath = path.join(GENOMES_DIR, latestGenomeFile);
-        const shardGenome = JSON.parse(fs.readFileSync(genomePath, 'utf8'));
-        
-        console.log(`Loaded Shard genome: ${latestGenomeFile}`);
-        console.log(`Genome contains ${Object.keys(shardGenome).length} seeds`);
+        const baselineGenomePath = path.join(GENOMES_DIR, genomeFiles[0]);
+        const baselineGenome = JSON.parse(fs.readFileSync(baselineGenomePath, 'utf8'));
         
         // Create clones for BETA and OMEGA groups
         const targetGroups = ['BETA', 'OMEGA'];
-        const createdBots = [];
+        const newBots = {};
         
         for (const groupId of targetGroups) {
-            // Generate unique bot ID
-            const existingBots = Object.values(communityState.bots);
-            const groupBots = existingBots.filter(bot => bot.groupId === groupId);
-            const nextGeneration = Math.max(0, ...groupBots.map(bot => bot.generation)) + 1;
+            const botId = `shard-clone-${groupId}-${Date.now()}`;
+            const botName = `Shard Clone ${groupId}`;
             
-            const botId = `shard-clone-${groupId}-evo-gen${nextGeneration}-${Date.now()}`;
-            
-            // Create bot object
             const bot = {
                 id: botId,
+                name: botName,
                 groupId,
-                generation: nextGeneration,
-                alive: true,
-                bankroll: 100, // Initial bankroll
+                isAlive: true,
+                bankroll: 100,
+                generation: 1,
                 fitness: 0,
                 winRate: 0,
-                roi: 0,
                 trades: 0,
                 genome: {
-                    strategyParams: shardGenome.strategyParams,
-                    marketRegime: shardGenome.marketRegime,
-                    temporal: shardGenome.temporal,
-                    correlation: shardGenome.correlation,
-                    sentiment: shardGenome.sentiment,
-                    riskAdapt: shardGenome.riskAdapt,
-                    metaEvolution: shardGenome.metaEvolution,
-                    patterns: shardGenome.patterns,
-                    symbolSelection: shardGenome.symbolSelection
+                    strategyParams: baselineGenome.strategyParams,
+                    marketRegime: baselineGenome.marketRegime,
+                    temporal: baselineGenome.temporal,
+                    correlation: baselineGenome.correlation,
+                    sentiment: baselineGenome.sentiment,
+                    riskAdapt: baselineGenome.riskAdapt,
+                    metaEvolution: baselineGenome.metaEvolution,
+                    patterns: baselineGenome.patterns,
+                    symbolSelection: baselineGenome.symbolSelection
                 },
                 timestamp: new Date().toISOString()
             };
             
-            // Inject genome using EvolutionRegistry
-            const evolutionRegistry = ecosystem.getEvolutionRegistry();
-            evolutionRegistry.injectGenome(bot.genome, {
-                dimension: `shard-clone-${groupId}`,
-                generation: nextGeneration,
-                metadata: {
-                    source: 'shard-baseline',
-                    targetGroup: groupId,
-                    timestamp: new Date().toISOString()
-                }
-            });
-            
-            // Add to community state
-            communityState.bots[botId] = bot;
-            createdBots.push(bot);
-            
-            console.log(`\nCreated clone for ${groupId}:`);
-            console.log(`ID: ${botId}`);
-            console.log(`Generation: ${nextGeneration}`);
-            console.log(`Genome seeds: ${Object.keys(bot.genome).length}`);
+            newBots[botId] = bot;
+            console.log(`✅ Created clone: ${botId} for group ${groupId}`);
         }
         
-        // Save updated community state
-        fs.writeFileSync(statePath, JSON.stringify(communityState, null, 2));
+        // Inject into community state
+        const updatedState = {
+            ...state,
+            bots: {
+                ...state.bots,
+                ...newBots
+            }
+        };
         
-        console.log(`\nSuccessfully created ${createdBots.length} Shard clones!`);
-        console.log(`Updated community state saved to: ${statePath}`);
+        fs.writeFileSync(STATE_FILE, JSON.stringify(updatedState, null, 2));
         
-        return createdBots;
+        // Register in EvolutionRegistry
+        const evolutionRegistry = new EvolutionRegistry();
+        for (const botId in newBots) {
+            const bot = newBots[botId];
+            evolutionRegistry.record('genome-injection', {
+                cycle: state.currentCycle,
+                generation: bot.generation,
+                fitness: bot.fitness,
+                bestGenomeHash: '', // Will be calculated later
+                metadata: {
+                    operation: 'shard-clone-injection',
+                    sourceGenome: 'shard-baseline',
+                    targetGroups: targetGroups,
+                    timestamp: bot.timestamp
+                }
+            });
+        }
+        
+        console.log(`✅ Successfully injected ${Object.keys(newBots).length} clones`);
+        console.log(`📊 Clones created: ${Object.keys(newBots).join(', ')}`);
+        console.log(`📁 Updated community state with new bots`);
+        
+        return newBots;
         
     } catch (error) {
-        console.error('Error injecting Shard clones:', error);
+        console.error('❌ Error injecting genome:', error.message);
         process.exit(1);
     }
 }
 
 if (require.main === module) {
-    injectShardClones().catch(console.error);
+    injectGenome();
 }
+
+export { injectGenome };

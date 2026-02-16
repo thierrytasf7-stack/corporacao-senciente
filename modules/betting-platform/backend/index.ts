@@ -1,5 +1,5 @@
 import { setupMetricsEndpoint } from './metrics-endpoint';
-import express from 'express'';
+import express from 'express';
 
 const app = express();
 

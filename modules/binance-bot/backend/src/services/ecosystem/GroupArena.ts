@@ -115,8 +115,8 @@ export class GroupArena {
         this.sentimentDNA = new SentimentDNA(groupId);
         this.riskAdaptDNA = new RiskAdaptDNA(groupId);
         this.metaEvolutionDNA = new MetaEvolutionDNA(groupId);
-        this.patternDNA = new PatternDNA(this.groupId);
-        this.symbolSelectionDNA = new SymbolSelectionDNA(this.groupId);
+        this.patternDNA = new PatternDNA(groupId);
+        this.symbolSelectionDNA = new SymbolSelectionDNA(groupId);
 
         // Initialize adaptive mutation engine with checkpoint monitoring
         this.adaptiveMutation = new AdaptiveMutationEngine(
@@ -818,7 +818,7 @@ export class GroupArena {
         const amplitude = baseAmplitude * profile.amplitudeMultiplier;
         const direction = profile.direction;
 
-        console.log(`🧬 [${this.groupId}] Mutation: ${mutationType} (${profile.description}) | Rate: ${mutationRate.toFixed(2)} | Amp: ${amplitude.toFixed(2)}`);
+        console.log(`🧩 [${this.groupId}] Mutation: ${mutationType} (${profile.description}) | Rate: ${mutationRate.toFixed(2)} | Amp: ${amplitude.toFixed(2)}`);
 
         // Strategy mask mutation
         for (let i = 0; i < STRATEGY_COUNT; i++) {
@@ -1065,38 +1065,70 @@ export class GroupArena {
     }
 
     getAliveBots(): BotStateV2[] {
-        return Array.from(this.bots.values()).filter(b => b.isAlive && b.bankroll > 0);
+        return Array.from(this.bots.values()).filter(b => b.isAlive);
     }
 
-    getAllBots(): BotStateV2[] {
-        return Array.from(this.bots.values());
+    getGroupFitness(): number {
+        const alive = this.getAliveBots();
+        if (alive.length === 0) return 0;
+        return alive.reduce((sum, bot) => sum + this.calculateFitness(bot), 0) / alive.length;
     }
 
-    // ======================== RANGING OPTIMIZATION ========================
+    // ======================== RANGING OPTIMIZATIONS ========================
 
     private applyRangingOptimizations(): void {
-        // Apply leverage reduction for RANGING regime
-        this.config.leverageMin = 15;
-        this.config.leverageMax = 25;
+        // Load ranging optimization config for DELTA group
+        const rangingConfig = this.loadRangingConfig();
+        if (!rangingConfig) return;
 
-        // Apply cooldown adjustment
-        this._pauseMultiplier = 0.5; // 50% reduced activity
+        // Apply leverage adjustments
+        for (const [, botState] of this.bots) {
+            if (botState.isAlive) {
+                // Reduce leverage for ranging markets
+                botState.genome.risk.leverage = Math.min(
+                    botState.genome.risk.leverage,
+                    rangingConfig.leverage.max
+                );
+                
+                // Increase minSignalStrength threshold
+                if (botState.genome.consensus.minWeightedStrength < rangingConfig.minSignalStrength) {
+                    botState.genome.consensus.minWeightedStrength = rangingConfig.minSignalStrength;
+                }
 
-        // Apply strategy range adjustment for mean-reversion
-        this.config.strategyRange = [20, 29];
+                // Apply cooldown for ranging markets
+                botState.symbolCooldowns.forEach((expiry, symbol) => {
+                    botState.symbolCooldowns.set(symbol, expiry + rangingConfig.cooldown);
+                });
 
-        // Apply minSignalStrength adjustment through StrategyParamDNA
-        // This would be implemented by adjusting the StrategyParamDNA genome
-        // For now, we'll log the adjustment
-        console.log(`🔄 [${this.groupId}] RANGING optimizations applied: leverage 15-25x, cooldown 30min, mean-reversion strategies [20-29]`);
+                // Activate mean-reversion strategies (20-29)
+                for (let i = 20; i <= 29; i++) {
+                    botState.genome.strategyMask[i] = true;
+                    botState.genome.strategyWeights[i] = 1.0;
+                }
+
+                // Reduce momentum strategy weights
+                for (let i = 10; i <= 19; i++) {
+                    botState.genome.strategyWeights[i] *= rangingConfig.momentumPenalty;
+                }
+            }
+        }
     }
 
-    // ======================== BACKUP ========================
-
-    backupGroupArena(): void {
-        const backupPath = `modules/binance-bot/backend/src/services/ecosystem/GroupArena.ts.bak`;
-        const content = file_read("modules/binance-bot/backend/src/services/ecosystem/GroupArena.ts");
-        file_write({ path: backupPath, content });
-        console.log(`💾 Backup created: ${backupPath}`);
+    private loadRangingConfig(): {
+        leverage: { min: number; max: number };
+        minSignalStrength: number;
+        cooldown: number;
+        strategyRange: [number, number];
+        meanReversionBoost: number;
+        momentumPenalty: number;
+    } | null {
+        try {
+            // Load from config file
+            const config = require('./configs/delta-ranging-optimization.json');
+            return config;
+        } catch {
+            console.warn('Ranging config not found for DELTA group');
+            return null;
+        }
     }
 }

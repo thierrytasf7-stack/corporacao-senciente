@@ -106,11 +106,14 @@ module.exports = {
     {
       name: 'binance-backend',
       namespace: 'SERVERS',
-      script: 'scripts/pm2-wrapper.js',
-      args: `${ROOT}/modules/binance-bot/backend/start-backend.ps1`,
-      cwd: ROOT,
+      script: 'npm',
+      args: 'run start:real',
+      cwd: `${ROOT}/modules/binance-bot/backend`,
       instances: 1,
       autorestart: true,
+      max_restarts: 10,
+      min_uptime: '60s',
+      restart_delay: 5000,
       env: {
         PORT: 21341,
         NODE_ENV: 'production'
@@ -124,9 +127,14 @@ module.exports = {
       cwd: ROOT,
       instances: 1,
       autorestart: true,
+      max_restarts: 10,
+      min_uptime: '60s',
+      restart_delay: 5000,
       env: {
         PORT: 21340
-      }
+      },
+      // Memory leak mitigation: auto-restart after 10 crashes with 1min uptime threshold
+      // Prevents frontend from crashing during long operations
     },
     {
       name: 'whatsapp-bridge',

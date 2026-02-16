@@ -11,18 +11,20 @@ from litellm import ChatCompletionRequest, ChatCompletionResponse
 from az_os.core.config import Config
 from az_os.core.storage import Database, TaskStatus, TaskPriority, LogLevel
 from az_os.core.models import Task, TaskLog, CostTracking
+from az_os.core.cache import LLMCache
 
 logger = logging.getLogger(__name__)
 
 
 class LLMClient:
-    def __init__(self, config: Config, db: Database):
+    def __init__(self, config: Config, db: Database, cache_enabled: bool = True):
         self.config = config
         self.db = db
         self.models = self.config.settings.llm.models
         self.default_model = self.config.settings.llm.default_model
         self.rate_limit_backoff = self.config.settings.llm.rate_limit_backoff
         self.max_retries = self.config.settings.llm.max_retries
+        self.cache = LLMCache(max_size=1000, ttl=3600) if cache_enabled else None
         
     async def initialize(self) -> None:
         """Initialize the LLM client."""
@@ -40,6 +42,19 @@ class LLMClient:
         """Generate text using the LLM with cascade fallback."""
         if not model:
             model = self.default_model
+
+        # Try cache first
+        if self.cache and not stream:  # Don't cache streaming responses
+            cache_key = self.cache._generate_key(
+                prompt=prompt,
+                model=model,
+                temperature=temperature,
+                max_tokens=max_tokens
+            )
+            cached = self.cache.get(cache_key)
+            if cached:
+                logger.info(f"Cache HIT for model {model}")
+                return cached
         
         # Try models in cascade order
         for model_name in self.models:
@@ -52,6 +67,18 @@ class LLMClient:
                     stream,
                     task_id,
                 )
+
+                # Cache the response
+                if self.cache and not stream:
+                    cache_key = self.cache._generate_key(
+                        prompt=prompt,
+                        model=model,
+                        temperature=temperature,
+                        max_tokens=max_tokens
+                    )
+                    self.cache.set(cache_key, response)
+                    logger.info(f"Cached response for model {model}")
+
                 return response
             except litellm.errors.RateLimitError:
                 logger.warning(f"Rate limit reached for {model_name}, retrying...")
@@ -59,7 +86,7 @@ class LLMClient:
             except Exception as e:
                 logger.error(f"Error with {model_name}: {e}")
                 continue
-        
+
         raise Exception("All models failed")
     
     async def _generate_with_model(
@@ -141,12 +168,19 @@ class LLMClient:
         try:
             # Test connection with a simple prompt
             response = await self.generate_text("Hello, how are you?", model="claude-3-5-sonnet-20241022")
-            return {
+
+            result = {
                 "status": "connected",
                 "models": self.models,
                 "default_model": self.default_model,
                 "response": response.choices[0].message.content[:100] + "...",
             }
+
+            # Add cache stats if enabled
+            if self.cache:
+                result["cache_stats"] = self.cache.get_stats()
+
+            return result
         except Exception as e:
             return {
                 "status": "error",

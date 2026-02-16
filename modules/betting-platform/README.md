@@ -43,8 +43,8 @@ npm test
 
 ## PM2 Configuration
 This module is configured in the main ecosystem.config.js with ports:
-- Backend: 21360
-- Frontend: 21361
+- Backend: 21370
+- Frontend: 21371
 
 ## Environment Variables
 Create `.env` files in each module as needed for configuration.

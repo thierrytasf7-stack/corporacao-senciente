@@ -1,55 +1,43 @@
-# Python Dependencies for Advanced AI Frameworks
-# Install with: pip install -r requirements.txt
+# CLI Framework
+typer==0.12.0
+rich==13.9.0
+rich-click==1.7.0
 
-# CrewAI - Framework for multi-agent orchestration
-crewai>=0.28.0
-crewai[tools]>=0.28.0
+# TUI Framework
+textual==0.82.0
 
-# LangChain & LangGraph - Workflow orchestration
-langchain>=0.1.0
-langchain-community>=0.0.20
-langgraph>=0.0.20
+# AI Orchestration
+litellm==1.0.0
 
-# Langfuse - Observability (self-hosted)
-langfuse>=2.0.0
+# MCP Protocol
+mcp-client==2026.1.0
 
-# Qdrant Client - Vector database client
-qdrant-client>=1.7.0
+# Database & Data
+aiosqlite==0.19.0
+pydantic==2.9.0
 
-# Optional: For Python-based agent execution
-anthropic>=0.18.0
-openai>=1.12.0
-google-generativeai>=0.3.0
+# Configuration Management
+dynaconf==3.2.0
 
-# Database & Vector Storage (Industry 6.0/7.0)
-asyncpg>=0.31.0
-mem0ai>=1.0.0
-sqlalchemy>=2.0.31
+# Async HTTP
+httpx==0.25.0
 
+# Async Utilities
+asyncstdlib==3.10.0
 
+# Development Dependencies
+pytest==7.4.0
+pytest-asyncio==0.21.0
+pytest-cov==4.1.0
+mypy==1.5.0
+flake8==6.0.0
+black==23.0.0
+isort==5.12.0
 
+# Documentation
+sphinx==7.0.0
+sphinx-rtd-theme==1.2.0
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Build
+build==1.0.0
+twine==4.0.0

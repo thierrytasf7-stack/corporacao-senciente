@@ -1,0 +1,45 @@
+# Include documentation
+include README.md
+include LICENSE
+include CHANGELOG.md
+
+# Include configuration files
+include pyproject.toml
+include setup.py
+
+# Include documentation
+recursive-include docs *.md
+recursive-include docs *.rst
+
+# Include config templates
+recursive-include config *.yaml
+recursive-include config *.yml
+recursive-include config *.json
+
+# Include tests
+recursive-include tests *.py
+
+# Exclude compiled files
+global-exclude *.pyc
+global-exclude *.pyo
+global-exclude __pycache__
+global-exclude *.so
+global-exclude *.dylib
+
+# Exclude build artifacts
+prune build
+prune dist
+prune *.egg-info
+
+# Exclude development files
+exclude .gitignore
+exclude .dockerignore
+exclude Dockerfile
+exclude docker-compose.yml
+
+# Exclude CI/CD
+recursive-exclude .github *
+
+# Exclude IDE
+recursive-exclude .vscode *
+recursive-exclude .idea *

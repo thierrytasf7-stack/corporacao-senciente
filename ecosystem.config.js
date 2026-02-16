@@ -106,11 +106,14 @@ module.exports = {
     {
       name: 'binance-backend',
       namespace: 'SERVERS',
-      script: 'scripts/pm2-wrapper.js',
-      args: `${ROOT}/modules/binance-bot/backend/start-backend.ps1`,
-      cwd: ROOT,
+      script: 'dist/real-server.js',
+      cwd: `${ROOT}/modules/binance-bot/backend`,
+      interpreter: 'node',
       instances: 1,
       autorestart: true,
+      max_restarts: 10,
+      min_uptime: '60s',
+      restart_delay: 5000,
       env: {
         PORT: 21341,
         NODE_ENV: 'production'
@@ -119,19 +122,19 @@ module.exports = {
     {
       name: 'binance-frontend',
       namespace: 'SERVERS',
-      script: 'scripts/pm2-wrapper.js',
-      args: `${ROOT}/modules/binance-bot/frontend/start-frontend.ps1`,
-      cwd: ROOT,
+      script: 'start-preview.bat',
+      cwd: `${ROOT}/modules/binance-bot/frontend`,
       instances: 1,
       autorestart: true,
       max_restarts: 10,
       min_uptime: '60s',
       restart_delay: 5000,
+      interpreter: 'cmd',
       env: {
-        PORT: 21340
-      },
-      // Memory leak mitigation: auto-restart after 10 crashes with 1min uptime threshold
-      // Prevents frontend from crashing during long operations
+        PORT: 21340,
+        DIANA_BINANCE_FRONTEND_PORT: 21340,
+        DIANA_BINANCE_BACKEND_PORT: 21341
+      }
     },
     {
       name: 'whatsapp-bridge',

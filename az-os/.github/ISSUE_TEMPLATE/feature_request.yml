@@ -1,0 +1,69 @@
+---
+name: Feature Request
+description: Suggest an idea for this project
+labels: [enhancement, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a new feature!
+        
+        **Please ensure you have read our [Contributing Guidelines](CONTRIBUTING.md) before opening an issue.**
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: A clear and concise description of what you want to happen.
+      placeholder: |
+        I would like to see support for ...
+    validations:
+      required: true
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: Describe the use case or problem this feature would solve.
+      placeholder: |
+        Currently, I have to ... but it would be better if ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your proposed solution to implement this feature.
+      placeholder: |
+        We could add a new command `az ...` that ...
+    validations:
+      required: false
+  - type: textarea
+    id: alternative-solutions
+    attributes:
+      label: Alternative Solutions
+      description: Describe any alternative solutions or features you've considered.
+    validations:
+      required: false
+  - type: input
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature? (Low/Medium/High/Critical)
+      placeholder: Medium
+    validations:
+      required: true
+  - type: input
+    id: effort
+    attributes:
+      label: Estimated Effort
+      description: How much effort do you think this would take to implement? (S/M/L/XL)
+      placeholder: M
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

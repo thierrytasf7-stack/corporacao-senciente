@@ -1,0 +1,72 @@
+# AZ-OS Default Configuration
+
+# Database Configuration
+database:
+  path: "${HOME}/.az-os/az_os.db"
+  timeout: 30.0
+  check_same_thread: false
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  datefmt: "%Y-%m-%d %H:%M:%S"
+  file: "${HOME}/.az-os/az_os.log"
+  console: true
+  file_mode: "a"
+
+# LLM Configuration
+llm:
+  default_model: "claude-3-sonnet-20240229"
+  providers: ["anthropic", "google", "openai"]
+  timeout: 30
+  max_tokens: 4096
+  temperature: 0.7
+  budget:
+    daily: 100.0
+    monthly: 3000.0
+    alert_threshold: 0.8
+
+# Task Configuration
+task:
+  default_priority: "medium"
+  max_concurrent_tasks: 5
+  retry_attempts: 3
+  retry_delay: 5
+
+# Cost Configuration
+cost:
+  currency: "USD"
+  pricing:
+    anthropic:
+      "claude-3-sonnet-20240229": 0.00003
+      "claude-3-haiku-20240307": 0.000015
+    google:
+      "gemini-1.5-pro": 0.00002
+      "gemini-1.5-flash": 0.000005
+    openai:
+      "gpt-4": 0.00006
+      "gpt-3.5-turbo": 0.000015
+    deepseek:
+      "deepseek-coder": 0.00001
+    ollama:
+      "llama2": 0.000001
+      "codellama": 0.0000015
+
+# Development Configuration
+development:
+  debug: false
+  verbose: false
+  log_level: "INFO"
+
+# Security Configuration
+security:
+  api_key_encryption: true
+  token_expiration: 3600
+  rate_limit: 100
+
+# Monitoring Configuration
+monitoring:
+  enabled: true
+  metrics_collection: true
+  prometheus_port: 9090

@@ -1,0 +1,108 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  POETRY_VERSION: 1.7.1
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: Install Poetry
+      run: |
+        pip install "poetry==${{ env.POETRY_VERSION }}"
+        poetry --version
+        
+    - name: Install dependencies
+      run: |
+        poetry install --no-root
+        poetry install
+        
+    - name: Run type checking
+      run: |
+        poetry run mypy src/
+        
+    - name: Run linting
+      run: |
+        poetry run flake8 src/ tests/
+        poetry run isort --check-only src/ tests/
+        poetry run black --check src/ tests/
+        
+    - name: Run tests
+      run: |
+        poetry run pytest tests/ --cov=az_os --cov-report=xml
+        
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Run Bandit security scan
+      uses: github/super-linter@v5
+      env:
+        VALIDATE_BANDIT: true
+        VALIDATE_YAML: true
+        VALIDATE_JSON: true
+        VALIDATE_MD: true
+        VALIDATE_PYTHON_ISORT: true
+        VALIDATE_PYTHON_BLACK: true
+        VALIDATE_PYTHON_FLAKE8: true
+        VALIDATE_PYTHON_MYPY: true
+        VALIDATE_PYTHON_PYLINTRC: ""
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    needs: [test, security]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+        
+    - name: Install Poetry
+      run: |
+        pip install "poetry==${{ env.POETRY_VERSION }}"
+        poetry --version
+        
+    - name: Build package
+      run: |
+        poetry build
+        
+    - name: Publish to PyPI
+      if: startsWith(github.ref, 'refs/tags')
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        user: __token__
+        password: ${{ secrets.PYPI_API_TOKEN }}

@@ -1,0 +1,708 @@
+{
+  "timestamp": "2026-02-13T02:56:10.794Z",
+  "auditor": "Lupe - Frontend Auditor",
+  "target": "http://localhost:21340/dashboard",
+  "components": [
+    "BinanceConnectionStatus",
+    "SystemStatus",
+    "PortfolioOverview",
+    "ActivePositions",
+    "LogsFeed",
+    "TradingStrategiesPanel"
+  ],
+  "findings": [
+    {
+      "severity": "HIGH",
+      "category": "Console Errors",
+      "description": "36 console error(s) during page load",
+      "page": "/dashboard",
+      "details": "Failed to load resource: net::ERR_CONNECTION_REFUSED\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Erro ao obter portfolio da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPortfolio (http://localhost:21340/src/services/BinanceRealService.ts:103\n❌ Erro ao carregar dados da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPortfolio (http://localhost:21340/src/services/BinanceRealService.ts:103:\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Erro ao obter posições da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPositions (http://localhost:21340/src/services/BinanceRealService.ts:76:3\n❌ [ACTIVE POSITIONS] Erro ao carregar posições: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPositions (http://localhost:21340/src/services/BinanceRealServ\nFailed to load resource: net::ERR_CONNECTION_REFUSED\nErro ao buscar estratégias: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at fetchStrategies (http://localhost:21340/src/components/strategies/TradingStrategiesPanel.tsx:51:37)\n    \nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Erro ao obter portfolio da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPortfolio (http://localhost:21340/src/services/BinanceRealService.ts:103\n❌ Erro ao carregar dados da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPortfolio (http://localhost:21340/src/services/BinanceRealService.ts:103:\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Erro ao obter posições da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPositions (http://localhost:21340/src/services/BinanceRealService.ts:76:3\n❌ [ACTIVE POSITIONS] Erro ao carregar posições: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPositions (http://localhost:21340/src/services/BinanceRealServ\nFailed to load resource: net::ERR_CONNECTION_REFUSED\nErro ao buscar estratégias: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at fetchStrategies (http://localhost:21340/src/components/strategies/TradingStrategiesPanel.tsx:51:37)\n    \nErro ao testar conexão Binance: AxiosError\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Erro ao obter dados REAIS do portfolio: Network Error\nFailed to load resource: net::ERR_CONNECTION_REFUSED\nErro ao testar conexão Binance: AxiosError\nFailed to load resource: net::ERR_CONNECTION_REFUSED\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Erro ao obter saldos REAIS: Network Error\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Erro na conexão REAL com Binance Testnet: Network Error\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Erro ao obter posições ativas REAIS: Network Error\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Erro na conexão REAL com Binance Testnet: Network Error\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Credenciais REAIS inválidas: Network Error\nFailed to load resource: net::ERR_CONNECTION_REFUSED\n❌ Credenciais REAIS inválidas: Network Error\nFailed to load resource: net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "severity": "LOW",
+      "category": "Console Warnings",
+      "description": "9 console warning(s) during page load",
+      "page": "/dashboard",
+      "details": "Network Error: Unable to connect to the server\nNetwork Error: Unable to connect to the server\nNetwork Error: Unable to connect to the server\nNetwork Error: Unable to connect to the server\nNetwork Error: Unable to connect to the server"
+    },
+    {
+      "severity": "HIGH",
+      "category": "Network Errors",
+      "description": "17 network request(s) failed",
+      "page": "/dashboard",
+      "details": "POST http://127.0.0.1:23231/api/logs/update-frontend - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/portfolio - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/positions - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/trading-strategies - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/portfolio - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/positions - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/trading-strategies - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/test-connection - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/portfolio - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/test-connection - net::ERR_CONNECTION_REFUSED\nPOST http://127.0.0.1:23231/api/logs/update-frontend - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/balances - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/test-connection - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/positions - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/test-connection - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/validate-credentials - net::ERR_CONNECTION_REFUSED\nGET http://127.0.0.1:23231/api/v1/binance/validate-credentials - net::ERR_CONNECTION_REFUSED"
+    },
+    {
+      "severity": "HIGH",
+      "category": "Error States",
+      "description": "PortfolioOverview showing error state",
+      "page": "/dashboard",
+      "details": "Erro na ConexãoErro ao conectar com a APIVerifique as configurações da API\nErro ao Carregar DadosErro Portfolio: Failed to fetchErro Balances: Failed to fetchSolução: Verifique as credenciais da Binance Testnet."
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "UX Completeness",
+      "description": "LogsFeed shows \"Em desenvolvimento\" placeholder - no real logs displayed",
+      "page": "/dashboard",
+      "details": ""
+    },
+    {
+      "severity": "HIGH",
+      "category": "Error States",
+      "description": "2 error banner(s) visible on dashboard",
+      "page": "/dashboard",
+      "details": "Erro na ConexãoErro ao conectar com a APIVerifique as configurações da API\n---\nErro ao Carregar DadosErro Portfolio: Failed to fetchErro Balances: Failed to fetchSolução: Verifique as credenciais da Binance Testnet."
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "UX Quality",
+      "description": "Debug/development text visible in production UI",
+      "page": "/dashboard",
+      "details": "Found: HMR ATIVO"
+    },
+    {
+      "severity": "LOW",
+      "category": "UX - Language",
+      "description": "Mixed Portuguese/English text on dashboard",
+      "page": "/dashboard",
+      "details": "English phrases found: Failed to"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "Responsive",
+      "description": "Sidebar not collapsed/hidden at tablet viewport (768px)",
+      "page": "/dashboard",
+      "details": "Fixed 256px sidebar reduces content area significantly on tablet"
+    },
+    {
+      "severity": "HIGH",
+      "category": "Responsive",
+      "description": "Horizontal overflow at mobile viewport (375px) - scrollWidth: 656",
+      "page": "/dashboard",
+      "details": ""
+    },
+    {
+      "severity": "HIGH",
+      "category": "Responsive",
+      "description": "Sidebar not collapsed on mobile (202.8125px on 375px viewport)",
+      "page": "/dashboard",
+      "details": "Sidebar takes 54% of the mobile screen"
+    },
+    {
+      "severity": "HIGH",
+      "category": "Code Quality",
+      "description": "ActivePositions.tsx references undefined `ApiService` variable (line 119)",
+      "page": "/dashboard",
+      "details": "ApiService.buildUrl() is called but ApiService is not imported in the component. This will cause a runtime error when trying to close a position."
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "Code Quality",
+      "description": "ActivePositions.tsx header contains debug text \"HMR ATIVO\" (line 229)",
+      "page": "/dashboard",
+      "details": "The h3 heading reads \"POSICOES ATIVAS - HMR ATIVO\" - development debug text visible to users"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "Code Quality",
+      "description": "ActivePositions.tsx uses window.alert() and window.confirm() (lines 99, 139, 148)",
+      "page": "/dashboard",
+      "details": "Native browser dialogs used for close-position confirmation and result feedback instead of proper UI modals"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "Code Quality",
+      "description": "Multiple components use `any` TypeScript type",
+      "page": "/dashboard",
+      "details": "BinanceConnectionStatus (line 22: catch err: any), PortfolioOverview (useState<any>, useState<any[]>), DashboardPage (dispatch as any)"
+    },
+    {
+      "severity": "LOW",
+      "category": "Code Quality",
+      "description": "Excessive console.log statements in production code",
+      "page": "/dashboard",
+      "details": "DashboardPage, BinanceConnectionStatus, PortfolioOverview, ActivePositions all have verbose console.log with emoji prefixes"
+    },
+    {
+      "severity": "LOW",
+      "category": "Code Quality",
+      "description": "LogsFeed is a static placeholder with zero functionality",
+      "page": "/dashboard",
+      "details": "LogsFeed.tsx only renders a static \"Em desenvolvimento\" message with no real log data"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "Code Quality",
+      "description": "SystemStatus hardcodes service availability (database, redis always \"connected\")",
+      "page": "/dashboard",
+      "details": "SystemStatus.tsx lines 19-20: database and redis status are hardcoded as \"connected\" without actual health checks"
+    },
+    {
+      "severity": "LOW",
+      "category": "Code Quality",
+      "description": "Sidebar uses duplicate icons for different routes",
+      "page": "/dashboard",
+      "details": "Both \"Posicoes/Historico\" and \"Backtesting\" use the same icon (line 11-12 of Sidebar.tsx)"
+    },
+    {
+      "severity": "MEDIUM",
+      "category": "Code Quality",
+      "description": "DashboardPage has 2-second delay before loading data (setTimeout line 39-41)",
+      "page": "/dashboard",
+      "details": "Artificial 2000ms delay in useEffect before fetching dashboard data, degrading perceived performance"
+    }
+  ],
+  "consoleMessages": [
+    {
+      "text": "[vite] connecting...",
+      "type": "debug"
+    },
+    {
+      "text": "✅ Global Logger ULTRA ROBUSTO ativado - capturando TODOS os logs",
+      "type": "log"
+    },
+    {
+      "text": "[vite] connected.",
+      "type": "debug"
+    },
+    {
+      "text": "%cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold",
+      "type": "info"
+    },
+    {
+      "text": "🔧 Configuração de desenvolvimento carregada",
+      "type": "info"
+    },
+    {
+      "text": "🔧 Config API_URL: http://127.0.0.1:23231/api/v1",
+      "type": "info"
+    },
+    {
+      "text": "🌐 API URL: http://127.0.0.1:23231/api/v1",
+      "type": "info"
+    },
+    {
+      "text": "🔌 WebSocket URL: ws://127.0.0.1:23231",
+      "type": "info"
+    },
+    {
+      "text": "🏠 Hostname detectado: localhost",
+      "type": "info"
+    },
+    {
+      "text": "🔍 Lógica de ambiente: LOCAL FORÇADO",
+      "type": "info"
+    },
+    {
+      "text": "🔧 Config API_URL: http://127.0.0.1:23231/api/v1",
+      "type": "info"
+    },
+    {
+      "text": "🚀 URL FINAL FORÇADA: http://127.0.0.1:23231/api/v1",
+      "type": "info"
+    },
+    {
+      "text": "🔧 Config API_URL: http://127.0.0.1:23231/api/v1",
+      "type": "info"
+    },
+    {
+      "text": "🔧 Config API_URL: http://127.0.0.1:23231/api/v1",
+      "type": "info"
+    },
+    {
+      "text": "🔧 Console Logger Utils: Funções personalizadas garantidas",
+      "type": "info"
+    },
+    {
+      "text": "🔧 Console Logger Utils: Funções personalizadas garantidas",
+      "type": "info"
+    },
+    {
+      "text": "📊 Obtendo dados REAIS do portfolio Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "📊 Obtendo dados REAIS do portfolio Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET http://127.0.0.1:23231/api/v1/binance/portfolio",
+      "type": "info"
+    },
+    {
+      "text": "🔄 [ACTIVE POSITIONS] Carregando posições ativas REAIS da Binance...",
+      "type": "info"
+    },
+    {
+      "text": "📈 Obtendo posições ativas REAIS da Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET http://127.0.0.1:23231/api/v1/binance/positions",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET http://127.0.0.1:23231/api/v1/trading-strategies",
+      "type": "info"
+    },
+    {
+      "text": "📊 Obtendo dados REAIS do portfolio Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "📊 Obtendo dados REAIS do portfolio Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET http://127.0.0.1:23231/api/v1/binance/portfolio",
+      "type": "info"
+    },
+    {
+      "text": "🔄 [ACTIVE POSITIONS] Carregando posições ativas REAIS da Binance...",
+      "type": "info"
+    },
+    {
+      "text": "📈 Obtendo posições ativas REAIS da Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET http://127.0.0.1:23231/api/v1/binance/positions",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET http://127.0.0.1:23231/api/v1/trading-strategies",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET /binance/test-connection (timeout: 30000ms)",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET /binance/test-connection (timeout: 30000ms)",
+      "type": "info"
+    },
+    {
+      "text": "🚀 Inicializando Sistema AURA Binance...",
+      "type": "info"
+    },
+    {
+      "text": "🔗 Testando conexão REAL com Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET /binance/test-connection (timeout: 30000ms)",
+      "type": "info"
+    },
+    {
+      "text": "🚀 Inicializando Sistema AURA Binance...",
+      "type": "info"
+    },
+    {
+      "text": "🔗 Testando conexão REAL com Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET /binance/test-connection (timeout: 30000ms)",
+      "type": "info"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "❌ Erro ao obter portfolio da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPortfolio (http://localhost:21340/src/services/BinanceRealService.ts:103:39)\n    at loadRealData (http://localhost:21340/src/components/dashboard/PortfolioOverview.tsx:34:50)\n    at http://localhost:21340/src/components/dashboard/PortfolioOverview.tsx:27:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at commitPassiveMountOnFiber (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18156:19)\n    at commitPassiveMountEffects_complete (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18129:17)\n    at commitPassiveMountEffects_begin (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18119:15)\n    at commitPassiveMountEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18109:11)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19490:11)",
+      "type": "error"
+    },
+    {
+      "text": "❌ Erro ao carregar dados da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPortfolio (http://localhost:21340/src/services/BinanceRealService.ts:103:39)\n    at loadRealData (http://localhost:21340/src/components/dashboard/PortfolioOverview.tsx:34:50)\n    at http://localhost:21340/src/components/dashboard/PortfolioOverview.tsx:27:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at commitPassiveMountOnFiber (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18156:19)\n    at commitPassiveMountEffects_complete (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18129:17)\n    at commitPassiveMountEffects_begin (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18119:15)\n    at commitPassiveMountEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18109:11)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19490:11)",
+      "type": "error"
+    },
+    {
+      "text": "📊 Carregando dados do dashboard...",
+      "type": "info"
+    },
+    {
+      "text": "📊 Obtendo dados REAIS do portfolio Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET /binance/portfolio (timeout: 30000ms)",
+      "type": "info"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "❌ Erro ao obter posições da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPositions (http://localhost:21340/src/services/BinanceRealService.ts:76:39)\n    at loadActivePositions (http://localhost:21340/src/components/dashboard/ActivePositions.tsx:30:50)\n    at http://localhost:21340/src/components/dashboard/ActivePositions.tsx:159:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at commitPassiveMountOnFiber (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18156:19)\n    at commitPassiveMountEffects_complete (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18129:17)\n    at commitPassiveMountEffects_begin (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18119:15)\n    at commitPassiveMountEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18109:11)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19490:11)",
+      "type": "error"
+    },
+    {
+      "text": "❌ [ACTIVE POSITIONS] Erro ao carregar posições: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPositions (http://localhost:21340/src/services/BinanceRealService.ts:76:39)\n    at loadActivePositions (http://localhost:21340/src/components/dashboard/ActivePositions.tsx:30:50)\n    at http://localhost:21340/src/components/dashboard/ActivePositions.tsx:159:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at commitPassiveMountOnFiber (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18156:19)\n    at commitPassiveMountEffects_complete (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18129:17)\n    at commitPassiveMountEffects_begin (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18119:15)\n    at commitPassiveMountEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18109:11)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19490:11)",
+      "type": "error"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Erro ao buscar estratégias: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at fetchStrategies (http://localhost:21340/src/components/strategies/TradingStrategiesPanel.tsx:51:37)\n    at http://localhost:21340/src/components/strategies/TradingStrategiesPanel.tsx:46:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at commitPassiveMountOnFiber (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18156:19)\n    at commitPassiveMountEffects_complete (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18129:17)\n    at commitPassiveMountEffects_begin (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18119:15)\n    at commitPassiveMountEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18109:11)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19490:11)\n    at flushPassiveEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19447:22)",
+      "type": "error"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "❌ Erro ao obter portfolio da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPortfolio (http://localhost:21340/src/services/BinanceRealService.ts:103:39)\n    at loadRealData (http://localhost:21340/src/components/dashboard/PortfolioOverview.tsx:34:50)\n    at http://localhost:21340/src/components/dashboard/PortfolioOverview.tsx:27:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at invokePassiveEffectMountInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18324:19)\n    at invokeEffectsInDev (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19701:19)\n    at commitDoubleInvokeEffectsInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19686:15)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19503:13)\n    at flushPassiveEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19447:22)",
+      "type": "error"
+    },
+    {
+      "text": "❌ Erro ao carregar dados da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPortfolio (http://localhost:21340/src/services/BinanceRealService.ts:103:39)\n    at loadRealData (http://localhost:21340/src/components/dashboard/PortfolioOverview.tsx:34:50)\n    at http://localhost:21340/src/components/dashboard/PortfolioOverview.tsx:27:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at invokePassiveEffectMountInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18324:19)\n    at invokeEffectsInDev (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19701:19)\n    at commitDoubleInvokeEffectsInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19686:15)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19503:13)\n    at flushPassiveEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19447:22)",
+      "type": "error"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "❌ Erro ao obter posições da Binance: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPositions (http://localhost:21340/src/services/BinanceRealService.ts:76:39)\n    at loadActivePositions (http://localhost:21340/src/components/dashboard/ActivePositions.tsx:30:50)\n    at http://localhost:21340/src/components/dashboard/ActivePositions.tsx:159:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at invokePassiveEffectMountInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18324:19)\n    at invokeEffectsInDev (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19701:19)\n    at commitDoubleInvokeEffectsInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19686:15)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19503:13)\n    at flushPassiveEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19447:22)",
+      "type": "error"
+    },
+    {
+      "text": "❌ [ACTIVE POSITIONS] Erro ao carregar posições: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at BinanceRealService.getPositions (http://localhost:21340/src/services/BinanceRealService.ts:76:39)\n    at loadActivePositions (http://localhost:21340/src/components/dashboard/ActivePositions.tsx:30:50)\n    at http://localhost:21340/src/components/dashboard/ActivePositions.tsx:159:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at invokePassiveEffectMountInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18324:19)\n    at invokeEffectsInDev (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19701:19)\n    at commitDoubleInvokeEffectsInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19686:15)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19503:13)\n    at flushPassiveEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19447:22)",
+      "type": "error"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Erro ao buscar estratégias: TypeError: Failed to fetch\n    at ApiService.get (http://localhost:21340/src/services/api/apiService.ts:27:28)\n    at fetchStrategies (http://localhost:21340/src/components/strategies/TradingStrategiesPanel.tsx:51:37)\n    at http://localhost:21340/src/components/strategies/TradingStrategiesPanel.tsx:46:5\n    at commitHookEffectListMount (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:16915:34)\n    at invokePassiveEffectMountInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:18324:19)\n    at invokeEffectsInDev (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19701:19)\n    at commitDoubleInvokeEffectsInDEV (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19686:15)\n    at flushPassiveEffectsImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19503:13)\n    at flushPassiveEffects (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19447:22)\n    at commitRootImpl (http://localhost:21340/node_modules/.vite/deps/chunk-NUMECXU6.js?v=897daf88:19416:13)",
+      "type": "error"
+    },
+    {
+      "text": "Network Error: Unable to connect to the server",
+      "type": "warning"
+    },
+    {
+      "text": "Erro ao testar conexão Binance: AxiosError",
+      "type": "error"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Network Error: Unable to connect to the server",
+      "type": "warning"
+    },
+    {
+      "text": "❌ Erro ao obter dados REAIS do portfolio: Network Error",
+      "type": "error"
+    },
+    {
+      "text": "✅ Dados do portfolio carregados",
+      "type": "info"
+    },
+    {
+      "text": "💰 Obtendo saldos REAIS da Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET /binance/balances (timeout: 30000ms)",
+      "type": "info"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Network Error: Unable to connect to the server",
+      "type": "warning"
+    },
+    {
+      "text": "Erro ao testar conexão Binance: AxiosError",
+      "type": "error"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Network Error: Unable to connect to the server",
+      "type": "warning"
+    },
+    {
+      "text": "❌ Erro ao obter saldos REAIS: Network Error",
+      "type": "error"
+    },
+    {
+      "text": "✅ Saldos carregados",
+      "type": "info"
+    },
+    {
+      "text": "📈 Obtendo posições ativas REAIS da Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET /binance/positions (timeout: 30000ms)",
+      "type": "info"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Network Error: Unable to connect to the server",
+      "type": "warning"
+    },
+    {
+      "text": "❌ Erro na conexão REAL com Binance Testnet: Network Error",
+      "type": "error"
+    },
+    {
+      "text": "✅ Conexão com API estabelecida",
+      "type": "info"
+    },
+    {
+      "text": "🔐 Validando credenciais REAIS da Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET /binance/validate-credentials (timeout: 30000ms)",
+      "type": "info"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Network Error: Unable to connect to the server",
+      "type": "warning"
+    },
+    {
+      "text": "❌ Erro ao obter posições ativas REAIS: Network Error",
+      "type": "error"
+    },
+    {
+      "text": "✅ Posições ativas carregadas",
+      "type": "info"
+    },
+    {
+      "text": "🎉 Dashboard carregado com dados reais da Binance Testnet!",
+      "type": "info"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Network Error: Unable to connect to the server",
+      "type": "warning"
+    },
+    {
+      "text": "❌ Erro na conexão REAL com Binance Testnet: Network Error",
+      "type": "error"
+    },
+    {
+      "text": "✅ Conexão com API estabelecida",
+      "type": "info"
+    },
+    {
+      "text": "🔐 Validando credenciais REAIS da Binance Testnet...",
+      "type": "info"
+    },
+    {
+      "text": "🚀 API Request: GET /binance/validate-credentials (timeout: 30000ms)",
+      "type": "info"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Network Error: Unable to connect to the server",
+      "type": "warning"
+    },
+    {
+      "text": "❌ Credenciais REAIS inválidas: Network Error",
+      "type": "error"
+    },
+    {
+      "text": "✅ Credenciais da Binance validadas",
+      "type": "info"
+    },
+    {
+      "text": "🎉 Sistema AURA Binance inicializado com sucesso!",
+      "type": "info"
+    },
+    {
+      "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "type": "error"
+    },
+    {
+      "text": "Network Error: Unable to connect to the server",
+      "type": "warning"
+    }
+  ],
+  "networkErrors": [
+    {
+      "url": "http://127.0.0.1:23231/api/logs/update-frontend",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "POST"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/portfolio",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/positions",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/trading-strategies",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/portfolio",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/positions",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/trading-strategies",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/test-connection",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/portfolio",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/test-connection",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/logs/update-frontend",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "POST"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/balances",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/test-connection",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/positions",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/test-connection",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/validate-credentials",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:23231/api/v1/binance/validate-credentials",
+      "failure": "net::ERR_CONNECTION_REFUSED",
+      "method": "GET"
+    }
+  ],
+  "responseErrors": [],
+  "componentStatus": {
+    "binanceConnection": {
+      "found": true,
+      "hasStatusIndicator": true
+    },
+    "systemStatus": {
+      "found": true,
+      "apiStatus": true,
+      "dbStatus": true,
+      "redisStatus": true,
+      "wsStatus": true
+    },
+    "portfolio": {
+      "found": true,
+      "hasValue": false,
+      "isLoading": false,
+      "hasError": true
+    },
+    "activePositions": {
+      "found": true,
+      "isEmpty": true,
+      "count": 5
+    },
+    "logsFeed": {
+      "found": true,
+      "isDev": true
+    },
+    "tradingStrategies": {
+      "found": true
+    },
+    "errorBanners": {
+      "count": 2,
+      "texts": [
+        "Erro na ConexãoErro ao conectar com a APIVerifique as configurações da API",
+        "Erro ao Carregar DadosErro Portfolio: Failed to fetchErro Balances: Failed to fetchSolução: Verifique as credenciais da Binance Testnet."
+      ]
+    },
+    "warningBanners": {
+      "count": 1
+    },
+    "visibleSpinners": 0,
+    "devPlaceholders": [
+      "Em desenvolvimento - Logs reais da Binance Testnet"
+    ],
+    "debugText": [
+      "HMR ATIVO"
+    ],
+    "dataIssues": []
+  },
+  "summary": {
+    "total": 20,
+    "critical": 0,
+    "high": 7,
+    "medium": 8,
+    "low": 5
+  },
+  "screenshots": [
+    "dashboard-01-fullpage.png",
+    "dashboard-02-viewport.png",
+    "dashboard-03-tablet.png",
+    "dashboard-04-mobile.png",
+    "dashboard-05-final.png"
+  ]
+}

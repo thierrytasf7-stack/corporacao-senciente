@@ -1,0 +1,1241 @@
+﻿{
+    "generated_at":  "2026-02-11T10:25:22.1537989-03:00",
+    "containers":  [
+                       {
+                           "id":  "e4eace9d05f199eaaae4f553f1e881fde9a31cfd9ec5cf6e8e377ef00e0cf7bf",
+                           "name":  "senciente-hive-guardian",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\docker\\hive-guardian\\genesis-story-generator-v3.py",
+                                               "destination":  "/app/genesis-generator.py",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\docs\\stories",
+                                               "destination":  "/app/docs/stories",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\.git",
+                                               "destination":  "/app/.git",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\modules\\binance-bot",
+                                               "destination":  "/app/modules/binance-bot",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "source":  "/run/desktop/mnt/host/c/Users/User/Desktop/Diana-Corporacao-Senciente/.aios",
+                                               "destination":  "/app/.aios",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\logs",
+                                               "destination":  "/app/logs",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\scripts",
+                                               "destination":  "/app/scripts",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "name":  "hive-guardian_hive-agents",
+                                               "source":  "/var/lib/docker/volumes/hive-guardian_hive-agents/_data",
+                                               "destination":  "/app/agents",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "source":  "/run/desktop/mnt/host/c/Users/User/Desktop/Diana-Corporacao-Senciente/docker/hive-guardian/story-processor.py",
+                                               "destination":  "/app/story-processor.py",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\docker\\hive-guardian\\aider-worker-executor.py",
+                                               "destination":  "/app/aider-executor.py",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "hive-guardian-hive-guardian",
+                           "started_at":  "2026-02-11T00:11:02.99307212Z",
+                           "networks":  [
+                                            {
+                                                "name":  "senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "dc5b8096c70f4926d2382369ea9b75dbd72d3d1d893d34e0163820846d123c48",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-11T00:04:07.343437915Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "2300/tcp",
+                                                     "host_port":  "2300",
+                                                     "host_ip":  ""
+                                                 },
+                                                 {
+                                                     "container_port":  "2400/tcp",
+                                                     "host_port":  "2400",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  null,
+                                          "cmd":  [
+                                                      "/app/hive-guardian"
+                                                  ],
+                                          "hostname":  "e4eace9d05f1",
+                                          "exposed_ports":  [
+                                                                "2300/tcp",
+                                                                "2400/tcp"
+                                                            ],
+                                          "working_dir":  "/app",
+                                          "env":  [
+                                                      "RUST_LOG=info",
+                                                      "MIN_QUALITY_SCORE=60",
+                                                      "PYTHONUNBUFFERED=1",
+                                                      "POLLING_INTERVAL=10",
+                                                      "PROJECT_ROOT=/app",
+                                                      "AIOS_PATH=/app/.aios",
+                                                      "PYTHONIOENCODING=utf-8",
+                                                      "NO_GENESIS=false",
+                                                      "OPENROUTER_API_KEY=***MASKED***",
+                                                      "GENERATION_INTERVAL=60",
+                                                      "MAX_WORKERS=5",
+                                                      "MAX_POOL_SIZE=8",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  2147483648,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "c351266336b8a8d513700e90eb95b26a29d104f53b20900ae53a5c8955e5d871",
+                           "name":  "senciente-hive-dashboard",
+                           "volumes":  [
+                                           {
+                                               "rw":  false,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\logs",
+                                               "destination":  "/usr/share/nginx/html/logs",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "ro"
+                                           },
+                                           {
+                                               "rw":  false,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\docs\\stories",
+                                               "destination":  "/usr/share/nginx/html/stories",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "ro"
+                                           },
+                                           {
+                                               "rw":  false,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\docker\\hive-guardian\\nginx.conf",
+                                               "destination":  "/etc/nginx/nginx.conf",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "ro"
+                                           }
+                                       ],
+                           "image":  "nginx:alpine",
+                           "started_at":  "2026-02-10T18:36:34.092138237Z",
+                           "networks":  [
+                                            {
+                                                "name":  "senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "dc5b8096c70f4926d2382369ea9b75dbd72d3d1d893d34e0163820846d123c48",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T18:36:22.040636632Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "80/tcp",
+                                                     "host_port":  "2301",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "/docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "nginx",
+                                                      "-g",
+                                                      "daemon off;"
+                                                  ],
+                                          "hostname":  "c351266336b8",
+                                          "exposed_ports":  [
+                                                                "80/tcp"
+                                                            ],
+                                          "working_dir":  "/",
+                                          "env":  [
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "NGINX_VERSION=1.29.5",
+                                                      "PKG_RELEASE=1",
+                                                      "DYNPKG_RELEASE=1",
+                                                      "NJS_VERSION=0.9.5",
+                                                      "NJS_RELEASE=1",
+                                                      "ACME_VERSION=0.3.1"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "a16017f3e75d2fc17d8114bc41a239c2eb8916d1046c513ef7b9f1f08286ac1f",
+                           "name":  "senciente-hive-metrics",
+                           "volumes":  [
+                                           {
+                                               "rw":  false,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\logs",
+                                               "destination":  "/logs",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "ro"
+                                           }
+                                       ],
+                           "image":  "prom/node-exporter:latest",
+                           "started_at":  "2026-02-10T18:36:25.051470121Z",
+                           "networks":  [
+                                            {
+                                                "name":  "senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "dc5b8096c70f4926d2382369ea9b75dbd72d3d1d893d34e0163820846d123c48",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T18:36:19.958706074Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "9100/tcp",
+                                                     "host_port":  "2302",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "/bin/node_exporter"
+                                                         ],
+                                          "cmd":  null,
+                                          "hostname":  "a16017f3e75d",
+                                          "exposed_ports":  [
+                                                                "9100/tcp"
+                                                            ],
+                                          "working_dir":  "",
+                                          "env":  [
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "d3c78e4a20abf71477b22e19709da057a61fc2e766ffeaceb1b27758d4634942",
+                           "name":  "senciente-agent-zero",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "name":  "docker_agent_zero_data",
+                                               "source":  "/var/lib/docker/volumes/docker_agent_zero_data/_data",
+                                               "destination":  "/a0/usr",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "agent0ai/agent-zero:latest",
+                           "started_at":  "2026-02-10T01:29:10.246066826Z",
+                           "networks":  [
+                                            {
+                                                "name":  "docker_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "062c9c97b380e4585f91b77827b3f5564e285749e83162b825b1f82532eb9da3",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T01:28:56.992121403Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "22/tcp",
+                                                     "host_port":  "50022",
+                                                     "host_ip":  ""
+                                                 },
+                                                 {
+                                                     "container_port":  "80/tcp",
+                                                     "host_port":  "50080",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  null,
+                                          "cmd":  [
+                                                      "/exe/initialize.sh",
+                                                      "$BRANCH"
+                                                  ],
+                                          "hostname":  "d3c78e4a20ab",
+                                          "exposed_ports":  [
+                                                                "22/tcp",
+                                                                "80/tcp",
+                                                                "9000/tcp",
+                                                                "9001/tcp",
+                                                                "9002/tcp",
+                                                                "9003/tcp",
+                                                                "9004/tcp",
+                                                                "9005/tcp",
+                                                                "9006/tcp",
+                                                                "9007/tcp",
+                                                                "9008/tcp",
+                                                                "9009/tcp"
+                                                            ],
+                                          "working_dir":  "/",
+                                          "env":  [
+                                                      "OLLAMA_HOST=http://senciente-ollama:11434",
+                                                      "TZ=America/Sao_Paulo",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "LANG=en_US.UTF-8",
+                                                      "LANGUAGE=en_US:en",
+                                                      "LC_ALL=en_US.UTF-8",
+                                                      "BRANCH=main"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "45cb4f5e7786504ba349935945ca18d8f01d16608152b4b35cb819127f4dde7d",
+                           "name":  "senciente-frontend",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\apps\\frontend\\src",
+                                               "destination":  "/app/src",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "docker-frontend",
+                           "started_at":  "2026-02-10T01:29:10.855501043Z",
+                           "networks":  [
+                                            {
+                                                "name":  "docker_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "062c9c97b380e4585f91b77827b3f5564e285749e83162b825b1f82532eb9da3",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T01:28:56.937641833Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "3000/tcp",
+                                                     "host_port":  "3000",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "npm",
+                                                      "run",
+                                                      "dev",
+                                                      "--",
+                                                      "--host",
+                                                      "0.0.0.0",
+                                                      "--port",
+                                                      "3000"
+                                                  ],
+                                          "hostname":  "45cb4f5e7786",
+                                          "exposed_ports":  [
+                                                                "3000/tcp"
+                                                            ],
+                                          "working_dir":  "/app",
+                                          "env":  [
+                                                      "VITE_SIGNAL_AGGREGATOR_URL=http://localhost:3003/api",
+                                                      "VITE_SUPABASE_ANON_KEY=***MASKED***",
+                                                      "VITE_MARKET_WATCHER_URL=http://localhost:3002/api",
+                                                      "NODE_ENV=development",
+                                                      "VITE_API_URL=http://localhost:8001/api",
+                                                      "VITE_SUPABASE_URL=https://ffdszaiarxstxbafvedi.supabase.co/",
+                                                      "VITE_WS_URL=ws://localhost:8001",
+                                                      "VITE_MAESTRO_URL=http://localhost:8001",
+                                                      "VITE_TRADING_API_URL=http://localhost:3001/api",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "NODE_VERSION=20.20.0",
+                                                      "YARN_VERSION=1.22.22"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "beff11087cb9b2934900e8a6646e58e2ad4145f0df5268414c16c505922bed03",
+                           "name":  "senciente-backend",
+                           "volumes":  [
+
+                                       ],
+                           "image":  "docker-backend",
+                           "started_at":  "2026-02-10T01:02:03.831722758Z",
+                           "networks":  [
+                                            {
+                                                "name":  "docker_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "062c9c97b380e4585f91b77827b3f5564e285749e83162b825b1f82532eb9da3",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T01:00:52.32546206Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "8000/tcp",
+                                                     "host_port":  "8001",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "node",
+                                                      "server.js"
+                                                  ],
+                                          "hostname":  "beff11087cb9",
+                                          "exposed_ports":  [
+                                                                "8000/tcp"
+                                                            ],
+                                          "working_dir":  "/app",
+                                          "env":  [
+                                                      "OLLAMA_MODEL=gemma2:2b",
+                                                      "CORPORATE_WILL_ENABLED=true",
+                                                      "SUPABASE_URL=https://ffdszaiarxstxbafvedi.supabase.co/",
+                                                      "BINANCE_SECRET_KEY=***MASKED***",
+                                                      "SUPABASE_ANON_KEY=***MASKED***",
+                                                      "GROK_API_KEY=***MASKED***",
+                                                      "NODE_ENV=production",
+                                                      "QDRANT_PORT=6333",
+                                                      "SENSORY_FEEDBACK_ENABLED=true",
+                                                      "DATABASE_URL=postgresql://senciente_user:73326688Th!@postgres:5432/corporacao_db",
+                                                      "JWT_SECRET=***MASKED***",
+                                                      "TRADING_ENABLED=true",
+                                                      "QDRANT_HOST=qdrant",
+                                                      "BINANCE_USE_TESTNET=true",
+                                                      "SUPABASE_SERVICE_ROLE_KEY=***MASKED***",
+                                                      "GEMINI_API_KEY=***MASKED***",
+                                                      "PORT=8000",
+                                                      "OLLAMA_BASE_URL=http://ollama:11434",
+                                                      "REDIS_URL=redis://redis:6379",
+                                                      "BINANCE_API_KEY=***MASKED***",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "NODE_VERSION=20.20.0",
+                                                      "YARN_VERSION=1.22.22"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "32d21980dc3decba5d6797644da854312d3edec3f0023fb2777cf9bcc0bba7ca",
+                           "name":  "senciente-qdrant",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "name":  "docker_qdrant_data",
+                                               "source":  "/var/lib/docker/volumes/docker_qdrant_data/_data",
+                                               "destination":  "/qdrant/storage",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "qdrant/qdrant:latest",
+                           "started_at":  "2026-02-10T01:01:25.225931317Z",
+                           "networks":  [
+                                            {
+                                                "name":  "docker_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "062c9c97b380e4585f91b77827b3f5564e285749e83162b825b1f82532eb9da3",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T00:30:11.368633177Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "6333/tcp",
+                                                     "host_port":  "6333",
+                                                     "host_ip":  ""
+                                                 },
+                                                 {
+                                                     "container_port":  "6334/tcp",
+                                                     "host_port":  "6334",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  null,
+                                          "cmd":  [
+                                                      "./entrypoint.sh"
+                                                  ],
+                                          "hostname":  "32d21980dc3d",
+                                          "exposed_ports":  [
+                                                                "6333/tcp",
+                                                                "6334/tcp"
+                                                            ],
+                                          "working_dir":  "/qdrant",
+                                          "env":  [
+                                                      "QDRANT__SERVICE__GRPC_PORT=6334",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "DIR=",
+                                                      "TZ=Etc/UTC",
+                                                      "RUN_MODE=production"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "8890673acbaad066ef7008878b1afcf0ea9075e5f50f7ab7d8db112d50efed09",
+                           "name":  "senciente-redis",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "name":  "diana-corporacao-senciente_redis_data",
+                                               "source":  "/var/lib/docker/volumes/diana-corporacao-senciente_redis_data/_data",
+                                               "destination":  "/data",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "redis:7-alpine",
+                           "started_at":  "2026-02-10T01:01:24.743290571Z",
+                           "networks":  [
+                                            {
+                                                "name":  "docker_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "062c9c97b380e4585f91b77827b3f5564e285749e83162b825b1f82532eb9da3",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T00:30:10.936855633Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "6379/tcp",
+                                                     "host_port":  "16379",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "redis-server"
+                                                  ],
+                                          "hostname":  "8890673acbaa",
+                                          "exposed_ports":  [
+                                                                "6379/tcp"
+                                                            ],
+                                          "working_dir":  "/data",
+                                          "env":  [
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "GOSU_VERSION=1.17",
+                                                      "REDIS_VERSION=7.4.7",
+                                                      "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-7.4.7.tar.gz",
+                                                      "REDIS_DOWNLOAD_SHA=c97e57b0df330a9e091cacff012bebe763c275398cf36ff44cdba876814b595b"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "c5647dab20a818bf5e3a3e399cd2f6ff7cd56055282071899c1f61df8a78d119",
+                           "name":  "senciente-postgres",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "name":  "diana-corporacao-senciente_postgres_data",
+                                               "source":  "/var/lib/docker/volumes/diana-corporacao-senciente_postgres_data/_data",
+                                               "destination":  "/var/lib/postgresql/data",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "postgres:15-alpine",
+                           "started_at":  "2026-02-10T01:01:25.085515874Z",
+                           "networks":  [
+                                            {
+                                                "name":  "docker_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "062c9c97b380e4585f91b77827b3f5564e285749e83162b825b1f82532eb9da3",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T00:30:10.886927299Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "5432/tcp",
+                                                     "host_port":  "15432",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "postgres"
+                                                  ],
+                                          "hostname":  "c5647dab20a8",
+                                          "exposed_ports":  [
+                                                                "5432/tcp"
+                                                            ],
+                                          "working_dir":  "/",
+                                          "env":  [
+                                                      "POSTGRES_USER=senciente_user",
+                                                      "POSTGRES_PASSWORD=***MASKED***",
+                                                      "POSTGRES_DB=corporacao_db",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "GOSU_VERSION=1.19",
+                                                      "LANG=en_US.utf8",
+                                                      "PG_MAJOR=15",
+                                                      "PG_VERSION=15.15",
+                                                      "PG_SHA256=5753aaeb8b09cbf61016f78aa69bf5cbdf01b43263f010cbf168c82896213aaa",
+                                                      "DOCKER_PG_LLVM_DEPS=llvm19-dev \t\tclang19",
+                                                      "PGDATA=/var/lib/postgresql/data"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "514bd8883ec26a3225f048d29194b70f599136e18599617b24d1bc8f501a5016",
+                           "name":  "senciente-prometheus",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\deployments\\docker\\prometheus.yml",
+                                               "destination":  "/etc/prometheus/prometheus.yml",
+                                               "type":  "bind",
+                                               "propagation":  "rprivate",
+                                               "mode":  "rw"
+                                           },
+                                           {
+                                               "rw":  true,
+                                               "name":  "docker_prometheus_data",
+                                               "source":  "/var/lib/docker/volumes/docker_prometheus_data/_data",
+                                               "destination":  "/prometheus",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "prom/prometheus:latest",
+                           "started_at":  "0001-01-01T00:00:00Z",
+                           "networks":  [
+                                            {
+                                                "name":  "docker_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T00:30:10.680999467Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "9090/tcp",
+                                                     "host_port":  "9090",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "created",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "/bin/prometheus"
+                                                         ],
+                                          "cmd":  [
+                                                      "--config.file=/etc/prometheus/prometheus.yml",
+                                                      "--storage.tsdb.path=/prometheus"
+                                                  ],
+                                          "hostname":  "514bd8883ec2",
+                                          "exposed_ports":  [
+                                                                "9090/tcp"
+                                                            ],
+                                          "working_dir":  "/prometheus",
+                                          "env":  [
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "4cbf47e4ed90614c8f169c513fa02bd5c85013a797d3e5f826ccd43d058414da",
+                           "name":  "senciente-ollama",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "name":  "docker_ollama_data",
+                                               "source":  "/var/lib/docker/volumes/docker_ollama_data/_data",
+                                               "destination":  "/root/.ollama",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "ollama/ollama:latest",
+                           "started_at":  "0001-01-01T00:00:00Z",
+                           "networks":  [
+                                            {
+                                                "name":  "docker_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-02-10T00:30:10.60097415Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "11434/tcp",
+                                                     "host_port":  "11434",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "created",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "sh",
+                                                             "-c",
+                                                             "\n  ollama serve \u0026\n  sleep 10 \u0026\u0026\n  ollama pull gemma2:2b \u0026\u0026\n  ollama pull qwen2.5:3b \u0026\u0026\n  wait\n"
+                                                         ],
+                                          "cmd":  null,
+                                          "hostname":  "4cbf47e4ed90",
+                                          "exposed_ports":  [
+                                                                "11434/tcp"
+                                                            ],
+                                          "working_dir":  "",
+                                          "env":  [
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "LD_LIBRARY_PATH=/usr/local/nvidia/lib:/usr/local/nvidia/lib64",
+                                                      "NVIDIA_DRIVER_CAPABILITIES=compute,utility",
+                                                      "NVIDIA_VISIBLE_DEVICES=all",
+                                                      "OLLAMA_HOST=0.0.0.0:11434"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "38f7775a1b628778a845a30a517e59cbfd5e4ff36d5e90d32ff5fccdc300542e",
+                           "name":  "senciente-signal-aggregator",
+                           "volumes":  [
+
+                                       ],
+                           "image":  "diana-corporacao-senciente-signal-aggregator",
+                           "started_at":  "2026-02-09T17:18:54.926941138Z",
+                           "networks":  [
+                                            {
+                                                "name":  "diana-corporacao-senciente_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "703bd5f1a86a1c4a6c11e625bc2c3e7449e104d73967cf4cc9fa3c562a382b93",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-01-22T14:59:07.152021555Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "3003/tcp",
+                                                     "host_port":  "3003",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "node",
+                                                      "dist/real-server.js"
+                                                  ],
+                                          "hostname":  "38f7775a1b62",
+                                          "exposed_ports":  [
+                                                                "3001/tcp",
+                                                                "3003/tcp"
+                                                            ],
+                                          "working_dir":  "/app",
+                                          "env":  [
+                                                      "MARKET_WATCHER_URL=http://market-watcher:3002",
+                                                      "SERVICE_MODE=aggregator",
+                                                      "PORT=3003",
+                                                      "OLLAMA_BASE_URL=http://ollama:11434",
+                                                      "MIN_SIGNALS_FOR_TRADE=2",
+                                                      "SIGNAL_TIMEOUT_MS=30000",
+                                                      "TRADING_BOT_URL=http://trading-bot:3001",
+                                                      "REDIS_URL=redis://redis:6379",
+                                                      "NODE_ENV=production",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "NODE_VERSION=18.20.8",
+                                                      "YARN_VERSION=1.22.22"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "a1604e7df5fb6c8cafc0d603e4312fbcc8cbf5e7bb690c4f0aaeb8b286b070ca",
+                           "name":  "senciente-trading-bot",
+                           "volumes":  [
+
+                                       ],
+                           "image":  "diana-corporacao-senciente-trading-bot",
+                           "started_at":  "2026-02-09T17:18:55.684789923Z",
+                           "networks":  [
+                                            {
+                                                "name":  "diana-corporacao-senciente_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "703bd5f1a86a1c4a6c11e625bc2c3e7449e104d73967cf4cc9fa3c562a382b93",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-01-22T14:59:06.03466434Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "3001/tcp",
+                                                     "host_port":  "3001",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "node",
+                                                      "dist/real-server.js"
+                                                  ],
+                                          "hostname":  "a1604e7df5fb",
+                                          "exposed_ports":  [
+                                                                "3001/tcp"
+                                                            ],
+                                          "working_dir":  "/app",
+                                          "env":  [
+                                                      "REDIS_URL=redis://redis:6379",
+                                                      "BINANCE_USE_TESTNET=true",
+                                                      "RISK_STOP_LOSS_PERCENT=2",
+                                                      "DATABASE_URL=postgresql://senciente_user:73326688Th!@postgres:5432/corporacao_db",
+                                                      "BINANCE_API_KEY=***MASKED***",
+                                                      "RISK_TAKE_PROFIT_PERCENT=6",
+                                                      "LLB_PROTOCOL_URL=http://backend:8000/api/llb-protocol",
+                                                      "OLLAMA_BASE_URL=http://ollama:11434",
+                                                      "BINANCE_SECRET_KEY=***MASKED***",
+                                                      "RISK_MAX_DAILY_LOSS_PERCENT=10",
+                                                      "RISK_MAX_LEVERAGE=20",
+                                                      "PORT=3001",
+                                                      "CORPORATE_WILL_URL=http://backend:8000/api/corporate-will",
+                                                      "SENSORY_FEEDBACK_URL=http://backend:8000/api/sensory-feedback",
+                                                      "OLLAMA_MODEL=qwen2.5:3b",
+                                                      "NODE_ENV=production",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "NODE_VERSION=18.20.8",
+                                                      "YARN_VERSION=1.22.22"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "94b1aee146bb1ce27169e90152927e08f5ab76abd98f73ffc766ce573811c859",
+                           "name":  "senciente-grafana",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "name":  "diana-corporacao-senciente_grafana_data",
+                                               "source":  "/var/lib/docker/volumes/diana-corporacao-senciente_grafana_data/_data",
+                                               "destination":  "/var/lib/grafana",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "grafana/grafana:latest",
+                           "started_at":  "2026-02-09T17:18:56.013147456Z",
+                           "networks":  [
+                                            {
+                                                "name":  "diana-corporacao-senciente_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "703bd5f1a86a1c4a6c11e625bc2c3e7449e104d73967cf4cc9fa3c562a382b93",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-01-22T14:58:58.72259344Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "3000/tcp",
+                                                     "host_port":  "3030",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "/run.sh"
+                                                         ],
+                                          "cmd":  null,
+                                          "hostname":  "94b1aee146bb",
+                                          "exposed_ports":  [
+                                                                "3000/tcp"
+                                                            ],
+                                          "working_dir":  "/usr/share/grafana",
+                                          "env":  [
+                                                      "GF_USERS_ALLOW_SIGN_UP=false",
+                                                      "GF_SECURITY_ADMIN_PASSWORD=***MASKED***",
+                                                      "PATH=/usr/share/grafana/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "GF_PATHS_CONFIG=/etc/grafana/grafana.ini",
+                                                      "GF_PATHS_DATA=/var/lib/grafana",
+                                                      "GF_PATHS_HOME=/usr/share/grafana",
+                                                      "GF_PATHS_LOGS=/var/log/grafana",
+                                                      "GF_PATHS_PLUGINS=/var/lib/grafana/plugins",
+                                                      "GF_PATHS_PROVISIONING=/etc/grafana/provisioning"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "9a40c69a199d33f9192661e18992e888d1a20147c8209e6909baf6760829b515",
+                           "name":  "senciente-market-watcher",
+                           "volumes":  [
+
+                                       ],
+                           "image":  "diana-corporacao-senciente-market-watcher",
+                           "started_at":  "2026-02-09T17:18:54.553193542Z",
+                           "networks":  [
+                                            {
+                                                "name":  "diana-corporacao-senciente_senciente-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "703bd5f1a86a1c4a6c11e625bc2c3e7449e104d73967cf4cc9fa3c562a382b93",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-01-22T14:58:45.295766312Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "3002/tcp",
+                                                     "host_port":  "3002",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "node",
+                                                      "dist/real-server.js"
+                                                  ],
+                                          "hostname":  "9a40c69a199d",
+                                          "exposed_ports":  [
+                                                                "3001/tcp",
+                                                                "3002/tcp"
+                                                            ],
+                                          "working_dir":  "/app",
+                                          "env":  [
+                                                      "OLLAMA_BASE_URL=http://ollama:11434",
+                                                      "WATCH_SYMBOLS=BTCUSDT,ETHUSDT,BNBUSDT,SOLUSDT,XRPUSDT,ADAUSDT,DOGEUSDT,AVAXUSDT",
+                                                      "BINANCE_USE_TESTNET=true",
+                                                      "REDIS_URL=redis://redis:6379",
+                                                      "PORT=3002",
+                                                      "OLLAMA_MODEL=phi3:3.8b",
+                                                      "BINANCE_API_KEY=***MASKED***",
+                                                      "BINANCE_SECRET_KEY=***MASKED***",
+                                                      "SERVICE_MODE=watcher",
+                                                      "RSI_OVERSOLD=30",
+                                                      "WATCH_INTERVAL=5000",
+                                                      "RSI_OVERBOUGHT=70",
+                                                      "MACD_THRESHOLD=0.001",
+                                                      "NODE_ENV=production",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "NODE_VERSION=18.20.8",
+                                                      "YARN_VERSION=1.22.22"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "19d940c5bdb65caaafe0d132b67afdfde7d2aa7c73a3d1b5a80ef340fe66f223",
+                           "name":  "aura-postgres",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "name":  "binance-bot_postgres_data",
+                                               "source":  "/var/lib/docker/volumes/binance-bot_postgres_data/_data",
+                                               "destination":  "/var/lib/postgresql/data",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "postgres:15-alpine",
+                           "started_at":  "2026-02-08T22:00:29.417943224Z",
+                           "networks":  [
+                                            {
+                                                "name":  "binance-bot_aura-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "b8cc520b966dc77bf074cf05a9021b5c70be62ef607fc6357aa72439a22e9ca3",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-01-22T04:07:49.358091256Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "5432/tcp",
+                                                     "host_port":  "25432",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "postgres"
+                                                  ],
+                                          "hostname":  "19d940c5bdb6",
+                                          "exposed_ports":  [
+                                                                "5432/tcp"
+                                                            ],
+                                          "working_dir":  "/",
+                                          "env":  [
+                                                      "POSTGRES_DB=aura_db",
+                                                      "POSTGRES_USER=aura_user",
+                                                      "POSTGRES_PASSWORD=***MASKED***",
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "GOSU_VERSION=1.19",
+                                                      "LANG=en_US.utf8",
+                                                      "PG_MAJOR=15",
+                                                      "PG_VERSION=15.15",
+                                                      "PG_SHA256=5753aaeb8b09cbf61016f78aa69bf5cbdf01b43263f010cbf168c82896213aaa",
+                                                      "DOCKER_PG_LLVM_DEPS=llvm19-dev \t\tclang19",
+                                                      "PGDATA=/var/lib/postgresql/data"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       },
+                       {
+                           "id":  "78d0db33d45dbcdadf3553334091c5142052d72cd284141224ff3d8db81842d4",
+                           "name":  "aura-redis",
+                           "volumes":  [
+                                           {
+                                               "rw":  true,
+                                               "name":  "binance-bot_redis_data",
+                                               "source":  "/var/lib/docker/volumes/binance-bot_redis_data/_data",
+                                               "destination":  "/data",
+                                               "type":  "volume",
+                                               "propagation":  "",
+                                               "mode":  "rw"
+                                           }
+                                       ],
+                           "image":  "redis:7-alpine",
+                           "started_at":  "2026-02-08T22:00:29.286300941Z",
+                           "networks":  [
+                                            {
+                                                "name":  "binance-bot_aura-network",
+                                                "gateway":  "",
+                                                "ip_address":  "",
+                                                "mac_address":  "",
+                                                "network_id":  "b8cc520b966dc77bf074cf05a9021b5c70be62ef607fc6357aa72439a22e9ca3",
+                                                "endpoint_id":  ""
+                                            }
+                                        ],
+                           "created":  "2026-01-22T04:07:49.337960326Z",
+                           "platform":  "linux",
+                           "port_bindings":  [
+                                                 {
+                                                     "container_port":  "6379/tcp",
+                                                     "host_port":  "26379",
+                                                     "host_ip":  ""
+                                                 }
+                                             ],
+                           "status":  "exited",
+                           "config":  {
+                                          "entrypoint":  [
+                                                             "docker-entrypoint.sh"
+                                                         ],
+                                          "cmd":  [
+                                                      "redis-server"
+                                                  ],
+                                          "hostname":  "78d0db33d45d",
+                                          "exposed_ports":  [
+                                                                "6379/tcp"
+                                                            ],
+                                          "working_dir":  "/data",
+                                          "env":  [
+                                                      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                                                      "GOSU_VERSION=1.17",
+                                                      "REDIS_VERSION=7.4.7",
+                                                      "REDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-7.4.7.tar.gz",
+                                                      "REDIS_DOWNLOAD_SHA=c97e57b0df330a9e091cacff012bebe763c275398cf36ff44cdba876814b595b"
+                                                  ]
+                                      },
+                           "resources":  {
+                                             "cpu_shares":  0,
+                                             "memory_limit":  0,
+                                             "cpu_quota":  0
+                                         }
+                       }
+                   ],
+    "docker_version":  "29.1.3",
+    "summary":  {
+                    "total_networks":  17,
+                    "total_volumes":  25,
+                    "stopped_containers":  17,
+                    "total_containers":  17,
+                    "running_containers":  0
+                }
+}

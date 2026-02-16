@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Forçar Limpeza de Cache - Sistema AURA</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #ffd700;
+        }
+
+        .step h3 {
+            color: #ffd700;
+            margin-top: 0;
+        }
+
+        .button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .success {
+            background: linear-gradient(45deg, #00b894, #00a085);
+        }
+
+        .warning {
+            background: linear-gradient(45deg, #fdcb6e, #e17055);
+        }
+
+        .info {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+        }
+
+        .log {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .status {
+            text-align: center;
+            font-size: 18px;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .status.success {
+            background: rgba(0, 184, 148, 0.2);
+            border: 2px solid #00b894;
+        }
+
+        .status.error {
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid #ff6b6b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔧 Forçar Limpeza de Cache - Sistema AURA</h1>
+
+        <div class="status" id="status">
+            Clique nos botões abaixo para limpar o cache e resolver o problema de timeout
+        </div>
+
+        <div class="step">
+            <h3>🚀 Passo 1: Limpar Cache do Navegador</h3>
+            <p>Clique no botão abaixo para limpar todo o cache do navegador:</p>
+            <button class="button info" onclick="clearBrowserCache()">🧹 Limpar Cache do Navegador</button>
+        </div>
+
+        <div class="step">
+            <h3>⚡ Passo 2: Forçar Hard Refresh</h3>
+            <p>Use este botão para forçar um hard refresh da página:</p>
+            <button class="button warning" onclick="forceHardRefresh()">🔄 Forçar Hard Refresh</button>
+        </div>
+
+        <div class="step">
+            <h3>🔍 Passo 3: Verificar Timeout</h3>
+            <p>Teste se o timeout está funcionando corretamente:</p>
+            <button class="button success" onclick="testTimeout()">🧪 Testar Timeout</button>
+        </div>
+
+        <div class="step">
+            <h3>📊 Logs de Debug</h3>
+            <div class="log" id="log"></div>
+            <button class="button warning" onclick="clearLog()">🗑️ Limpar Logs</button>
+        </div>
+
+        <div class="step">
+            <h3>🎯 Instruções Manuais</h3>
+            <ol>
+                <li><strong>Chrome/Edge:</strong> Ctrl + Shift + Delete → Limpar dados</li>
+                <li><strong>Firefox:</strong> Ctrl + Shift + Delete → Limpar tudo</li>
+                <li><strong>Hard Refresh:</strong> Ctrl + F5 ou Ctrl + Shift + R</li>
+                <li><strong>DevTools:</strong> F12 → Network → Disable cache</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.style.color = type === 'error' ? '#ff6b6b' : type === 'success' ? '#00b894' : '#74b9ff';
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logDiv.appendChild(logEntry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        async function clearBrowserCache() {
+            try {
+                updateStatus('🧹 Limpando cache do navegador...', 'info');
+                log('🧹 Iniciando limpeza de cache...');
+
+                // Tentar limpar cache via Service Worker
+                if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    for (const cacheName of cacheNames) {
+                        await caches.delete(cacheName);
+                        log(`🗑️ Cache deletado: ${cacheName}`);
+                    }
+                }
+
+                // Limpar localStorage
+                localStorage.clear();
+                log('🗑️ LocalStorage limpo');
+
+                // Limpar sessionStorage
+                sessionStorage.clear();
+                log('🗑️ SessionStorage limpo');
+
+                // Limpar IndexedDB
+                if ('indexedDB' in window) {
+                    const databases = await indexedDB.databases();
+                    for (const db of databases) {
+                        if (db.name) {
+                            indexedDB.deleteDatabase(db.name);
+                            log(`🗑️ IndexedDB deletado: ${db.name}`);
+                        }
+                    }
+                }
+
+                updateStatus('✅ Cache limpo com sucesso!', 'success');
+                log('✅ Cache limpo com sucesso!');
+
+                // Aguardar um pouco e recarregar
+                setTimeout(() => {
+                    log('🔄 Recarregando página em 3 segundos...');
+                    setTimeout(() => {
+                        window.location.reload(true);
+                    }, 3000);
+                }, 2000);
+
+            } catch (error) {
+                updateStatus('❌ Erro ao limpar cache', 'error');
+                log(`❌ Erro ao limpar cache: ${error.message}`, 'error');
+            }
+        }
+
+        function forceHardRefresh() {
+            updateStatus('🔄 Forçando hard refresh...', 'info');
+            log('🔄 Forçando hard refresh...');
+
+            // Forçar reload sem cache
+            window.location.reload(true);
+        }
+
+        async function testTimeout() {
+            try {
+                updateStatus('🧪 Testando timeout...', 'info');
+                log('🧪 Testando timeout da API...');
+
+                // Testar timeout com uma requisição simples
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000);
+
+                const response = await fetch('http://localhost:13001/api/v1/rotative-analysis/signals', {
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    updateStatus('✅ Timeout funcionando corretamente!', 'success');
+                    log('✅ Timeout de 30s funcionando - API respondeu em tempo');
+                } else {
+                    updateStatus('⚠️ API respondeu mas com erro', 'warning');
+                    log(`⚠️ API respondeu com status: ${response.status}`);
+                }
+
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    updateStatus('❌ Timeout de 30s atingido', 'error');
+                    log('❌ Timeout de 30s atingido - API não respondeu');
+                } else {
+                    updateStatus('❌ Erro na requisição', 'error');
+                    log(`❌ Erro na requisição: ${error.message}`);
+                }
+            }
+        }
+
+        // Log inicial
+        log('🚀 Sistema de limpeza de cache inicializado');
+        log('📊 Verificando configurações...');
+
+        // Verificar se o arquivo timeout-fix.ts está sendo carregado
+        if (typeof window !== 'undefined') {
+            log('🌐 Navegador detectado');
+            log(`🔧 User Agent: ${navigator.userAgent}`);
+        }
+    </script>
+</body>
+
+</html>

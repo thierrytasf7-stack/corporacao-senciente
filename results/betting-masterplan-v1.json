@@ -1,0 +1,1682 @@
+{
+  "version": "1.0",
+  "created_at": "2026-02-15",
+  "status": "draft",
+  "author": "pm",
+  "masterplan": {
+    "gaps": [
+      {
+        "id": "gap-1.1",
+        "title": "Data Integration",
+        "priority": "P0",
+        "status": "0% implemented",
+        "impact": "Platform cannot operate without real data",
+        "description": "Betfair API not connected, Pinnacle API not connected, historical data pipeline non-existent, websocket for real-time odds not implemented",
+        "stories": [
+          {
+            "id": "story-1.1.1",
+            "title": "Betfair API Integration",
+            "owner": "data-sports squad",
+            "description": "Create BetfairClient.ts with OAuth2 authentication",
+            "subtasks": [
+              {
+                "id": "subtask-1.1.1.1",
+                "title": "Research Betfair API",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research Betfair API endpoints, OAuth2 flow, rate limits, authentication requirements",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.1.1.2",
+                "title": "Create BetfairClient.ts",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement BetfairClient.ts with OAuth2 authentication, error handling, rate limiting",
+                "dependencies": ["subtask-1.1.1.1"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.1.1.3",
+                "title": "Create Betfair tRPC Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/betfair.ts with tRPC endpoints for Betfair API",
+                "dependencies": ["subtask-1.1.1.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.1.1.4",
+                "title": "Create Betfair Service",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/services/BetfairService.ts with business logic for Betfair integration",
+                "dependencies": ["subtask-1.1.1.3"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.1.1.5",
+                "title": "Create Betfair Query Hook",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create frontend/src/hooks/useBetfairQuery.ts for Betfair data fetching",
+                "dependencies": ["subtask-1.1.1.4"],
+                "estimated_time": "2h"
+              }
+            ],
+            "effort": "14h",
+            "dependencies": [],
+            "acceptance_criteria": [
+              "BetfairClient.ts implemented with OAuth2 authentication",
+              "Betfair tRPC router created with all endpoints",
+              "BetfairService.ts with business logic implemented",
+              "useBetfairQuery.ts hook created for frontend",
+              "Unit tests with 80% coverage"
+            ]
+          },
+          {
+            "id": "story-1.1.2",
+            "title": "Pinnacle API Integration",
+            "owner": "data-sports squad",
+            "description": "Create PinnacleClient.ts with API key authentication",
+            "subtasks": [
+              {
+                "id": "subtask-1.1.2.1",
+                "title": "Research Pinnacle API",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research Pinnacle API endpoints, API key authentication, rate limits, requirements",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.1.2.2",
+                "title": "Create PinnacleClient.ts",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement PinnacleClient.ts with API key authentication, error handling, rate limiting",
+                "dependencies": ["subtask-1.1.2.1"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.1.2.3",
+                "title": "Create Pinnacle tRPC Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/pinnacle.ts with tRPC endpoints for Pinnacle API",
+                "dependencies": ["subtask-1.1.2.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.1.2.4",
+                "title": "Create Pinnacle Service",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/services/PinnacleService.ts with business logic for Pinnacle integration",
+                "dependencies": ["subtask-1.1.2.3"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.1.2.5",
+                "title": "Create Pinnacle Query Hook",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create frontend/src/hooks/usePinnacleQuery.ts for Pinnacle data fetching",
+                "dependencies": ["subtask-1.1.2.4"],
+                "estimated_time": "2h"
+              }
+            ],
+            "effort": "14h",
+            "dependencies": ["story-1.1.1"],
+            "acceptance_criteria": [
+              "PinnacleClient.ts implemented with API key authentication",
+              "Pinnacle tRPC router created with all endpoints",
+              "PinnacleService.ts with business logic implemented",
+              "usePinnacleQuery.ts hook created for frontend",
+              "Unit tests with 80% coverage"
+            ]
+          },
+          {
+            "id": "story-1.1.3",
+            "title": "Credentials Management",
+            "owner": "infra-sports squad",
+            "description": "Configure secure credentials for Betfair and Pinnacle APIs",
+            "subtasks": [
+              {
+                "id": "subtask-1.1.3.1",
+                "title": "Research Secrets Management",
+                "agent": "devops",
+                "f_score": 1,
+                "description": "Research secrets management solutions (AWS Secrets Manager, HashiCorp Vault, environment variables)",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.1.3.2",
+                "title": "Setup Environment Variables",
+                "agent": "devops",
+                "f_score": 2,
+                "description": "Create .env.example with required environment variables for Betfair and Pinnacle",
+                "dependencies": ["subtask-1.1.3.1"],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.1.3.3",
+                "title": "Create Credentials Service",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/services/CredentialsService.ts for secure credential management",
+                "dependencies": ["subtask-1.1.3.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.1.3.4",
+                "title": "Implement Auth Middleware",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/middleware/auth.ts for API authentication and credential validation",
+                "dependencies": ["subtask-1.1.3.3"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.1.3.5",
+                "title": "Create Credentials Documentation",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Create backend/docs/credentials.md with setup instructions and security best practices",
+                "dependencies": ["subtask-1.1.3.4"],
+                "estimated_time": "2h"
+              }
+            ],
+            "effort": "12h",
+            "dependencies": ["story-1.1.1", "story-1.1.2"],
+            "acceptance_criteria": [
+              "Environment variables configured for Betfair and Pinnacle",
+              "CredentialsService.ts implemented with secure credential management",
+              "Auth middleware created for API authentication",
+              "Credentials documentation created",
+              "Security audit passed"
+            ]
+          },
+          {
+            "id": "story-1.1.4",
+            "title": "Historical Data Pipeline",
+            "owner": "data-sports squad",
+            "description": "Implement ETL pipeline for historical sports data",
+            "subtasks": [
+              {
+                "id": "subtask-1.1.4.1",
+                "title": "Research Historical Data Sources",
+                "agent": "data-engineer",
+                "f_score": 2,
+                "description": "Research historical data sources (Betfair historical API, third-party providers, scraping options)",
+                "dependencies": [],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.1.4.2",
+                "title": "Design Database Schema",
+                "agent": "data-engineer",
+                "f_score": 2,
+                "description": "Design PostgreSQL schema for historical odds, results, and metadata",
+                "dependencies": ["subtask-1.1.4.1"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.1.4.3",
+                "title": "Implement Data Pipeline",
+                "agent": "data-engineer",
+                "f_score": 3,
+                "description": "Create backend/services/DataPipelineService.ts with ETL logic for historical data",
+                "dependencies": ["subtask-1.1.4.2"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.1.4.4",
+                "title": "Create Data Ingestion Scripts",
+                "agent": "data-engineer",
+                "f_score": 3,
+                "description": "Create scripts for scheduled data ingestion (daily/weekly) with error handling",
+                "dependencies": ["subtask-1.1.4.3"],
+                "estimated_time": "6h"
+              },
+              {
+                "id": "subtask-1.1.4.5",
+                "title": "Create Data Validation",
+                "agent": "data-engineer",
+                "f_score": 2,
+                "description": "Implement data validation and quality checks for historical data pipeline",
+                "dependencies": ["subtask-1.1.4.4"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "25h",
+            "dependencies": ["story-1.1.3"],
+            "acceptance_criteria": [
+              "PostgreSQL schema designed for historical data",
+              "DataPipelineService.ts implemented with ETL logic",
+              "Scheduled ingestion scripts created",
+              "Data validation implemented",
+              "Historical data loaded (minimum 2 years)",
+              "Unit tests with 80% coverage"
+            ]
+          },
+          {
+            "id": "story-1.1.5",
+            "title": "Real-Time WebSocket Integration",
+            "owner": "data-sports squad",
+            "description": "Implement websocket for real-time odds updates",
+            "subtasks": [
+              {
+                "id": "subtask-1.1.5.1",
+                "title": "Research WebSocket APIs",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research Betfair Stream API and WebSocket implementation requirements",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.1.5.2",
+                "title": "Create WebSocket Client",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/BetfairWebSocket.ts for real-time odds streaming",
+                "dependencies": ["subtask-1.1.5.1"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.1.5.3",
+                "title": "Create WebSocket Server",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Create backend/services/WebSocketServer.ts for client connections",
+                "dependencies": ["subtask-1.1.5.2"],
+                "estimated_time": "6h"
+              },
+              {
+                "id": "subtask-1.1.5.4",
+                "title": "Create WebSocket Hook",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create frontend/src/hooks/useWebSocket.ts for real-time data consumption",
+                "dependencies": ["subtask-1.1.5.3"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.1.5.5",
+                "title": "Create Real-Time Dashboard",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create frontend/src/pages/RealTimeDashboard.tsx for live odds display",
+                "dependencies": ["subtask-1.1.5.4"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "24h",
+            "dependencies": ["story-1.1.4"],
+            "acceptance_criteria": [
+              "BetfairWebSocket.ts implemented for real-time streaming",
+              "WebSocketServer.ts created for client connections",
+              "useWebSocket.ts hook created for frontend",
+              "RealTimeDashboard.tsx implemented",
+              "Real-time odds displayed with <1s latency",
+              "Unit tests with 80% coverage"
+            ]
+          }
+        ],
+        "total_effort": "79h",
+        "dependencies": [],
+        "wave": 1
+      },
+      {
+        "id": "gap-1.2",
+        "title": "Strategy Implementation",
+        "priority": "P0",
+        "status": "5% implemented (structure only)",
+        "impact": "Without strategies, there are no automated bets",
+        "description": "Value betting not implemented, arbitrage detection not implemented, Kelly Criterion calculator mocked, sure betting engine non-existent",
+        "stories": [
+          {
+            "id": "story-1.2.1",
+            "title": "Value Betting Strategy",
+            "owner": "strategy-sports squad",
+            "description": "Implement value betting strategy with odds comparison and Kelly Criterion",
+            "subtasks": [
+              {
+                "id": "subtask-1.2.1.1",
+                "title": "Research Value Betting",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research value betting concepts, Kelly Criterion implementation, odds comparison algorithms",
+                "dependencies": [],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.2.1.2",
+                "title": "Create Value Betting Calculator",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement backend/services/ValueBettingCalculator.ts with Kelly Criterion logic",
+                "dependencies": ["subtask-1.2.1.1"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.2.1.3",
+                "title": "Create Value Betting Strategy",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/ValueBettingStrategy.ts with odds comparison and value detection",
+                "dependencies": ["subtask-1.2.1.2"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.2.1.4",
+                "title": "Create Value Betting Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/valueBetting.ts with tRPC endpoints for value betting",
+                "dependencies": ["subtask-1.2.1.3"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.2.1.5",
+                "title": "Create Value Betting UI",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create frontend/src/pages/ValueBetting.tsx for value betting interface",
+                "dependencies": ["subtask-1.2.1.4"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "22h",
+            "dependencies": ["gap-1.1"],
+            "acceptance_criteria": [
+              "ValueBettingCalculator.ts implemented with Kelly Criterion",
+              "ValueBettingStrategy.ts implemented with odds comparison",
+              "Value betting tRPC router created",
+              "ValueBetting.tsx UI implemented",
+              "Unit tests with 80% coverage",
+              "Value bets detected and calculated correctly"
+            ]
+          },
+          {
+            "id": "story-1.2.2",
+            "title": "Arbitrage Detection",
+            "owner": "strategy-sports squad",
+            "description": "Implement arbitrage detection across multiple bookmakers",
+            "subtasks": [
+              {
+                "id": "subtask-1.2.2.1",
+                "title": "Research Arbitrage Betting",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research arbitrage betting concepts, detection algorithms, stake calculation",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.2.2.2",
+                "title": "Create Arbitrage Detector",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/ArbitrageDetector.ts with multi-bookmaker comparison",
+                "dependencies": ["subtask-1.2.2.1"],
+                "estimated_time": "10h"
+              },
+              {
+                "id": "subtask-1.2.2.3",
+                "title": "Create Arbitrage Calculator",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement backend/services/ArbitrageCalculator.ts for stake calculation",
+                "dependencies": ["subtask-1.2.2.2"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.2.2.4",
+                "title": "Create Arbitrage Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/arbitrage.ts with tRPC endpoints for arbitrage",
+                "dependencies": ["subtask-1.2.2.3"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.2.2.5",
+                "title": "Create Arbitrage UI",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create frontend/src/pages/Arbitrage.tsx for arbitrage interface",
+                "dependencies": ["subtask-1.2.2.4"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "23h",
+            "dependencies": ["gap-1.1", "story-1.2.1"],
+            "acceptance_criteria": [
+              "ArbitrageDetector.ts implemented with multi-bookmaker comparison",
+              "ArbitrageCalculator.ts implemented for stake calculation",
+              "Arbitrage tRPC router created",
+              "Arbitrage.tsx UI implemented",
+              "Unit tests with 80% coverage",
+              "Arbitrage opportunities detected and calculated correctly"
+            ]
+          },
+          {
+            "id": "story-1.2.3",
+            "title": "Sure Betting Engine",
+            "owner": "strategy-sports squad",
+            "description": "Implement sure betting engine for guaranteed profit opportunities",
+            "subtasks": [
+              {
+                "id": "subtask-1.2.3.1",
+                "title": "Research Sure Betting",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research sure betting concepts, guaranteed profit detection, implementation strategies",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.2.3.2",
+                "title": "Create Sure Betting Engine",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/SureBettingEngine.ts for guaranteed profit detection",
+                "dependencies": ["subtask-1.2.3.1"],
+                "estimated_time": "12h"
+              },
+              {
+                "id": "subtask-1.2.3.3",
+                "title": "Create Sure Betting Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/sureBetting.ts with tRPC endpoints for sure betting",
+                "dependencies": ["subtask-1.2.3.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.2.3.4",
+                "title": "Create Sure Betting UI",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create frontend/src/pages/SureBetting.tsx for sure betting interface",
+                "dependencies": ["subtask-1.2.3.3"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "21h",
+            "dependencies": ["gap-1.1", "story-1.2.2"],
+            "acceptance_criteria": [
+              "SureBettingEngine.ts implemented for guaranteed profit detection",
+              "Sure betting tRPC router created",
+              "SureBetting.tsx UI implemented",
+              "Unit tests with 80% coverage",
+              "Sure betting opportunities detected correctly"
+            ]
+          }
+        ],
+        "total_effort": "66h",
+        "dependencies": ["gap-1.1"],
+        "wave": 2
+      },
+      {
+        "id": "gap-1.3",
+        "title": "Risk Management",
+        "priority": "P1",
+        "status": "30% implemented (configurable but not active)",
+        "impact": "Exposure to catastrophic losses without active controls",
+        "description": "Stop-loss configured but not executed automatically, Kelly Criterion calculator not integrated to betting flow, portfolio exposure tracking real-time non-existent, overexposure alerts not implemented",
+        "stories": [
+          {
+            "id": "story-1.3.1",
+            "title": "Risk Enforcer Implementation",
+            "owner": "live-betting squad",
+            "description": "Implement automated risk enforcement with pre-bet checks",
+            "subtasks": [
+              {
+                "id": "subtask-1.3.1.1",
+                "title": "Research Risk Management",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research risk management concepts, stop-loss implementation, exposure limits",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.3.1.2",
+                "title": "Create Risk Enforcer",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/RiskEnforcer.ts with pre-bet validation and stop-loss execution",
+                "dependencies": ["subtask-1.3.1.1"],
+                "estimated_time": "10h"
+              },
+              {
+                "id": "subtask-1.3.1.3",
+                "title": "Create Risk Middleware",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/middleware/risk.ts for request validation and risk checks",
+                "dependencies": ["subtask-1.3.1.2"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.3.1.4",
+                "title": "Create Risk Configuration",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/services/RiskConfiguration.ts for configurable risk limits",
+                "dependencies": ["subtask-1.3.1.3"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.3.1.5",
+                "title": "Create Risk UI",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create frontend/src/pages/RiskConfig.tsx for risk configuration interface",
+                "dependencies": ["subtask-1.3.1.4"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "23h",
+            "dependencies": ["gap-1.1", "story-1.2.1"],
+            "acceptance_criteria": [
+              "RiskEnforcer.ts implemented with pre-bet validation",
+              "Risk middleware created for request validation",
+              "RiskConfiguration.ts implemented for configurable limits",
+              "RiskConfig.tsx UI implemented",
+              "Unit tests with 80% coverage",
+              "Risk checks blocking unsafe bets correctly"
+            ]
+          },
+          {
+            "id": "story-1.3.2",
+            "title": "Exposure Dashboard",
+            "owner": "analytics-sports squad",
+            "description": "Create real-time exposure dashboard with alerts",
+            "subtasks": [
+              {
+                "id": "subtask-1.3.2.1",
+                "title": "Research Exposure Tracking",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research portfolio exposure tracking, real-time monitoring, alert systems",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.3.2.2",
+                "title": "Create Exposure Service",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/ExposureService.ts for real-time exposure calculation",
+                "dependencies": ["subtask-1.3.2.1"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.3.2.3",
+                "title": "Create Exposure Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/exposure.ts with tRPC endpoints for exposure data",
+                "dependencies": ["subtask-1.3.2.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.3.2.4",
+                "title": "Create Exposure Dashboard",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Create frontend/src/pages/ExposureDashboard.tsx with real-time exposure visualization",
+                "dependencies": ["subtask-1.3.2.3"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.3.2.5",
+                "title": "Create Alert System",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement backend/services/AlertService.ts for overexposure notifications",
+                "dependencies": ["subtask-1.3.2.4"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "25h",
+            "dependencies": ["gap-1.1", "story-1.3.1"],
+            "acceptance_criteria": [
+              "ExposureService.ts implemented for real-time calculation",
+              "Exposure tRPC router created",
+              "ExposureDashboard.tsx implemented with visualization",
+              "AlertService.ts implemented for notifications",
+              "Unit tests with 80% coverage",
+              "Real-time exposure tracking working correctly"
+            ]
+          }
+        ],
+        "total_effort": "48h",
+        "dependencies": ["gap-1.1", "story-1.2.1"],
+        "wave": 3
+      },
+      {
+        "id": "gap-1.4",
+        "title": "Backtesting Engine",
+        "priority": "P1",
+        "status": "10% implemented (UI ready, engine mocked)",
+        "impact": "Without backtesting, there is no strategy validation",
+        "description": "Historical data not loaded, backtesting engine not implemented, performance metrics calculated manually, multi-strategy comparison non-existent",
+        "stories": [
+          {
+            "id": "story-1.4.1",
+            "title": "Historical Data Loading",
+            "owner": "data-sports squad",
+            "description": "Load 2+ years of historical data into PostgreSQL",
+            "subtasks": [
+              {
+                "id": "subtask-1.4.1.1",
+                "title": "Prepare Historical Data",
+                "agent": "data-engineer",
+                "f_score": 2,
+                "description": "Prepare historical data files from Betfair API and public sources",
+                "dependencies": [],
+                "estimated_time": "6h"
+              },
+              {
+                "id": "subtask-1.4.1.2",
+                "title": "Optimize Database Tables",
+                "agent": "data-engineer",
+                "f_score": 2,
+                "description": "Optimize PostgreSQL tables for historical data with indexes and partitioning",
+                "dependencies": ["subtask-1.4.1.1"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.4.1.3",
+                "title": "Load Historical Data",
+                "agent": "data-engineer",
+                "f_score": 3,
+                "description": "Load 2+ years of historical odds and results into PostgreSQL",
+                "dependencies": ["subtask-1.4.1.2"],
+                "estimated_time": "12h"
+              },
+              {
+                "id": "subtask-1.4.1.4",
+                "title": "Create Data Validation",
+                "agent": "data-engineer",
+                "f_score": 2,
+                "description": "Implement data validation for historical data quality and completeness",
+                "dependencies": ["subtask-1.4.1.3"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "26h",
+            "dependencies": ["gap-1.1", "story-1.1.4"],
+            "acceptance_criteria": [
+              "Historical data prepared from Betfair API",
+              "PostgreSQL tables optimized for historical data",
+              "2+ years of historical data loaded",
+              "Data validation implemented",
+              "Unit tests with 80% coverage"
+            ]
+          },
+          {
+            "id": "story-1.4.2",
+            "title": "Backtesting Engine Implementation",
+            "owner": "analytics-sports squad",
+            "description": "Implement backtesting engine with performance metrics",
+            "subtasks": [
+              {
+                "id": "subtask-1.4.2.1",
+                "title": "Research Backtesting Libraries",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research backtesting libraries and algorithms for sports betting",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.4.2.2",
+                "title": "Create Backtesting Engine",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/BacktestingEngine.ts with simulation logic",
+                "dependencies": ["subtask-1.4.2.1"],
+                "estimated_time": "12h"
+              },
+              {
+                "id": "subtask-1.4.2.3",
+                "title": "Create Performance Metrics",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement backend/services/PerformanceMetrics.ts for ROI, Sharpe, Drawdown calculations",
+                "dependencies": ["subtask-1.4.2.2"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.4.2.4",
+                "title": "Create Backtesting Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/backtesting.ts with tRPC endpoints for backtesting",
+                "dependencies": ["subtask-1.4.2.3"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.4.2.5",
+                "title": "Create Backtest Results UI",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Create frontend/src/pages/BacktestResults.tsx with performance visualization",
+                "dependencies": ["subtask-1.4.2.4"],
+                "estimated_time": "8h"
+              }
+            ],
+            "effort": "29h",
+            "dependencies": ["gap-1.1", "story-1.4.1"],
+            "acceptance_criteria": [
+              "BacktestingEngine.ts implemented with simulation logic",
+              "PerformanceMetrics.ts implemented for calculations",
+              "Backtesting tRPC router created",
+              "BacktestResults.tsx UI implemented",
+              "Unit tests with 80% coverage",
+              "Backtesting working with historical data"
+            ]
+          },
+          {
+            "id": "story-1.4.3",
+            "title": "Multi-Strategy Comparison",
+            "owner": "analytics-sports squad",
+            "description": "Implement multi-strategy comparison and analysis",
+            "subtasks": [
+              {
+                "id": "subtask-1.4.3.1",
+                "title": "Research Strategy Comparison",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research strategy comparison algorithms and visualization techniques",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.4.3.2",
+                "title": "Create Strategy Comparison",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/StrategyComparison.ts for multi-strategy analysis",
+                "dependencies": ["subtask-1.4.3.1"],
+                "estimated_time": "10h"
+              },
+              {
+                "id": "subtask-1.4.3.3",
+                "title": "Create Comparison Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/comparison.ts with tRPC endpoints for strategy comparison",
+                "dependencies": ["subtask-1.4.3.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.4.3.4",
+                "title": "Create Comparison UI",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Create frontend/src/pages/StrategyComparison.tsx with multi-strategy visualization",
+                "dependencies": ["subtask-1.4.3.3"],
+                "estimated_time": "8h"
+              }
+            ],
+            "effort": "23h",
+            "dependencies": ["gap-1.1", "story-1.4.2"],
+            "acceptance_criteria": [
+              "StrategyComparison.ts implemented for multi-strategy analysis",
+              "Comparison tRPC router created",
+              "StrategyComparison.tsx UI implemented",
+              "Unit tests with 80% coverage",
+              "Multi-strategy comparison working correctly"
+            ]
+          }
+        ],
+        "total_effort": "78h",
+        "dependencies": ["gap-1.1", "story-1.1.4"],
+        "wave": 4
+      },
+      {
+        "id": "gap-1.5",
+        "title": "Real-Time Odds Monitoring",
+        "priority": "P1",
+        "status": "0% implemented",
+        "impact": "Without real-time odds, loss of value betting opportunities",
+        "description": "WebSocket connection for Betfair non-existent, Pinnacle API polling not implemented, odds comparison dashboard not created, value bet notifications not implemented",
+        "stories": [
+          {
+            "id": "story-1.5.1",
+            "title": "Betfair WebSocket Implementation",
+            "owner": "data-sports squad",
+            "description": "Implement Betfair Stream API websocket connection",
+            "subtasks": [
+              {
+                "id": "subtask-1.5.1.1",
+                "title": "Setup WebSocket Infrastructure",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Setup WebSocket server infrastructure and connection handling",
+                "dependencies": [],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.5.1.2",
+                "title": "Implement Betfair Stream",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/BetfairStream.ts for Betfair Stream API",
+                "dependencies": ["subtask-1.5.1.1"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.5.1.3",
+                "title": "Create Stream Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/stream.ts with tRPC endpoints for streaming",
+                "dependencies": ["subtask-1.5.1.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.5.1.4",
+                "title": "Create Stream Service",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/StreamService.ts for stream processing",
+                "dependencies": ["subtask-1.5.1.3"],
+                "estimated_time": "6h"
+              },
+              {
+                "id": "subtask-1.5.1.5",
+                "title": "Create Redis Cache",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement Redis caching for real-time odds with TTL management",
+                "dependencies": ["subtask-1.5.1.4"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "25h",
+            "dependencies": ["gap-1.1", "story-1.1.5"],
+            "acceptance_criteria": [
+              "WebSocket infrastructure setup",
+              "BetfairStream.ts implemented for Stream API",
+              "Stream tRPC router created",
+              "StreamService.ts implemented for processing",
+              "Redis cache implemented for real-time odds",
+              "Unit tests with 80% coverage"
+            ]
+          },
+          {
+            "id": "story-1.5.2",
+            "title": "Pinnacle Polling Implementation",
+            "owner": "data-sports squad",
+            "description": "Implement polling for Pinnacle API odds updates",
+            "subtasks": [
+              {
+                "id": "subtask-1.5.2.1",
+                "title": "Setup Polling Infrastructure",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Setup polling infrastructure with scheduled jobs",
+                "dependencies": [],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.5.2.2",
+                "title": "Implement Pinnacle Polling",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/PinnaclePolling.ts for API polling",
+                "dependencies": ["subtask-1.5.2.1"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.5.2.3",
+                "title": "Create Polling Router",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create backend/routers/polling.ts with tRPC endpoints for polling",
+                "dependencies": ["subtask-1.5.2.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.5.2.4",
+                "title": "Create Polling Service",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement backend/services/PollingService.ts for poll processing",
+                "dependencies": ["subtask-1.5.2.3"],
+                "estimated_time": "6h"
+              },
+              {
+                "id": "subtask-1.5.2.5",
+                "title": "Create Polling Cache",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement Redis caching for polled odds with TTL management",
+                "dependencies": ["subtask-1.5.2.4"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "24h",
+            "dependencies": ["gap-1.1", "story-1.1.2"],
+            "acceptance_criteria": [
+              "Polling infrastructure setup",
+              "PinnaclePolling.ts implemented for API polling",
+              "Polling tRPC router created",
+              "PollingService.ts implemented for processing",
+              "Redis cache implemented for polled odds",
+              "Unit tests with 80% coverage"
+            ]
+          },
+          {
+            "id": "story-1.5.3",
+            "title": "Odds Monitoring Dashboard",
+            "owner": "live-betting squad",
+            "description": "Create real-time odds comparison dashboard",
+            "subtasks": [
+              {
+                "id": "subtask-1.5.3.1",
+                "title": "Research Dashboard Requirements",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Research odds comparison dashboard requirements and best practices",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.5.3.2",
+                "title": "Create Odds Monitor",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement frontend/src/pages/OddsMonitor.tsx with real-time odds display",
+                "dependencies": ["subtask-1.5.3.1"],
+                "estimated_time": "10h"
+              },
+              {
+                "id": "subtask-1.5.3.3",
+                "title": "Implement Value Bet Detection",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement value bet detection logic and highlighting in dashboard",
+                "dependencies": ["subtask-1.5.3.2"],
+                "estimated_time": "6h"
+              },
+              {
+                "id": "subtask-1.5.3.4",
+                "title": "Create Quick-Bet Interface",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement 1-click betting interface for detected value bets",
+                "dependencies": ["subtask-1.5.3.3"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.5.3.5",
+                "title": "Create Notifications System",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Implement notification system for value bet alerts",
+                "dependencies": ["subtask-1.5.3.4"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "26h",
+            "dependencies": ["gap-1.1", "story-1.5.1", "story-1.5.2"],
+            "acceptance_criteria": [
+              "OddsMonitor.tsx implemented with real-time display",
+              "Value bet detection logic implemented",
+              "Quick-bet interface implemented",
+              "Notification system implemented",
+              "Unit tests with 80% coverage",
+              "Real-time odds monitoring working correctly"
+            ]
+          }
+        ],
+        "total_effort": "75h",
+        "dependencies": ["gap-1.1", "story-1.1.5", "story-1.1.2"],
+        "wave": 5
+      },
+      {
+        "id": "gap-1.6",
+        "title": "Testing & Quality Assurance",
+        "priority": "P2",
+        "status": "0% implemented",
+        "impact": "Bugs in production, low confidence in deployments",
+        "description": "Unit tests: 0%, Integration tests: 0%, E2E tests: 0%, CI/CD pipeline non-existent",
+        "stories": [
+          {
+            "id": "story-1.6.1",
+            "title": "Testing Infrastructure Setup",
+            "owner": "infra-sports squad",
+            "description": "Setup Jest and React Testing Library for testing",
+            "subtasks": [
+              {
+                "id": "subtask-1.6.1.1",
+                "title": "Setup Jest Configuration",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Setup Jest configuration with TypeScript support and test environment",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.6.1.2",
+                "title": "Setup React Testing Library",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Setup React Testing Library with necessary utilities and matchers",
+                "dependencies": ["subtask-1.6.1.1"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.6.1.3",
+                "title": "Setup Testing Utilities",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create testing utilities and helpers for common test patterns",
+                "dependencies": ["subtask-1.6.1.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.6.1.4",
+                "title": "Create Test Configuration",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Create test configuration files and scripts for different test types",
+                "dependencies": ["subtask-1.6.1.3"],
+                "estimated_time": "2h"
+              }
+            ],
+            "effort": "10h",
+            "dependencies": [],
+            "acceptance_criteria": [
+              "Jest configured with TypeScript support",
+              "React Testing Library setup",
+              "Testing utilities created",
+              "Test configuration files created",
+              "Unit tests running successfully"
+            ]
+          },
+          {
+            "id": "story-1.6.2",
+            "title": "CI/CD Pipeline Implementation",
+            "owner": "infra-sports squad",
+            "description": "Implement GitHub Actions CI/CD pipeline",
+            "subtasks": [
+              {
+                "id": "subtask-1.6.2.1",
+                "title": "Setup GitHub Actions",
+                "agent": "devops",
+                "f_score": 2,
+                "description": "Setup GitHub Actions workflow for CI/CD with necessary permissions",
+                "dependencies": [],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.6.2.2",
+                "title": "Create CI Workflow",
+                "agent": "devops",
+                "f_score": 3,
+                "description": "Create CI workflow for automated testing and linting",
+                "dependencies": ["subtask-1.6.2.1"],
+                "estimated_time": "6h"
+              },
+              {
+                "id": "subtask-1.6.2.3",
+                "title": "Create CD Workflow",
+                "agent": "devops",
+                "f_score": 3,
+                "description": "Create CD workflow for automated deployments",
+                "dependencies": ["subtask-1.6.2.2"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.6.2.4",
+                "title": "Create Environment Configuration",
+                "agent": "devops",
+                "f_score": 2,
+                "description": "Create environment configuration for different deployment stages",
+                "dependencies": ["subtask-1.6.2.3"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "22h",
+            "dependencies": ["story-1.6.1"],
+            "acceptance_criteria": [
+              "GitHub Actions setup with necessary permissions",
+              "CI workflow implemented for testing and linting",
+              "CD workflow implemented for deployments",
+              "Environment configuration created",
+              "Pipeline running successfully"
+            ]
+          },
+          {
+            "id": "story-1.6.3",
+            "title": "Test Coverage Implementation",
+            "owner": "all squads",
+            "description": "Implement tests for all new code with 80% coverage target",
+            "subtasks": [
+              {
+                "id": "subtask-1.6.3.1",
+                "title": "Create Unit Tests",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create unit tests for all new components and services",
+                "dependencies": ["story-1.6.1"],
+                "estimated_time": "15h"
+              },
+              {
+                "id": "subtask-1.6.3.2",
+                "title": "Create Integration Tests",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Create integration tests for API endpoints and data flow",
+                "dependencies": ["subtask-1.6.3.1"],
+                "estimated_time": "20h"
+              },
+              {
+                "id": "subtask-1.6.3.3",
+                "title": "Create E2E Tests",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Create E2E tests for critical user journeys",
+                "dependencies": ["subtask-1.6.3.2"],
+                "estimated_time": "25h"
+              },
+              {
+                "id": "subtask-1.6.3.4",
+                "title": "Setup Coverage Reporting",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Setup coverage reporting and thresholds in CI pipeline",
+                "dependencies": ["subtask-1.6.3.3"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "64h",
+            "dependencies": ["story-1.6.1", "story-1.6.2"],
+            "acceptance_criteria": [
+              "Unit tests implemented for all new code",
+              "Integration tests implemented for APIs",
+              "E2E tests implemented for user journeys",
+              "Coverage reporting setup with 80% threshold",
+              "All tests passing in CI pipeline"
+            ]
+          }
+        ],
+        "total_effort": "96h",
+        "dependencies": ["story-1.6.1", "story-1.6.2"],
+        "wave": 6
+      },
+      {
+        "id": "gap-1.7",
+        "title": "Performance Optimization",
+        "priority": "P2",
+        "status": "Not measured",
+        "impact": "User experience may degrade with real data",
+        "description": "API response time not monitored, frontend bundle size not optimized, database queries not optimized, caching strategy non-existent",
+        "stories": [
+          {
+            "id": "story-1.7.1",
+            "title": "APM Implementation",
+            "owner": "infra-sports squad",
+            "description": "Implement Application Performance Monitoring",
+            "subtasks": [
+              {
+                "id": "subtask-1.7.1.1",
+                "title": "Research APM Solutions",
+                "agent": "devops",
+                "f_score": 1,
+                "description": "Research APM solutions (DataDog, New Relic, OpenTelemetry) and requirements",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.7.1.2",
+                "title": "Setup APM Infrastructure",
+                "agent": "devops",
+                "f_score": 2,
+                "description": "Setup APM infrastructure and instrumentation",
+                "dependencies": ["subtask-1.7.1.1"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.7.1.3",
+                "title": "Implement APM Monitoring",
+                "agent": "devops",
+                "f_score": 3,
+                "description": "Implement APM monitoring for APIs, database, and frontend performance",
+                "dependencies": ["subtask-1.7.1.2"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.7.1.4",
+                "title": "Create Performance Dashboard",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create performance dashboard with real-time metrics",
+                "dependencies": ["subtask-1.7.1.3"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "18h",
+            "dependencies": [],
+            "acceptance_criteria": [
+              "APM solution selected and implemented",
+              "APM infrastructure setup",
+              "Performance monitoring implemented",
+              "Performance dashboard created",
+              "Performance metrics being collected"
+            ]
+          },
+          {
+            "id": "story-1.7.2",
+            "title": "Bundle Size Optimization",
+            "owner": "infra-sports squad",
+            "description": "Optimize frontend bundle size with code splitting",
+            "subtasks": [
+              {
+                "id": "subtask-1.7.2.1",
+                "title": "Analyze Bundle Size",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Analyze current bundle size and identify optimization opportunities",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.7.2.2",
+                "title": "Implement Code Splitting",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement code splitting for routes and components",
+                "dependencies": ["subtask-1.7.2.1"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.7.2.3",
+                "title": "Optimize Dependencies",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Optimize dependencies and remove unused packages",
+                "dependencies": ["subtask-1.7.2.2"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.7.2.4",
+                "title": "Implement Lazy Loading",
+                "agent": "dev",
+                "f_score": 3,
+                "description": "Implement lazy loading for heavy components and libraries",
+                "dependencies": ["subtask-1.7.2.3"],
+                "estimated_time": "6h"
+              }
+            ],
+            "effort": "20h",
+            "dependencies": ["story-1.7.1"],
+            "acceptance_criteria": [
+              "Bundle size analyzed",
+              "Code splitting implemented",
+              "Dependencies optimized",
+              "Lazy loading implemented",
+              "Bundle size reduced by 30%+",
+              "Performance metrics improved"
+            ]
+          },
+          {
+            "id": "story-1.7.3",
+            "title": "Database Optimization",
+            "owner": "data-sports squad",
+            "description": "Optimize database queries and performance",
+            "subtasks": [
+              {
+                "id": "subtask-1.7.3.1",
+                "title": "Analyze Database Performance",
+                "agent": "data-engineer",
+                "f_score": 2,
+                "description": "Analyze database performance and identify slow queries",
+                "dependencies": [],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.7.3.2",
+                "title": "Create Database Indexes",
+                "agent": "data-engineer",
+                "f_score": 2,
+                "description": "Create database indexes for frequently queried columns",
+                "dependencies": ["subtask-1.7.3.1"],
+                "estimated_time": "6h"
+              },
+              {
+                "id": "subtask-1.7.3.3",
+                "title": "Optimize Queries",
+                "agent": "data-engineer",
+                "f_score": 3,
+                "description": "Optimize slow queries and implement query best practices",
+                "dependencies": ["subtask-1.7.3.2"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.7.3.4",
+                "title": "Implement Query Caching",
+                "agent": "data-engineer",
+                "f_score": 3,
+                "description": "Implement query caching with Redis for frequently accessed data",
+                "dependencies": ["subtask-1.7.3.3"],
+                "estimated_time": "6h"
+              }
+            ],
+            "effort": "24h",
+            "dependencies": ["story-1.7.1"],
+            "acceptance_criteria": [
+              "Database performance analyzed",
+              "Database indexes created",
+              "Queries optimized",
+              "Query caching implemented",
+              "Database performance improved by 50%+",
+              "Query response time <100ms"
+            ]
+          }
+        ],
+        "total_effort": "62h",
+        "dependencies": ["story-1.7.1"],
+        "wave": 7
+      },
+      {
+        "id": "gap-1.8",
+        "title": "Documentation",
+        "priority": "P3",
+        "status": "20% complete (this doc + platform overview)",
+        "impact": "Slow onboarding, context loss",
+        "description": "API documentation non-existent, user guide non-existent, platform overview created (today), deployment guide non-existent",
+        "stories": [
+          {
+            "id": "story-1.8.1",
+            "title": "API Documentation",
+            "owner": "infra-sports squad",
+            "description": "Generate API documentation with tRPC OpenAPI",
+            "subtasks": [
+              {
+                "id": "subtask-1.8.1.1",
+                "title": "Setup OpenAPI Generation",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Setup OpenAPI generation with tRPC and configuration",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.8.1.2",
+                "title": "Generate API Docs",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Generate comprehensive API documentation with examples",
+                "dependencies": ["subtask-1.8.1.1"],
+                "estimated_time": "4h"
+              },
+              {
+                "id": "subtask-1.8.1.3",
+                "title": "Create API Reference",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create API reference documentation with endpoint details",
+                "dependencies": ["subtask-1.8.1.2"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.8.1.4",
+                "title": "Create API Examples",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create API examples and usage patterns",
+                "dependencies": ["subtask-1.8.1.3"],
+                "estimated_time": "3h"
+              }
+            ],
+            "effort": "12h",
+            "dependencies": [],
+            "acceptance_criteria": [
+              "OpenAPI generation setup",
+              "API documentation generated",
+              "API reference created",
+              "API examples created",
+              "Documentation accessible and up-to-date"
+            ]
+          },
+          {
+            "id": "story-1.8.2",
+            "title": "User Guide Creation",
+            "owner": "ceo-bet",
+            "description": "Create user guide for platform operators",
+            "subtasks": [
+              {
+                "id": "subtask-1.8.2.1",
+                "title": "Research User Guide Requirements",
+                "agent": "ceo-bet",
+                "f_score": 1,
+                "description": "Research user guide requirements and operator workflows",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.8.2.2",
+                "title": "Create User Guide Structure",
+                "agent": "ceo-bet",
+                "f_score": 2,
+                "description": "Create user guide structure and outline",
+                "dependencies": ["subtask-1.8.2.1"],
+                "estimated_time": "3h"
+              },
+              {
+                "id": "subtask-1.8.2.3",
+                "title": "Write User Guide Content",
+                "agent": "ceo-bet",
+                "f_score": 3,
+                "description": "Write comprehensive user guide content with screenshots",
+                "dependencies": ["subtask-1.8.2.2"],
+                "estimated_time": "8h"
+              },
+              {
+                "id": "subtask-1.8.2.4",
+                "title": "Create User Guide PDF",
+                "agent": "ceo-bet",
+                "f_score": 2,
+                "description": "Create PDF version of user guide for distribution",
+                "dependencies": ["subtask-1.8.2.3"],
+                "estimated_time": "2h"
+              }
+            ],
+            "effort": "15h",
+            "dependencies": [],
+            "acceptance_criteria": [
+              "User guide structure created",
+              "User guide content written",
+              "User guide PDF created",
+              "Guide accessible and comprehensive",
+              "Operator onboarding improved"
+            ]
+          },
+          {
+            "id": "story-1.8.3",
+            "title": "Module Documentation",
+            "owner": "all squads",
+            "description": "Create README.md for each module with setup instructions",
+            "subtasks": [
+              {
+                "id": "subtask-1.8.3.1",
+                "title": "Create Frontend README",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Create frontend/README.md with setup and development instructions",
+                "dependencies": [],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.8.3.2",
+                "title": "Create Backend README",
+                "agent": "dev",
+                "f_score": 1,
+                "description": "Create backend/README.md with setup and development instructions",
+                "dependencies": ["subtask-1.8.3.1"],
+                "estimated_time": "2h"
+              },
+              {
+                "id": "subtask-1.8.3.3",
+                "title": "Create Services README",
+                "agent": "dev",
+                "f_score": 2,
+                "description": "Create README.md for each service with API documentation",
+                "dependencies": ["subtask-1.8.3.2"],
+                "estimated_time": "6h"
+              },
+              {
+                "id": "subtask-1.8.3.4",
+                "title": "Create Deployment Guide",
+                "agent": "devops",
+                "f_score": 2,
+                "description": "Create deployment guide with environment setup instructions",
+                "dependencies": ["subtask-1.8.3.3"],
+                "estimated_time": "4h"
+              }
+            ],
+            "effort": "14h",
+            "dependencies": [],
+            "acceptance_criteria": [
+              "Frontend README created",
+              "Backend README created",
+              "Services README created",
+              "Deployment guide created",
+              "All documentation accessible and up-to-date"
+            ]
+          }
+        ],
+        "total_effort": "41h",
+        "dependencies": [],
+        "wave": 8
+      }
+    ],
+    "total_stories": 15,
+    "total_subtasks": 120,
+    "total_effort_hours": 462,
+    "total_effort_weeks": 12,
+    "waves": {
+      "wave_1": {
+        "stories": ["story-1.1.1", "story-1.1.2", "story-1.1.3", "story-1.1.4", "story-1.1.5"],
+        "effort_hours": 79,
+        "effort_weeks": 2,
+        "dependencies": [],
+        "description": "Foundation - Data Integration"
+      },
+      "wave_2": {
+        "stories": ["story-1.2.1", "story-1.2.2", "story-1.2.3"],
+        "effort_hours": 66,
+        "effort_weeks": 2,
+        "dependencies": ["gap-1.1"],
+        "description": "Strategy Implementation"
+      },
+      "wave_3": {
+        "stories": ["story-1.3.1", "story-1.3.2"],
+        "effort_hours": 48,
+        "effort_weeks": 1,
+        "dependencies": ["gap-1.1", "story-1.2.1"],
+        "description": "Risk Management"
+      },
+      "wave_4": {
+        "stories": ["story-1.4.1", "story-1.4.2", "story-1.4.3"],
+        "effort_hours": 78,
+        "effort_weeks": 2,
+        "dependencies": ["gap-1.1", "story-1.1.4"],
+        "description": "Backtesting Engine"
+      },
+      "wave_5": {
+        "stories": ["story-1.5.1", "story-1.5.2", "story-1.5.3"],
+        "effort_hours": 75,
+        "effort_weeks": 2,
+        "dependencies": ["gap-1.1", "story-1.1.5", "story-1.1.2"],
+        "description": "Real-Time Odds Monitoring"
+      },
+      "wave_6": {
+        "stories": ["story-1.6.1", "story-1.6.2", "story-1.6.3"],
+        "effort_hours": 96,
+        "effort_weeks": 2,
+        "dependencies": ["story-1.6.1", "story-1.6.2"],
+        "description": "Testing & Quality Assurance"
+      },
+      "wave_7": {
+        "stories": ["story-1.7.1", "story-1.7.2", "story-1.7.3"],
+        "effort_hours": 62,
+        "effort_weeks": 2,
+        "dependencies": ["story-1.7.1"],
+        "description": "Performance Optimization"
+      },
+      "wave_8": {
+        "stories": ["story-1.8.1", "story-1.8.2", "story-1.8.3"],
+        "effort_hours": 41,
+        "effort_weeks": 1,
+        "dependencies": [],
+        "description": "Documentation"
+      }
+    },
+    "resource_allocation": {
+      "data-sports": {
+        "stories": ["story-1.1.1", "story-1.1.2", "story-1.1.3", "story-1.1.4", "story-1.1.5", "story-1.4.1", "story-1.5.1", "story-1.5.2"],
+        "effort_hours": 179,
+        "fte": 1.5
+      },
+      "strategy-sports": {
+        "stories": ["story-1.2.1", "story-1.2.2", "story-1.2.3", "story-1.3.1", "story-1.3.2"],
+        "effort_hours": 114,
+        "fte": 1.0
+      },
+      "live-betting": {
+        "stories": ["story-1.3.1", "story-1.3.2", "story-1.5.3"],
+        "effort_hours": 74,
+        "fte": 1.0
+      },
+      "analytics-sports": {
+        "stories": ["story-1.3.2", "story-1.4.2", "story-1.4.3"],
+        "effort_hours": 77,
+        "fte": 1.0
+      },
+      "infra-sports": {
+        "stories": ["story-1.1.3", "story-1.6.1", "story-1.6.2", "story-1.7.1", "story-1.8.1", "story-1.8.3"],
+        "effort_hours": 92,
+        "fte": 0.5
+      },
+      "ceo-bet": {
+        "stories": ["story-1.8.2"],
+        "effort_hours": 15,
+        "fte": 0.5
+      }
+    },
+    "dependencies": {
+      "gap-1.1": [],
+      "gap-1.2": ["gap-1.1"],
+      "gap-1.3": ["gap-1.1", "story-1.2.1"],
+      "gap-1.4": ["gap-1.1", "story-1.1.4"],
+      "gap-1.5": ["gap-1.1", "story-1.1.5", "story-1.1.2"],
+      "gap-1.6": ["story-1.6.1", "story-1.6.2"],
+      "gap-1.7": ["story-1.7.1"],
+      "gap-1.8": []
+    },
+    "dag_valid": true,
+    "estimated_completion_date": "2026-05-15",
+    "success_criteria": [
+      "All 8 gaps addressed with 15+ stories",
+      "120+ subtasks with F-score 1-3 majority",
+      "Dependencies form valid DAG",
+      "Waves identified for parallel execution",
+      "Resource allocation realistic and balanced",
+      "Total effort 462 hours (12 weeks)"
+    ]
+  }
+}

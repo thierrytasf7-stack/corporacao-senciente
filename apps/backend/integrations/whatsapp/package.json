@@ -1,0 +1,26 @@
+{
+    "name": "whatsapp-bridge",
+    "version": "1.0.0",
+    "description": "WhatsApp Listener - Conecta, escuta, loga mensagens",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "keywords": [
+        "whatsapp",
+        "baileys",
+        "cli",
+        "automation"
+    ],
+    "author": "Corporação Senciente",
+    "license": "MIT",
+    "dependencies": {
+        "@whiskeysockets/baileys": "^7.0.0-rc.9",
+        "express": "^5.2.1",
+        "qrcode": "^1.5.4"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    }
+}

@@ -1,0 +1,51 @@
+# Rapid Planning Cycle (Blitz Mode)
+# Used for: Small changes, quick features, tweaks
+# Skips: Discovery, Design, Validation (full)
+
+name: rapid-planning-cycle
+version: 1.0.0
+description: Planejamento rapido para mudancas pequenas - direto ao ponto
+trigger: "*plan-rapid"
+
+phases:
+  - id: strategy
+    name: "Quick Strategy"
+    agent: pm
+    skill: "Planejamento:PM-AIOS"
+    duration: "10-15min"
+    actions:
+      - command: "*create-epic"
+        output: "quick-epic.md"
+    gate: gate-strategy.md
+    handoff_to: architecture
+
+  - id: architecture
+    name: "Impact Assessment"
+    agent: architect
+    skill: "Planejamento:Architect-AIOS"
+    duration: "10-15min"
+    actions:
+      - command: "*assess-complexity"
+        output: "complexity.md"
+      - command: "*analyze-project-structure"
+        when: "needs code impact analysis"
+        output: "impact.md"
+    gate: gate-architecture.md
+    handoff_to: stories
+
+  - id: stories
+    name: "Quick Stories"
+    agent: sm
+    skill: "Planejamento:SM-AIOS"
+    duration: "10-15min"
+    actions:
+      - command: "*draft"
+        output: "story.md"
+      - command: "*story-checklist"
+        output: "validation.md"
+    gate: gate-stories.md
+
+success_criteria:
+  - "Story pronta para @dev em menos de 45min"
+  - "Complexidade avaliada"
+  - "Acceptance criteria claros"

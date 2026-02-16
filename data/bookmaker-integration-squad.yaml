@@ -1,0 +1,85 @@
+name: bookmaker-integration
+version: 1.0.0
+description: Squad de integração com múltiplas bookmakers para operações de apostas esportivas - conecta APIs, busca odds, monitora saldos e executa apostas
+team: BET-SPORTS
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: BookmakerIntegration
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - bookmaker-lead.md
+    - api-connector.md
+    - odds-fetcher.md
+    - balance-monitor.md
+  tasks:
+    # Lead Tasks
+    - api-connect.md
+    - odds-sync.md
+    - balance-check.md
+    - bet-execute.md
+    # API Connector Tasks
+    - api-auth.md
+    - api-request.md
+    - api-error-handling.md
+    # Odds Fetcher Tasks
+    - odds-fetch.md
+    - odds-parse.md
+    - odds-validate.md
+    # Balance Monitor Tasks
+    - balance-retrieve.md
+    - balance-alert.md
+  workflows:
+    - bookmaker-sync.yaml
+    - odds-monitoring.yaml
+    - balance-management.yaml
+  checklists:
+    - api-connection-checklist.md
+    - odds-validation-checklist.md
+    - balance-monitoring-checklist.md
+  templates:
+    - api-response-tmpl.md
+    - odds-report-tmpl.md
+    - balance-report-tmpl.md
+  tools:
+    - axios
+    - cheerio
+    - puppeteer
+  scripts: []
+
+config:
+  extends: extend
+  bookmakers:
+    focus: ["Bet365", "Betfair", "Pinnacle", "1xBet", "Betway"]
+    markets: ["1X2", "Over/Under", "Asian Handicap", "BTTS", "Correct Score"]
+  apiSettings:
+    timeout: 30000
+    retries: 3
+    retryDelay: 2000
+    rateLimit: 100
+  monitoring:
+    balanceThreshold: 100
+    oddsThreshold: 0.05
+    alertThreshold: 0.1
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+codebase:
+  module: modules/bookmaker-integration
+  frontend: modules/bookmaker-integration/frontend
+  backend: modules/bookmaker-integration/backend
+
+tags:
+  - bookmaker
+  - integration
+  - api
+  - odds
+  - balance
+  - betting

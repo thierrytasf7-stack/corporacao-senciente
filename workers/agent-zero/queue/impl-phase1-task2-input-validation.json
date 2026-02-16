@@ -1,0 +1,22 @@
+{
+  "id": "impl-phase1-task2-input-validation",
+  "agent": "dev",
+  "task_type": "implement-security-fix",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_read", "file_write", "shell_exec"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [
+    "modules/betting-platform/backend/services/QueryOptimizer.ts"
+  ],
+  "prompt": "CRITICAL FIX #2: Implement comprehensive input validation\n\nFILE: modules/betting-platform/backend/services/QueryOptimizer.ts:19-27\nISSUE: Missing validation for cache keys and JSON parsing\nRISK: Injection attacks, remote code execution\n\nIMPLEMENTATION:\n1. Read QueryOptimizer.ts methods (getBatch, get, set, etc.)\n2. Criar validateCacheKey(key: string) function:\n   - Whitelist: alphanumeric, dash, underscore, colon apenas\n   - Max length: 256 chars\n   - No null bytes, control chars\n   - Throw ValidationError se inválido\n3. Criar safeJSONParse(data: string) function:\n   - Try-catch wrapper\n   - Prevent prototype pollution\n   - Return null em vez de throw (graceful degradation)\n4. Aplicar validação em TODOS métodos:\n   - get(key) → validateCacheKey(key)\n   - set(key, value) → validateCacheKey(key)\n   - getBatch(keys) → keys.forEach(validateCacheKey)\n   - delete(key) → validateCacheKey(key)\n5. Wrap JSON.parse com safeJSONParse\n6. Add unit tests para validação\n\nACCEPTANCE CRITERIA:\n- validateCacheKey implementada com whitelist\n- safeJSONParse com try-catch\n- Validação aplicada em TODOS métodos\n- Prototype pollution prevented\n- Error handling graceful\n\nOUTPUT: Validated code + tests",
+  "acceptance_criteria": [
+    "validateCacheKey function com whitelist regex",
+    "safeJSONParse com try-catch implementado",
+    "Validação aplicada em get/set/delete/getBatch",
+    "Prototype pollution prevention",
+    "Error handling não quebra app"
+  ],
+  "max_tool_iterations": 15,
+  "self_review": true,
+  "quality_threshold": 8
+}

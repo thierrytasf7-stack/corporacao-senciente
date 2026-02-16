@@ -1,0 +1,1368 @@
+{
+  "sessionId": "session_1771150486197",
+  "botId": "v2-periodic-gen180-1771150486196",
+  "botName": "Hydra",
+  "generation": 180,
+  "genome": {
+    "id": "v2-periodic-gen180-1771150486196",
+    "name": "Hydra",
+    "generation": 180,
+    "parentIds": [
+      "v2-periodic-gen178-1771149888991",
+      "v2-periodic-gen175-1771148686704"
+    ],
+    "strategyMask": [
+      true,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true
+    ],
+    "strategyWeights": [
+      1.1962092096587127,
+      0.9662714599061816,
+      0.956122187310406,
+      1.3278689845131475,
+      1.3507237944252697,
+      1.3631598599203607,
+      0.2,
+      0.30788310088524673,
+      1.3596033116530581,
+      1.3626299735730367,
+      0.8081949016065122,
+      0.4844137664295882,
+      1.0679172412007698,
+      0.840859824129668,
+      0.2187849573916797,
+      0.5399261308090331,
+      1.0962274506606122,
+      0.19483832636354995,
+      0.3161002862434425,
+      1,
+      0.2579843192895431,
+      1.6807641161454903,
+      1.6805208342665754,
+      0.1,
+      0.42414084096878196,
+      0.2518177813160412,
+      0.1,
+      0.2035136280986114,
+      2,
+      0.1
+    ],
+    "consensus": {
+      "minAgreeingSignals": 2,
+      "maxOpposingSignals": 3,
+      "minWeightedStrength": 47.79755974477966,
+      "preferredDirection": "ANY"
+    },
+    "risk": {
+      "atrMultiplierTP": 2.3316004035442703,
+      "atrMultiplierSL": 0.9397098898126611,
+      "trailingStopATR": 0.973391196369715,
+      "flipExitThreshold": 7,
+      "leverage": 54,
+      "maxOpenPositions": 4,
+      "maxExposurePercent": 35
+    },
+    "betting": {
+      "basePercent": 5.132310696245957,
+      "winMultiplier": 1,
+      "lossMultiplier": 0.8603119710783425,
+      "maxBetPercent": 12,
+      "resetAfterLosses": 3
+    },
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "BNBUSDT",
+      "XRPUSDT"
+    ]
+  },
+  "startBankroll": 100,
+  "endBankroll": 99.57,
+  "peakBankroll": 101.58,
+  "totalTrades": 75,
+  "wins": 27,
+  "losses": 48,
+  "winRate": 36,
+  "maxDrawdown": 2.57,
+  "finalReason": "EVOLVED_OUT",
+  "startTime": "2026-02-15T10:14:46.197Z",
+  "endTime": "2026-02-15T10:44:52.137Z",
+  "trades": [
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2061.94,
+      "exitPrice": 2060.35,
+      "betAmount": 5.1060713803388715,
+      "pnlPercent": 4.16,
+      "pnlValue": 0.21,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.49,
+      "bankrollAfter": 99.7,
+      "timestamp": "2026-02-15T10:24:10.849Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 2,
+        "weightedStrength": 56.09654094959024,
+        "topStrategies": [
+          "macd_standard",
+          "stochastic_14",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "supertrend"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2060.37,
+      "exitPrice": 2060.38,
+      "betAmount": 5.116983639750827,
+      "pnlPercent": -0.03,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.7,
+      "bankrollAfter": 99.7,
+      "timestamp": "2026-02-15T10:24:13.431Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 2,
+        "weightedStrength": 56.09654094959024,
+        "topStrategies": [
+          "macd_standard",
+          "stochastic_14",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "supertrend"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5826,
+      "exitPrice": 1.5826,
+      "betAmount": 4.402143066124774,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.7,
+      "bankrollAfter": 99.7,
+      "timestamp": "2026-02-15T10:24:44.526Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 74.48834141351286,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5826,
+      "exitPrice": 1.5826,
+      "betAmount": 3.787216378186662,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.7,
+      "bankrollAfter": 99.7,
+      "timestamp": "2026-02-15T10:24:48.657Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 74.48834141351286,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5826,
+      "exitPrice": 1.5819,
+      "betAmount": 5.116914810108926,
+      "pnlPercent": 2.39,
+      "pnlValue": 0.12,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.7,
+      "bankrollAfter": 99.82,
+      "timestamp": "2026-02-15T10:24:59.104Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 74.48834141351286,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "BNBUSDT",
+      "side": "SHORT",
+      "entryPrice": 628.8,
+      "exitPrice": 628.83,
+      "betAmount": 5.123187325917862,
+      "pnlPercent": -0.26,
+      "pnlValue": -0.01,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.82,
+      "bankrollAfter": 99.81,
+      "timestamp": "2026-02-15T10:25:03.188Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 57.71199059203755,
+        "topStrategies": [
+          "macd_standard",
+          "stochastic_14",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "supertrend"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5818,
+      "exitPrice": 1.5818,
+      "betAmount": 5.123187325917862,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.81,
+      "bankrollAfter": 99.81,
+      "timestamp": "2026-02-15T10:25:03.469Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 74.48834141351286,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5818,
+      "exitPrice": 1.5818,
+      "betAmount": 3.79135751658721,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.81,
+      "bankrollAfter": 99.81,
+      "timestamp": "2026-02-15T10:25:06.748Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 74.48834141351286,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5819,
+      "exitPrice": 1.582,
+      "betAmount": 5.122509909595326,
+      "pnlPercent": -0.34,
+      "pnlValue": -0.02,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.81,
+      "bankrollAfter": 99.79,
+      "timestamp": "2026-02-15T10:25:14.047Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 74.48834141351286,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5857,
+      "exitPrice": 1.5882,
+      "betAmount": 5.121612459143568,
+      "pnlPercent": -8.51,
+      "pnlValue": -0.44,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.79,
+      "bankrollAfter": 99.36,
+      "timestamp": "2026-02-15T10:27:40.475Z",
+      "consensusSnapshot": {
+        "agreeingCount": 5,
+        "opposingCount": 2,
+        "weightedStrength": 59.620936814727145,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "trix_15",
+          "supertrend"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.36,
+      "exitPrice": 89.36,
+      "betAmount": 5.168130394838537,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.36,
+      "bankrollAfter": 99.36,
+      "timestamp": "2026-02-15T10:28:33.658Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 2,
+        "weightedStrength": 69.59619119714739,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_cross_9_21",
+          "ema_triple_9_21_55",
+          "supertrend"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.36,
+      "exitPrice": 89.36,
+      "betAmount": 5.099233885864752,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.36,
+      "bankrollAfter": 99.36,
+      "timestamp": "2026-02-15T10:28:40.505Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 54.98307182320465,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "stochastic_14",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.36,
+      "exitPrice": 89.35,
+      "betAmount": 5.099233885864752,
+      "pnlPercent": 0.6,
+      "pnlValue": 0.03,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.36,
+      "bankrollAfter": 99.39,
+      "timestamp": "2026-02-15T10:28:45.418Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 54.98307182320465,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "stochastic_14",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5889,
+      "exitPrice": 1.5892,
+      "betAmount": 5.099233885864752,
+      "pnlPercent": -1.02,
+      "pnlValue": -0.05,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.39,
+      "bankrollAfter": 99.33,
+      "timestamp": "2026-02-15T10:28:45.696Z",
+      "consensusSnapshot": {
+        "agreeingCount": 5,
+        "opposingCount": 3,
+        "weightedStrength": 49.03541252720998,
+        "topStrategies": [
+          "macd_standard",
+          "stochastic_14",
+          "rsi_7",
+          "supertrend",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.36,
+      "exitPrice": 89.32,
+      "betAmount": 4.3859969572161415,
+      "pnlPercent": 2.42,
+      "pnlValue": 0.11,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.33,
+      "bankrollAfter": 99.44,
+      "timestamp": "2026-02-15T10:29:10.558Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 54.98307182320465,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "stochastic_14",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.32,
+      "exitPrice": 89.32,
+      "betAmount": 4.390678056179607,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.44,
+      "bankrollAfter": 99.44,
+      "timestamp": "2026-02-15T10:29:18.573Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 54.98307182320465,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "stochastic_14",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.28,
+      "exitPrice": 89.28,
+      "betAmount": 3.7773528928823032,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.44,
+      "bankrollAfter": 99.44,
+      "timestamp": "2026-02-15T10:29:21.131Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 54.98307182320465,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "stochastic_14",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.28,
+      "exitPrice": 89.27,
+      "betAmount": 3.249701912734053,
+      "pnlPercent": 0.6,
+      "pnlValue": 0.02,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.44,
+      "bankrollAfter": 99.46,
+      "timestamp": "2026-02-15T10:29:53.830Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 54.98307182320465,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "stochastic_14",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.27,
+      "exitPrice": 89.27,
+      "betAmount": 3.2503442512174416,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.46,
+      "bankrollAfter": 99.46,
+      "timestamp": "2026-02-15T10:30:04.157Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 54.98307182320465,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "stochastic_14",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 2061.73,
+      "exitPrice": 2061.7,
+      "betAmount": 3.2503442512174416,
+      "pnlPercent": -0.08,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.46,
+      "bankrollAfter": 99.46,
+      "timestamp": "2026-02-15T10:30:04.441Z",
+      "consensusSnapshot": {
+        "agreeingCount": 3,
+        "opposingCount": 3,
+        "weightedStrength": 53.56675537722348,
+        "topStrategies": [
+          "macd_fast",
+          "roc_12",
+          "dpo"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 2061.04,
+      "exitPrice": 2061.19,
+      "betAmount": 2.4056372536455686,
+      "pnlPercent": 0.39,
+      "pnlValue": 0.01,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.46,
+      "bankrollAfter": 99.47,
+      "timestamp": "2026-02-15T10:31:10.724Z",
+      "consensusSnapshot": {
+        "agreeingCount": 3,
+        "opposingCount": 3,
+        "weightedStrength": 53.56675537722348,
+        "topStrategies": [
+          "macd_fast",
+          "roc_12",
+          "dpo"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 2061.2,
+      "exitPrice": 2061.2,
+      "betAmount": 2.405865930131,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.47,
+      "bankrollAfter": 99.47,
+      "timestamp": "2026-02-15T10:31:26.077Z",
+      "consensusSnapshot": {
+        "agreeingCount": 3,
+        "opposingCount": 3,
+        "weightedStrength": 53.56675537722348,
+        "topStrategies": [
+          "macd_fast",
+          "roc_12",
+          "dpo"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 2061.96,
+      "exitPrice": 2060.27,
+      "betAmount": 2.069795260501231,
+      "pnlPercent": -4.43,
+      "pnlValue": -0.09,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.47,
+      "bankrollAfter": 99.38,
+      "timestamp": "2026-02-15T10:33:50.793Z",
+      "consensusSnapshot": {
+        "agreeingCount": 3,
+        "opposingCount": 2,
+        "weightedStrength": 47.92621265508695,
+        "topStrategies": [
+          "macd_fast",
+          "supertrend",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.18,
+      "exitPrice": 89.17,
+      "betAmount": 2.4056372536455686,
+      "pnlPercent": 0.61,
+      "pnlValue": 0.01,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.38,
+      "bankrollAfter": 99.39,
+      "timestamp": "2026-02-15T10:34:28.695Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 54.98307182320465,
+        "topStrategies": [
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "stochastic_14",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.18,
+      "exitPrice": 89.24,
+      "betAmount": 1.7792904559344533,
+      "pnlPercent": -3.63,
+      "pnlValue": -0.06,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.39,
+      "bankrollAfter": 99.33,
+      "timestamp": "2026-02-15T10:34:35.730Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 67.33902426052758,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 2060.37,
+      "exitPrice": 2059.49,
+      "betAmount": 1.529749278872619,
+      "pnlPercent": -2.31,
+      "pnlValue": -0.04,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.33,
+      "bankrollAfter": 99.29,
+      "timestamp": "2026-02-15T10:35:11.840Z",
+      "consensusSnapshot": {
+        "agreeingCount": 3,
+        "opposingCount": 2,
+        "weightedStrength": 47.92621265508695,
+        "topStrategies": [
+          "macd_fast",
+          "supertrend",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "LONG",
+      "entryPrice": 70383.3,
+      "exitPrice": 70326.4,
+      "betAmount": 2.4056372536455686,
+      "pnlPercent": -4.37,
+      "pnlValue": -0.11,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.29,
+      "bankrollAfter": 99.18,
+      "timestamp": "2026-02-15T10:35:56.983Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 2,
+        "weightedStrength": 48.454196616017974,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_cross_9_21",
+          "roc_12",
+          "supertrend"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.23,
+      "exitPrice": 89.21,
+      "betAmount": 1.315594131904957,
+      "pnlPercent": 1.21,
+      "pnlValue": 0.02,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.18,
+      "bankrollAfter": 99.2,
+      "timestamp": "2026-02-15T10:36:25.901Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 67.33902426052758,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "LONG",
+      "entryPrice": 1.5877,
+      "exitPrice": 1.5854,
+      "betAmount": 1.7790296838284294,
+      "pnlPercent": -7.82,
+      "pnlValue": -0.14,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.2,
+      "bankrollAfter": 99.06,
+      "timestamp": "2026-02-15T10:37:07.936Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 70.32284965806838,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_cross_9_21",
+          "roc_12",
+          "supertrend"
+        ]
+      }
+    },
+    {
+      "symbol": "BNBUSDT",
+      "side": "LONG",
+      "entryPrice": 629,
+      "exitPrice": 628.28,
+      "betAmount": 1.315594131904957,
+      "pnlPercent": -6.18,
+      "pnlValue": -0.08,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.06,
+      "bankrollAfter": 98.98,
+      "timestamp": "2026-02-15T10:37:25.564Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 54.8604749387541,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_cross_9_21",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2057.26,
+      "exitPrice": 2057.29,
+      "betAmount": 3.759879579987018,
+      "pnlPercent": -0.08,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 98.98,
+      "bankrollAfter": 98.98,
+      "timestamp": "2026-02-15T10:37:30.152Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 2,
+        "weightedStrength": 51.23278682373323,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.21,
+      "exitPrice": 89.15,
+      "betAmount": 5.091296094079647,
+      "pnlPercent": 3.63,
+      "pnlValue": 0.18,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 98.98,
+      "bankrollAfter": 99.16,
+      "timestamp": "2026-02-15T10:38:12.161Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 67.33902426052758,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "LONG",
+      "entryPrice": 1.5823,
+      "exitPrice": 1.583,
+      "betAmount": 5.0893182022481565,
+      "pnlPercent": 2.39,
+      "pnlValue": 0.12,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.16,
+      "bankrollAfter": 99.28,
+      "timestamp": "2026-02-15T10:38:18.120Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 48.7931415654087,
+        "topStrategies": [
+          "macd_standard",
+          "ema_cross_9_21",
+          "roc_12",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "LONG",
+      "entryPrice": 1.583,
+      "exitPrice": 1.5832,
+      "betAmount": 5.095558071886648,
+      "pnlPercent": 0.68,
+      "pnlValue": 0.03,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.28,
+      "bankrollAfter": 99.32,
+      "timestamp": "2026-02-15T10:38:22.123Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 48.25321543459967,
+        "topStrategies": [
+          "macd_standard",
+          "ema_cross_9_21",
+          "roc_12",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "LONG",
+      "entryPrice": 1.5832,
+      "exitPrice": 1.583,
+      "betAmount": 5.0973422883219826,
+      "pnlPercent": -0.68,
+      "pnlValue": -0.03,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.32,
+      "bankrollAfter": 99.28,
+      "timestamp": "2026-02-15T10:38:29.202Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 3,
+        "weightedStrength": 48.25321543459967,
+        "topStrategies": [
+          "macd_standard",
+          "ema_cross_9_21",
+          "roc_12",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.15,
+      "exitPrice": 89.15,
+      "betAmount": 5.0893182022481565,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.28,
+      "bankrollAfter": 99.28,
+      "timestamp": "2026-02-15T10:38:36.070Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 61.59638192386108,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.15,
+      "exitPrice": 89.15,
+      "betAmount": 3.771409177184592,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.28,
+      "bankrollAfter": 99.28,
+      "timestamp": "2026-02-15T10:38:40.168Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 61.59638192386108,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2056.83,
+      "exitPrice": 2057.09,
+      "betAmount": 3.771409177184592,
+      "pnlPercent": -0.68,
+      "pnlValue": -0.03,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.28,
+      "bankrollAfter": 99.26,
+      "timestamp": "2026-02-15T10:38:49.378Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 2,
+        "weightedStrength": 51.23278682373323,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.19,
+      "exitPrice": 89.18,
+      "betAmount": 5.095557672613501,
+      "pnlPercent": 0.61,
+      "pnlValue": 0.03,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.26,
+      "bankrollAfter": 99.29,
+      "timestamp": "2026-02-15T10:38:56.359Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 61.59638192386108,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.18,
+      "exitPrice": 89.17,
+      "betAmount": 5.095819791127153,
+      "pnlPercent": 0.61,
+      "pnlValue": 0.03,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.29,
+      "bankrollAfter": 99.32,
+      "timestamp": "2026-02-15T10:38:57.962Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 61.59638192386108,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.17,
+      "exitPrice": 89.17,
+      "betAmount": 5.097403419567037,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.32,
+      "bankrollAfter": 99.32,
+      "timestamp": "2026-02-15T10:39:04.263Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 61.59638192386108,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.15,
+      "exitPrice": 89.16,
+      "betAmount": 4.3853571832692015,
+      "pnlPercent": -0.61,
+      "pnlValue": -0.03,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.32,
+      "bankrollAfter": 99.29,
+      "timestamp": "2026-02-15T10:39:11.902Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 61.59638192386108,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5807,
+      "exitPrice": 1.5804,
+      "betAmount": 3.7717662564556544,
+      "pnlPercent": 1.02,
+      "pnlValue": 0.04,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.29,
+      "bankrollAfter": 99.33,
+      "timestamp": "2026-02-15T10:39:35.051Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 59.313629085048426,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2056.34,
+      "exitPrice": 2056.49,
+      "betAmount": 3.77323462544409,
+      "pnlPercent": -0.39,
+      "pnlValue": -0.01,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.33,
+      "bankrollAfter": 99.32,
+      "timestamp": "2026-02-15T10:40:01.524Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 52.57768816077563,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5804,
+      "exitPrice": 1.5797,
+      "betAmount": 3.77323462544409,
+      "pnlPercent": 2.39,
+      "pnlValue": 0.09,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.32,
+      "bankrollAfter": 99.41,
+      "timestamp": "2026-02-15T10:40:17.312Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 59.313629085048426,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5797,
+      "exitPrice": 1.5798,
+      "betAmount": 3.2486225025844018,
+      "pnlPercent": -0.34,
+      "pnlValue": -0.01,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.41,
+      "bankrollAfter": 99.4,
+      "timestamp": "2026-02-15T10:40:23.496Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 59.313629085048426,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5824,
+      "exitPrice": 1.5823,
+      "betAmount": 2.7945166124602947,
+      "pnlPercent": 0.34,
+      "pnlValue": 0.01,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.4,
+      "bankrollAfter": 99.41,
+      "timestamp": "2026-02-15T10:41:29.147Z",
+      "consensusSnapshot": {
+        "agreeingCount": 8,
+        "opposingCount": 2,
+        "weightedStrength": 60.08246100932305,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5823,
+      "exitPrice": 1.5822,
+      "betAmount": 2.7947847273820683,
+      "pnlPercent": 0.34,
+      "pnlValue": 0.01,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.41,
+      "bankrollAfter": 99.42,
+      "timestamp": "2026-02-15T10:41:36.252Z",
+      "consensusSnapshot": {
+        "agreeingCount": 8,
+        "opposingCount": 2,
+        "weightedStrength": 60.08246100932305,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.23,
+      "exitPrice": 89.13,
+      "betAmount": 2.7950528849739094,
+      "pnlPercent": 6.05,
+      "pnlValue": 0.17,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.42,
+      "bankrollAfter": 99.58,
+      "timestamp": "2026-02-15T10:41:40.340Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 1,
+        "weightedStrength": 67.99248278483027,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "supertrend"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5822,
+      "exitPrice": 1.5823,
+      "betAmount": 2.7950528849739094,
+      "pnlPercent": -0.34,
+      "pnlValue": -0.01,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.58,
+      "bankrollAfter": 99.57,
+      "timestamp": "2026-02-15T10:41:40.609Z",
+      "consensusSnapshot": {
+        "agreeingCount": 8,
+        "opposingCount": 2,
+        "weightedStrength": 60.08246100932305,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_triple_9_21_55",
+          "ema_cross_9_21",
+          "roc_12"
+        ]
+      }
+    }
+  ],
+  "fitness": 26.592557805840645,
+  "activeStrategies": [
+    "ema_cross_9_21",
+    "ema_triple_9_21_55",
+    "macd_standard",
+    "macd_fast",
+    "supertrend",
+    "rsi_14",
+    "rsi_7",
+    "stochastic_14",
+    "roc_12",
+    "trix_15",
+    "mfi_14",
+    "bollinger_20_2",
+    "volume_spike",
+    "dpo"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "aura-trigger-monitor",
+  "version": "1.0.0",
+  "description": "Monitor de gatilhos automáticos para o Sistema AURA",
+  "main": "dist/trigger-monitor.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/trigger-monitor.js",
+    "dev": "ts-node src/trigger-monitor.ts",
+    "build:trigger": "tsc src/trigger-monitor.ts --outDir dist --target es2020 --module commonjs --esModuleInterop --allowSyntheticDefaultImports --skipLibCheck"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  }
+}

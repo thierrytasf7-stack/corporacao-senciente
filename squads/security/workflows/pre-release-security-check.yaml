@@ -1,0 +1,58 @@
+name: pre-release-security-check
+description: Security gate para pre-release - verifica que nao ha vulnerabilidades novas
+version: 1.0.0
+trigger: "Pre-release security gate"
+agent: security-engineer
+timeout: 10min
+
+phases:
+  - name: quick-scan
+    description: Scan rapido focado em vulnerabilidades criticas
+    tasks:
+      - task: sec-scan-dependencies.md
+        params:
+          target: root
+      - task: sec-scan-secrets.md
+        params:
+          scope: files
+    outputs:
+      - quick_findings
+
+  - name: regression-check
+    description: Comparar com baseline para detectar novas vulnerabilidades
+    depends_on: [quick-scan]
+    tasks:
+      - task: sec-regression-check.md
+    outputs:
+      - regression_result
+
+  - name: critical-checks
+    description: Verificacoes criticas obrigatorias
+    depends_on: [quick-scan]
+    parallel_with: [regression-check]
+    tasks:
+      - action: "Verify: zero critical/high dependency vulnerabilities"
+      - action: "Verify: zero hardcoded secrets"
+      - action: "Verify: no new SAST critical findings"
+    outputs:
+      - critical_check_result
+
+  - name: gate-decision
+    description: Decisao final do gate de seguranca
+    depends_on: [regression-check, critical-checks]
+    decision:
+      all_pass:
+        result: PASS
+        action: "Release autorizado do ponto de vista de seguranca"
+      new_medium_low:
+        result: WARN
+        action: "Release autorizado com tracking de medium/low"
+      new_high:
+        result: FAIL
+        action: "BLOQUEAR release - fix high vulnerabilities first"
+      new_critical:
+        result: FAIL
+        action: "BLOQUEAR release - fix critical IMMEDIATELY"
+      secret_found:
+        result: FAIL
+        action: "BLOQUEAR - rotate secret, then fix code"

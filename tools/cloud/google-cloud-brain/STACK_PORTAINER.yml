@@ -1,0 +1,80 @@
+# ==============================================================================
+# CORPORACAO SENCIENTE - Stack para Portainer
+# Copie e cole este conteúdo no Portainer > Stacks > Add Stack > Web editor
+# ==============================================================================
+# 
+# INSTRUÇÕES:
+# 1. Substitua TAILSCALE_IP pelo IP real do seu servidor Google Cloud no Tailscale
+# 2. (Opcional) Adicione TELEGRAM_BOT_TOKEN e DISCORD_WEBHOOK_URL se tiver
+# 3. Deploy!
+# ==============================================================================
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: senciente-redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --maxmemory 128mb
+      --maxmemory-policy allkeys-lru
+      --save ""
+      --appendonly no
+      --tcp-backlog 511
+      --timeout 0
+      --tcp-keepalive 300
+    networks:
+      - senciente-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 150M
+        reservations:
+          memory: 100M
+    volumes:
+      - redis_data:/data
+
+  maestro:
+    image: ghcr.io/thierrytasf7-stack/diana-corporacao-senciente-maestro:latest
+    container_name: senciente-maestro
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - HEARTBEAT_INTERVAL=30
+      - HEARTBEAT_MISS_THRESHOLD=3
+      - TELEGRAM_BOT_TOKEN=
+      - DISCORD_WEBHOOK_URL=
+      - TAILSCALE_IP=100.78.145.65
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - senciente-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+  senciente-network:
+    driver: bridge

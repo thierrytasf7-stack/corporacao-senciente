@@ -1,0 +1,32 @@
+name: ds-client-onboarding
+description: Onboarding de cliente para Design System customizado
+agent: ds-architect
+trigger: "*client-system"
+
+steps:
+  - id: brief
+    description: "Coletar brief do cliente"
+    template: ds-client-brief-tmpl.md
+
+  - id: brand-analysis
+    description: "Analisar assets existentes do cliente"
+    depends_on: [brief]
+
+  - id: create-system
+    task: ds-create-client-system.md
+    description: "Criar DS baseado no _base + brand do cliente"
+    depends_on: [brand-analysis]
+
+  - id: themes
+    task: ds-create-theme.md
+    description: "Criar temas light + dark com brand"
+    depends_on: [create-system]
+
+  - id: documentation
+    task: ds-document-guidelines.md
+    description: "Gerar docs especificos do cliente"
+    depends_on: [create-system, themes]
+
+  - id: registration
+    description: "Registrar em library/systems/client-{name}/"
+    depends_on: [documentation]

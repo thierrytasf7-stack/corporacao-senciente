@@ -1,0 +1,19 @@
+{
+  "id": "impl-phase2-task3-cashout",
+  "agent": "dev",
+  "task_type": "implement-feature",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_write"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [],
+  "prompt": "CASHOUT VALIDATION\n\nCreate: modules/betting-platform/backend/services/CashoutService.ts\n\nBasic service with:\n1. validateCashout(betId, currentOdds)\n   - Check bet exists\n   - Check bet is active (not settled)\n   - Calculate cashout value\n   - Return {allowed, value, reason}\n\n2. processCashout(betId, userId)\n   - Validate\n   - Update bet status to 'cashed_out'\n   - Return result\n\nSimple validation logic.",
+  "acceptance_criteria": [
+    "CashoutService.ts criado",
+    "validateCashout implementado",
+    "processCashout implementado",
+    "Status checks incluídos"
+  ],
+  "max_tool_iterations": 10,
+  "self_review": false,
+  "quality_threshold": 7
+}

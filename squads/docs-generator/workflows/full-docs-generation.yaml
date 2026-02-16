@@ -1,0 +1,62 @@
+name: full-docs-generation
+description: Pipeline completo de geracao e validacao de documentacao
+version: 1.0.0
+trigger: "Full docs generation pipeline"
+agent: docs-engineer
+
+phases:
+  - name: audit
+    description: Auditar estado atual da documentacao
+    tasks:
+      - task: docs-audit.md
+    outputs:
+      - coverage_report
+      - gaps_list
+
+  - name: generation
+    description: Gerar docs para gaps identificados
+    depends_on: [audit]
+    tasks:
+      - action: "Gerar ADRs pendentes"
+      - action: "Gerar API docs para endpoints nao documentados"
+      - action: "Gerar code docs para modulos prioritarios"
+    outputs:
+      - generated_docs
+
+  - name: changelog
+    description: Gerar changelog atualizado
+    depends_on: [audit]
+    parallel_with: [generation]
+    tasks:
+      - task: docs-changelog.md
+    outputs:
+      - changelog
+
+  - name: index-rebuild
+    description: Regenerar index com novos docs
+    depends_on: [generation, changelog]
+    tasks:
+      - task: docs-index.md
+    outputs:
+      - updated_index
+
+  - name: validation
+    description: Validar todos os docs
+    depends_on: [index-rebuild]
+    tasks:
+      - task: docs-validate.md
+        params:
+          scope: full
+          checks: all
+    outputs:
+      - validation_report
+
+  - name: i18n-sync
+    description: Sincronizar traducoes
+    depends_on: [validation]
+    tasks:
+      - task: docs-sync-i18n.md
+        params:
+          target_lang: all
+    outputs:
+      - sync_report

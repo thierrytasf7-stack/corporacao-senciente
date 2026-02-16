@@ -1,0 +1,30 @@
+{
+  "_comment": "TEMPLATE para invocar SQUAD completo via Agent Zero",
+  "_comment2": "SUBSTITUIR: {squad-name}, {lead-agent}, {objetivo}, {task}",
+
+  "id": "invoke-squad-{squad-name}-{task-id}",
+  "task_type": "invoke-aios-squad",
+  "squad": "{squad-name}",
+  "lead_agent": "{lead-agent-id}",
+
+  "aios_squad_path": "squads/{squad-name}/squad.yaml",
+  "aios_agent_path": "squads/{squad-name}/agents/{lead-agent}.md",
+
+  "context_files": [
+    "squads/{squad-name}/squad.yaml",
+    "{contexto-relevante-1}",
+    "{contexto-relevante-2}"
+  ],
+
+  "tools_required": ["file_read", "db_query", "skill_call"],
+
+  "prompt": "INVOCA SQUAD {squad-name} ({lead-agent} coordena equipe).\n\nLeia aios_squad_path e aios_agent_path.\n\nABSORVA:\n- Squad structure: {N} agentes coordenados\n- Lead: {lead-agent} (orquestrador)\n- Process: {workflow-principal}\n\nUse context_files para estado atual.\n\nTASK:\n{steps do workflow, ex:\n1. Lead faz briefing\n2. Agente1 executa sub-task1\n3. Agente2 executa sub-task2\n4. Lead consolida e decide}\n\nCRITERIA:\n{criterios específicos do squad}\n\nOUTPUT: {formato de output do squad}",
+
+  "acceptance_criteria": [
+    "{criterio-1}",
+    "{criterio-2}",
+    "{criterio-3}"
+  ],
+
+  "max_tool_iterations": 20
+}

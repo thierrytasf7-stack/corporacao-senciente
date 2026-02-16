@@ -1,0 +1,139 @@
+============================================================================
+MARKETING AGENT - CREDENCIAIS E VARIÁVEIS DE AMBIENTE
+============================================================================
+Este arquivo contém TODAS as credenciais necessárias para o Marketing Agent
+Estas mesmas variáveis também estão no env.local principal para uso geral
+
+IMPORTANTE: Este arquivo é apenas para referência/documentação
+O sistema usa o env.local principal como fonte única da verdade
+============================================================================
+
+----------------------------------------------------------------------------
+GOOGLE ADS API - Publicidade Google
+----------------------------------------------------------------------------
+Função: Criação e gestão de campanhas Google Ads
+Uso: Tools create_campaign, optimize_budget, analyze_roi do Marketing Agent
+Limites: Free até $50/dia em campanhas (quando em produção)
+Status: ✅ OAuth Client criado, Developer Token configurado - Aguardando Refresh Token
+Nível de Acesso: ⚠️ Conta de Teste - UPGRADE PENDENTE para Nível Básico/Produção
+
+Documentação: docs/GUIA_CONFIGURACAO_GOOGLE_ADS_API.md
+Pendências: docs/PENDENCIAS_GOOGLE_ADS.md
+
+Conta Google Ads:
+  - Nome: tasf-admin-ads
+  - Email: thierry.tasf7@gmail.com
+  - Customer ID: 845-800-9247
+  - Tipo: Manager Account (MC-845-800-9247)
+
+OAuth 2.0 Credentials:
+  - Tipo: Desktop App
+  - Criado em: 15/12/2025 21:08:55 GMT-3
+  - Status: Ativado
+
+Developer Token:
+  - Token: W9NkV9F5zg50Zgk4NR_2-A
+  - Status: Ativo
+  - Nível: Test Account (precisa upgrade para produção)
+
+Como obter Refresh Token:
+  1. Execute: npm run google-ads:setup
+  2. Autorize no navegador
+  3. Token será salvo automaticamente no env.local
+
+VARIÁVEIS:
+----------
+GOOGLE_ADS_CUSTOMER_ID=845-800-9247
+GOOGLE_ADS_DEVELOPER_TOKEN=W9NkV9F5zg50Zgk4NR_2-A
+GOOGLE_ADS_CLIENT_ID=393659950592-kmemsdnh6tce7cu656u1s8ld9c38llns.apps.googleusercontent.com
+GOOGLE_ADS_CLIENT_SECRET=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
+GOOGLE_ADS_REFRESH_TOKEN=
+GOOGLE_ADS_ACCESS_TOKEN=
+GOOGLE_ADS_TOKEN_EXPIRY=
+
+----------------------------------------------------------------------------
+FACEBOOK/META ADS API - Publicidade Facebook/Instagram
+----------------------------------------------------------------------------
+Função: Criação e gestão de campanhas Facebook/Instagram Ads
+Uso: Tools create_campaign, optimize_budget do Marketing Agent
+Status: ⚠️ Aguardando configuração (Meta Business Account)
+
+Como configurar:
+  1. Criar Meta Business Account: https://business.facebook.com
+  2. Criar App no Meta for Developers: https://developers.facebook.com
+  3. Adicionar "Marketing API" ao app
+  4. Criar System User e gerar token
+  5. Obter Ad Account ID
+
+Documentação: https://developers.facebook.com/docs/marketing-apis
+
+VARIÁVEIS:
+----------
+META_ADS_APP_ID=
+META_ADS_APP_SECRET=
+META_ADS_ACCESS_TOKEN=
+META_ADS_ACCOUNT_ID=
+
+----------------------------------------------------------------------------
+GOOGLE ANALYTICS 4 - Métricas e Conversões (COMPARTILHADO)
+----------------------------------------------------------------------------
+Função: Métricas de campanhas e análise de conversão
+Uso: Tool analyze_roi do Marketing Agent
+Status: ✅ Configurado (compartilhado com Copywriting Agent)
+
+Nota: Reutiliza credenciais do Copywriting Agent (mesmo OAuth)
+Ver seção Google Analytics 4 no env.local principal
+
+Client ID: 393659950592-j87063e0guq3iilqpuf2hepppqrq62cl.apps.googleusercontent.com
+(Ver env.local para credenciais completas)
+
+----------------------------------------------------------------------------
+GOOGLE SEARCH CONSOLE API - SEO e Performance (COMPARTILHADO)
+----------------------------------------------------------------------------
+Função: Análise de SEO, keywords, posições de ranking
+Uso: Tool analyze_seo do Marketing Agent
+Status: ✅ Configurado (compartilhado com SEO Agent)
+
+Nota: Reutiliza OAuth do Google Analytics (mesmo Client ID)
+Ver seção Google Analytics 4 no env.local principal
+
+URL do site: (configurar quando necessário)
+GOOGLE_SEARCH_CONSOLE_SITE_URL=https://your-site.com
+
+============================================================================
+NOTAS IMPORTANTES
+============================================================================
+
+1. Este arquivo serve como DOCUMENTAÇÃO de referência
+2. As variáveis devem estar sincronizadas com env.local principal
+3. NUNCA commite este arquivo com credenciais reais no Git
+4. Para produção, use variáveis de ambiente do sistema
+5. Sempre atualize AMBOS os arquivos quando adicionar novas credenciais:
+   - env.local (principal - usado pelo sistema)
+   - docs/FICHA-TECNICA-AGENTES/marketing/credenciais-marketing.txt (documentação)
+
+============================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUV Score - Zara Instagram</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .subtitle { font-size: 1.2em; opacity: 0.9; }
+        .score-hero { background: #f8f9fa; padding: 60px 40px; text-align: center; border-bottom: 3px solid #667eea; }
+        .score-circle { width: 200px; height: 200px; margin: 0 auto 30px; border-radius: 50%; background: conic-gradient(#4CAF50 0% 75%, #e0e0e0 75% 100%); display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .score-circle::before { content: ''; position: absolute; width: 160px; height: 160px; background: white; border-radius: 50%; }
+        .score-number { position: relative; z-index: 1; font-size: 4em; font-weight: bold; color: #4CAF50; }
+        .score-label { font-size: 1.5em; color: #666; margin-top: 10px; }
+        .score-status { display: inline-block; background: #4CAF50; color: white; padding: 10px 30px; border-radius: 30px; font-weight: bold; margin-top: 20px; }
+        .criteria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 40px; }
+        .criterion { background: #f8f9fa; border-radius: 10px; padding: 25px; border-left: 5px solid #667eea; transition: transform 0.2s; }
+        .criterion:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .criterion h3 { color: #1e3c72; margin-bottom: 15px; font-size: 1.2em; }
+        .score-bar { background: #e0e0e0; height: 30px; border-radius: 15px; overflow: hidden; margin: 10px 0; }
+        .score-fill { height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: bold; transition: width 0.5s; }
+        .criterion p { color: #666; line-height: 1.6; margin-top: 10px; }
+        .radar-section { padding: 40px; background: #f8f9fa; text-align: center; }
+        .radar-section h2 { color: #1e3c72; margin-bottom: 30px; font-size: 2em; }
+        .radar-container { max-width: 600px; margin: 0 auto; position: relative; }
+        .radar-chart { width: 100%; height: auto; }
+        .footer { background: #1e3c72; color: white; padding: 30px; text-align: center; }
+        .footer p { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 PUV Score Analysis</h1>
+            <p class="subtitle">Proposta Única de Valor - Instagram @zara</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Data: 13 de Fevereiro de 2026</p>
+        </div>
+
+        <div class="score-hero">
+            <div class="score-circle">
+                <div class="score-number">15</div>
+            </div>
+            <p class="score-label">Pontuação Total (de 20)</p>
+            <span class="score-status">🟢 BOM - Marca Bem Estabelecida</span>
+        </div>
+
+        <div class="criteria-grid">
+            <div class="criterion">
+                <h3>1. Clareza da Proposta de Valor</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 100%;">2/2</div>
+                </div>
+                <p>✅ Excelente: "Fast fashion que traduz tendências de passarela em looks acessíveis." Proposta clara e bem comunicada.</p>
+            </div>
+
+            <div class="criterion">
+                <h3>2. Diferenciação Competitiva</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 100%;">2/2</div>
+                </div>
+                <p>✅ Excelente: Supply chain ágil (novas coleções 2x/semana), posicionamento premium vs H&M, exclusividade via estoque limitado.</p>
+            </div>
+
+            <div class="criterion">
+                <h3>3. Público-Alvo Definido</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 100%;">2/2</div>
+                </div>
+                <p>✅ Excelente: 18-35 anos, urbanos, fashion-forward, renda média-alta. Segmentação clara e mensurável.</p>
+            </div>
+
+            <div class="criterion">
+                <h3>4. Comunicação dos Benefícios</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 50%;">1/2</div>
+                </div>
+                <p>⚠️ Bom: Benefícios implícitos (tendência, preço, atualização constante) mas não explícitos no Instagram. Foco visual > textual.</p>
+            </div>
+
+            <div class="criterion">
+                <h3>5. Prova Social/Credibilidade</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 100%;">2/2</div>
+                </div>
+                <p>✅ Excelente: Marca consolidada do Grupo Inditex, presença global, reconhecimento massivo, liderança em fast fashion.</p>
+            </div>
+
+            <div class="criterion">
+                <h3>6. Call-to-Action Claro</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 50%;">1/2</div>
+                </div>
+                <p>⚠️ Bom: Instagram funciona mais como vitrine visual. CTAs implícitos (link na bio), mas não há urgência forte ou direcionamento explícito.</p>
+            </div>
+
+            <div class="criterion">
+                <h3>7. Consistência Visual/Marca</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 100%;">2/2</div>
+                </div>
+                <p>✅ Excelente: Identidade visual forte, estética minimalista e clean, paleta coerente, fotografia profissional de alta qualidade.</p>
+            </div>
+
+            <div class="criterion">
+                <h3>8. Presença Digital Integrada</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 50%;">1/2</div>
+                </div>
+                <p>⚠️ Bom: Instagram + site + app bem integrados, mas falta conteúdo interativo/engajamento direto no Instagram (Stories, Reels limitados).</p>
+            </div>
+
+            <div class="criterion">
+                <h3>9. Experiência do Usuário</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 100%;">2/2</div>
+                </div>
+                <p>✅ Excelente: Feed organizado, navegação visual intuitiva, estética premium, carregamento rápido, link direto para e-commerce.</p>
+            </div>
+
+            <div class="criterion">
+                <h3>10. Potencial de Conversão</h3>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: 0%;">0/2</div>
+                </div>
+                <p>❌ Fraco: Instagram da Zara funciona como branding/awareness, não conversão direta. Sem product tags, shopping integrado ou promoções visíveis.</p>
+            </div>
+        </div>
+
+        <div class="radar-section">
+            <h2>Radar de Desempenho PUV</h2>
+            <div class="radar-container">
+                <svg class="radar-chart" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Grid circles -->
+                    <circle cx="200" cy="200" r="160" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                    <circle cx="200" cy="200" r="120" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                    <circle cx="200" cy="200" r="80" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                    <circle cx="200" cy="200" r="40" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+
+                    <!-- Axes -->
+                    <line x1="200" y1="200" x2="200" y2="40" stroke="#ccc" stroke-width="1"/>
+                    <line x1="200" y1="200" x2="351" y2="276" stroke="#ccc" stroke-width="1"/>
+                    <line x1="200" y1="200" x2="294" y2="349" stroke="#ccc" stroke-width="1"/>
+                    <line x1="200" y1="200" x2="106" y2="349" stroke="#ccc" stroke-width="1"/>
+                    <line x1="200" y1="200" x2="49" y2="276" stroke="#ccc" stroke-width="1"/>
+
+                    <!-- Data polygon (15/20 = 75% average) -->
+                    <polygon points="200,40 351,124 280,294 120,294 49,124" fill="rgba(76, 175, 80, 0.3)" stroke="#4CAF50" stroke-width="2"/>
+
+                    <!-- Data points -->
+                    <circle cx="200" cy="40" r="5" fill="#4CAF50"/>
+                    <circle cx="351" cy="124" r="5" fill="#4CAF50"/>
+                    <circle cx="280" cy="294" r="5" fill="#4CAF50"/>
+                    <circle cx="120" cy="294" r="5" fill="#4CAF50"/>
+                    <circle cx="49" cy="124" r="5" fill="#4CAF50"/>
+
+                    <!-- Labels -->
+                    <text x="200" y="30" text-anchor="middle" font-size="12" fill="#1e3c72">Clareza</text>
+                    <text x="365" y="120" text-anchor="start" font-size="12" fill="#1e3c72">Diferenciação</text>
+                    <text x="300" y="315" text-anchor="start" font-size="12" fill="#1e3c72">Público</text>
+                    <text x="100" y="315" text-anchor="end" font-size="12" fill="#1e3c72">Comunicação</text>
+                    <text x="35" y="120" text-anchor="end" font-size="12" fill="#1e3c72">Prova Social</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Diana Corporação Senciente</strong> - PUV Score Analysis System</p>
+            <p>Gerado em: 13/02/2026 18:26</p>
+        </div>
+    </div>
+</body>
+</html>

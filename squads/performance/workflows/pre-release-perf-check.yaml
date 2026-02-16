@@ -1,0 +1,54 @@
+name: pre-release-perf-check
+description: Performance gate rapido antes de release. Verifica budgets e regressoes.
+version: 1.0.0
+trigger: pre-release # Acionado por Prometheus antes de *ship
+
+phases:
+  - name: quick-metrics
+    description: Coletar metricas rapidas (< 2 min)
+    agent: performance-engineer
+    steps:
+      - action: bundle-size-check
+        description: Verificar bundle size vs budget
+        budget: bundle_size_max_kb <= 250
+      - action: memory-snapshot
+        description: Capturar memory usage atual
+        budget: heap_max_mb <= 512
+      - action: api-health-ping
+        description: Verificar response time basico
+        budget: api_p95_ms <= 500
+
+  - name: regression-check
+    description: Comparar com baseline
+    agent: performance-engineer
+    task: perf-regression-check.md
+    depends_on: [quick-metrics]
+
+  - name: budget-verification
+    description: Verificar compliance com todos budgets
+    agent: performance-engineer
+    task: perf-set-budget.md
+    action: verify
+    depends_on: [quick-metrics]
+
+  - name: gate-decision
+    description: Decidir se release pode prosseguir
+    depends_on: [regression-check, budget-verification]
+    gate:
+      checklist: perf-gate-release.md
+      on_pass: approve-release
+      on_fail: block-release-with-report
+
+output:
+  - release-perf-scorecard.md
+  - gate-result (PASS/FAIL)
+
+decision_matrix:
+  all_pass: "RELEASE APPROVED - Performance within budgets"
+  warnings_only: "RELEASE APPROVED WITH WARNINGS - Monitor post-deploy"
+  any_critical: "RELEASE BLOCKED - Fix critical findings first"
+  regression_detected: "RELEASE BLOCKED - Performance regression detected"
+
+notification:
+  on_pass: prometheus # Notify CEO-Desenvolvimento
+  on_fail: [prometheus, dev] # Notify CEO + Dev team

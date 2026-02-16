@@ -1,0 +1,1 @@
+C:\Users\User\Desktop\Diana-Corporacao-Senciente\rust_components\hive-guardian\target\release\hive-guardian.exe: C:\Users\User\Desktop\Diana-Corporacao-Senciente\rust_components\hive-guardian\src\main.rs

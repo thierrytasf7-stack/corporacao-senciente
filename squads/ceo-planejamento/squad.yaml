@@ -1,0 +1,148 @@
+name: ceo-planejamento
+version: 1.0.0
+description: CEO de Planejamento - Orquestra autonomamente toda a equipe de planejamento AIOS (PM, PO, Architect, Analyst, UX, SM) para transformar ideias em planos executaveis de excelencia suprema
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: CeoPlanning
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - ceo-planejamento.md
+  tasks:
+    # Orchestration Flows
+    - ceo-plan-greenfield.md
+    - ceo-plan-brownfield.md
+    - ceo-plan-rapid.md
+    - ceo-plan-design-sprint.md
+    # Phase Management
+    - ceo-phase-discovery.md
+    - ceo-phase-strategy.md
+    - ceo-phase-architecture.md
+    - ceo-phase-design.md
+    - ceo-phase-stories.md
+    - ceo-phase-validation.md
+    # Utilities
+    - ceo-status-report.md
+    - ceo-delegate.md
+    - ceo-quality-gate.md
+  workflows:
+    - full-planning-cycle.yaml
+    - rapid-planning-cycle.yaml
+    - design-sprint-cycle.yaml
+  checklists:
+    - gate-discovery.md
+    - gate-strategy.md
+    - gate-architecture.md
+    - gate-design.md
+    - gate-stories.md
+    - gate-final.md
+  templates:
+    - masterplan-tmpl.md
+    - phase-report-tmpl.md
+    - delegation-brief-tmpl.md
+  tools:
+    - context7
+    - sequential-thinking
+  scripts: []
+
+config:
+  extends: extend
+  executionModes:
+    blitz:
+      description: "Planejamento rapido para features pequenas (1-2 stories)"
+      phases: [strategy, architecture, stories]
+      estimatedTime: "30-60min"
+      agents: [pm, architect, sm]
+    standard:
+      description: "Planejamento completo para features medias (3-8 stories)"
+      phases: [discovery, strategy, architecture, design, stories, validation]
+      estimatedTime: "2-4h"
+      agents: [analyst, pm, architect, ux, po, sm]
+    comprehensive:
+      description: "Planejamento exaustivo para projetos grandes (epics, novos modulos)"
+      phases: [discovery, strategy, architecture, design, stories, validation]
+      estimatedTime: "4-8h"
+      agents: [analyst, pm, architect, ux, po, sm]
+      extras: [competitive-analysis, design-system-audit, spec-pipeline]
+  phases:
+    discovery:
+      agent: analyst
+      outputs: [project-brief, market-research, competitive-analysis]
+      gate: gate-discovery.md
+    strategy:
+      agent: pm
+      outputs: [prd, epic-structure, prioritization]
+      gate: gate-strategy.md
+    architecture:
+      agent: architect
+      outputs: [architecture-doc, tech-stack, complexity-assessment]
+      gate: gate-architecture.md
+    design:
+      agent: ux-design-expert
+      outputs: [wireframes, front-end-spec, design-tokens]
+      gate: gate-design.md
+    stories:
+      agents: [po, sm]
+      outputs: [validated-backlog, detailed-stories, sprint-plan]
+      gate: gate-stories.md
+    validation:
+      agent: ceo
+      outputs: [masterplan, quality-report, execution-readiness]
+      gate: gate-final.md
+  qualityDimensions:
+    - performance
+    - scalability
+    - security
+    - accessibility
+    - ux-excellence
+    - ui-polish
+    - maintainability
+    - testability
+    - cost-efficiency
+    - time-to-market
+  decisionFramework:
+    prioritization: RICE
+    estimation: fibonacci
+    riskAssessment: impact-probability-matrix
+    tradeoffs: quality-speed-scope-triangle
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+# Planning agents this CEO orchestrates (AIOS core agents)
+orchestrates:
+  - agent: analyst
+    skill: "Planejamento:Analyst-AIOS"
+    when: "Discovery, research, competitive analysis, brainstorming"
+  - agent: pm
+    skill: "Planejamento:PM-AIOS"
+    when: "PRD, epic creation, prioritization, strategy"
+  - agent: architect
+    skill: "Planejamento:Architect-AIOS"
+    when: "System design, tech stack, API design, complexity"
+  - agent: ux-design-expert
+    skill: "Planejamento:UX-AIOS"
+    when: "User research, wireframes, design system, components"
+  - agent: po
+    skill: "Planejamento:PO-AIOS"
+    when: "Backlog management, story validation, sprint planning"
+  - agent: sm
+    skill: "Planejamento:SM-AIOS"
+    when: "Story creation, story checklist, branch management"
+
+tags:
+  - planning
+  - orchestration
+  - ceo
+  - strategy
+  - autonomous
+  - product
+  - architecture
+  - ux
+  - management

@@ -1,0 +1,40 @@
+You are an expert TypeScript developer. Create a production-quality TypeScript file with these STRICT requirements:
+
+## File: string-utils.ts
+
+## Functions (5 total, all exported as named exports):
+
+### 1. capitalize(str: string): string
+- Capitalize first letter, rest unchanged
+- EDGE CASES: empty string returns '', single char works, already uppercase unchanged
+- Must handle: null-safe (empty string guard)
+
+### 2. slugify(str: string): string
+- Convert to URL-friendly slug: lowercase, hyphens for spaces, no special chars
+- MUST: trim whitespace, collapse multiple hyphens, strip leading/trailing hyphens
+- Example: '  Hello World! ' → 'hello-world'
+
+### 3. truncate(str: string, maxLen: number, suffix?: string): string
+- Truncate at maxLen INCLUDING the suffix length (default '...')
+- CRITICAL: truncate('Hello World', 8) must return 'Hello...' (8 chars total, NOT 'Hello Wo...')
+- If str.length <= maxLen, return original
+- If maxLen < suffix.length, return suffix truncated to maxLen
+
+### 4. countWords(str: string): number
+- Count words separated by whitespace
+- CRITICAL: countWords('') MUST return 0 (not 1)
+- Handle multiple spaces, tabs, leading/trailing whitespace
+
+### 5. reverseWords(str: string): string
+- Reverse word order, preserve each word's characters
+- Trim and collapse whitespace in result
+
+## Quality Requirements:
+- Full JSDoc with @param, @returns, @example tags on every function
+- TypeScript strict mode compatible
+- All edge cases handled (empty string, whitespace-only, boundary values)
+- Add commented test section at bottom using console.assert() with descriptive messages
+- Minimum 4 assert tests per function (20+ total)
+- Tests MUST verify edge cases, not just happy path
+- NO console.log tests - use console.assert ONLY
+- Export all functions as named exports

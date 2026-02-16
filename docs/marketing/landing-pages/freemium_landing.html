@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporação Senciente - Automatize Seu Negócio com IA | Comece Grátis</title>
+    <meta name="description" content="Automatize 80% das tarefas manuais do seu negócio com IA. 15 agentes especializados, setup em 5 minutos. Freemium para sempre.">
+    <meta name="keywords" content="automação business IA, SaaS AI, automação empresarial, IA para gestão">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://corporacao-senciente.com/">
+    <meta property="og:title" content="Corporação Senciente - Seu Negócio Automatizado com IA">
+    <meta property="og:description" content="Trabalhe 2 horas por dia enquanto nossos 15 agentes IA cuidam do resto.">
+    <meta property="og:image" content="https://corporacao-senciente.com/og-image.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://corporacao-senciente.com/">
+    <meta property="twitter:title" content="Corporação Senciente - Seu Negócio Automatizado com IA">
+    <meta property="twitter:description" content="Trabalhe 2 horas por dia enquanto nossos 15 agentes IA cuidam do resto.">
+    <meta property="twitter:image" content="https://corporacao-senciente.com/twitter-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        .neon-border {
+            border: 1px solid #00f0ff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+
+    <!-- Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-sm border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">CS</span>
+                    </div>
+                    <span class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                        Corporação Senciente
+                    </span>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-300 hover:text-cyan-400 transition-colors">Recursos</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-cyan-400 transition-colors">Preços</a>
+                    <a href="#testimonials" class="text-gray-300 hover:text-cyan-400 transition-colors">Depoimentos</a>
+                    <a href="#contact" class="text-gray-300 hover:text-cyan-400 transition-colors">Contato</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="/login" class="text-gray-300 hover:text-cyan-400 transition-colors">Entrar</a>
+                    <a href="#cta" class="bg-gradient-to-r from-cyan-500 to-blue-600 px-4 py-2 rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all">
+                        Começar Grátis
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-24 pb-16 px-4">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="animate-float">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent">
+                        Trabalhe 2 Horas
+                    </span>
+                    <br>
+                    <span class="text-gray-300">por Dia</span>
+                </h1>
+
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Enquanto nossos <strong class="text-cyan-400">15 agentes IA especializados</strong> automatizam
+                    <strong class="text-purple-400">80% das tarefas manuais</strong> do seu negócio.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                    <a href="#cta" class="bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105 transition-all inline-block">
+                        🚀 Começar Grátis - Sem Cartão
+                    </a>
+                    <a href="#demo" class="border border-cyan-400 text-cyan-400 px-8 py-4 rounded-lg font-semibold hover:bg-cyan-400 hover:text-gray-900 transition-all">
+                        ▶️ Ver Demo (2 min)
+                    </a>
+                </div>
+
+                <!-- Social Proof -->
+                <div class="flex flex-col items-center space-y-4">
+                    <p class="text-gray-400 text-sm">Junte-se a 500+ empresas já automatizadas</p>
+                    <div class="flex items-center space-x-8 opacity-60">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-cyan-400">500+</div>
+                            <div class="text-sm text-gray-400">Empresas</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-400">80%</div>
+                            <div class="text-sm text-gray-400">Automação</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-400">2h</div>
+                            <div class="text-sm text-gray-400">Trabalho/Dia</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section class="py-16 px-4 bg-gray-800">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-red-400">
+                ⏰ Você Ainda Está Perdendo Tempo Com Isso?
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-8 mt-12">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">📧</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Emails Manuais</h3>
+                    <p class="text-gray-400">Respondendo 50+ emails por dia sobre as mesmas coisas</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">📊</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Relatórios Repetitivos</h3>
+                    <p class="text-gray-400">Criando os mesmos dashboards toda semana</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">🤝</span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Reuniões Desnecessárias</h3>
+                    <p class="text-gray-400">Meetings de status que podiam ser automáticos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section class="py-20 px-4 bg-gradient-to-b from-gray-900 to-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="text-cyan-400">Nossos 15 Agentes IA</span> Fazem Tudo Por Você
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Cada agente é especialista em uma área específica, trabalhando 24/7 para automatizar seu negócio.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div class="bg-gray-800/50 rounded-lg p-6 text-center hover:bg-gray-700/50 transition-all">
+                    <div class="w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <span class="text-cyan-400 text-xl">🎯</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">Marketing</h3>
+                    <p class="text-sm text-gray-400">Campanhas automáticas, leads scoring, social media</p>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg p-6 text-center hover:bg-gray-700/50 transition-all">
+                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <span class="text-purple-400 text-xl">💰</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">Vendas</h3>
+                    <p class="text-sm text-gray-400">Lead nurturing, follow-ups, pipeline management</p>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg p-6 text-center hover:bg-gray-700/50 transition-all">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <span class="text-blue-400 text-xl">⚙️</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">Automação</h3>
+                    <p class="text-sm text-gray-400">Workflows inteligentes, triggers, condições</p>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg p-6 text-center hover:bg-gray-700/50 transition-all">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <span class="text-green-400 text-xl">📊</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">Analytics</h3>
+                    <p class="text-sm text-gray-400">Relatórios automáticos, insights, dashboards</p>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg p-6 text-center hover:bg-gray-700/50 transition-all">
+                    <div class="w-12 h-12 bg-yellow-500/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                        <span class="text-yellow-400 text-xl">🎯</span>
+                    </div>
+                    <h3 class="font-semibold mb-2">CRM</h3>
+                    <p class="text-sm text-gray-400">Customer management, support tickets, feedback</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="py-16 px-4 bg-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Empresas Que Já Transformaram Seus Negócios</h2>
+                <p class="text-gray-400">Resultados reais de clientes usando nossos agentes IA</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-cyan-500 rounded-full flex items-center justify-center mr-3">
+                            <span class="text-white font-bold">TC</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold">TechCorp Brasil</div>
+                            <div class="text-sm text-gray-400">500 funcionários</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "Cortamos 200 horas de trabalho manual por mês. Nossos agentes cuidam de tudo enquanto dormimos."
+                    </p>
+                    <div class="text-cyan-400 font-semibold">📈 +300% produtividade</div>
+                </div>
+
+                <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center mr-3 mb-4">
+                        <span class="text-white font-bold">SM</span>
+                    </div>
+                    <div>
+                        <div class="font-semibold">Sara Marketing</div>
+                        <div class="text-sm text-gray-400">Agência de marketing</div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "De 10 campanhas por mês para 50+. Os agentes criam conteúdo e gerenciam anúncios automaticamente."
+                    </p>
+                    <div class="text-purple-400 font-semibold">📈 +400% campanhas</div>
+                </div>
+
+                <div class="bg-gray-900 rounded-lg p-6 border border-gray-700">
+                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3 mb-4">
+                        <span class="text-white font-bold">FS</span>
+                    </div>
+                    <div>
+                        <div class="font-semibold">FinTech Solutions</div>
+                        <div class="text-sm text-gray-400">Startup fintech</div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "Automatizamos todo o processo de compliance e relatórios. Zero erros humanos."
+                    </p>
+                    <div class="text-blue-400 font-semibold">📈 +250% eficiência</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 px-4 bg-gray-900">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-6">Comece Grátis, Escale Conforme Cresce</h2>
+                <p class="text-xl text-gray-300">
+                    Freemium para sempre. Pague apenas quando precisar de mais potência.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Freemium -->
+                <div class="bg-gray-800 rounded-lg p-8 border-2 border-cyan-400 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-cyan-400 text-gray-900 px-4 py-2 rounded-full font-bold text-sm">
+                            MAIS POPULAR
+                        </span>
+                    </div>
+
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-2">Freemium</h3>
+                        <div class="text-4xl font-bold text-cyan-400 mb-2">GRÁTIS</div>
+                        <p class="text-gray-400">Para sempre</p>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>3 campanhas por mês</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>10 leads por mês</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>2 automações simultâneas</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Suporte comunidade</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Dashboard básico</span>
+                        </li>
+                    </ul>
+
+                    <a href="#cta" class="block w-full bg-cyan-500 text-gray-900 py-3 rounded-lg font-bold text-center hover:bg-cyan-400 transition-colors">
+                        Começar Grátis
+                    </a>
+                </div>
+
+                <!-- Pro -->
+                <div class="bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg p-8 border border-gray-700">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-2">Pro</h3>
+                        <div class="text-4xl font-bold mb-2">
+                            <span class="line-through text-gray-500 text-2xl">$119</span>
+                            <span class="text-purple-400">$99</span>
+                        </div>
+                        <p class="text-gray-400">por mês</p>
+                        <div class="bg-purple-500/20 text-purple-300 px-3 py-1 rounded text-sm mt-2">
+                            Economize 17%
+                        </div>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Campanhas ilimitadas</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Leads ilimitados</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>10 automações simultâneas</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Analytics avançados</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>API access</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Suporte prioritário</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-500 transition-colors">
+                        Upgrade para Pro
+                    </button>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="bg-gray-800 rounded-lg p-8 border border-gray-700">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
+                        <div class="text-4xl font-bold mb-2">$999</div>
+                        <p class="text-gray-400">por mês</p>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Tudo do Pro</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Automações ilimitadas</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>White-label</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Consultoria dedicada</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>SLA garantido</span>
+                        </li>
+                        <li class="flex items-center">
+                            <span class="text-green-400 mr-3">✅</span>
+                            <span>Suporte 24/7</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full bg-gray-700 text-white py-3 rounded-lg font-bold hover:bg-gray-600 transition-colors">
+                        Falar com Vendas
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="py-20 px-4 bg-gradient-to-r from-cyan-900 to-blue-900">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                Pronto Para Automatizar Seu Negócio?
+            </h2>
+
+            <p class="text-xl text-gray-300 mb-8">
+                Junte-se a 500+ empresas que já transformaram seus processos com IA.
+                <strong class="text-cyan-400">Setup em 5 minutos. Resultados imediatos.</strong>
+            </p>
+
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-8 max-w-md mx-auto mb-8">
+                <h3 class="text-2xl font-bold mb-4">Comece Grátis Agora</h3>
+
+                <form class="space-y-4">
+                    <input
+                        type="email"
+                        placeholder="Seu melhor email"
+                        class="w-full px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        placeholder="Nome da empresa"
+                        class="w-full px-4 py-3 rounded-lg bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                        required
+                    >
+
+                    <button
+                        type="submit"
+                        class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 py-3 rounded-lg font-bold text-lg hover:shadow-lg hover:shadow-cyan-500/25 transform hover:scale-105 transition-all"
+                    >
+                        🚀 Criar Conta Grátis
+                    </button>
+                </form>
+
+                <p class="text-sm text-gray-400 mt-4">
+                    Sem cartão de crédito • Setup em 5 minutos • Cancele a qualquer momento
+                </p>
+            </div>
+
+            <div class="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-400">
+                <span class="flex items-center">
+                    <span class="text-green-400 mr-2">🔒</span>
+                    SSL Encrypted
+                </span>
+                <span class="flex items-center">
+                    <span class="text-green-400 mr-2">🇧🇷</span>
+                    Dados no Brasil
+                </span>
+                <span class="flex items-center">
+                    <span class="text-green-400 mr-2">⚡</span>
+                    99.9% Uptime
+                </span>
+                <span class="flex items-center">
+                    <span class="text-green-400 mr-2">🎯</span>
+                    GDPR Compliant
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">CS</span>
+                        </div>
+                        <span class="text-xl font-bold">Corporação Senciente</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Automatizando o futuro dos negócios com IA avançada.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Produto</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Recursos</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Preços</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Segurança</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">API</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Empresa</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Sobre</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Carreiras</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Contato</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold mb-4">Suporte</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Centro de Ajuda</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Comunidade</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Status</a></li>
+                        <li><a href="#" class="hover:text-cyan-400 transition-colors">Feedback</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    © 2026 Corporação Senciente. Todos os direitos reservados.
+                </p>
+
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                        <span class="sr-only">Twitter</span>
+                        🐦
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                        <span class="sr-only">LinkedIn</span>
+                        💼
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                        <span class="sr-only">GitHub</span>
+                        💻
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = this.querySelector('input[type="email"]').value;
+            const company = this.querySelector('input[type="text"]').value;
+
+            // Track conversion
+            gtag('event', 'freemium_signup', {
+                event_category: 'engagement',
+                event_label: 'landing_page_cta'
+            });
+
+            // Show success message
+            this.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-4xl mb-4">🎉</div>
+                    <h3 class="text-xl font-bold mb-2 text-green-400">Conta criada com sucesso!</h3>
+                    <p class="text-gray-300 mb-4">Enviamos instruções de setup para ${email}</p>
+                    <a href="/dashboard" class="inline-block bg-cyan-500 text-gray-900 px-6 py-3 rounded-lg font-bold hover:bg-cyan-400 transition-colors">
+                        Acessar Dashboard
+                    </a>
+                </div>
+            `;
+
+            // Here you would typically send data to your backend
+            console.log('Freemium signup:', { email, company });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    <!-- Additional CSS for animations -->
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+    </style>
+</body>
+</html>

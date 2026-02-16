@@ -1,0 +1,58 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)",
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "WebSearch",
+      "WebFetch(*)",
+      "Task(*)",
+      "Skill(*)",
+      "NotebookEdit(*)",
+      "mcp__*"
+    ],
+    "deny": [],
+    "defaultMode": "dontAsk"
+  },
+  "autonomousMode": true,
+  "skipPermissionPrompts": true,
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:/Users/User/Desktop/Diana-Corporacao-Senciente", "C:/Users/User/Desktop", "C:/Users/User/Documents"]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://postgres:21057788@localhost:5432/postgres"]
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
+      }
+    },
+    "sentry": {
+      "command": "npx",
+      "args": ["-y", "@sentry/mcp-server@latest"],
+      "env": {
+        "SENTRY_AUTH_TOKEN": "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"
+      }
+    }
+  }
+}

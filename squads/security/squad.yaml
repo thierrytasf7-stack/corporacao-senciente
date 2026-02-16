@@ -1,0 +1,123 @@
+name: security
+version: 1.0.0
+description: Squad de Security Engineering - SAST, dependency scanning, secret detection, OWASP Top 10, API security, threat modeling e security gates. Especialista que garante que o software e SEGURO de verdade.
+team: Desenvolvimento
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: Security
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - security-engineer.md
+  tasks:
+    # Scanning
+    - sec-audit-full.md
+    - sec-scan-sast.md
+    - sec-scan-dependencies.md
+    - sec-scan-secrets.md
+    # Checks
+    - sec-check-headers.md
+    - sec-check-auth.md
+    - sec-check-injection.md
+    - sec-check-api.md
+    # Actions
+    - sec-fix-vulnerability.md
+    - sec-threat-model.md
+    # Reporting
+    - sec-report.md
+    - sec-regression-check.md
+  workflows:
+    - full-security-audit.yaml
+    - pre-release-security-check.yaml
+  checklists:
+    - sec-gate-code.md
+    - sec-gate-dependencies.md
+    - sec-gate-api.md
+    - sec-gate-release.md
+  templates:
+    - sec-audit-report-tmpl.md
+    - sec-threat-model-tmpl.md
+  tools:
+    - context7
+  scripts: []
+
+config:
+  extends: extend
+  # Security thresholds (defaults - can be overridden per project)
+  thresholds:
+    dependencies:
+      critical_max: 0
+      high_max: 0
+      medium_max: 5
+      low_max: 20
+      audit_frequency: "every commit"
+    secrets:
+      tolerance: 0
+      scan_scope: "full repo history"
+      allowed_patterns: [".env.example", "*.test.*"]
+    code:
+      eval_tolerance: 0
+      innerHTML_tolerance: 0
+      sql_injection_tolerance: 0
+      command_injection_tolerance: 0
+    headers:
+      require_csp: true
+      require_hsts: true
+      require_x_frame_options: true
+      require_x_content_type: true
+      cors_whitelist_only: true
+    api:
+      require_rate_limiting: true
+      require_input_validation: true
+      require_authentication: true
+      max_request_size_mb: 10
+
+  # Existing infrastructure to leverage (NOT duplicate)
+  existing_tools:
+    security_utils: ".aios-core/core/utils/security-utils.js"
+    security_checker: ".aios-core/infrastructure/scripts/security-checker.js"
+    security_validation_checklist: ".aios-core/checklists/security-validation.md"
+    security_scan_task: ".aios-core/development/tasks/security-scan.md"
+    qa_security_checklist: ".aios-core/development/tasks/qa-security-checklist.md"
+    eslint_security_config: ".aios-core/product/templates/eslintrc-security.json"
+    rls_patterns: ".aios-core/data/rls-security-patterns.md"
+    security_tests: "tests/security/core-security.test.js"
+    dependabot: ".github/dependabot.yml"
+    permissions_system: ".aios-core/core/permissions/"
+
+  # Severity classification (CVSS-aligned)
+  severity:
+    critical: "Exploitable remotely, no auth needed - RCE, SQL injection, auth bypass"
+    high: "Exploitable with some conditions - XSS stored, SSRF, secret exposure"
+    medium: "Requires specific conditions - XSS reflected, missing headers, weak crypto"
+    low: "Informational or hardening - verbose errors, outdated deps (no CVE)"
+
+dependencies:
+  node:
+    - eslint-plugin-security
+    - secretlint
+  python: []
+  squads: []
+
+# Integration with CEO-Desenvolvimento
+reports_to: ceo-desenvolvimento
+triggered_by:
+  - "Prometheus aciona quando story tem tag security-critical"
+  - "Pre-release security gate"
+  - "Qualquer story com autenticacao, API publica, dados sensiveis"
+  - "User solicita audit de seguranca"
+  - "Dependabot alerta vulnerabilidade critica"
+
+tags:
+  - security
+  - sast
+  - dependency-scanning
+  - secret-detection
+  - owasp
+  - vulnerability
+  - threat-modeling
+  - api-security

@@ -1,0 +1,28 @@
+{
+  "_comment": "TEMPLATE para invocar @dev (Dex) via Agent Zero",
+  "_comment2": "SUBSTITUIR: {task-id}, {objetivo}, {steps}, {criterios}",
+
+  "id": "invoke-dev-{task-id}",
+  "task_type": "invoke-aios-agent",
+  "agent": "dev",
+  "aios_agent_path": ".aios-core/development/agents/dev.md",
+
+  "context_files": [
+    "src/{modulo}/existing-code.ts",
+    "tests/{modulo}/existing-tests.test.ts",
+    "docs/stories/active/{story}.md"
+  ],
+
+  "tools_required": ["file_read", "file_write", "skill_call"],
+
+  "prompt": "INVOCA @dev (Dex) para {objetivo}.\n\nLeia aios_agent_path e ABSORVA:\n- Persona: Desenvolvedor full-stack pragmático\n- Style: Test-driven, código limpo, TypeScript strict\n- Process: Implementação → Testes → Docs → Review\n\nUse context_files como base.\n\nTASK:\n1. {step-1}\n2. {step-2}\n3. {step-3}\n4. Auto-review com criteria abaixo\n\nCRITERIA:\n- Código TypeScript strict (sem any)\n- Testes unitários com >80% coverage\n- Imports absolutos (@/)\n- Docs atualizadas\n- Padrões AIOS seguidos\n\nOUTPUT: Lista arquivos criados/modificados com summary",
+
+  "acceptance_criteria": [
+    "Código implementado seguindo AIOS standards",
+    "Testes com coverage >80%",
+    "Docs atualizadas",
+    "Auto-review passou todos os criteria"
+  ],
+
+  "max_tool_iterations": 15
+}

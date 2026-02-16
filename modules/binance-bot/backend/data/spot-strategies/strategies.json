@@ -1,0 +1,98 @@
+[
+  {
+    "id": "spot_rsi_momentum_001",
+    "name": "RSI Momentum 30min",
+    "description": "📋 Detalhamento da Lógica de Força do RSI Momentum 1min\n\n🎯 CONCEITO CENTRAL:\nA estratégia RSI Momentum combina reversão de sobrevenda com aceleração de momentum. Identifica pontos onde o preço estava muito baixo (RSI < 30) e agora está acelerando para cima.\n\n🔍 ANÁLISE TÉCNICA DETALHADA:\n• RSI(14): Indicador de momentum relativo (0-100)\n• Sobrevenda: RSI < 30 (preço muito baixo)\n• Reversão: RSI cruza acima de 30\n• Momentum: Aceleração do RSI em direção a 50+\n• Confirmação: RSI > 50 com tendência crescente\n\n📊 ESCALA DE FORÇA (0-100%):\n• 0-20%: RSI > 70 (sobrecompra) → Aguardar correção\n• 21-40%: RSI 50-70 (neutro-alto) → Monitorar\n• 41-60%: RSI 30-50 (recuperação) → Preparar entrada\n• 61-80%: RSI < 30 + cruzamento → Sinal forte\n• 81-95%: RSI < 30 + momentum crescente → Sinal muito forte\n• 96-100%: RSI < 30 + aceleração + confirmação → Execução imediata\n\n🎯 CONDIÇÕES DE COMPRA ESPECÍFICAS:\n1. RSI(14) < 30 (zona de sobrevenda)\n2. RSI cruza acima de 30 (reversão)\n3. Momentum crescente (ROC > 0)\n4. Confirmação com RSI > 50 em 3 velas\n5. Volume crescente (confirmação)\n6. Stop Loss: Último swing low\n7. Take Profit: R:R ≥ 1.5\n\n⚡ GATILHOS DE EXECUÇÃO:\n• Sinal ≥ 90%: Execução automática imediata\n• Sinal 80-89%: Execução com confirmação adicional\n• Sinal < 80%: Aguardar melhores condições\n\n🔄 GESTÃO DE RISCO:\n• Cooldown: 15 minutos por moeda\n• Apenas mercados favoritos\n• Verificação de histórico recente\n• Progressão lógica baseada em condições de mercado",
+    "isActive": true,
+    "isFavorite": false,
+    "type": "CONSERVATIVE",
+    "tradingType": "SPOT",
+    "riskLevel": "LOW",
+    "createdAt": "2025-10-09T16:14:01.150Z",
+    "updatedAt": "2025-10-10T03:03:28.961Z"
+  },
+  {
+    "id": "spot_bollinger_squeeze_002",
+    "name": "Bollinger Squeeze 1min",
+    "description": "📋 Detalhamento da Lógica de Força do Bollinger Squeeze 1min\n\n🎯 CONCEITO CENTRAL:\nA estratégia Bollinger Squeeze identifica períodos de baixa volatilidade (compressão das bandas) seguidos de breakouts explosivos. Baseada no princípio de que após consolidação, o preço tende a se mover significativamente.\n\n🔍 ANÁLISE TÉCNICA DETALHADA:\n• Bandas de Bollinger (20, 2): SMA de 20 períodos ± 2 desvios padrão\n• Compressão: Largura das bandas < 70% da média histórica\n• Posição do Preço: Localização dentro das bandas (0-100%)\n• Breakout: Rompimento da banda superior com confirmação de volume\n\n📊 ESCALA DE FORÇA (0-100%):\n• 0-20%: Bandas normais, preço no meio → Aguardar compressão\n• 21-40%: Compressão leve (1.5-2.0x), preço central → Monitorar\n• 41-60%: Compressão moderada (2.0-2.5x), preço baixo → Preparar entrada\n• 61-80%: Compressão forte (2.5-3.0x), preço < 30% → Sinal forte\n• 81-95%: Compressão extrema (3.0x+), preço < 20% → Sinal muito forte\n• 96-100%: Breakout confirmado com volume → Execução imediata\n\n🎯 CONDIÇÕES DE COMPRA ESPECÍFICAS:\n1. Compressão das bandas ≥ 2.0x (bandas muito próximas)\n2. Preço na parte inferior < 30% das bandas\n3. Volume atual ≥ 1.5x do volume médio (20 períodos)\n4. Confirmação de breakout da banda superior\n5. RSI(14) < 70 (evitar sobrecompra)\n6. Stop Loss: Banda inferior\n7. Take Profit: R:R ≥ 2.0 (risco:retorno)\n\n⚡ GATILHOS DE EXECUÇÃO:\n• Sinal ≥ 90%: Execução automática imediata\n• Sinal 80-89%: Execução com confirmação adicional\n• Sinal < 80%: Aguardar melhores condições\n\n🔄 GESTÃO DE RISCO:\n• Cooldown: 15 minutos por moeda\n• Apenas mercados favoritos\n• Verificação de histórico recente\n• Progressão lógica baseada em condições de mercado",
+    "isActive": true,
+    "isFavorite": false,
+    "type": "MODERATE",
+    "tradingType": "SPOT",
+    "riskLevel": "MEDIUM",
+    "createdAt": "2025-10-09T16:14:01.150Z",
+    "updatedAt": "2025-10-09T16:14:01.150Z"
+  },
+  {
+    "id": "spot_macd_crossover_003",
+    "name": "MACD Crossover 1min",
+    "description": "📋 Detalhamento da Lógica de Força do MACD Crossover 1min\n\n🎯 CONCEITO CENTRAL:\nA estratégia MACD Crossover identifica cruzamentos bullish entre a linha MACD e a linha de sinal, especialmente quando acompanhados de momentum crescente e posição acima da linha zero.\n\n🔍 ANÁLISE TÉCNICA DETALHADA:\n• MACD(12, 26, 9): Diferença entre EMA rápida e lenta\n• Linha de Sinal: EMA(9) da linha MACD\n• Histograma: Diferença entre MACD e Signal\n• Cruzamento Bullish: MACD cruza acima da Signal\n• Confirmação: Posição acima de zero + histograma crescente\n\n📊 ESCALA DE FORÇA (0-100%):\n• 0-20%: MACD < Signal, abaixo de zero → Aguardar reversão\n• 21-40%: MACD < Signal, acima de zero → Monitorar\n• 41-60%: MACD > Signal, abaixo de zero → Preparar entrada\n• 61-80%: MACD > Signal, acima de zero → Sinal forte\n• 81-95%: Cruzamento + acima de zero + histograma crescente → Sinal muito forte\n• 96-100%: Cruzamento perfeito + confirmação → Execução imediata\n\n🎯 CONDIÇÕES DE COMPRA ESPECÍFICAS:\n1. MACD cruza acima da Signal (cruzamento bullish)\n2. MACD > 0 (acima da linha zero)\n3. Histograma crescente (momentum positivo)\n4. Confirmação com volume crescente\n5. RSI(14) < 70 (evitar sobrecompra)\n6. Stop Loss: Último swing low\n7. Take Profit: R:R ≥ 1.8\n\n⚡ GATILHOS DE EXECUÇÃO:\n• Sinal ≥ 90%: Execução automática imediata\n• Sinal 80-89%: Execução com confirmação adicional\n• Sinal < 80%: Aguardar melhores condições\n\n🔄 GESTÃO DE RISCO:\n• Cooldown: 15 minutos por moeda\n• Apenas mercados favoritos\n• Verificação de histórico recente\n• Progressão lógica baseada em condições de mercado",
+    "isActive": true,
+    "isFavorite": false,
+    "type": "MODERATE",
+    "tradingType": "SPOT",
+    "riskLevel": "MEDIUM",
+    "createdAt": "2025-10-09T16:14:01.150Z",
+    "updatedAt": "2025-10-09T16:14:01.150Z"
+  },
+  {
+    "id": "spot_volume_breakout_004",
+    "name": "Volume Breakout 1min",
+    "description": "📋 Detalhamento da Lógica de Força do Volume Breakout 1min\n\n🎯 CONCEITO CENTRAL:\nA estratégia Volume Breakout identifica movimentos de preço acompanhados por volume anormalmente alto, indicando forte interesse de compra e potencial continuação da tendência.\n\n🔍 ANÁLISE TÉCNICA DETALHADA:\n• Volume Atual vs Volume Médio (20 períodos)\n• Breakout de Preço: Rompimento de máximas recentes\n• Fator de Volume: Volume atual / Volume médio\n• Confirmação: Preço + Volume + Momentum\n\n📊 ESCALA DE FORÇA (0-100%):\n• 0-20%: Volume baixo (< 1.0x) → Aguardar atividade\n• 21-40%: Volume normal (1.0-1.5x) → Monitorar\n• 41-60%: Volume alto (1.5-2.0x) → Preparar entrada\n• 61-80%: Volume muito alto (2.0-3.0x) → Sinal forte\n• 81-95%: Volume extremo (3.0x+) → Sinal muito forte\n• 96-100%: Breakout + volume extremo → Execução imediata\n\n🎯 CONDIÇÕES DE COMPRA ESPECÍFICAS:\n1. Volume atual ≥ 2.0x do volume médio (20 períodos)\n2. Preço rompe máxima dos últimos 20 períodos\n3. Confirmação com momentum crescente\n4. RSI(14) < 70 (evitar sobrecompra)\n5. Volume crescente em 3 velas consecutivas\n6. Stop Loss: Suporte recente\n7. Take Profit: R:R ≥ 2.2\n\n⚡ GATILHOS DE EXECUÇÃO:\n• Sinal ≥ 90%: Execução automática imediata\n• Sinal 80-89%: Execução com confirmação adicional\n• Sinal < 80%: Aguardar melhores condições\n\n🔄 GESTÃO DE RISCO:\n• Cooldown: 15 minutos por moeda\n• Apenas mercados favoritos\n• Verificação de histórico recente\n• Progressão lógica baseada em condições de mercado",
+    "isActive": true,
+    "isFavorite": false,
+    "type": "AGGRESSIVE",
+    "tradingType": "SPOT",
+    "riskLevel": "HIGH",
+    "createdAt": "2025-10-09T16:14:01.150Z",
+    "updatedAt": "2025-10-09T16:14:01.150Z"
+  },
+  {
+    "id": "spot_stochastic_005",
+    "name": "Stochastic Oscillator 1min",
+    "description": "📋 Detalhamento da Lógica de Força do Stochastic Oscillator 1min\n\n🎯 CONCEITO CENTRAL:\nA estratégia Stochastic Oscillator identifica cruzamentos bullish em zona de sobrevenda, combinando reversão de momentum com aceleração de preço.\n\n🔍 ANÁLISE TÉCNICA DETALHADA:\n• %K(14): Indicador de momentum rápido\n• %D(3): Média móvel do %K (suavização)\n• Cruzamento Bullish: %K cruza acima de %D\n• Zona de Sobrevenda: %K < 20\n• Confirmação: %K > %D + momentum crescente\n\n📊 ESCALA DE FORÇA (0-100%):\n• 0-20%: %K > %D, zona normal → Aguardar sobrevenda\n• 21-40%: %K < %D, zona normal → Monitorar\n• 41-60%: %K > %D, zona normal → Preparar entrada\n• 61-80%: %K > %D, zona de sobrevenda → Sinal forte\n• 81-95%: Cruzamento + sobrevenda + momentum → Sinal muito forte\n• 96-100%: Cruzamento perfeito + confirmação → Execução imediata\n\n🎯 CONDIÇÕES DE COMPRA ESPECÍFICAS:\n1. %K cruza acima de %D (cruzamento bullish)\n2. %K < 20 (zona de sobrevenda)\n3. Momentum crescente (%K acelerando)\n4. Confirmação com volume crescente\n5. RSI(14) < 70 (evitar sobrecompra)\n6. Stop Loss: Último swing low\n7. Take Profit: R:R ≥ 1.6\n\n⚡ GATILHOS DE EXECUÇÃO:\n• Sinal ≥ 90%: Execução automática imediata\n• Sinal 80-89%: Execução com confirmação adicional\n• Sinal < 80%: Aguardar melhores condições\n\n🔄 GESTÃO DE RISCO:\n• Cooldown: 15 minutos por moeda\n• Apenas mercados favoritos\n• Verificação de histórico recente\n• Progressão lógica baseada em condições de mercado",
+    "isActive": true,
+    "isFavorite": false,
+    "type": "MODERATE",
+    "tradingType": "SPOT",
+    "riskLevel": "MEDIUM",
+    "createdAt": "2025-10-09T16:14:01.150Z",
+    "updatedAt": "2025-10-09T16:14:01.150Z"
+  },
+  {
+    "id": "spot_ema_trend_006",
+    "name": "EMA Trend 1min",
+    "description": "📋 Detalhamento da Lógica de Força do EMA Trend 1min\n\n🎯 CONCEITO CENTRAL:\nA estratégia EMA Trend identifica alinhamentos bullish de múltiplas médias móveis exponenciais, indicando forte tendência de alta com momentum crescente.\n\n🔍 ANÁLISE TÉCNICA DETALHADA:\n• EMA(8): Tendência de curto prazo\n• EMA(21): Tendência de médio prazo\n• EMA(50): Tendência de longo prazo\n• Alinhamento Bullish: EMA(8) > EMA(21) > EMA(50)\n• Confirmação: Preço acima de todas as EMAs\n\n📊 ESCALA DE FORÇA (0-100%):\n• 0-20%: EMAs desalinhadas → Aguardar alinhamento\n• 21-40%: EMA(8) > EMA(21) → Monitorar\n• 41-60%: EMA(8) > EMA(21) > EMA(50) → Preparar entrada\n• 61-80%: Alinhamento + preço acima → Sinal forte\n• 81-95%: Alinhamento perfeito + momentum → Sinal muito forte\n• 96-100%: Alinhamento + confirmação → Execução imediata\n\n🎯 CONDIÇÕES DE COMPRA ESPECÍFICAS:\n1. EMA(8) > EMA(21) > EMA(50) (alinhamento bullish)\n2. Preço acima de todas as EMAs\n3. EMA(8) com inclinação positiva\n4. Confirmação com volume crescente\n5. RSI(14) < 70 (evitar sobrecompra)\n6. Stop Loss: EMA(21)\n7. Take Profit: R:R ≥ 1.7\n\n⚡ GATILHOS DE EXECUÇÃO:\n• Sinal ≥ 90%: Execução automática imediata\n• Sinal 80-89%: Execução com confirmação adicional\n• Sinal < 80%: Aguardar melhores condições\n\n🔄 GESTÃO DE RISCO:\n• Cooldown: 15 minutos por moeda\n• Apenas mercados favoritos\n• Verificação de histórico recente\n• Progressão lógica baseada em condições de mercado",
+    "isActive": true,
+    "isFavorite": false,
+    "type": "CONSERVATIVE",
+    "tradingType": "SPOT",
+    "riskLevel": "LOW",
+    "createdAt": "2025-10-09T16:14:01.150Z",
+    "updatedAt": "2025-10-09T16:14:01.150Z"
+  },
+  {
+    "id": "spot_williams_r_007",
+    "name": "Williams %R 1min",
+    "description": "📋 Detalhamento da Lógica de Força do Williams %R 1min\n\n🎯 CONCEITO CENTRAL:\nA estratégia Williams %R identifica reversões de sobrevenda com momentum crescente, similar ao RSI mas com foco em posição relativa dentro do range de preços.\n\n🔍 ANÁLISE TÉCNICA DETALHADA:\n• Williams %R(14): Posição relativa no range (0 a -100)\n• Sobrevenda: %R < -80 (preço muito baixo)\n• Reversão: %R cruza acima de -80\n• Momentum: %R acelerando em direção a -50\n• Confirmação: %R > -50 com tendência crescente\n\n📊 ESCALA DE FORÇA (0-100%):\n• 0-20%: %R > -20 (sobrecompra) → Aguardar correção\n• 21-40%: %R -20 a -50 (neutro) → Monitorar\n• 41-60%: %R -50 a -80 (recuperação) → Preparar entrada\n• 61-80%: %R < -80 + cruzamento → Sinal forte\n• 81-95%: %R < -80 + momentum crescente → Sinal muito forte\n• 96-100%: %R < -80 + aceleração + confirmação → Execução imediata\n\n🎯 CONDIÇÕES DE COMPRA ESPECÍFICAS:\n1. Williams %R(14) < -80 (zona de sobrevenda)\n2. %R cruza acima de -80 (reversão)\n3. Momentum crescente (%R acelerando)\n4. Confirmação com %R > -50\n5. Volume crescente (confirmação)\n6. Stop Loss: Último swing low\n7. Take Profit: R:R ≥ 1.4\n\n⚡ GATILHOS DE EXECUÇÃO:\n• Sinal ≥ 90%: Execução automática imediata\n• Sinal 80-89%: Execução com confirmação adicional\n• Sinal < 80%: Aguardar melhores condições\n\n🔄 GESTÃO DE RISCO:\n• Cooldown: 15 minutos por moeda\n• Apenas mercados favoritos\n• Verificação de histórico recente\n• Progressão lógica baseada em condições de mercado",
+    "isActive": true,
+    "isFavorite": false,
+    "type": "CONSERVATIVE",
+    "tradingType": "SPOT",
+    "riskLevel": "LOW",
+    "createdAt": "2025-10-09T16:14:01.150Z",
+    "updatedAt": "2025-10-09T16:14:01.150Z"
+  },
+  {
+    "id": "spot_cci_cyclical_008",
+    "name": "CCI Cyclical 1min",
+    "description": "📋 Detalhamento da Lógica de Força do CCI Cyclical 1min\n\n🎯 CONCEITO CENTRAL:\nA estratégia CCI Cyclical identifica reversões de sobrevenda com momentum crescente, usando o Commodity Channel Index para detectar desvios significativos da média.\n\n🔍 ANÁLISE TÉCNICA DETALHADA:\n• CCI(14): Desvio da média em desvios padrão\n• Sobrevenda: CCI < -100 (desvio significativo)\n• Reversão: CCI cruza acima de -100\n• Momentum: CCI acelerando em direção a 0\n• Confirmação: CCI > 0 com tendência crescente\n\n📊 ESCALA DE FORÇA (0-100%):\n• 0-20%: CCI > 100 (sobrecompra) → Aguardar correção\n• 21-40%: CCI 0 a 100 (neutro-alto) → Monitorar\n• 41-60%: CCI -100 a 0 (recuperação) → Preparar entrada\n• 61-80%: CCI < -100 + cruzamento → Sinal forte\n• 81-95%: CCI < -100 + momentum crescente → Sinal muito forte\n• 96-100%: CCI < -100 + aceleração + confirmação → Execução imediata\n\n🎯 CONDIÇÕES DE COMPRA ESPECÍFICAS:\n1. CCI(14) < -100 (zona de sobrevenda)\n2. CCI cruza acima de -100 (reversão)\n3. Momentum crescente (CCI acelerando)\n4. Confirmação com CCI > 0\n5. Volume crescente (confirmação)\n6. Stop Loss: Último swing low\n7. Take Profit: R:R ≥ 1.3\n\n⚡ GATILHOS DE EXECUÇÃO:\n• Sinal ≥ 90%: Execução automática imediata\n• Sinal 80-89%: Execução com confirmação adicional\n• Sinal < 80%: Aguardar melhores condições\n\n🔄 GESTÃO DE RISCO:\n• Cooldown: 15 minutos por moeda\n• Apenas mercados favoritos\n• Verificação de histórico recente\n• Progressão lógica baseada em condições de mercado",
+    "isActive": true,
+    "isFavorite": false,
+    "type": "CONSERVATIVE",
+    "tradingType": "SPOT",
+    "riskLevel": "LOW",
+    "createdAt": "2025-10-09T16:14:01.150Z",
+    "updatedAt": "2025-10-09T16:14:01.150Z"
+  }
+]

@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  trigger-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.trigger
+    container_name: aura-trigger-monitor
+    environment:
+      - NODE_ENV=production
+      - BINANCE_API_KEY=${BINANCE_API_KEY}
+      - BINANCE_SECRET_KEY=${BINANCE_SECRET_KEY}
+      - BINANCE_TESTNET=true
+      - API_URL=http://aura-backend:3001/api/v1
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - aura-network
+
+networks:
+  aura-network:
+    external: true
+    name: binance-bot_aura-network

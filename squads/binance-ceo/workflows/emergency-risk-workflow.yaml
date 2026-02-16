@@ -1,0 +1,68 @@
+# Emergency Risk Workflow
+# Protocolo de emergencia quando limites de risco sao violados
+
+name: emergency-risk-workflow
+description: Workflow de emergencia para situacoes de risco critico - drawdown excessivo, crash, falha de sistema
+trigger: automatic
+conditions:
+  - drawdown_daily > 5%
+  - consecutive_losses >= 5
+  - api_connection_lost
+  - system_health_critical
+
+steps:
+  - id: detect-emergency
+    agent: binance-risk-manager
+    description: Detectar violacao de limites de risco
+    next: kill-switch
+
+  - id: kill-switch
+    agent: binance-risk-manager
+    description: PAUSAR todas as novas ordens imediatamente
+    actions:
+      - pause_new_orders: true
+      - cancel_pending_orders: true
+    next: [assess-positions, notify-ceo]
+
+  - id: assess-positions
+    agent: binance-trader
+    task: trader-manage-positions
+    description: Avaliar posicoes abertas - fechar se necessario
+    next: damage-report
+    parallel: true
+
+  - id: notify-ceo
+    agent: binance-ops
+    description: Notificar CEO da emergencia com detalhes
+    next: damage-report
+    parallel: true
+
+  - id: damage-report
+    agent: binance-risk-manager
+    task: risk-drawdown-analysis
+    description: Analise de dano e causa raiz
+    depends_on: [assess-positions, notify-ceo]
+    next: ceo-decision
+
+  - id: ceo-decision
+    agent: binance-ceo
+    description: CEO decide proximo passo
+    options:
+      - resume: Retomar operacoes com limites reduzidos
+      - reduce: Reduzir exposicao em 50%
+      - shutdown: Fechar todas as posicoes e pausar 24h
+    gate: true
+
+escalation:
+  level_1:
+    trigger: drawdown_daily > 3%
+    action: reduce_position_size_50
+  level_2:
+    trigger: drawdown_daily > 5%
+    action: pause_new_orders
+  level_3:
+    trigger: drawdown_daily > 10%
+    action: close_all_positions
+  level_4:
+    trigger: drawdown_daily > 15%
+    action: full_shutdown_notify_ceo

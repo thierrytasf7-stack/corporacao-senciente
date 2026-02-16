@@ -1,0 +1,21 @@
+{
+  "default_provider": "mock",
+  "providers": {
+    "openai": {
+      "model": "gpt-4o",
+      "temperature": 0.7
+    },
+    "anthropic": {
+      "model": "claude-3-5-sonnet-20240620",
+      "temperature": 0.7
+    },
+    "mock": {
+      "model": "echo-v1",
+      "latency": 0.5
+    }
+  },
+  "cost_control": {
+    "max_daily_spend_usd": 5.00,
+    "warning_threshold": 0.8
+  }
+}

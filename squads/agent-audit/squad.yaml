@@ -1,0 +1,59 @@
+name: agent-audit
+version: 1.0.0
+description: Squad de auditoria, otimizacao e versionamento de agentes AIOS. Especialista em pegar 1 agente, analisar profundamente cada aspecto, otimizar, e registrar evolucao com metricas versionadas no proprio agente. Garante evolucao linear e rastreavel.
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: AgentAudit
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - agent-evolver.md
+  tasks:
+    - audit-full-agent.md
+    - audit-persona-quality.md
+    - audit-commands-coverage.md
+    - audit-task-alignment.md
+    - audit-principles-coherence.md
+    - audit-greeting-activation.md
+    - audit-dependencies-integrity.md
+    - audit-collaboration-map.md
+    - optimize-agent.md
+    - version-agent.md
+    - generate-evolution-report.md
+  workflows:
+    - full-agent-evolution-workflow.yaml
+  checklists:
+    - agent-structure-checklist.md
+    - persona-quality-checklist.md
+    - commands-coverage-checklist.md
+    - evolution-tracking-checklist.md
+  templates:
+    - evolution-report-tmpl.md
+    - agent-changelog-tmpl.md
+    - evolution-header-tmpl.yaml
+  tools: []
+  scripts: []
+
+config:
+  extends: extend
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+tags:
+  - agent
+  - audit
+  - optimization
+  - versioning
+  - evolution
+  - meta
+  - quality
+  - aios
+  - metrics
+  - changelog

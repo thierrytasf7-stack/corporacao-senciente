@@ -1,0 +1,204 @@
+# Alert Rules for Corporação Senciente
+# Regras de alerta inteligentes para monitoramento proativo
+
+groups:
+  # Critical System Alerts
+  - name: system_critical
+    rules:
+      - alert: SystemDown
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: critical
+          service: infrastructure
+        annotations:
+          summary: "Sistema {{ $labels.job }} está indisponível"
+          description: "O serviço {{ $labels.job }} está down há mais de 5 minutos"
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 90
+        for: 10m
+        labels:
+          severity: critical
+          service: infrastructure
+        annotations:
+          summary: "Uso de memória crítico: {{ $value }}%"
+          description: "Uso de memória acima de 90% por mais de 10 minutos"
+
+      - alert: HighCPUUsage
+        expr: (1 - avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m]))) * 100 > 95
+        for: 5m
+        labels:
+          severity: critical
+          service: infrastructure
+        annotations:
+          summary: "Uso de CPU crítico: {{ $value }}%"
+          description: "Uso de CPU acima de 95% por mais de 5 minutos"
+
+  # Application Performance Alerts
+  - name: application_performance
+    rules:
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) * 100 > 5
+        for: 5m
+        labels:
+          severity: warning
+          service: backend
+        annotations:
+          summary: "Taxa de erro alta: {{ $value }}%"
+          description: "Taxa de erro HTTP 5xx acima de 5% nos últimos 5 minutos"
+
+      - alert: SlowResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+          service: backend
+        annotations:
+          summary: "Tempo de resposta lento: {{ $value }}s (95th percentile)"
+          description: "95% das requisições estão demorando mais de 2 segundos"
+
+      - alert: HighRequestRate
+        expr: rate(http_requests_total[5m]) > 1000
+        for: 2m
+        labels:
+          severity: info
+          service: backend
+        annotations:
+          summary: "Alta taxa de requisições: {{ $value }} req/s"
+          description: "Sistema recebendo mais de 1000 requisições por segundo"
+
+  # Business Logic Alerts
+  - name: business_logic
+    rules:
+      - alert: SubsidiaryCreationFailed
+        expr: increase(subsidiary_creation_failures_total[5m]) > 0
+        for: 1m
+        labels:
+          severity: warning
+          service: business
+        annotations:
+          summary: "Falha na criação de subsidiária"
+          description: "{{ $value }} tentativas de criação de subsidiária falharam nos últimos 5 minutos"
+
+      - alert: LowCashPosition
+        expr: holding_cash_position < 100000
+        for: 15m
+        labels:
+          severity: warning
+          service: business
+        annotations:
+          summary: "Posição de caixa baixa: R$ {{ $value }}"
+          description: "Posição de caixa da holding abaixo de R$ 100.000 por mais de 15 minutos"
+
+      - alert: HighPipelineFriction
+        expr: pipeline_friction_score > 75
+        for: 10m
+        labels:
+          severity: warning
+          service: pipeline
+        annotations:
+          summary: "Fricção do pipeline alta: {{ $value }}/100"
+          description: "Score de fricção do pipeline de processamento acima de 75 por mais de 10 minutos"
+
+      - alert: SubsidiaryHealthDegraded
+        expr: subsidiary_health_score < 50
+        for: 20m
+        labels:
+          severity: warning
+          service: business
+        annotations:
+          summary: "Saúde da subsidiária degradada: {{ $value }}/100"
+          description: "Score de saúde de subsidiária abaixo de 50 por mais de 20 minutos"
+
+  # Database Performance Alerts
+  - name: database_performance
+    rules:
+      - alert: HighDatabaseConnections
+        expr: pg_stat_activity_count > 80
+        for: 5m
+        labels:
+          severity: warning
+          service: database
+        annotations:
+          summary: "Conexões de banco altas: {{ $value }}"
+          description: "Mais de 80 conexões ativas no PostgreSQL por mais de 5 minutos"
+
+      - alert: SlowQueryDetected
+        expr: increase(pg_stat_statements_total_exec_time_seconds[5m]) / increase(pg_stat_statements_total_calls[5m]) > 1
+        for: 5m
+        labels:
+          severity: info
+          service: database
+        annotations:
+          summary: "Queries lentas detectadas"
+          description: "Tempo médio de execução de queries acima de 1 segundo nos últimos 5 minutos"
+
+  # AI and ML Alerts
+  - name: ai_ml_alerts
+    rules:
+      - alert: ModelInferenceFailed
+        expr: increase(ai_model_inference_failures_total[5m]) > 5
+        for: 3m
+        labels:
+          severity: warning
+          service: ai
+        annotations:
+          summary: "Falhas em inferência de modelo IA"
+          description: "Mais de 5 falhas em inferência de modelo nos últimos 5 minutos"
+
+      - alert: HighTokenUsage
+        expr: increase(ai_tokens_used_total[1h]) > 1000000
+        for: 10m
+        labels:
+          severity: info
+          service: ai
+        annotations:
+          summary: "Uso alto de tokens IA: {{ $value }}"
+          description: "Mais de 1 milhão de tokens IA usados na última hora"
+
+  # Security Alerts
+  - name: security_alerts
+    rules:
+      - alert: FailedLoginAttempts
+        expr: increase(failed_login_attempts_total[5m]) > 10
+        for: 5m
+        labels:
+          severity: warning
+          service: security
+        annotations:
+          summary: "Múltiplas tentativas de login falhadas"
+          description: "Mais de 10 tentativas de login falharam nos últimos 5 minutos"
+
+      - alert: UnusualTrafficPattern
+        expr: (rate(http_requests_total[5m]) - rate(http_requests_total[1h])) / rate(http_requests_total[1h]) > 2
+        for: 10m
+        labels:
+          severity: warning
+          service: security
+        annotations:
+          summary: "Padrão de tráfego incomum detectado"
+          description: "Aumento anormal no tráfego HTTP (>200% vs última hora)"
+
+  # Auto-scaling Alerts
+  - name: auto_scaling
+    rules:
+      - alert: ScalingActionFailed
+        expr: increase(auto_scaling_failures_total[5m]) > 0
+        for: 2m
+        labels:
+          severity: warning
+          service: infrastructure
+        annotations:
+          summary: "Falha em ação de auto-scaling"
+          description: "Sistema falhou em executar ação de auto-scaling nos últimos 5 minutos"
+
+      - alert: ResourceExhaustion
+        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) < 0.1
+        for: 5m
+        labels:
+          severity: critical
+          service: infrastructure
+        annotations:
+          summary: "Esgotamento de recursos de armazenamento"
+          description: "Espaço em disco disponível abaixo de 10% por mais de 5 minutos"

@@ -1,0 +1,77 @@
+name: analytics-sports
+version: 1.0.0
+description: Squad de análise de performance e relatórios - tracking de ROI, geração de relatórios e identificação de insights
+team: BET-SPORTS
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: AnalyticsSports
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - analytics-lead.md
+    - performance-analyst.md
+    - report-engineer.md
+    - insights-specialist.md
+  tasks:
+    # Analytics Lead Tasks
+    - analytics-roadmap.md
+    - analytics-kpi-review.md
+    # Performance Tasks
+    - performance-roi-analysis.md
+    - performance-variance-analysis.md
+    - performance-sharpe-calculation.md
+    # Report Tasks
+    - report-daily-summary.md
+    - report-monthly-review.md
+    - report-strategy-comparison.md
+    # Insights Tasks
+    - insights-pattern-detection.md
+    - insights-opportunity-identification.md
+    - insights-recommendation-engine.md
+  workflows:
+    - analytics-workflow.yaml
+    - reporting-workflow.yaml
+    - insights-workflow.yaml
+  checklists:
+    - analytics-quality-checklist.md
+    - report-validation-checklist.md
+  templates:
+    - daily-report-tmpl.md
+    - monthly-report-tmpl.md
+    - insights-report-tmpl.md
+  tools:
+    - postgres
+    - context7
+  scripts: []
+
+config:
+  extends: extend
+  analytics:
+    kpis: ["roi", "sharpe-ratio", "win-rate", "avg-odds", "variance"]
+    reporting:
+      frequency: daily
+      formats: [pdf, html, json]
+  insights:
+    algorithms: ["clustering", "anomaly-detection", "forecasting"]
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+codebase:
+  module: modules/analytics-sports
+  backend: modules/analytics-sports/backend
+  reports: modules/analytics-sports/reports
+
+tags:
+  - analytics
+  - sports
+  - performance
+  - reporting
+  - insights
+  - roi

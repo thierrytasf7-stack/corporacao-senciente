@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUV Score - OXIMAG</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .score-section {
+            padding: 40px;
+            text-align: center;
+            background: #f8f9fa;
+        }
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#667eea 0% 55%, #e0e0e0 55% 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .score-circle::before {
+            content: '';
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .score-value {
+            position: relative;
+            z-index: 1;
+            font-size: 4em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .score-label {
+            font-size: 1.5em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .score-description {
+            font-size: 1.1em;
+            color: #888;
+        }
+        .criteria-section {
+            padding: 40px;
+        }
+        .criteria-section h2 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .criterion {
+            margin-bottom: 25px;
+        }
+        .criterion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .criterion-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+        }
+        .criterion-score {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        .criterion-bar {
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .criterion-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            transition: width 0.5s ease;
+        }
+        .radar-section {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+        .radar-section h2 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .insights-section {
+            padding: 40px;
+        }
+        .insights-section h2 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .insight-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .insight-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        .insight-box p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .footer {
+            padding: 30px;
+            text-align: center;
+            color: #999;
+            border-top: 1px solid #e0e0e0;
+        }
+        svg { display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>OXIMAG - Ímãs e Equipamentos Magnéticos</h1>
+            <p>Análise de Proposta Única de Valor</p>
+        </div>
+
+        <div class="score-section">
+            <div class="score-circle">
+                <div class="score-value">11/20</div>
+            </div>
+            <div class="score-label">Score PUV</div>
+            <div class="score-description">Nível Intermediário - Precisa de melhorias</div>
+        </div>
+
+        <div class="criteria-section">
+            <h2>Avaliação por Critério</h2>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">1. Clareza da PUV</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">2. Diferenciação Competitiva</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">3. Definição de Público-Alvo</span>
+                    <span class="criterion-score">2/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">4. Benefícios Tangíveis</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">5. Prova Social</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">6. Call-to-Action (CTA)</span>
+                    <span class="criterion-score">2/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">7. Identidade de Marca</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">8. Presença Digital</span>
+                    <span class="criterion-score">0/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">9. Experiência do Usuário (UX)</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">10. Otimização para Conversão</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="criterion-bar">
+                    <div class="criterion-fill" style="width: 50%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="radar-section">
+            <h2>Radar de Performance</h2>
+            <svg width="600" height="600" viewBox="0 0 600 600">
+                <!-- Grid circles -->
+                <circle cx="300" cy="300" r="250" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="200" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="150" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="100" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="50" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+
+                <!-- Axes -->
+                <line x1="300" y1="300" x2="300" y2="50" stroke="#e0e0e0" stroke-width="1"/>
+                <line x1="300" y1="300" x2="476.78" y2="138.28" stroke="#e0e0e0" stroke-width="1"/>
+                <line x1="300" y1="300" x2="550" y2="300" stroke="#e0e0e0" stroke-width="1"/>
+                <line x1="300" y1="300" x2="476.78" y2="461.72" stroke="#e0e0e0" stroke-width="1"/>
+                <line x1="300" y1="300" x2="300" y2="550" stroke="#e0e0e0" stroke-width="1"/>
+                <line x1="300" y1="300" x2="123.22" y2="461.72" stroke="#e0e0e0" stroke-width="1"/>
+                <line x1="300" y1="300" x2="50" y2="300" stroke="#e0e0e0" stroke-width="1"/>
+                <line x1="300" y1="300" x2="123.22" y2="138.28" stroke="#e0e0e0" stroke-width="1"/>
+
+                <!-- Data polygon (scaled: 0=center, 2pts=250px radius) -->
+                <!-- Clareza:1 (50%), Diferenciação:1 (50%), Público:2 (100%), Benefícios:1 (50%), Prova:1 (50%), CTA:2 (100%), Marca:1 (50%), Presença:0 (0%), UX:1 (50%), Conversão:1 (50%) -->
+                <polygon points="300,175 388.39,194.14 425,300 388.39,405.86 300,425 211.61,405.86 175,300 211.61,194.14"
+                         fill="rgba(102, 126, 234, 0.3)" stroke="#667eea" stroke-width="2"/>
+
+                <!-- Data points -->
+                <circle cx="300" cy="175" r="5" fill="#667eea"/>
+                <circle cx="388.39" cy="194.14" r="5" fill="#667eea"/>
+                <circle cx="425" cy="300" r="5" fill="#667eea"/>
+                <circle cx="388.39" cy="405.86" r="5" fill="#667eea"/>
+                <circle cx="300" cy="425" r="5" fill="#667eea"/>
+                <circle cx="211.61" cy="405.86" r="5" fill="#667eea"/>
+                <circle cx="175" cy="300" r="5" fill="#667eea"/>
+                <circle cx="211.61" cy="194.14" r="5" fill="#667eea"/>
+
+                <!-- Labels -->
+                <text x="300" y="35" text-anchor="middle" font-size="14" fill="#333">Clareza</text>
+                <text x="495" y="130" text-anchor="start" font-size="14" fill="#333">Diferenciação</text>
+                <text x="565" y="305" text-anchor="start" font-size="14" fill="#333">Público</text>
+                <text x="495" y="480" text-anchor="start" font-size="14" fill="#333">Benefícios</text>
+                <text x="300" y="580" text-anchor="middle" font-size="14" fill="#333">Prova Social</text>
+                <text x="105" y="480" text-anchor="end" font-size="14" fill="#333">CTA</text>
+                <text x="35" y="305" text-anchor="end" font-size="14" fill="#333">Marca</text>
+                <text x="105" y="130" text-anchor="end" font-size="14" fill="#333">Presença</text>
+
+                <!-- Additional points (UX, Conversão overlaid on same axes for 10 criteria) -->
+            </svg>
+        </div>
+
+        <div class="insights-section">
+            <h2>Insights e Recomendações</h2>
+
+            <div class="insight-box">
+                <h3>🎯 Pontos Fortes</h3>
+                <p><strong>Público-Alvo Bem Definido (2/2):</strong> Clareza excepcional na segmentação - indústrias alimentícia, automotiva, mineração, reciclagem, siderurgia, química, plástico, agronegócio. Multi-segmento bem estruturado.</p>
+                <p><strong>CTA Direto (2/2):</strong> "SOLICITE UM ORÇAMENTO" é claro, visível e acionável. Bem posicionado no site.</p>
+            </div>
+
+            <div class="insight-box">
+                <h3>⚠️ Pontos de Atenção</h3>
+                <p><strong>Presença Digital Ausente (0/2):</strong> Nenhuma avaliação pública encontrada (Solutudo sem reviews). LinkedIn corporativo existe mas sem engajamento visível. Zero presença em redes sociais B2B.</p>
+                <p><strong>Diferenciação Fraca (1/2):</strong> "22 anos de experiência" e "tecnologia própria" são genéricos. Faltam dados concretos: quantos clientes? Qual performance magnética exata? Certificações ISO?</p>
+            </div>
+
+            <div class="insight-box">
+                <h3>🚀 Oportunidades Críticas</h3>
+                <p><strong>1. Prova Social Inexistente:</strong> Adicionar cases reais com números (ex: "Reduzimos 35% de contaminação metálica na Indústria X"). Solicitar depoimentos de clientes atuais. Publicar reviews no site.</p>
+                <p><strong>2. Presença Digital Zero:</strong> Criar conteúdo técnico no LinkedIn (artigos sobre aplicações magnéticas). Postar cases no Instagram B2B. Gerar avaliações no Google Meu Negócio.</p>
+                <p><strong>3. Benefícios Vagos:</strong> Trocar "alta performance magnética" por métricas: "Ímãs de neodímio com força de 1.2T, 40% mais fortes que ferrite". Quantificar ROI para o cliente.</p>
+            </div>
+
+            <div class="insight-box">
+                <h3>📊 Benchmark Competitivo</h3>
+                <p>Mercado B2B industrial brasileiro tem concorrentes com certificações ISO visíveis, cases publicados e presença digital ativa. OXIMAG precisa alcançar paridade em prova social e visibilidade online para não perder leads qualificados.</p>
+            </div>
+
+            <div class="insight-box">
+                <h3>🎯 Ação Imediata (Quick Win)</h3>
+                <p>Criar seção "Cases de Sucesso" no site com 3-5 histórias reais: [Indústria] + [Problema] + [Solução OXIMAG] + [Resultado em %]. Isso elevaria Prova Social de 1/2 para 2/2 e Score total para 12/20.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Diana Corporação Senciente</strong> | PUV Score Analysis v1.0</p>
+            <p>Gerado em 14/02/2026 às 16:50</p>
+        </div>
+    </div>
+</body>
+</html>

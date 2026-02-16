@@ -1,0 +1,42 @@
+---
+workflow:
+  id: dropshipping-main
+  name: Fluxo Principal de Dropshipping
+  description: Workflow principal que coordena todas as etapas do processo de dropshipping
+  triggers:
+    - type: manual
+      name: Iniciar Processo de Dropshipping
+    - type: scheduled
+      name: Execução Diária Automática
+      schedule: "0 8 * * *"
+  sequence:
+    - id: product-research
+      name: Pesquisa de Produtos
+      description: Pesquisa e identificação de produtos com alto potencial de venda
+      agent: product-hunter
+      timeout: 300000
+      retries: 2
+    - id: marketplace-sync
+      name: Sincronização com Marketplaces
+      description: Sincronização de produtos com marketplaces integrados
+      agent: marketplace-integrator
+      timeout: 180000
+      retries: 1
+    - id: dynamic-pricing
+      name: Precificação Dinâmica
+      description: Ajuste automático de preços baseado em concorrência e demanda
+      agent: marketplace-integrator
+      timeout: 120000
+      retries: 1
+    - id: order-processing
+      name: Processamento de Pedidos
+      description: Processamento automatizado de pedidos recebidos
+      agent: order-processor
+      timeout: 240000
+      retries: 3
+    - id: order-tracking
+      name: Rastreamento de Pedidos
+      description: Rastreamento e atualização de status de pedidos
+      agent: order-processor
+      timeout: 300000
+      retries: 2

@@ -1,0 +1,115 @@
+audit-decomposition:
+  description: Decomposição de auditoria fullstack betting em subtasks atomicas
+  version: 1.0.0
+  
+  # Fases lógicas identificadas
+  phases:
+    - analysis
+    - backend-audit
+    - frontend-audit
+    - integration-audit
+    - reporting
+  
+  # Subtasks atomicas
+  tasks:
+    - id: audit-structure-analysis
+      title: Analyze project structure and dependencies
+      description: Examine codebase organization, identify all modules, services, and integration points between betting-ops and live-betting systems
+      estimated_time: 15min
+      f_score: 1
+      dependencies: []
+      agent: pm
+      priority: HIGH
+      
+    - id: backend-security-audit
+      title: Audit backend security vulnerabilities
+      description: Review authentication, authorization, input validation, SQL injection, XSS, API security, and data protection mechanisms
+      estimated_time: 25min
+      f_score: 2
+      dependencies: [audit-structure-analysis]
+      agent: pm
+      priority: CRITICAL
+      
+    - id: backend-performance-audit
+      title: Audit backend performance and scalability
+      description: Analyze database queries, API response times, memory usage, concurrent connections, and system bottlenecks
+      estimated_time: 20min
+      f_score: 2
+      dependencies: [audit-structure-analysis]
+      agent: pm
+      priority: HIGH
+      
+    - id: frontend-security-audit
+      title: Audit frontend security vulnerabilities
+      description: Review client-side validation, XSS protection, CSRF tokens, secure storage, and data exposure risks
+      estimated_time: 20min
+      f_score: 2
+      dependencies: [audit-structure-analysis]
+      agent: pm
+      priority: CRITICAL
+      
+    - id: frontend-ux-audit
+      title: Audit frontend UX and accessibility
+      description: Evaluate user interface design, navigation, responsiveness, accessibility compliance, and user experience flow
+      estimated_time: 15min
+      f_score: 1
+      dependencies: [audit-structure-analysis]
+      agent: pm
+      priority: MEDIUM
+      
+    - id: integration-testing-audit
+      title: Audit system integration and data flow
+      description: Test API endpoints, data synchronization, real-time updates, error handling, and cross-component communication
+      estimated_time: 25min
+      f_score: 3
+      dependencies: [backend-security-audit, backend-performance-audit, frontend-security-audit, frontend-ux-audit]
+      agent: pm
+      priority: HIGH
+      
+    - id: compliance-audit
+      title: Audit regulatory compliance and data privacy
+      description: Verify GDPR compliance, data retention policies, audit logging, and regulatory requirements for betting operations
+      estimated_time: 20min
+      f_score: 2
+      dependencies: [audit-structure-analysis]
+      agent: pm
+      priority: HIGH
+      
+    - id: report-generation
+      title: Generate comprehensive audit report
+      description: Consolidate findings, categorize by severity, provide evidence, and create actionable recommendations
+      estimated_time: 30min
+      f_score: 3
+      dependencies: [backend-security-audit, backend-performance-audit, frontend-security-audit, frontend-ux-audit, integration-testing-audit, compliance-audit]
+      agent: pm
+      priority: HIGH
+  
+  # Dependencies DAG validation
+  dependencies_graph:
+    audit-structure-analysis: []
+    backend-security-audit: [audit-structure-analysis]
+    backend-performance-audit: [audit-structure-analysis]
+    frontend-security-audit: [audit-structure-analysis]
+    frontend-ux-audit: [audit-structure-analysis]
+    integration-testing-audit: [backend-security-audit, backend-performance-audit, frontend-security-audit, frontend-ux-audit]
+    compliance-audit: [audit-structure-analysis]
+    report-generation: [backend-security-audit, backend-performance-audit, frontend-security-audit, frontend-ux-audit, integration-testing-audit, compliance-audit]
+  
+  # F-score distribution
+  f_score_distribution:
+    F1: 2 tasks
+    F2: 4 tasks
+    F3: 2 tasks
+  
+  # Priority distribution
+  priority_distribution:
+    CRITICAL: 2 tasks
+    HIGH: 4 tasks
+    MEDIUM: 1 task
+  
+  # Estimated total time
+  total_estimated_time: 170min
+  
+  # Agent assignment
+  agent_assignment:
+    pm: 8 tasks

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="600"
+  height="160"
+  viewBox="0 0 600 160"
+  version="1.1"
+>
+  <!-- Background Circle (Light Theme) -->
+  <circle
+    cx="300"
+    cy="80"
+    r="75"
+    fill="#F5F5F5"
+    stroke="#C0C0C0"
+    stroke-width="2"
+  />
+
+  <!-- Main Neural Nodes (Light Theme) -->
+  <g id="neural-nodes">
+    <!-- Node 1: Top Left -->
+    <circle
+      cx="200"
+      cy="40"
+      r="12"
+      fill="#C0C0C0"
+    />
+    <circle
+      cx="200"
+      cy="40"
+      r="8"
+      fill="#1E90FF"
+    />
+
+    <!-- Node 2: Top Right -->
+    <circle
+      cx="400"
+      cy="40"
+      r="12"
+      fill="#C0C0C0"
+    />
+    <circle
+      cx="400"
+      cy="40"
+      r="8"
+      fill="#1E90FF"
+    />
+
+    <!-- Node 3: Bottom Left -->
+    <circle
+      cx="200"
+      cy="120"
+      r="12"
+      fill="#C0C0C0"
+    />
+    <circle
+      cx="200"
+      cy="120"
+      r="8"
+      fill="#1E90FF"
+    />
+
+    <!-- Node 4: Bottom Right -->
+    <circle
+      cx="400"
+      cy="120"
+      r="12"
+      fill="#C0C0C0"
+    />
+    <circle
+      cx="400"
+      cy="120"
+      r="8"
+      fill="#1E90FF"
+    />
+
+    <!-- Node 5: Center Left -->
+    <circle
+      cx="250"
+      cy="80"
+      r="12"
+      fill="#C0C0C0"
+    />
+    <circle
+      cx="250"
+      cy="80"
+      r="8"
+      fill="#1E90FF"
+    />
+
+    <!-- Node 6: Center Right -->
+    <circle
+      cx="350"
+      cy="80"
+      r="12"
+      fill="#C0C0C0"
+    />
+    <circle
+      cx="350"
+      cy="80"
+      r="8"
+      fill="#1E90FF"
+    />
+  </g>
+
+  <!-- Central Core (Light Theme) -->
+  <circle
+    cx="300"
+    cy="80"
+    r="20"
+    fill="#FFD700"
+    stroke="#1E90FF"
+    stroke-width="2"
+  />
+
+  <!-- Connection Lines (Light Theme) -->
+  <g id="connection-lines" stroke="#1E90FF" stroke-width="2" stroke-linecap="round">
+    <!-- Outer Connections -->
+    <line x1="200" y1="40" x2="400" y2="40" />
+    <line x1="200" y1="120" x2="400" y2="120" />
+    <line x1="200" y1="40" x2="200" y2="120" />
+    <line x1="400" y1="40" x2="400" y2="120" />
+    
+    <!-- Inner Connections -->
+    <line x1="250" y1="80" x2="350" y2="80" />
+    <line x1="200" y1="40" x2="250" y2="80" />
+    <line x1="200" y1="120" x2="250" y2="80" />
+    <line x1="400" y1="40" x2="350" y2="80" />
+    <line x1="400" y1="120" x2="350" y2="80" />
+  </g>
+
+  <!-- Text (Light Theme) -->
+  <g id="logo-text">
+    <text
+      x="460"
+      y="85"
+      font-family="Arial, sans-serif"
+      font-size="24"
+      font-weight="bold"
+      fill="#1E90FF"
+    >
+      Diana
+    </text>
+    <text
+      x="460"
+      y="115"
+      font-family="Arial, sans-serif"
+      font-size="16"
+      fill="#808080"
+    >
+      Corporação Senciente
+    </text>
+  </g>
+</svg>

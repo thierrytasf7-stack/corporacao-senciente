@@ -1,0 +1,18 @@
+{
+  "id": "impl-phase4-task4-compliance-report",
+  "agent": "dev",
+  "task_type": "implement-compliance",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_write"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [],
+  "prompt": "CREATE COMPLIANCE REPORTER\n\nCreate: modules/betting-platform/backend/services/ComplianceReporter.ts\n\nBasic reporting:\n1. generateMonthlyReport(month, year)\n2. Returns: total bets, total users, KYC stats, AML flags\n3. Export to CSV format\n\nSimple reporter.",
+  "acceptance_criteria": [
+    "ComplianceReporter.ts criado",
+    "generateMonthlyReport method",
+    "CSV export function"
+  ],
+  "max_tool_iterations": 8,
+  "self_review": false,
+  "quality_threshold": 7
+}

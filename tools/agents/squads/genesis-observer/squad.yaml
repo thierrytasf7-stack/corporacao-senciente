@@ -1,0 +1,61 @@
+name: genesis-observer
+version: 1.0.0
+level: 11
+display_name: "GenesisObserver-NV:011"
+short-title: "The Primordial Watcher (Self-Evolving)"
+description: >-
+  Squad primordial autopoiético. Observa, interpreta e evolui a si mesmo e aos outros.
+  Nível Atual: NV-011.
+
+author: Synkra AIOS Dev Team
+slashPrefix: genesis
+
+tags:
+  - genesis
+  - observer
+  - evolutionary
+  - level-11
+  - deep-insight
+
+requires:
+  node: ">=18.0.0"
+  aios: ">=2.3.0"
+
+status:
+  production_ready: true
+  cost_model: "free (internal squad)"
+  evolution_mode: "autonomous"
+
+# SQUAD PURPOSE
+purpose: |
+  1. Observar a estrutura (Cartógrafo).
+  2. Interpretar a intenção (Filósofo).
+  3. EVOLUIR (Motor de Evolução): Analisar lacunas, criar melhorias e subir de nível.
+
+# AGENT DEFINITIONS
+agents:
+  - id: cartographer
+    role: observer
+    description: "Varre diretórios e estrutura."
+
+  - id: systems-philosopher
+    role: interpreter
+    description: "Cérebro da evolução. Decide O QUE evoluir."
+
+  - id: auto-fixer
+    role: mender
+    description: "Agente de auto-cura (Nascido no Nível 10)."
+
+# COMMANDS
+commands:
+  primary:
+    - /cartographer
+    - /systems-philosopher
+    - /genesis-observe
+    - *evolua
+    - *evoluir-squad-especifico
+
+# INTEGRATION WITH AIOS CORE
+integration:
+  aios_core_enabled: true
+  workflow_position: "Root - Evolutionary Layer"

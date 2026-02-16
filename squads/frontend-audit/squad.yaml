@@ -1,0 +1,55 @@
+name: frontend-audit
+version: 1.0.0
+description: Squad especialista em auditoria completa de frontends - debug, UX/UI review, acessibilidade, performance, responsividade e validação visual tab-a-tab via Playwright
+author: Diana Corporação Senciente
+license: MIT
+slashPrefix: FrontendAudit
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - frontend-auditor.md
+  tasks:
+    - audit-full-frontend.md
+    - audit-single-page.md
+    - audit-ux-heuristics.md
+    - audit-accessibility.md
+    - audit-performance.md
+    - audit-responsive.md
+    - audit-console-errors.md
+    - generate-audit-report.md
+  workflows:
+    - full-audit-workflow.yaml
+  checklists:
+    - ux-heuristics-checklist.md
+    - accessibility-checklist.md
+    - performance-checklist.md
+    - responsive-checklist.md
+  templates:
+    - audit-report-tmpl.md
+  tools:
+    - playwright
+    - browser
+  scripts: []
+
+config:
+  extends: extend
+
+dependencies:
+  node:
+    - "@playwright/test"
+  python: []
+  squads: []
+
+tags:
+  - frontend
+  - audit
+  - ux
+  - ui
+  - debug
+  - playwright
+  - accessibility
+  - performance

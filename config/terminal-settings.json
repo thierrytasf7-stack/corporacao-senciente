@@ -1,0 +1,30 @@
+{
+    "profiles": {
+        "list": [
+            {
+                "name": "Hive Guardian - Diana",
+                "commandline": "powershell.exe -NoExit -Command "pm2 logs guardian-hive --lines 100"",
+                "startingDirectory": "C:/Users/User/Desktop/Diana-Corporacao-Senciente",
+                "colorScheme": "One Half Dark",
+                "icon": "🛡️"
+            },
+            {
+                "name": "Agent Zero - Diana",
+                "commandline": "powershell.exe -NoExit -Command "pm2 logs agent-zero --lines 50"",
+                "startingDirectory": "C:/Users/User/Desktop/Diana-Corporacao-Senciente",
+                "icon": "🤖"
+            },
+            {
+                "name": "Aider Worker - Diana",
+                "commandline": "nu",
+                "startingDirectory": "C:/Users/User/Desktop/Diana-Corporacao-Senciente",
+                "icon": "👷"
+            }
+        ]
+    },
+    "actions": [
+        { "command": { "action": "newTab", "profile": "Hive Guardian - Diana" }, "keys": "ctrl+shift+1" },
+        { "command": { "action": "newTab", "profile": "Agent Zero - Diana" }, "keys": "ctrl+shift+2" },
+        { "command": { "action": "newTab", "profile": "Aider Worker - Diana" }, "keys": "ctrl+shift+3" }
+    ]
+}

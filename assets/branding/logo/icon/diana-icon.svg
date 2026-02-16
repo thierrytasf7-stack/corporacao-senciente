@@ -1,0 +1,41 @@
+<!--
+  Diana Icon - Simplified Neural Convergence
+  Usage: Favicon, app icons, small spaces (16px-64px)
+  Optimized for: Recognition at small sizes
+-->
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:1" />
+    </linearGradient>
+
+    <radialGradient id="icon-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:0.3" />
+    </radialGradient>
+  </defs>
+
+  <!-- Outer Ring -->
+  <circle cx="32" cy="32" r="28"
+          fill="none"
+          stroke="url(#icon-gradient)"
+          stroke-width="2" />
+
+  <!-- Neural Nodes (simplified - 4 nodes) -->
+  <circle cx="32" cy="8" r="3" fill="#C0C0C0" />
+  <circle cx="56" cy="32" r="3" fill="#C0C0C0" />
+  <circle cx="32" cy="56" r="3" fill="#C0C0C0" />
+  <circle cx="8" cy="32" r="3" fill="#C0C0C0" />
+
+  <!-- Connection Lines -->
+  <line x1="32" y1="8" x2="32" y2="32" stroke="#1E90FF" stroke-width="1.5" opacity="0.6" />
+  <line x1="56" y1="32" x2="32" y2="32" stroke="#1E90FF" stroke-width="1.5" opacity="0.6" />
+  <line x1="32" y1="56" x2="32" y2="32" stroke="#1E90FF" stroke-width="1.5" opacity="0.6" />
+  <line x1="8" y1="32" x2="32" y2="32" stroke="#1E90FF" stroke-width="1.5" opacity="0.6" />
+
+  <!-- Central Core -->
+  <circle cx="32" cy="32" r="10" fill="url(#icon-glow)" />
+  <circle cx="32" cy="32" r="6" fill="#FFD700" opacity="0.95" />
+  <circle cx="32" cy="32" r="3" fill="#1A1A1A" />
+</svg>

@@ -1,0 +1,101 @@
+name: docs-generator
+version: 1.0.0
+description: Squad de Documentation Engineering - gera, valida, sincroniza e audita toda a documentacao do projeto. ADRs, API docs, guides, changelogs, i18n sync e code docs.
+team: Desenvolvimento
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: DocsGen
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - docs-engineer.md
+  tasks:
+    # Generation
+    - docs-generate.md
+    - docs-adr.md
+    - docs-story.md
+    - docs-api-reference.md
+    - docs-code-docs.md
+    - docs-changelog.md
+    # Maintenance
+    - docs-index.md
+    - docs-validate.md
+    - docs-sync-i18n.md
+    - docs-audit.md
+  workflows:
+    - full-docs-generation.yaml
+    - pre-release-docs-check.yaml
+  checklists:
+    - docs-gate-quality.md
+    - docs-gate-release.md
+  templates:
+    - docs-adr-tmpl.md
+    - docs-guide-tmpl.md
+  tools: []
+  scripts: []
+
+config:
+  extends: extend
+
+  # Existing infrastructure to leverage (NOT duplicate)
+  existing_tools:
+    aios_doc_template: ".aios-core/development/templates/aios-doc-template.md"
+    smart_story_template: "docs/templates/SMART_STORY_TEMPLATE.md"
+    story_template: "docs/templates/story-template.md"
+    report_template: "docs/templates/report_template.md"
+    docs_index: "docs/INDEX.md"
+    framework_coding_standards: "docs/framework/coding-standards.md"
+    framework_tech_stack: "docs/framework/tech-stack.md"
+    framework_source_tree: "docs/framework/source-tree.md"
+    architecture_index: "docs/architecture/ARCHITECTURE-INDEX.md"
+    agents_reference: ".claude/commands/Docs/AgentsReference.md"
+
+  # Documentation standards
+  standards:
+    language: "pt-BR"
+    i18n_support: ["pt", "en", "es"]
+    file_naming: "kebab-case.md"
+    max_doc_age_days: 90
+    required_frontmatter: ["title", "date", "status"]
+    link_validation: true
+    changelog_format: "keep-a-changelog"
+
+  # Doc categories recognized
+  categories:
+    - getting-started
+    - architecture
+    - agents
+    - integrations
+    - operations
+    - troubleshooting
+    - guides
+    - api
+    - framework
+    - stories
+    - prd
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+reports_to: ceo-desenvolvimento
+triggered_by:
+  - "Prometheus aciona quando nova feature precisa docs"
+  - "Pre-release docs gate"
+  - "Nova ADR precisa ser registrada"
+  - "Story completada precisa documentacao"
+  - "API mudou e docs estao desatualizados"
+
+tags:
+  - documentation
+  - docs-generation
+  - adr
+  - api-docs
+  - changelog
+  - i18n
+  - code-docs

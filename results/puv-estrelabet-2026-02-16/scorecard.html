@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scorecard PUV - Estrela Bet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffffff;
+            padding: 40px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 10px;
+        }
+        
+        .score {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff6b35, #ff8c42);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        .classification {
+            font-size: 24px;
+            color: #4ade80;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .criteria-section {
+            margin-bottom: 30px;
+        }
+        
+        .criteria-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 40px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            font-weight: 600;
+        }
+        
+        .progress-bar.score-4 {
+            background: linear-gradient(90deg, #4ade80, #69f0ae);
+            width: 100%;
+        }
+        
+        .progress-bar.score-3 {
+            background: linear-gradient(90deg, #4ade80, #69f0ae);
+            width: 75%;
+        }
+        
+        .progress-bar.score-2 {
+            background: linear-gradient(90deg, #ffeb3b, #fff176);
+            width: 50%;
+        }
+        
+        .progress-bar.score-1 {
+            background: linear-gradient(90deg, #ff6b35, #ff8c42);
+            width: 25%;
+        }
+        
+        .progress-bar.score-0 {
+            background: linear-gradient(90deg, #ff6b35, #ff8c42);
+            width: 0%;
+        }
+        
+        .score-badge {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 14px;
+            margin-left: 15px;
+        }
+        
+        .justification {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+        
+        .opportunity {
+            font-size: 13px;
+            color: #4ade80;
+            font-style: italic;
+            background: rgba(74, 222, 128, 0.1);
+            padding: 10px;
+            border-left: 4px solid #4ade80;
+            margin-bottom: 20px;
+        }
+        
+        .top-actions {
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+        
+        .top-actions h3 {
+            color: #ff6b35;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .action-item {
+            font-size: 14px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .action-item::before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #ff6b35;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Estrela Bet</div>
+            <div class="score">12/20</div>
+            <div class="classification">Média</div>
+        </header>
+
+        <div class="criteria-section">
+            <div class="criteria-title">1. Diferenciação e Posicionamento</div>
+            <div class="progress-container">
+                <div class="progress-bar score-2">
+                    <span>2/4</span>
+                    <span class="score-badge">Regular</span>
+                </div>
+            </div>
+            <div class="justification">O site usa linguagem de atitude e campeonato, mas a proposta é genérica para apostas esportivas. Não há diferenciação clara do que os diferencia dos concorrentes no mercado brasileiro.</div>
+            <div class="opportunity">Desenvolver uma proposta de valor única baseada em algum diferencial competitivo específico (odds melhores, experiência do usuário, bônus exclusivos)</div>
+        </div>
+
+        <div class="criteria-section">
+            <div class="criteria-title">2. Clareza da Proposta/Benefício</div>
+            <div class="progress-container">
+                <div class="progress-bar score-3">
+                    <span>3/4</span>
+                    <span class="score-badge">Bom</span>
+                </div>
+            </div>
+            <div class="justification">A proposta é clara: "Casa de Aposta Esportiva e Cassino Online". Os benefícios são comunicados de forma direta com CTAs visíveis e linguagem motivacional.</div>
+            <div class="opportunity">Reduzir o tempo de compreensão para menos de 5 segundos com uma headline mais impactante e específica</div>
+        </div>
+
+        <div class="criteria-section">
+            <div class="criteria-title">3. Linguagem e Conexão Emocional</div>
+            <div class="progress-container">
+                <div class="progress-bar score-3">
+                    <span>3/4</span>
+                    <span class="score-badge">Bom</span>
+                </div>
+            </div>
+            <div class="justification">Usa linguagem motivacional como "Vai pra cima!" e "Chegou a hora de ser campeão!". Conecta emocionalmente com o desejo de vitória e sucesso.</div>
+            <div class="opportunity">Criar uma narrativa mais profunda que ressoe com os valores e aspirações específicas do público-alvo brasileiro</div>
+        </div>
+
+        <div class="criteria-section">
+            <div class="criteria-title">4. Credibilidade e Confiança</div>
+            <div class="progress-container">
+                <div class="progress-bar score-2">
+                    <span>2/4</span>
+                    <span class="score-badge">Regular</span>
+                </div>
+            </div>
+            <div class="justification">Mostra autorização governamental (SPA/MF nº 320/2025) e CNPJ, mas falta prova social mais forte como depoimentos, números de usuários, ou selos de segurança adicionais.</div>
+            <div class="opportunity">Adicionar depoimentos de usuários, números de apostas realizadas, selos de segurança reconhecidos e parcerias estratégicas</div>
+        </div>
+
+        <div class="criteria-section">
+            <div class="criteria-title">5. Jornada Guiada e CTA</div>
+            <div class="progress-container">
+                <div class="progress-bar score-2">
+                    <span>2/4</span>
+                    <span class="score-badge">Regular</span>
+                </div>
+            </div>
+            <div class="justification">Possui CTAs claros como "Entre ou cadastre-se" e "Cadastre-se", mas a jornada poderia ser mais guiada com menos opções e mais foco no primeiro passo.</div>
+            <div class="opportunity">Simplificar a jornada inicial com um CTA principal dominante e sequência de passos claramente definidos</div>
+        </div>
+
+        <div class="top-actions">
+            <h3>Top 3 Ações para Melhoria</h3>
+            <div class="action-item">Desenvolver uma proposta de valor única baseada em diferenciais competitivos específicos</div>
+            <div class="action-item">Adicionar prova social forte com depoimentos, números e selos de segurança</div>
+            <div class="action-item">Simplificar a jornada inicial com um CTA principal dominante e sequência de passos claros</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Análise PUV Score - Diana Corp</p>
+    </footer>
+</body>
+</html>

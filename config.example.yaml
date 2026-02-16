@@ -1,0 +1,71 @@
+# ========================================
+# CORPORAÇÃO SENCIENTE - CONFIGURAÇÃO YAML
+# ========================================
+
+# Database Configuration
+database:
+  supabase_url: "https://your-project.supabase.co"
+  supabase_service_role_key: "your-service-role-key-here"
+  pool_min_size: 5
+  pool_max_size: 20
+  request_timeout: 30
+
+# AI Configuration
+ai:
+  openai_api_key: "your-openai-api-key-here"
+  model: "gpt-4"
+  temperature: 0.7
+  max_tokens: 2000
+
+# Payment Configuration
+payments:
+  stripe_secret_key: "your-stripe-secret-key"
+  stripe_publishable_key: "your-stripe-publishable-key"
+  stripe_webhook_secret: "your-stripe-webhook-secret"
+  default_currency: "USD"
+
+# System Configuration
+system:
+  environment: "development"
+  log_level: "INFO"
+  debug: true
+
+# Agent Configuration
+agents:
+  auto_evolution_interval_hours: 24
+  max_concurrent_agents: 10
+  agent_autonomy_threshold: 80
+  enable_learning: true
+
+# Holding Configuration
+holding:
+  main_holding_id: "550e8400-e29b-41d4-a716-446655440000"
+  default_vision: "Holding que constrói empresas automaticamente"
+  auto_create_subsidiaries: true
+
+# Security Configuration
+security:
+  jwt_secret_key: "your-jwt-secret-key-here"
+  jwt_algorithm: "HS256"
+  jwt_expiration_hours: 24
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8000"
+
+# Frontend Configuration
+frontend:
+  url: "http://localhost:3000"
+  enable_cors: true
+
+# Monitoring Configuration
+monitoring:
+  enable_metrics: true
+  metrics_retention_days: 30
+  health_check_interval: 60
+
+# Business Rules
+business_rules:
+  min_subsidiary_autonomy: 60
+  max_opportunity_evaluation_time: 300
+  revenue_growth_target: 0.15
+  agent_performance_threshold: 80

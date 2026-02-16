@@ -1,0 +1,33 @@
+{
+  "worker_id": "documentation_aa0ba2b4",
+  "squad_type": "documentation",
+  "system_prompt": "Você é um Technical Writer da Corporação Senciente.\nSua missão: Criar documentação clara e completa.\nContexto: Você trabalha em paralelo com outros writers. Seu contexto é isolado.\nResponsabilidades:\n- Documentar APIs\n- Criar guias de uso\n- Manter README atualizado\n- Gerar exemplos\nFerramentas: Markdown, Aider, Qwen\nQualidade: Documentação deve ser clara e acessível",
+  "tools": [
+    "aider",
+    "git",
+    "python",
+    "typescript",
+    "docker",
+    "pytest",
+    "jest",
+    "openrouter_api"
+  ],
+  "best_practices": {
+    "code_style": "PEP 8 para Python, ESLint para JavaScript",
+    "testing": "Pytest para Python, Jest para JavaScript, >80% coverage",
+    "documentation": "Docstrings completas, type hints, README.md",
+    "git": "Commits atômicos, mensagens descritivas",
+    "architecture": "DDD, SOLID principles, Clean Code",
+    "performance": "Otimizar para latência <100ms, throughput >1000 req/s",
+    "security": "Zero-trust, validação de entrada, sem hardcoded secrets"
+  },
+  "knowledge_files": [
+    "DOCUMENTO_UNICO_VERDADE.md",
+    ".sentient_protocols.md",
+    ".lingma/rules/contexto.md",
+    ".agent/rules/senciencia.md",
+    "backend/core/services/README_CLI_ORCHESTRATION.md"
+  ],
+  "task": "Refatorar 08_Evolucao_Metabolismo_Obra_Senciencia.md com estrutura de 23 níveis",
+  "created_at": "2026-02-02T20:54:38.744649"
+}

@@ -1,0 +1,98 @@
+# Configuração de desenvolvimento
+environment: development
+
+# Configurações do servidor
+server:
+  port: 3001
+  host: localhost
+  cors:
+    enabled: true
+    origins:
+      - http://localhost:3000
+      - http://localhost:3001
+      - http://localhost:13000
+      - http://localhost:13001
+
+# Configurações do banco de dados
+database:
+  host: aura-postgres
+  port: 5432
+  database: aura_db
+  username: aura_user
+  password: aura_password
+  ssl: false
+  maxConnections: 10
+  idleTimeoutMillis: 30000
+
+# Configurações do Redis
+redis:
+  host: aura-redis
+  port: 6379
+  password: null
+  database: 0
+  maxRetriesPerRequest: 3
+  retryDelayOnFailover: 100
+
+# Configurações da Binance
+binance:
+  baseUrl: https://api.binance.com
+  testnetUrl: https://testnet.binance.vision
+  useTestnet: true
+  apiKey: fNvgZQzCexYFQfGALy03zGXzsDQ3lEoDYLgtRDwdml1HGdmmH51uLKWfAzV4RGyF
+  secretKey: 80nEJoimIghboxbDbPFuIWHPh5rRaGETWsi7ugYtnPHPa4puFgWG7CP2RSvynFsO
+  timeout: 30000
+  maxRetries: 3
+  retryDelay: 1000
+
+# Configurações de segurança
+security:
+  jwtSecret: your-jwt-secret-key-here
+  jwtRefreshSecret: your-jwt-refresh-secret-key-here
+  jwtExpiresIn: 1h
+  jwtRefreshExpiresIn: 7d
+  encryptionKey: AURA_ENCRYPTION_KEY_32_CHARACTERS_MINIMUM
+  rateLimitWindowMs: 900000
+  rateLimitMaxRequests: 100
+
+# Configurações de logging
+logging:
+  level: info
+  file: logs/app.log
+  maxFiles: 5
+  maxSize: 10m
+  format: json
+
+# Configurações de monitoramento
+monitoring:
+  enabled: true
+  metricsInterval: 60000
+  healthCheckInterval: 30000
+  alertThresholds:
+    cpuUsage: 80
+    memoryUsage: 80
+    responseTime: 5000
+    errorRate: 5
+
+# Configurações de notificação
+notifications:
+  email:
+    enabled: false
+    smtp:
+      host: smtp.gmail.com
+      port: 587
+      secure: false
+      auth:
+        user: your-email@gmail.com
+        pass: your-password
+    from: your-email@gmail.com
+    alertEmails: []
+  slack:
+    enabled: false
+    webhookUrl: your-slack-webhook-url
+    channel: #alerts
+    username: AURA Bot
+  webhook:
+    enabled: false
+    url: your-webhook-url
+    timeout: 5000
+    retries: 3

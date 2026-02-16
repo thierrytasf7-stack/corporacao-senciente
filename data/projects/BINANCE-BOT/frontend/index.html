@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sistema AURA - Trading Automatizado</title>
+  <meta name="description" content="Sistema AURA - Automated Unified Risk-managed Arbitrage Trading System" />
+  <!-- Suprimir warnings de extensões do navegador -->
+  <script>
+    // Suprimir warnings do ethereum.js e outras extensões
+    (function () {
+      const originalWarn = console.warn;
+      const originalError = console.error;
+      const originalLog = console.log;
+
+      const shouldSuppress = (message) => {
+        return message.includes('chrome.runtime') ||
+          message.includes('ethereum.js') ||
+          message.includes('isDevEnv()') ||
+          message.includes('injected content script') ||
+          message.includes('You are trying to access chrome.runtime') ||
+          message.includes('Avoid using isDevEnv()') ||
+          message.includes('app.uniswap.org');
+      };
+
+      console.warn = function (...args) {
+        const message = args.join(' ');
+        if (shouldSuppress(message)) {
+          return; // Suprimir warnings de extensões
+        }
+        originalWarn.apply(console, args);
+      };
+
+      console.error = function (...args) {
+        const message = args.join(' ');
+        if (shouldSuppress(message)) {
+          return; // Suprimir erros de extensões
+        }
+        originalError.apply(console, args);
+      };
+
+      console.log = function (...args) {
+        const message = args.join(' ');
+        if (shouldSuppress(message)) {
+          return; // Suprimir logs de extensões
+        }
+        originalLog.apply(console, args);
+      };
+    })();
+  </script>
+
+  <!-- Logger Global ULTRA ROBUSTO - DEVE ser carregado PRIMEIRO -->
+  <script>
+    (function () {
+      var globalLogs = [];
+      var sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      var isInitialized = false;
+      var lastSendTime = 0;
+      var sendInterval = 10000; // 10 segundos entre envios
+      var maxLogsPerBatch = 50; // Máximo de logs por lote
+      var pendingSend = false;
+
+      // Preservar console original
+      var originalConsole = {
+        log: console.log,
+        error: console.error,
+        warn: console.warn,
+        info: console.info,
+        debug: console.debug
+      };
+
+      // Função para capturar logs com throttling
+      function captureLog(level) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        var message = args.map(function (arg) {
+          return typeof arg === 'object' ? JSON.stringify(arg) : String(arg);
+        }).join(' ');
+
+        var logEntry = {
+          timestamp: new Date().toISOString(),
+          level: level,
+          message: message,
+          args: args,
+          url: window.location.href,
+          userAgent: navigator.userAgent
+        };
+
+        globalLogs.push(logEntry);
+
+        // Limitar o número de logs em memória
+        if (globalLogs.length > 1000) {
+          globalLogs = globalLogs.slice(-500); // Manter apenas os últimos 500
+        }
+
+        // Enviar logs com throttling
+        scheduleLogSend();
+
+        // Chamar método original
+        originalConsole[level].apply(console, args);
+      }
+
+      // Função para agendar envio de logs com throttling
+      function scheduleLogSend() {
+        if (pendingSend) return;
+
+        var now = Date.now();
+        if (now - lastSendTime < sendInterval && globalLogs.length < maxLogsPerBatch) {
+          return;
+        }
+
+        pendingSend = true;
+        setTimeout(function () {
+          sendLogsToBackend();
+          pendingSend = false;
+        }, 100);
+      }
+
+      // Função para enviar logs otimizada
+      function sendLogsToBackend() {
+        if (globalLogs.length === 0) return;
+
+        var now = Date.now();
+        lastSendTime = now;
+
+        // Pegar apenas os logs mais recentes se houver muitos
+        var logsToSend = globalLogs.length > maxLogsPerBatch
+          ? globalLogs.slice(-maxLogsPerBatch)
+          : globalLogs.slice();
+
+        var logData = {
+          sessionId: sessionId,
+          startTime: new Date(now - sendInterval).toISOString(),
+          endTime: new Date(now).toISOString(),
+          totalLogs: logsToSend.length,
+          errors: logsToSend.filter(function (log) { return log.level === 'error'; }).length,
+          warnings: logsToSend.filter(function (log) { return log.level === 'warn'; }).length,
+          logs: logsToSend
+        };
+
+        // Limpar logs enviados
+        globalLogs = globalLogs.slice(logsToSend.length);
+
+        fetch('http://127.0.0.1:23231/api/logs/update-frontend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename: 'LOGS-CONSOLE-FRONTEND.JSON',
+            content: JSON.stringify(logData),
+            timestamp: new Date().toISOString(),
+            sourceUrl: window.location.href
+          })
+        }).then(function (response) {
+          if (response.ok) {
+            // Log de sucesso apenas em debug
+            if (window.location.search.includes('debug=true')) {
+              originalConsole.debug('✅ Logs enviados com sucesso:', logsToSend.length, 'logs');
+            }
+          }
+        }).catch(function (err) {
+          // Só logar erro se não for de conexão
+          if (!err.message.includes('Failed to fetch') && !err.message.includes('Network Error')) {
+            originalConsole.error('Erro ao enviar logs:', err);
+          }
+        });
+      }
+
+      // Interceptar console methods IMEDIATAMENTE
+      console.log = function () {
+        captureLog.apply(null, ['info'].concat(Array.prototype.slice.call(arguments)));
+      };
+      console.error = function () {
+        captureLog.apply(null, ['error'].concat(Array.prototype.slice.call(arguments)));
+      };
+      console.warn = function () {
+        captureLog.apply(null, ['warn'].concat(Array.prototype.slice.call(arguments)));
+      };
+      console.info = function () {
+        captureLog.apply(null, ['info'].concat(Array.prototype.slice.call(arguments)));
+      };
+      console.debug = function () {
+        captureLog.apply(null, ['debug'].concat(Array.prototype.slice.call(arguments)));
+      };
+
+      // Capturar erros não tratados
+      window.addEventListener('error', function (event) {
+        captureLog('error', 'Uncaught Error:', event.error ? event.error.message : event.message, event.error ? event.error.stack : '');
+      });
+
+      window.addEventListener('unhandledrejection', function (event) {
+        captureLog('error', 'Unhandled Promise Rejection:', event.reason);
+      });
+
+      // Capturar logs do React/Redux
+      window.addEventListener('message', function (event) {
+        if (event.data && event.data.type === 'console_log') {
+          captureLog(event.data.level || 'info', event.data.message);
+        }
+      });
+
+      // Inicializar após um pequeno delay
+      setTimeout(function () {
+        isInitialized = true;
+        originalConsole.log('✅ Global Logger ULTRA ROBUSTO ativado - capturando TODOS os logs');
+
+        // Enviar logs periodicamente (a cada 30 segundos)
+        setInterval(sendLogsToBackend, 30000);
+      }, 100);
+
+    })();
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>

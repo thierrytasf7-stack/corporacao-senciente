@@ -1,0 +1,19 @@
+{
+  "id": "impl-phase2-task2-rate-limit",
+  "agent": "dev",
+  "task_type": "implement-security",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_write", "shell_exec"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [],
+  "prompt": "ADD RATE LIMITING\n\nCreate: modules/betting-platform/backend/middleware/rate-limit.ts\n\n1. Install express-rate-limit\n2. Create rateLimiter with:\n   - windowMs: 15 * 60 * 1000 (15min)\n   - max: 100 requests per window\n   - message: 'Too many requests'\n3. Export middleware\n\nBasic rate limiter.",
+  "acceptance_criteria": [
+    "rate-limit.ts criado",
+    "express-rate-limit configurado",
+    "15min window, 100 max",
+    "Middleware exportado"
+  ],
+  "max_tool_iterations": 8,
+  "self_review": false,
+  "quality_threshold": 7
+}

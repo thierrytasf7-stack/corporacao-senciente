@@ -1,0 +1,266 @@
+name: dev-aider
+version: 1.1.0
+short-title: "Dev-Aider Squad - Open Source AI with Free Models"
+description: >-
+  Ultra-low-cost development squad using AIDER-AIOS as a tool with free models via OpenRouter.
+  Uses Arcee AI: Trinity Large Preview (127B) completely free. Perfect for reducing AI costs
+  while maintaining quality code generation. Integrates AIDER-AIOS as subprocess workflow.
+
+author: Synkra AIOS Dev Team
+slashPrefix: aider
+
+tags:
+  - cost-reduction
+  - open-source
+  - arcee-trinity
+  - openrouter-free
+  - aider-integration
+  - subprocess-workflow
+  - dev-efficiency
+
+requires:
+  node: ">=18.0.0"
+  aios: ">=2.3.0"
+  python: ">=3.8.0"
+  aider: "installed-locally"
+
+status:
+  production_ready: true
+  cost_model: "free (Arcee Trinity 127B via OpenRouter)"
+  integration: "AIDER-AIOS as external tool (subprocess)"
+
+# 🚨 MANDATORY EXECUTION RULES
+# ALL aider-* agents MUST invoke Aider CLI via Bash tool
+# Claude Write/Edit tools are FORBIDDEN for code generation
+# See: AIDER-EXECUTION-RULES.md for complete enforcement rules
+execution_rules:
+  rules_file: "AIDER-EXECUTION-RULES.md"
+  enforcement: "MANDATORY"
+  forbidden:
+    - "Write tool for implementation"
+    - "Edit tool for implementation"
+    - "Direct code generation"
+  required:
+    - "Bash tool → Aider CLI"
+    - "Cost tracking ($0 per task)"
+    - "Aider execution logging"
+  aider_cli_template: |
+    aider --model openrouter/arcee-ai/trinity-large-preview:free \
+          --no-auto-commits \
+          --yes \
+          --file {target_files} \
+          --message "{task_prompt}"
+
+# SQUAD PURPOSE
+purpose: |
+  Cost-optimized development using AIDER-AIOS with free Arcee Trinity model.
+
+  Use Case 1 - CHEAP IMPLEMENTATION:
+    Story needs implementation → @aider-dev analyzes scope
+    → If complexity < STANDARD: Invoke AIDER-AIOS (free, Arcee Trinity)
+    → If complexity >= COMPLEX: Escalate to @dev (Claude Opus)
+
+  Use Case 2 - REFACTORING & CLEANUP:
+    @aider-dev uses AIDER for refactoring, optimization, documentation
+    → Save Claude tokens for complex logic
+
+  Use Case 3 - COST ANALYSIS:
+    @aider-optimizer decides when to use Aider vs Claude
+    → Calculate cost-benefit ratio
+    → Track savings vs quality metrics
+
+# SQUAD ARCHITECTURE
+architecture:
+  type: subprocess-integration
+  pattern: claude-orchestrator → aider-aios-tool → free-model-inference
+
+  layers:
+    orchestration: "Claude AIOS (claude-code agent)"
+    tool_integration: "AIDER-AIOS subprocess wrapper"
+    execution: "Aider CLI (local terminal)"
+    inference: "Arcee Trinity 127B (free via OpenRouter)"
+
+# EXTERNAL TOOL CONFIGURATION
+external_tools:
+  aider_aios:
+    path: "../../AIDER-AIOS"  # Reference to AIDER-AIOS repo
+    invocation: "subprocess (Python wrapper)"
+    models:
+      primary: "arcee-ai/trinity-large-preview:free (127B, free)"
+      fallback: "qwen/qwen2.5-7b-instruct:free (free)"
+    api_provider: "OpenRouter"
+    cost: "100% FREE"
+
+# AGENT DEFINITIONS
+agents:
+  - id: aider-dev
+    role: developer
+    description: "Implements tasks via AIDER-AIOS with free models"
+
+  - id: aider-optimizer
+    role: optimizer
+    description: "Decides cost-benefit of using Aider vs Claude, optimizes prompts"
+
+  - id: po-aider
+    role: story-creator
+    description: "Generates user stories via Aider with free models"
+
+  - id: sm-aider
+    role: task-decomposer
+    description: "Decomposes stories into atomic Aider-sized tasks"
+
+  - id: qa-aider
+    role: validator
+    description: "Runs lint/typecheck/test and generates QA summary"
+
+  - id: deploy-aider
+    role: deployer
+    description: "Handles git staging, commit, and push with checklist gating"
+
+# COMMANDS & WORKFLOWS
+commands:
+  primary:
+    - /aider-dev        # Invoke aider-dev agent
+    - /aider-optimize   # Invoke aider-optimizer agent
+    - /po-aider         # Story creation via Aider
+    - /sm-aider         # Task decomposition via Aider
+    - /qa-aider         # Validation via Aider
+    - /deploy-aider     # Deployment via git
+
+  shortcuts:
+    - /cheap            # Quick invoke AIDER with defaults
+    - /analyze-cost     # Cost analysis for current task
+    - /full-cycle       # Run complete story-to-deploy cycle
+
+# DEPENDENCIES
+dependencies:
+  integrations:
+    - integrations/aider_aios_integration.py  # Main Python wrapper for AIDER-AIOS
+
+  scripts:
+    - scripts/aider-invoke.js        # Wrapper to invoke AIDER-AIOS
+    - scripts/cost-calculator.js     # Calculate cost savings
+    - scripts/model-selector.js      # Choose between Aider/Claude
+    - scripts/story-generator.js     # Generate stories via Aider
+    - scripts/task-decomposer.js     # Decompose stories into tasks
+    - scripts/qa-runner.js           # Run validation and generate summary
+    - scripts/aider-status.js        # Status helper for Aider
+
+  tasks:
+    - invoke-aider.md               # Task to invoke AIDER-AIOS
+    - cost-analysis.md              # Cost-benefit analysis
+    - aider-handoff.md              # Handoff from Claude to Aider
+    - aider-integration.md          # Integration workflows
+    - po-aider-create-story.md      # Story creation task
+    - sm-aider-create-tasks.md      # Task decomposition task
+    - qa-aider-validate.md          # Validation task
+    - deploy-aider-deploy.md        # Deployment task
+
+  templates:
+    - aider-prompt-tmpl.md          # Optimized prompt templates
+    - cost-report-tmpl.md           # Cost analysis report
+    - story-summary-tmpl.md         # Story summary for Claude review
+    - qa-summary-tmpl.md            # QA summary for Claude sign-off
+
+  checklists:
+    - story-review-checklist.md     # Story review gate checklist
+    - qa-summary-checklist.md       # QA sign-off checklist
+    - deploy-checklist.md           # Pre-deployment checklist
+
+  workflows:
+    - aider-full-cycle.yaml         # Complete story-to-deploy workflow
+
+  data:
+    - arcee-trinity-guide.md        # Model capabilities & limits
+    - cost-strategies.md            # When to use Aider vs Claude
+    - free-models-comparison.md     # Other free options
+
+# INTEGRATION WITH AIOS CORE
+integration:
+  aios_core_enabled: true
+  aios_core:
+    agents_used: ["@dev", "@architect", "@qa"]
+    when_to_use: "When task can be done cheaper via Aider without quality loss"
+    integration_type: "subprocess wrapper"
+    parent_framework: "Synkra AIOS (claude-code)"
+
+  workflow_position: "Optional layer before @dev implementation"
+
+  decision_tree:
+    - "Complexity SIMPLE + AIDER applicable? → YES: Use Aider (FREE)"
+    - "Complexity STANDARD + AIDER suitable? → MAYBE: Analyze cost-benefit"
+    - "Complexity COMPLEX? → NO: Use @dev (better quality, worth cost)"
+    - "Task is refactoring/docs? → YES: Use Aider (save tokens)"
+
+# CAPABILITIES
+capabilities:
+  aider_cli:
+    - Full terminal-based development
+    - Multi-file editing (/add, /drop files)
+    - Git integration (diff, commit)
+    - Model switching
+    - Incremental development
+
+  free_models:
+    - Arcee Trinity 127B (4k context, excellent code)
+    - Qwen 2.5 7B (8k context, good quality)
+    - DeepSeek R1 Distill (4k context)
+    - All completely FREE via OpenRouter
+
+  cost_optimization:
+    - Automatic cost tracking
+    - Savings calculation vs Claude Opus
+    - Quality metrics vs cost analysis
+    - Model recommendation engine
+
+# COST COMPARISON
+costs:
+  aider_arcee_trinity:
+    per_thousand_tokens: "$0"
+    monthly_budget: "$0 (completely free)"
+    suitable_for: "Simple to standard complexity"
+
+  claude_opus:
+    per_thousand_tokens: "$15 (input), $60 (output)"
+    monthly_example: "$200-500 (active development)"
+    suitable_for: "Complex, high-quality tasks"
+
+  savings_potential: "100% on simple tasks, 50%+ on standard tasks"
+
+# QUALITY EXPECTATIONS
+quality:
+  arcee_trinity:
+    code_quality: "Good (suitable for most tasks)"
+    reasoning: "Limited (no complex logic)"
+    context_window: "4k tokens (manageable with good prompts)"
+    cost: "FREE"
+
+  claude_opus:
+    code_quality: "Excellent"
+    reasoning: "Excellent"
+    context_window: "200k tokens"
+    cost: "Expensive"
+
+  recommendation: "Use Aider for implementation, Claude for architecture/complex logic"
+
+# SETUP REQUIREMENTS
+setup:
+  required:
+    - AIDER-AIOS cloned locally (reference path above)
+    - OpenRouter account (free tier available)
+    - OPENROUTER_API_KEY environment variable set
+    - Python 3.8+
+    - Node.js 18+
+
+  optional:
+    - Git repository (for /commit command in Aider)
+    - Terminal/shell (for subprocess execution)
+
+# METADATA
+metadata:
+  created: "2026-02-04"
+  last_updated: "2026-02-04"
+  maintainer: "Synkra AIOS Dev Team"
+  squad_type: "cost-optimization / tool-integration"
+  integration_type: "subprocess wrapper"
+  production_status: "ready"

@@ -1,0 +1,47 @@
+{
+    "timestamp": "2025-08-18T23:00:17.350669",
+    "summary": {
+        "total_tests": 6,
+        "successful_tests": 5,
+        "failed_tests": 1,
+        "success_rate": 83.33333333333334
+    },
+    "results": [
+        {
+            "test": "frontend_connection",
+            "status_code": null,
+            "success": false,
+            "error": "HTTPConnectionPool(host='localhost', port=13000): Read timed out. (read timeout=5)"
+        },
+        {
+            "test": "backend_connection",
+            "status_code": 200,
+            "success": true,
+            "error": null
+        },
+        {
+            "endpoint": "/api/v1/binance/test-connection",
+            "status_code": 200,
+            "success": true,
+            "error": null
+        },
+        {
+            "endpoint": "/api/v1/binance/portfolio",
+            "status_code": 200,
+            "success": true,
+            "error": null
+        },
+        {
+            "endpoint": "/api/v1/binance/balances",
+            "status_code": 200,
+            "success": true,
+            "error": null
+        },
+        {
+            "endpoint": "/api/v1/binance/positions",
+            "status_code": 200,
+            "success": true,
+            "error": null
+        }
+    ]
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUV Scorecard - PlugAI Gym</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header .url { opacity: 0.9; font-size: 0.9em; }
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: white;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .score-number {
+            font-size: 4em;
+            font-weight: bold;
+            color: #667eea;
+            line-height: 1;
+        }
+        .score-max {
+            font-size: 1.2em;
+            color: #999;
+        }
+        .content {
+            padding: 40px;
+        }
+        .criterio {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .criterio:last-child { border-bottom: none; }
+        .criterio-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .criterio-nome {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #333;
+        }
+        .criterio-nota {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #667eea;
+            min-width: 50px;
+            text-align: right;
+        }
+        .barra-container {
+            background: #f0f0f0;
+            height: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .barra-preenchida {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            transition: width 0.3s ease;
+        }
+        .criterio-obs {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        .footer {
+            background: #f8f9fa;
+            padding: 30px 40px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .legenda {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .legenda-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .legenda-item {
+            display: inline-block;
+            margin-right: 20px;
+            font-size: 0.85em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PlugAI Gym</h1>
+            <div class="url">https://www.plugideias.com.br/</div>
+            <div class="score-circle">
+                <div class="score-number">15</div>
+                <div class="score-max">/20</div>
+            </div>
+            <div style="margin-top: 20px; font-size: 1.1em;">
+                Análise de Proposta Única de Valor - 13/02/2026
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Clareza da PUV</div>
+                    <div class="criterio-nota">2/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 100%;"></div>
+                </div>
+                <div class="criterio-obs">PUV clara e direta: 'Conecte. Acelere. Cresça com IA.' - Comunicação objetiva do valor</div>
+            </div>
+
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Diferenciação</div>
+                    <div class="criterio-nota">2/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 100%;"></div>
+                </div>
+                <div class="criterio-obs">Solução única com 4 agentes IA personalizados (ContactFit, SaleFit, StayFit, FinFit) - Altamente diferenciado</div>
+            </div>
+
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Público-alvo Definido</div>
+                    <div class="criterio-nota">2/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 100%;"></div>
+                </div>
+                <div class="criterio-obs">Segmentação precisa: academias com 3+ unidades em crescimento - Deixa claro para quem NÃO é</div>
+            </div>
+
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Benefícios Tangíveis</div>
+                    <div class="criterio-nota">2/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 100%;"></div>
+                </div>
+                <div class="criterio-obs">Promessa clara: escalar sem perder padrão, vendas e controle - Foco em resultados mensuráveis</div>
+            </div>
+
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Prova Social</div>
+                    <div class="criterio-nota">1/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 50%;"></div>
+                </div>
+                <div class="criterio-obs">Case com métricas (+42% conversão, -35% inadimplência) mas apenas 1 depoimento visível</div>
+            </div>
+
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Call-to-Action</div>
+                    <div class="criterio-nota">2/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 100%;"></div>
+                </div>
+                <div class="criterio-obs">CTAs claros: 'Quero estruturar minha academia' + Diagnóstico Grátis via WhatsApp - Direto ao ponto</div>
+            </div>
+
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Identidade de Marca</div>
+                    <div class="criterio-nota">1/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 50%;"></div>
+                </div>
+                <div class="criterio-obs">Marca posicionada mas sem história, time ou valores explícitos - Falta humanização</div>
+            </div>
+
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Presença Digital</div>
+                    <div class="criterio-nota">1/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 50%;"></div>
+                </div>
+                <div class="criterio-obs">Site funcional mas presença digital limitada - Não encontrado em busca orgânica sobre concorrentes</div>
+            </div>
+
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Experiência do Usuário</div>
+                    <div class="criterio-nota">1/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 50%;"></div>
+                </div>
+                <div class="criterio-obs">Navegação clara com foco em conversão - Mas falta conteúdo educativo e recursos de pré-venda</div>
+            </div>
+
+            <div class="criterio">
+                <div class="criterio-header">
+                    <div class="criterio-nome">Potencial de Conversão</div>
+                    <div class="criterio-nota">1/2</div>
+                </div>
+                <div class="barra-container">
+                    <div class="barra-preenchida" style="width: 50%;"></div>
+                </div>
+                <div class="criterio-obs">Funil direto para WhatsApp - Mas poderia ter mais camadas (webinar, trial, demos)</div>
+            </div>
+
+            <div class="legenda">
+                <div class="legenda-title">Escala de Avaliação</div>
+                <span class="legenda-item">⭐ 0 = Ausente/Crítico</span>
+                <span class="legenda-item">⭐ 1 = Presente/Básico</span>
+                <span class="legenda-item">⭐ 2 = Excelente/Referência</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            <strong>Resumo Executivo:</strong><br>
+            PlugAI Gym apresenta proposta de valor sólida e diferenciada no nicho fitness tech, com segmentação precisa e solução inovadora.
+            Score 15/20 indica produto forte mas com oportunidades em branding, presença digital e jornada de conversão.
+            <br><br>
+            Análise PUV Score - Diana Corporação Senciente
+        </div>
+    </div>
+</body>
+</html>

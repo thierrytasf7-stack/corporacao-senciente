@@ -1,0 +1,64 @@
+# Design Sprint Cycle
+# Used for: Exploratory design, rapid prototyping, idea validation
+# Flow: Discovery → Design → Strategy → Stories
+
+name: design-sprint-cycle
+version: 1.0.0
+description: Design sprint para explorar ideias rapidamente com foco em UX/UI antes da estrategia
+trigger: "*design-sprint"
+
+phases:
+  - id: discovery
+    name: "Rapid Discovery"
+    agent: analyst
+    skill: "Planejamento:Analyst-AIOS"
+    duration: "20-30min"
+    actions:
+      - command: "*brainstorm {topic}"
+        output: "brainstorm.md"
+      - command: "*create-project-brief"
+        output: "brief.md"
+    gate: gate-discovery.md
+    handoff_to: design
+
+  - id: design
+    name: "Design Exploration"
+    agent: ux-design-expert
+    skill: "Planejamento:UX-AIOS"
+    duration: "30-45min"
+    actions:
+      - command: "*research"
+        output: "user-research.md"
+      - command: "*wireframe low"
+        output: "wireframes-lofi.md"
+      - command: "*generate-ui-prompt"
+        output: "ui-prompts.md"
+    gate: gate-design.md
+    handoff_to: strategy
+
+  - id: strategy
+    name: "Strategy from Design"
+    agent: pm
+    skill: "Planejamento:PM-AIOS"
+    duration: "20-30min"
+    actions:
+      - command: "*create-prd"
+        note: "PRD informed by design exploration"
+        output: "prd.md"
+    gate: gate-strategy.md
+    handoff_to: stories
+
+  - id: stories
+    name: "Sprint Stories"
+    agents: [po, sm]
+    skills: ["Planejamento:PO-AIOS", "Planejamento:SM-AIOS"]
+    duration: "20-30min"
+    actions:
+      - command: "*draft"
+        output: "stories/"
+    gate: gate-stories.md
+
+success_criteria:
+  - "Ideias exploradas e validadas via wireframes"
+  - "PRD alinhado com design exploration"
+  - "Stories prontas para prototipo funcional"

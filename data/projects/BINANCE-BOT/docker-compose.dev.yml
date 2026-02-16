@@ -1,0 +1,183 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: aura-binance-postgres-dev
+    environment:
+      POSTGRES_DB: aura_binance_dev
+      POSTGRES_USER: aura_user
+      POSTGRES_PASSWORD: aura_password
+    ports:
+      - "15432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    networks:
+      - aura-dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aura_user -d aura_binance_dev"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: aura-binance-redis-dev
+    ports:
+      - "16379:6379"
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - aura-dev-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Backend Node.js/TypeScript API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: aura-binance-backend-dev
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DATABASE_URL: postgresql://aura_user:aura_password@postgres:5432/aura_binance_dev
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: aura_binance_jwt_secret_dev_2024
+      JWT_REFRESH_SECRET: aura_binance_refresh_secret_dev_2024
+      ENCRYPTION_KEY: aura_binance_encryption_key_dev_32_chars
+      BINANCE_API_KEY: ${BINANCE_API_KEY}
+      BINANCE_SECRET_KEY: ${BINANCE_SECRET_KEY}
+      BINANCE_USE_TESTNET: true
+      BINANCE_API_URL: https://testnet.binance.vision
+      BINANCE_WS_URL: wss://testnet.binance.vision/ws
+      CORS_ORIGIN: http://localhost:13000
+      LOG_LEVEL: debug
+    ports:
+      - "13001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - aura-dev-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+
+  # Frontend React App com Hot-Reload
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: aura-binance-frontend-dev
+    environment:
+      VITE_API_URL: http://backend:3001/api/v1
+      VITE_WS_URL: ws://backend:3001
+      VITE_APP_ENV: development
+    ports:
+      - "13000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/dist
+    networks:
+      - aura-dev-network
+    restart: unless-stopped
+
+  # Nginx para desenvolvimento (proxy reverso)
+  nginx-dev:
+    image: nginx:alpine
+    container_name: aura-binance-nginx-dev
+    ports:
+      - "18080:80"
+    volumes:
+      - ./nginx-dev.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - aura-dev-network
+    restart: unless-stopped
+
+  # Prometheus para monitoramento em desenvolvimento
+  prometheus-dev:
+    image: prom/prometheus:latest
+    container_name: aura-binance-prometheus-dev
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=24h'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_dev_data:/prometheus
+    ports:
+      - "19090:9090"
+    networks:
+      - aura-dev-network
+    restart: unless-stopped
+
+  # Grafana para desenvolvimento
+  grafana-dev:
+    image: grafana/grafana:latest
+    container_name: aura-binance-grafana-dev
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: false
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - grafana_dev_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+    ports:
+      - "13002:3000"
+    networks:
+      - aura-dev-network
+    depends_on:
+      - prometheus-dev
+    restart: unless-stopped
+
+volumes:
+  postgres_dev_data:
+    name: aura-binance-postgres-dev-data
+    driver: local
+  redis_dev_data:
+    name: aura-binance-redis-dev-data
+    driver: local
+  prometheus_dev_data:
+    name: aura-binance-prometheus-dev-data
+    driver: local
+  grafana_dev_data:
+    name: aura-binance-grafana-dev-data
+    driver: local
+
+networks:
+  aura-dev-network:
+    name: aura-binance-dev-network
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1

@@ -1,0 +1,225 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SynkraAI/aios-squads/main/schemas/registry-schema.json",
+  "version": "1.1.0",
+  "updated": "2026-02-04T00:00:00Z",
+  "description": "AIOS Squads Registry - Official index of available squads",
+  "repository": "https://github.com/SynkraAI/aios-squads",
+  "squads": {
+    "official": [
+      {
+        "name": "meta-orchestrator",
+        "version": "1.0.0",
+        "path": "squads/meta-orchestrator",
+        "description": "Universal Task Delegation & Dynamic Squad Creation - Hybrid orchestrator that routes tasks and creates new squads",
+        "author": "AIOS System",
+        "status": "production",
+        "tags": [
+          "orchestration",
+          "meta",
+          "delegation",
+          "squad-creation",
+          "autonomous",
+          "routing"
+        ],
+        "requires": {
+          "node": ">=18.0.0",
+          "aios": ">=3.0.0"
+        },
+        "agents": [
+          "nexus",
+          "scanner",
+          "forge",
+          "sentinel",
+          "cortex"
+        ],
+        "tasks": [
+          "orchestrate-task",
+          "spawn-squad-task"
+        ],
+        "workflows": [
+          "universal-orchestration"
+        ],
+        "capabilities": {
+          "delegation": "Route tasks to any existing squad",
+          "creation": "Create new squads dynamically",
+          "monitoring": "Track execution quality",
+          "learning": "Improve routing over time"
+        }
+      },
+      {
+        "name": "etl-squad",
+        "version": "2.0.0",
+        "path": "squads/etl-squad",
+        "description": "Lightweight blog collection utilities with proven 100% success rate",
+        "author": "Academia Lendar[IA] (Alan Nicolas)",
+        "status": "production",
+        "tags": [
+          "blog-collection",
+          "web-scraping",
+          "content-discovery",
+          "speaker-diarization"
+        ],
+        "requires": {
+          "node": ">=18.0.0",
+          "aios": ">=2.0.0"
+        },
+        "agents": [
+          "data-collector",
+          "document-specialist",
+          "social-specialist",
+          "web-specialist",
+          "youtube-specialist",
+          "zlibrary-harvester"
+        ],
+        "scripts": {
+          "discovery": [
+            "scripts/utils/blog-discovery.js"
+          ],
+          "collection": [
+            "scripts/collectors/web-collector.js",
+            "bin/collect-blog.js"
+          ],
+          "transformers": [
+            "scripts/transformers/speaker-filter.js",
+            "scripts/transformers/clean-transcript.js"
+          ]
+        }
+      },
+      {
+        "name": "dev-aider",
+        "version": "1.1.0",
+        "path": "squads/dev-aider",
+        "description": "Cost-optimized development squad using Aider with free models. Complete story-to-deploy cycle where all heavy work runs via Aider (free) and Claude only reads minimal summaries at decision gates. Savings: 80-100% reduction in AI costs while maintaining quality.",
+        "author": "Synkra AIOS Dev Team",
+        "status": "production",
+        "tags": [
+          "cost-reduction",
+          "open-source",
+          "arcee-trinity",
+          "openrouter-free",
+          "aider-integration",
+          "full-cycle",
+          "story-to-deploy"
+        ],
+        "requires": {
+          "node": ">=18.0.0",
+          "aios": ">=2.3.0",
+          "python": ">=3.8.0"
+        },
+        "agents": [
+          "aider-dev",
+          "aider-optimizer",
+          "po-aider",
+          "sm-aider",
+          "qa-aider",
+          "deploy-aider"
+        ],
+        "tasks": [
+          "invoke-aider",
+          "cost-analysis",
+          "aider-handoff",
+          "aider-integration",
+          "po-aider-create-story",
+          "sm-aider-create-tasks",
+          "qa-aider-validate",
+          "deploy-aider-deploy"
+        ],
+        "workflows": [
+          "aider-full-cycle"
+        ],
+        "capabilities": {
+          "story_creation": "Generate user stories via free models (po-aider)",
+          "task_decomposition": "Break stories into Aider-sized tasks (sm-aider)",
+          "implementation": "Execute code changes via Aider subprocess (aider-dev)",
+          "validation": "Run lint/typecheck/test and produce summaries (qa-aider)",
+          "deployment": "Git operations with checklist gating (deploy-aider)",
+          "cost_optimization": "Route work to minimize Claude token usage",
+          "full_workflow": "Complete story-to-deploy cycle with minimal Claude gates"
+        }
+      },
+      {
+        "name": "squad-creator",
+        "version": "1.0.0",
+        "path": "squads/squad-creator",
+        "description": "Tool for creating new expansion packs and custom AIOS extensions",
+        "author": "AIOS Team",
+        "status": "production",
+        "tags": [
+          "expansion-pack",
+          "creator",
+          "scaffolding",
+          "templates"
+        ],
+        "requires": {
+          "node": ">=18.0.0",
+          "aios": ">=2.0.0"
+        },
+        "agents": [
+          "expansion-creator"
+        ],
+        "tasks": [
+          "create-expansion-agent",
+          "create-expansion-pack",
+          "create-expansion-task",
+          "create-expansion-template",
+          "install-expansion-commands"
+        ]
+      }
+    ],
+    "community": []
+  },
+  "private": {
+    "note": "Private squads are not listed here. See SynkraAI/mmos and SynkraAI/certified-partners.",
+    "repositories": [
+      {
+        "name": "mmos",
+        "description": "Mind Mapping Operating System",
+        "url": "https://github.com/SynkraAI/mmos",
+        "visibility": "private"
+      },
+      {
+        "name": "certified-partners",
+        "description": "Premium partner packs and portal",
+        "url": "https://github.com/SynkraAI/certified-partners",
+        "visibility": "private"
+      }
+    ]
+  },
+  "contributing": {
+    "guide": "https://github.com/SynkraAI/aios-core/blob/main/CONTRIBUTING.md",
+    "squadsGuide": "https://github.com/SynkraAI/aios-core/blob/main/docs/guides/squads-guide.md",
+    "submitProcess": "Create a PR to add your squad to packages/community/{your-username}/{squad-name}/"
+  },
+  "social-media-squad": {
+    "name": "social-media-squad",
+    "status": "ACTIVE",
+    "agents": [
+      {
+        "id": "analytics-expert",
+        "file": "analytics-expert.md",
+        "status": "ACTIVE",
+        "registeredAt": "2026-02-05T15:37:57.322Z"
+      },
+      {
+        "id": "community-manager",
+        "file": "community-manager.md",
+        "status": "ACTIVE",
+        "registeredAt": "2026-02-05T15:37:57.322Z"
+      },
+      {
+        "id": "content-strategist",
+        "file": "content-strategist.md",
+        "status": "ACTIVE",
+        "registeredAt": "2026-02-05T15:37:57.322Z"
+      },
+      {
+        "id": "creative-director",
+        "file": "creative-director.md",
+        "status": "ACTIVE",
+        "registeredAt": "2026-02-05T15:37:57.323Z"
+      }
+    ],
+    "createdAt": "2026-02-05T15:37:57.308Z",
+    "activatedAt": "2026-02-05T15:37:57.323Z"
+  }
+}

@@ -1,0 +1,154 @@
+name: ceo-desenvolvimento
+version: 1.0.0
+description: CEO de Desenvolvimento - Recebe masterplan do CEO-Planejamento e orquestra autonomamente toda a execucao (Dev, QA, DataEngineer, DevOps, Aiders) ate codigo testado e publicado em producao
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: CeoDev
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - ceo-desenvolvimento.md
+  tasks:
+    # Intake & Planning
+    - ceo-dev-intake-masterplan.md
+    - ceo-dev-create-sprint.md
+    - ceo-dev-assign-stories.md
+    # Execution Orchestration
+    - ceo-dev-execute-story.md
+    - ceo-dev-execute-sprint.md
+    - ceo-dev-parallel-stories.md
+    # Quality & Review
+    - ceo-dev-qa-loop.md
+    - ceo-dev-quality-gate.md
+    - ceo-dev-integration-check.md
+    # Delivery
+    - ceo-dev-prepare-release.md
+    - ceo-dev-ship.md
+    # Management
+    - ceo-dev-status.md
+    - ceo-dev-unblock.md
+    - ceo-dev-delegate.md
+    - ceo-dev-retrospective.md
+  workflows:
+    - sprint-execution-cycle.yaml
+    - story-pipeline.yaml
+    - release-pipeline.yaml
+    - hotfix-pipeline.yaml
+  checklists:
+    - gate-story-ready.md
+    - gate-implementation-done.md
+    - gate-qa-passed.md
+    - gate-release-ready.md
+    - gate-post-deploy.md
+  templates:
+    - sprint-plan-tmpl.md
+    - story-assignment-tmpl.md
+    - release-notes-tmpl.md
+    - retro-tmpl.md
+  tools:
+    - context7
+    - sequential-thinking
+    - postgres
+  scripts: []
+
+config:
+  extends: extend
+  executionModes:
+    single-story:
+      description: "Implementar uma unica story isolada"
+      flow: assign → dev → qa → devops
+      agents: [dev, qa, devops]
+    sprint:
+      description: "Sprint completo com multiplas stories"
+      flow: plan-sprint → assign-all → parallel-dev → qa-loop → release
+      agents: [dev, qa, data-engineer, devops]
+    hotfix:
+      description: "Correcao urgente direto para producao"
+      flow: dev-fix → qa-quick → devops-push
+      agents: [dev, qa, devops]
+    autonomous:
+      description: "Execucao 100% autonoma de todo o masterplan"
+      flow: intake → sprint-plan → execute-all → release
+      agents: [dev, qa, data-engineer, devops]
+
+  costOptimization:
+    strategy: "aider-first"
+    description: "Usar Aiders ($0) para tarefas rotineiras, AIOS para complexas"
+    routing:
+      simple_implementation: "Dev-Aider"
+      complex_implementation: "dev (Dex)"
+      simple_test: "QA-Aider"
+      full_review: "qa (Quinn)"
+      git_ops: "Deploy-Aider ou devops (Gage)"
+      database: "data-engineer (Dara) sempre"
+
+  qualityPipeline:
+    dev_coderabbit: "light (2 iter, CRITICAL only)"
+    qa_coderabbit: "full (3 iter, CRITICAL+HIGH)"
+    devops_coderabbit: "pre-PR (0 CRITICAL tolerance)"
+    qa_loop_max: 5
+    escalation: "human after max iterations or BLOCKED"
+
+  storyStates:
+    - BACKLOG
+    - ASSIGNED
+    - IN_PROGRESS
+    - REVIEW
+    - QA_PASS
+    - READY_TO_SHIP
+    - SHIPPED
+    - BLOCKED
+
+dependencies:
+  node: []
+  python: []
+  squads:
+    - ceo-planejamento  # receives masterplan from
+
+# Development agents this CEO orchestrates
+orchestrates:
+  # AIOS Core (Full Power)
+  - agent: dev
+    skill: "Desenvolvimento:Dev-AIOS"
+    authority: "implement, commit, branch, merge (NOT push)"
+    when: "Complex implementation, architecture-heavy stories, performance-critical"
+  - agent: qa
+    skill: "Desenvolvimento:QA-AIOS"
+    authority: "review, test design, quality gate, security audit (read-only git)"
+    when: "Code review, test strategy, quality gates, NFR assessment"
+  - agent: data-engineer
+    skill: "Desenvolvimento:DataEngineer-AIOS"
+    authority: "schema design, migrations, RLS, query optimization (read-only git)"
+    when: "Any story touching database, schema changes, migrations"
+  - agent: devops
+    skill: "Operacoes:DevOps-AIOS"
+    authority: "EXCLUSIVE push, PR, release, CI/CD, worktrees"
+    when: "Push to remote, create PR, release, infra changes"
+  # Aiders (Cost $0)
+  - agent: dev-aider
+    skill: "Aider:Dev-Aider"
+    authority: "implement simple stories with free models"
+    when: "Simple/routine implementation, boilerplate, low complexity (fibonacci 1-3)"
+  - agent: qa-aider
+    skill: "Aider:QA-Aider"
+    authority: "lint, typecheck, basic tests"
+    when: "Quick validation, pre-review checks, basic quality gates"
+  - agent: deploy-aider
+    skill: "Aider:Deploy-Aider"
+    authority: "git ops with free models"
+    when: "Simple push, branch management, PR creation for low-risk changes"
+
+tags:
+  - development
+  - execution
+  - orchestration
+  - ceo
+  - sprint
+  - implementation
+  - quality
+  - release
+  - autonomous

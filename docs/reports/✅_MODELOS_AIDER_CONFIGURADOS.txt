@@ -1,0 +1,142 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║              🤖 MODELOS LLM CONFIGURADOS NO AIDER 🤖                         ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+📊 MODELOS EM ORDEM DE PRIORIDADE
+
+  1. 🥇 Arcee AI: Trinity Large Preview (127B)
+     • Identificador: openrouter/arcee-ai/trinity-large-preview
+     • Uso: Arquitetura, design, raciocínio complexo
+     • Custo: Médio-Alto
+     • Status: ✅ CONFIGURADO COMO PADRÃO
+
+  2. 🥈 DeepSeek R1
+     • Identificador: openrouter/deepseek/deepseek-r1
+     • Uso: Implementação rápida, código repetitivo
+     • Custo: GRÁTIS
+     • Status: ✅ CONFIGURADO COMO WEAK MODEL
+
+  3. 🥉 T2 Chimera
+     • Identificador: openrouter/t2-ai/chimera
+     • Uso: Tarefas gerais, balanceado
+     • Custo: Médio
+     • Status: ✅ DISPONÍVEL
+
+  4. 🏆 Qwen3 Coder 480B
+     • Identificador: openrouter/qwen/qwen-3-coder-480b
+     • Uso: Código complexo, especialista
+     • Custo: Alto
+     • Status: ✅ DISPONÍVEL
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚙️ ARQUIVOS CRIADOS
+
+  ✅ .aider.conf.yml
+     → Configuração padrão do Aider
+     → Modelo principal: Trinity Large Preview
+     → Modelo weak: DeepSeek R1
+
+  ✅ USAR_MODELOS_AIDER.ps1
+     → Script PowerShell para trocar modelos facilmente
+     → Suporta: trinity, deepseek, chimera, qwen
+
+  ✅ GUIA_MODELOS_AIDER.md
+     → Documentação completa
+     → Exemplos de uso
+     → Estimativa de custos
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 COMO USAR
+
+  Opção 1: Padrão (Trinity Large Preview)
+  ────────────────────────────────────────
+  aider
+
+  Opção 2: Script PowerShell (Recomendado)
+  ────────────────────────────────────────
+  .\USAR_MODELOS_AIDER.ps1                    # Padrão (Trinity)
+  .\USAR_MODELOS_AIDER.ps1 -Modelo trinity    # Trinity (127B)
+  .\USAR_MODELOS_AIDER.ps1 -Modelo deepseek   # DeepSeek R1
+  .\USAR_MODELOS_AIDER.ps1 -Modelo chimera    # T2 Chimera
+  .\USAR_MODELOS_AIDER.ps1 -Modelo qwen       # Qwen3 Coder (480B)
+
+  Opção 3: Linha de Comando
+  ────────────────────────────────────────
+  aider --model openrouter/arcee-ai/trinity-large-preview
+  aider --model openrouter/deepseek/deepseek-r1
+  aider --model openrouter/t2-ai/chimera
+  aider --model openrouter/qwen/qwen-3-coder-480b
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 RECOMENDAÇÕES DE USO
+
+  📝 Implementação Rápida (80% das tarefas)
+     → Modelo: DeepSeek R1 (GRÁTIS)
+     → Comando: .\USAR_MODELOS_AIDER.ps1 -Modelo deepseek
+
+  🏗️ Arquitetura e Design (10% das tarefas)
+     → Modelo: Trinity Large Preview (127B)
+     → Comando: .\USAR_MODELOS_AIDER.ps1 -Modelo trinity
+
+  🎯 Código Complexo (5% das tarefas)
+     → Modelo: Qwen3 Coder 480B
+     → Comando: .\USAR_MODELOS_AIDER.ps1 -Modelo qwen
+
+  🔄 Tarefas Gerais (5% das tarefas)
+     → Modelo: T2 Chimera
+     → Comando: .\USAR_MODELOS_AIDER.ps1 -Modelo chimera
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 ESTIMATIVA DE CUSTOS
+
+  Modelo                    Custo/1M tokens    Recomendação
+  ────────────────────────────────────────────────────────
+  Trinity Large (127B)      ~$5-10            Médio uso
+  DeepSeek R1               GRÁTIS            Uso intensivo
+  T2 Chimera                ~$3-5             Baixo uso
+  Qwen3 Coder (480B)        ~$15-20           Uso crítico
+
+  Estratégia de Custo:
+  • 80% DeepSeek R1 (grátis) = $0
+  • 10% Trinity = ~$50/mês
+  • 5% Qwen3 = ~$75/mês
+  • 5% Chimera = ~$15/mês
+  ────────────────────────────
+  TOTAL ESTIMADO: ~$140/mês
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ STATUS
+
+  Configuração: ✅ COMPLETA
+  Modelos: ✅ 4 DISPONÍVEIS
+  API Key: ✅ CONFIGURADA
+  Script: ✅ PRONTO
+  Documentação: ✅ COMPLETA
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📚 DOCUMENTAÇÃO
+
+  • GUIA_MODELOS_AIDER.md (guia completo)
+  • .aider.conf.yml (configuração)
+  • USAR_MODELOS_AIDER.ps1 (script)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 PRONTO PARA USAR!
+
+  Execute: .\USAR_MODELOS_AIDER.ps1
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                    DIANA CORPORAÇÃO SENCIENTE                                ║
+║                  MODELOS LLM CONFIGURADOS COM SUCESSO                        ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝

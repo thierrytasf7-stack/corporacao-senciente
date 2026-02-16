@@ -1,0 +1,157 @@
+name: design-system
+version: 1.0.0
+description: Squad de Design System Engineering - Cria, documenta, mantém e evolui Design Systems completos. Tokens, componentes, padrões visuais, guidelines de uso, temas e variantes. Biblioteca organizada e versionada para equipes de dev seguirem fielmente.
+team: Design
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: Design
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - ds-architect.md
+  tasks:
+    # Creation
+    - ds-create-system.md
+    - ds-create-tokens.md
+    - ds-create-components.md
+    - ds-create-theme.md
+    - ds-create-icons.md
+    # Documentation
+    - ds-document-guidelines.md
+    - ds-document-usage.md
+    - ds-generate-storybook.md
+    # Audit & Maintenance
+    - ds-audit-consistency.md
+    - ds-audit-accessibility.md
+    - ds-migrate-version.md
+    - ds-diff-systems.md
+    # Client/Project Specific
+    - ds-create-client-system.md
+    - ds-adapt-brand.md
+  workflows:
+    - full-ds-creation.yaml
+    - ds-audit-cycle.yaml
+    - ds-client-onboarding.yaml
+  checklists:
+    - ds-gate-tokens.md
+    - ds-gate-components.md
+    - ds-gate-accessibility.md
+    - ds-gate-documentation.md
+  templates:
+    - ds-token-spec-tmpl.md
+    - ds-component-spec-tmpl.md
+    - ds-theme-spec-tmpl.md
+    - ds-audit-report-tmpl.md
+    - ds-client-brief-tmpl.md
+  tools:
+    - context7
+  scripts: []
+
+config:
+  extends: extend
+
+  # Design System Standards
+  standards:
+    naming:
+      tokens: "kebab-case (color-primary-500, spacing-md)"
+      components: "PascalCase (Button, CardHeader, NavigationBar)"
+      files: "kebab-case (button.tsx, card-header.tsx)"
+      css_vars: "--ds-{category}-{variant}-{scale}"
+
+    token_categories:
+      - color       # Paleta completa (primitives + semantic + component)
+      - typography   # Font families, sizes, weights, line-heights
+      - spacing      # Scale consistente (4px base ou 8px base)
+      - sizing       # Width, height, min/max constraints
+      - radius       # Border radius scale
+      - shadow       # Elevation/shadow scale
+      - border       # Border widths, styles
+      - opacity      # Opacity scale
+      - z-index      # Layering scale
+      - motion       # Duration, easing, transitions
+      - breakpoint   # Responsive breakpoints
+
+    component_tiers:
+      primitives: "Atoms - Button, Input, Badge, Avatar, Icon"
+      composites: "Molecules - Card, FormField, SearchBar, Alert"
+      patterns: "Organisms - Header, Sidebar, DataTable, Modal"
+      layouts: "Templates - PageLayout, DashboardLayout, AuthLayout"
+
+    accessibility:
+      wcag_level: "AA"
+      min_contrast_normal: 4.5
+      min_contrast_large: 3.0
+      focus_visible: required
+      aria_labels: required
+      keyboard_nav: required
+      reduced_motion: required
+
+  # Output Formats
+  output:
+    token_formats:
+      - css_variables    # :root { --ds-color-primary: #xxx }
+      - tailwind_config  # tailwind.config.js theme extend
+      - scss_variables   # $ds-color-primary: #xxx
+      - json             # design-tokens.json (Style Dictionary compatible)
+      - figma_tokens     # Figma Tokens plugin format
+    component_formats:
+      - react_tsx        # React + TypeScript
+      - html_css         # Vanilla HTML/CSS
+      - vue_sfc          # Vue Single File Components
+    documentation:
+      - markdown         # Specs e guidelines
+      - storybook        # Component playground
+      - html_preview     # Static preview pages
+
+  # Library Organization
+  library:
+    root: "squads/design-system/library/"
+    structure: |
+      library/
+      ├── systems/           # Design Systems completos
+      │   ├── diana-core/    # DS principal do projeto Diana
+      │   ├── client-{name}/ # DS por cliente
+      │   └── _base/         # Base template reutilizavel
+      ├── catalog.json       # Index de todos os DS criados
+      └── changelog.md       # Historico de mudancas
+
+  # Quality Thresholds
+  quality:
+    token_coverage: 90          # % de categorias com tokens definidos
+    component_documentation: 100 # % de componentes documentados
+    accessibility_score: 95      # % de checks WCAG passando
+    naming_consistency: 100      # % seguindo naming convention
+    theme_completeness: 85       # % de tokens com variante dark/light
+
+dependencies:
+  node:
+    - style-dictionary
+    - @storybook/react
+  python: []
+  squads: []
+
+# Integration
+reports_to: ceo-desenvolvimento
+triggered_by:
+  - "Novo projeto precisa de Design System"
+  - "Cliente solicita identidade visual sistematizada"
+  - "Equipe dev precisa de padroes visuais para implementar"
+  - "Audit de consistencia visual"
+  - "Migracao/evolucao de Design System existente"
+  - "User solicita criacao de DS"
+
+tags:
+  - design-system
+  - tokens
+  - components
+  - accessibility
+  - theming
+  - ui-patterns
+  - style-guide
+  - brand
+  - figma
+  - storybook

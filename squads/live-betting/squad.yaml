@@ -1,0 +1,85 @@
+name: live-betting
+version: 1.0.0
+description: Squad de operações de apostas esportivas ao vivo - coordena execução de apostas, análise de odds, gestão de bankroll e monitoramento de posições
+team: BET-SPORTS
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: LiveBetting
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - live-lead.md
+    - match-monitor.md
+    - instant-bettor.md
+    - risk-calculator.md
+  tasks:
+    # Live Lead Tasks
+    - lead-daily-briefing.md
+    - lead-strategy-decision.md
+    - lead-portfolio-review.md
+    # Match Monitor Tasks
+    - monitor-live-events.md
+    - monitor-odds-movement.md
+    - monitor-score-updates.md
+    # Instant Bettor Tasks
+    - instant-bet.md
+    - instant-cashout.md
+    - instant-market-analysis.md
+    # Risk Calculator Tasks
+    - risk-calculate-stake.md
+    - risk-assess-event.md
+    - risk-manage-exposure.md
+  workflows:
+    - live-betting-cycle.yaml
+    - risk-management.yaml
+    - market-analysis.yaml
+  checklists:
+    - pre-bet-checklist.md
+    - risk-assessment-checklist.md
+    - live-event-checklist.md
+  templates:
+    - bet-report-tmpl.md
+    - risk-report-tmpl.md
+    - live-event-tmpl.md
+  tools:
+    - postgres
+    - context7
+  scripts: []
+
+config:
+  extends: extend
+  sports:
+    focus: ["Football", "Basketball", "Tennis", "MMA", "Esports"]
+    markets: ["1X2", "Over/Under", "Asian Handicap", "BTTS"]
+  bankrollDefaults:
+    initialBankroll: 10000
+    maxStakePercent: 5
+    minOdds: 1.5
+    maxOdds: 10.0
+    kellyFraction: 0.25
+  riskManagement:
+    maxOpenBets: 10
+    maxDailyRisk: 15
+    stopLossDaily: 10
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+codebase:
+  module: modules/live-betting
+  frontend: modules/live-betting/frontend
+  backend: modules/live-betting/backend
+
+tags:
+  - betting
+  - sports
+  - live
+  - instant
+  - risk
+  - operations

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Chat</title>
+</head>
+<body>
+    <h1>Test Chat Diana</h1>
+    <input type="text" id="message" placeholder="Digite sua mensagem">
+    <button onclick="sendMessage()">Enviar</button>
+    <div id="response"></div>
+
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById('message').value;
+            console.log('Enviando:', message);
+
+            try {
+                const response = await fetch('http://localhost:21301/api/chat/message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        agentId: 'diana',
+                        message: message,
+                        context: { conversationHistory: [] }
+                    })
+                });
+
+                console.log('Response status:', response.status);
+                const data = await response.json();
+                console.log('Response data:', data);
+
+                document.getElementById('response').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('response').innerHTML = '<pre>Erro: ' + error.message + '</pre>';
+            }
+        }
+    </script>
+</body>
+</html>

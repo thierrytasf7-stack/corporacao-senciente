@@ -1,0 +1,260 @@
+{
+  "sessionId": "session_1771199545303",
+  "botId": "v2-periodic-gen344-1771199545301",
+  "botName": "Kraken",
+  "generation": 344,
+  "genome": {
+    "id": "v2-periodic-gen344-1771199545301",
+    "name": "Kraken",
+    "generation": 344,
+    "parentIds": [
+      "v2-periodic-gen340-1771198339040",
+      "v2-periodic-gen332-1771196534498"
+    ],
+    "strategyMask": [
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "strategyWeights": [
+      1.3626505488997767,
+      1.0309667040487025,
+      0.985831655788769,
+      1.2637517069793738,
+      1.2021573030852823,
+      1.6776046411932697,
+      0.49197497919541056,
+      0.31225667854429817,
+      1.4462193723909509,
+      1.3626299735730367,
+      0.7526194839793696,
+      0.3279424352199519,
+      1.0412630071558597,
+      0.641871212187276,
+      0.3712769636043135,
+      0.35070131827955275,
+      0.6371221181750917,
+      0.20521869354678832,
+      0.3000928428025712,
+      0.9857910782573862,
+      0.16493646234793818,
+      1.4189109610261972,
+      1.8754731994977885,
+      0.15472589783695578,
+      0.555663543945702,
+      0.17223388412319865,
+      0.1,
+      0.21638902603765714,
+      2,
+      0.1
+    ],
+    "consensus": {
+      "minAgreeingSignals": 3,
+      "maxOpposingSignals": 5,
+      "minWeightedStrength": 48.93863386681146,
+      "preferredDirection": "ANY"
+    },
+    "risk": {
+      "atrMultiplierTP": 3.2634853881779033,
+      "atrMultiplierSL": 0.9994472041316764,
+      "trailingStopATR": 1.4199054443375512,
+      "flipExitThreshold": 7,
+      "leverage": 69,
+      "maxOpenPositions": 4,
+      "maxExposurePercent": 35
+    },
+    "betting": {
+      "basePercent": 2.1551205960271584,
+      "winMultiplier": 1,
+      "lossMultiplier": 1,
+      "maxBetPercent": 12,
+      "resetAfterLosses": 3
+    },
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "BNBUSDT",
+      "XRPUSDT"
+    ]
+  },
+  "startBankroll": 100,
+  "endBankroll": 99.97,
+  "peakBankroll": 100,
+  "totalTrades": 5,
+  "wins": 0,
+  "losses": 5,
+  "winRate": 0,
+  "maxDrawdown": 0.03,
+  "finalReason": "EVOLVED_OUT",
+  "startTime": "2026-02-15T23:52:25.303Z",
+  "endTime": "2026-02-15T23:57:24.142Z",
+  "trades": [
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 1964.84,
+      "exitPrice": 1964.84,
+      "betAmount": 2.1551205960271584,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 100,
+      "timestamp": "2026-02-15T23:52:42.639Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 50.7095120850329,
+        "topStrategies": [
+          "adx_trend",
+          "ema_cross_9_21",
+          "ema_cross_12_26",
+          "ema_triple_9_21_55",
+          "momentum_10"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 1964.84,
+      "exitPrice": 1964.84,
+      "betAmount": 2.1551205960271584,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 100,
+      "timestamp": "2026-02-15T23:52:47.657Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 54.32341707383572,
+        "topStrategies": [
+          "adx_trend",
+          "ema_cross_9_21",
+          "momentum_10",
+          "ema_cross_12_26",
+          "ema_triple_9_21_55"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 1964.84,
+      "exitPrice": 1964.41,
+      "betAmount": 2.1551205960271584,
+      "pnlPercent": -1.51,
+      "pnlValue": -0.03,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 99.97,
+      "timestamp": "2026-02-15T23:52:54.708Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 50.7095120850329,
+        "topStrategies": [
+          "adx_trend",
+          "ema_cross_9_21",
+          "ema_cross_12_26",
+          "ema_triple_9_21_55",
+          "momentum_10"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 1964.01,
+      "exitPrice": 1964.01,
+      "betAmount": 2.1544192481121933,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.97,
+      "bankrollAfter": 99.97,
+      "timestamp": "2026-02-15T23:54:17.147Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 50.7095120850329,
+        "topStrategies": [
+          "adx_trend",
+          "ema_cross_9_21",
+          "ema_cross_12_26",
+          "ema_triple_9_21_55",
+          "momentum_10"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 1964.01,
+      "exitPrice": 1964.01,
+      "betAmount": 2.1544192481121933,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.97,
+      "bankrollAfter": 99.97,
+      "timestamp": "2026-02-15T23:54:23.616Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 50.7095120850329,
+        "topStrategies": [
+          "adx_trend",
+          "ema_cross_9_21",
+          "ema_cross_12_26",
+          "ema_triple_9_21_55",
+          "momentum_10"
+        ]
+      }
+    }
+  ],
+  "fitness": 5.4902370022876035,
+  "activeStrategies": [
+    "ema_cross_9_21",
+    "ema_cross_12_26",
+    "ema_triple_9_21_55",
+    "adx_trend",
+    "parabolic_sar",
+    "supertrend",
+    "rsi_7",
+    "stochastic_14",
+    "momentum_10",
+    "elder_ray",
+    "atr_breakout"
+  ]
+}

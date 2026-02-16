@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "aider-bridge": {
+      "command": "node",
+      "args": ["index.js"],
+      "cwd": "Diana-Corporacao-Senciente/mcp/aider-bridge",
+      "env": {
+        "AIDER_PATH": "aider",
+        "WORKSPACE_ROOT": "Diana-Corporacao-Senciente"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "aider_status",
+        "aider_list_models",
+        "squad_create_context"
+      ]
+    }
+  }
+}

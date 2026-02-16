@@ -1,0 +1,32 @@
+task_context:
+  - task_description: "Implementar pipeline de embeddings de PRDs e diffs"
+    status: planning
+    related_files: ["scripts/seed_supabase.js", "scripts/check_alignment.js"]
+  - task_description: "Criar verificador de alinhamento automático (A10)"
+    status: planning
+    related_files: ["scripts/check_alignment.js"]
+  - task_description: "Semear personas e Alma da Empresa no Supabase"
+    status: planning
+    related_files: ["seeds/corporate_memory.yaml", "seeds/agent_logs.yaml"]
+  - task_description: "Popular glosário vetorial mínimo (30 termos)"
+    status: planning
+    related_files: ["seeds/corporate_memory.yaml"]
+  - task_description: "Adicionar guardrails de não fazer com veto vetorial"
+    status: planning
+    related_files: ["seeds/corporate_memory.yaml"]
+  - task_description: "Padronizar tom de voz e estilo de código vetorizado"
+    status: planning
+    related_files: ["seeds/corporate_memory.yaml"]
+  - task_description: "Criar PRDs base vetorizados no task_context"
+    status: planning
+    related_files: ["docs/prds/PRD_A_Alma_e_Personas.md"]
+  - task_description: "Teste de busca vetorial para memória corporativa"
+    status: planning
+    related_files: ["scripts/check_alignment.js"]
+  - task_description: "Automatizar seeds via script Node/TS"
+    status: planning
+    related_files: ["scripts/seed_supabase.js"]
+  - task_description: "Documentar thresholds e ajustes de similaridade"
+    status: planning
+    related_files: ["docs/REQUIREMENTS.md"]
+

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Sistema de Log - AURA Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
+        }
+
+        .test-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .test-btn {
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-log {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-info {
+            background: #2196F3;
+            color: white;
+        }
+
+        .btn-warn {
+            background: #FF9800;
+            color: white;
+        }
+
+        .btn-error {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-debug {
+            background: #9C27B0;
+            color: white;
+        }
+
+        .btn-test {
+            background: #607D8B;
+            color: white;
+        }
+
+        .btn-clear {
+            background: #795548;
+            color: white;
+        }
+
+        .log-display {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #333;
+        }
+
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #666;
+            padding-left: 10px;
+        }
+
+        .log-entry.error {
+            border-left-color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+
+        .log-entry.warn {
+            border-left-color: #FF9800;
+            background: rgba(255, 152, 0, 0.1);
+        }
+
+        .log-entry.info {
+            border-left-color: #2196F3;
+            background: rgba(33, 150, 243, 0.1);
+        }
+
+        .log-entry.debug {
+            border-left-color: #9C27B0;
+            background: rgba(156, 39, 176, 0.1);
+        }
+
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .download-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border: 1px solid #bbdefb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Teste do Sistema de Log - AURA Bot</h1>
+            <p>Sistema de captura e monitoramento de logs em tempo real</p>
+        </div>
+
+        <div class="status success" id="status">
+            ✅ Sistema de Log Inicializado - Aguardando testes...
+        </div>
+
+        <div class="test-buttons">
+            <button class="test-btn btn-log" onclick="testLog()">📝 Teste Log</button>
+            <button class="test-btn btn-info" onclick="testInfo()">ℹ️ Teste Info</button>
+            <button class="test-btn btn-warn" onclick="testWarn()">⚠️ Teste Warning</button>
+            <button class="test-btn btn-error" onclick="testError()">❌ Teste Error</button>
+            <button class="test-btn btn-debug" onclick="testDebug()">🐛 Teste Debug</button>
+            <button class="test-btn btn-test" onclick="runAllTests()">🚀 Todos os Testes</button>
+            <button class="test-btn btn-clear" onclick="clearLogs()">🗑️ Limpar Logs</button>
+        </div>
+
+        <div class="download-section">
+            <h3>📄 Download de Logs</h3>
+            <p>Os logs são salvos automaticamente a cada 5 segundos. Clique para forçar download:</p>
+            <button onclick="downloadLogs()"
+                style="background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+                📥 Download Logs
+            </button>
+        </div>
+
+        <h3>📊 Logs em Tempo Real:</h3>
+        <div class="log-display" id="logDisplay">
+            <div class="log-entry">Aguardando logs...</div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de Log Detalhado
+        class ConsoleLogger {
+            constructor() {
+                this.logs = [];
+                this.sessionId = this.generateSessionId();
+                this.startTime = new Date().toISOString();
+                this.isInitialized = false;
+                this.originalConsole = {
+                    log: console.log,
+                    info: console.info,
+                    warn: console.warn,
+                    error: console.error,
+                    debug: console.debug,
+                };
+                this.initialize();
+            }
+
+            generateSessionId() {
+                return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            }
+
+            getMemoryInfo() {
+                if ('memory' in performance) {
+                    const memory = performance.memory;
+                    return {
+                        used: Math.round(memory.usedJSHeapSize / 1024 / 1024),
+                        total: Math.round(memory.totalJSHeapSize / 1024 / 1024),
+                        limit: Math.round(memory.jsHeapSizeLimit / 1024 / 1024),
+                    };
+                }
+                return undefined;
+            }
+
+            createLogEntry(level, message, data, stack) {
+                return {
+                    timestamp: new Date().toISOString(),
+                    level,
+                    message: typeof message === 'string' ? message : JSON.stringify(message),
+                    data: data !== undefined ? (typeof data === 'object' ? JSON.stringify(data) : String(data)) : undefined,
+                    stack,
+                    url: window.location.href,
+                    userAgent: navigator.userAgent,
+                    memory: this.getMemoryInfo(),
+                };
+            }
+
+            interceptConsole() {
+                // Interceptar console.log
+                console.log = (...args) => {
+                    this.originalConsole.log(...args);
+                    const message = args.map(arg =>
+                        typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                    ).join(' ');
+                    this.logs.push(this.createLogEntry('log', message, args.length > 1 ? args : undefined));
+                    this.updateDisplay();
+                };
+
+                // Interceptar console.info
+                console.info = (...args) => {
+                    this.originalConsole.info(...args);
+                    const message = args.map(arg =>
+                        typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                    ).join(' ');
+                    this.logs.push(this.createLogEntry('info', message, args.length > 1 ? args : undefined));
+                    this.updateDisplay();
+                };
+
+                // Interceptar console.warn
+                console.warn = (...args) => {
+                    this.originalConsole.warn(...args);
+                    const message = args.map(arg =>
+                        typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                    ).join(' ');
+                    this.logs.push(this.createLogEntry('warn', message, args.length > 1 ? args : undefined));
+                    this.updateDisplay();
+                };
+
+                // Interceptar console.error
+                console.error = (...args) => {
+                    this.originalConsole.error(...args);
+                    const message = args.map(arg =>
+                        typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                    ).join(' ');
+
+                    let stack;
+                    if (args[0] instanceof Error) {
+                        stack = args[0].stack;
+                    } else {
+                        stack = new Error().stack;
+                    }
+
+                    this.logs.push(this.createLogEntry('error', message, args.length > 1 ? args : undefined, stack));
+                    this.updateDisplay();
+                };
+
+                // Interceptar console.debug
+                console.debug = (...args) => {
+                    this.originalConsole.debug(...args);
+                    const message = args.map(arg =>
+                        typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                    ).join(' ');
+                    this.logs.push(this.createLogEntry('debug', message, args.length > 1 ? args : undefined));
+                    this.updateDisplay();
+                };
+            }
+
+            interceptErrors() {
+                window.addEventListener('error', (event) => {
+                    const logEntry = this.createLogEntry(
+                        'error',
+                        `Uncaught Error: ${event.message}`,
+                        {
+                            filename: event.filename,
+                            lineno: event.lineno,
+                            colno: event.colno,
+                        },
+                        event.error?.stack
+                    );
+                    this.logs.push(logEntry);
+                    this.updateDisplay();
+                });
+
+                window.addEventListener('unhandledrejection', (event) => {
+                    const logEntry = this.createLogEntry(
+                        'error',
+                        `Unhandled Promise Rejection: ${event.reason}`,
+                        event.reason,
+                        event.reason?.stack
+                    );
+                    this.logs.push(logEntry);
+                    this.updateDisplay();
+                });
+            }
+
+            updateDisplay() {
+                const logDisplay = document.getElementById('logDisplay');
+                if (!logDisplay) return;
+
+                const lastLog = this.logs[this.logs.length - 1];
+                const logElement = document.createElement('div');
+                logElement.className = `log-entry ${lastLog.level}`;
+
+                const time = new Date(lastLog.timestamp).toLocaleTimeString();
+                logElement.innerHTML = `
+                    <strong>[${time}] ${lastLog.level.toUpperCase()}:</strong> ${lastLog.message}
+                `;
+
+                logDisplay.appendChild(logElement);
+                logDisplay.scrollTop = logDisplay.scrollHeight;
+            }
+
+            generateReport() {
+                const errors = this.logs.filter(log => log.level === 'error');
+                const warnings = this.logs.filter(log => log.level === 'warn');
+                const criticalErrors = errors.filter(error =>
+                    error.message.includes('Critical') ||
+                    error.message.includes('Fatal') ||
+                    error.message.includes('Uncaught') ||
+                    error.message.includes('Unhandled')
+                );
+
+                return {
+                    sessionId: this.sessionId,
+                    startTime: this.startTime,
+                    endTime: new Date().toISOString(),
+                    totalLogs: this.logs.length,
+                    errors: errors.length,
+                    warnings: warnings.length,
+                    logs: this.logs,
+                    summary: {
+                        errors,
+                        warnings,
+                        criticalErrors,
+                    },
+                };
+            }
+
+            saveLogToFile() {
+                try {
+                    const report = this.generateReport();
+                    const logContent = JSON.stringify(report, null, 2);
+
+                    // Salvar no localStorage
+                    localStorage.setItem('console-log-backup', logContent);
+                    localStorage.setItem('console-log-latest', logContent);
+                    localStorage.setItem('console-log-timestamp', new Date().toISOString());
+
+                    // Salvar no arquivo fixo via API
+                    try {
+                        if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+                            fetch('/api/logs/update-frontend', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    filename: 'LOGS-CONSOLE-FRONTEND.JSON',
+                                    content: logContent,
+                                    timestamp: new Date().toISOString()
+                                })
+                            }).catch(() => {
+                                // Se a API não estiver disponível, ignorar silenciosamente
+                            });
+                        }
+                    } catch (apiError) {
+                        // API não disponível, continuar normalmente
+                    }
+
+                    console.log(`📄 Log atualizado em LOGS-CONSOLE-FRONTEND.JSON`);
+                } catch (error) {
+                    console.error('Erro ao salvar log:', error);
+                }
+            }
+
+            initialize() {
+                if (this.isInitialized) return;
+
+                console.log('🚀 Inicializando Sistema de Log Detalhado...');
+
+                this.interceptConsole();
+                this.interceptErrors();
+
+                // Salvar log a cada 5 segundos
+                setInterval(() => {
+                    this.saveLogToFile();
+                }, 5000);
+
+                // Salvar log quando a página for fechada
+                window.addEventListener('beforeunload', () => {
+                    this.saveLogToFile();
+                });
+
+                this.isInitialized = true;
+                console.log('✅ Sistema de Log Detalhado inicializado com sucesso!');
+
+                // Atualizar status
+                document.getElementById('status').innerHTML = '✅ Sistema de Log Ativo - Capturando logs...';
+                document.getElementById('status').className = 'status success';
+            }
+
+            getLogs() {
+                return [...this.logs];
+            }
+
+            getReport() {
+                return this.generateReport();
+            }
+
+            clearLogs() {
+                this.logs = [];
+                document.getElementById('logDisplay').innerHTML = '<div class="log-entry">Logs limpos...</div>';
+                console.log('🗑️ Logs limpos');
+            }
+
+            forceSave() {
+                this.saveLogToFile();
+            }
+        }
+
+        // Inicializar sistema de log
+        const consoleLogger = new ConsoleLogger();
+
+        // Funções de teste
+        function testLog() {
+            console.log('📝 Teste de log normal');
+            console.log('Objeto de teste:', { nome: 'Teste', valor: 123, array: [1, 2, 3] });
+        }
+
+        function testInfo() {
+            console.info('ℹ️ Informação importante');
+            console.info('Dados de sistema:', {
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        function testWarn() {
+            console.warn('⚠️ Aviso importante');
+            console.warn('Atenção: Esta é uma simulação de aviso');
+        }
+
+        function testError() {
+            console.error('❌ Erro simulado');
+            try {
+                throw new Error('Erro de teste intencional');
+            } catch (error) {
+                console.error('Erro capturado:', error);
+            }
+        }
+
+        function testDebug() {
+            console.debug('🐛 Debug information');
+            console.debug('Dados de debug:', {
+                memory: consoleLogger.getMemoryInfo(),
+                sessionId: consoleLogger.sessionId
+            });
+        }
+
+        function runAllTests() {
+            console.log('🚀 Executando todos os testes...');
+            setTimeout(() => testLog(), 100);
+            setTimeout(() => testInfo(), 200);
+            setTimeout(() => testWarn(), 300);
+            setTimeout(() => testError(), 400);
+            setTimeout(() => testDebug(), 500);
+
+            // Testar promessa rejeitada
+            setTimeout(() => {
+                Promise.reject(new Error('Promessa rejeitada de teste'))
+                    .catch(error => {
+                        console.error('Promessa rejeitada:', error);
+                    });
+            }, 600);
+
+            // Testar requisição de rede
+            setTimeout(() => {
+                fetch('https://httpbin.org/status/404')
+                    .then(response => {
+                        if (!response.ok) {
+                            console.warn('Requisição falhou:', response.status);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro na requisição:', error);
+                    });
+            }, 700);
+
+            console.log('✅ Todos os testes concluídos!');
+        }
+
+        function clearLogs() {
+            consoleLogger.clearLogs();
+        }
+
+        function downloadLogs() {
+            // Forçar salvamento no arquivo fixo
+            const report = consoleLogger.getReport();
+            const logContent = JSON.stringify(report, null, 2);
+
+            // Salvar no arquivo fixo via API
+            fetch('/api/logs/update-frontend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    filename: 'LOGS-CONSOLE-FRONTEND.JSON',
+                    content: logContent,
+                    timestamp: new Date().toISOString()
+                })
+            }).then(() => {
+                alert('✅ Log atualizado em LOGS-CONSOLE-FRONTEND.JSON!');
+            }).catch(() => {
+                alert('❌ Erro ao atualizar log!');
+            });
+        }
+
+        // Inicializar após carregamento da página
+        window.addEventListener('load', () => {
+            console.log('🌐 Página carregada - Sistema de log ativo');
+        });
+    </script>
+</body>
+
+</html>

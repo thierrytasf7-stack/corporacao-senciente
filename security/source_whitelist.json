@@ -1,0 +1,63 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-02-14T15:00:00Z",
+  "policy": {
+    "blockUnauthorized": true,
+    "logBlocked": true,
+    "validateReputation": true,
+    "reputationCheckInterval": 604800000
+  },
+  "sources": [
+    {
+      "id": "source-001",
+      "name": "ESPN",
+      "domain": "espn.com",
+      "category": "sports",
+      "status": "active",
+      "reputation": {
+        "score": 9.5,
+        "lastChecked": "2026-02-14T15:00:00Z",
+        "trusted": true
+      },
+      "tags": ["sports", "live-data", "odds"],
+      "description": "Primary sports data source",
+      "addedBy": "system",
+      "addedAt": "2026-02-14T15:00:00Z"
+    },
+    {
+      "id": "source-002",
+      "name": "Betfair",
+      "domain": "betfair.com",
+      "category": "betting",
+      "status": "active",
+      "reputation": {
+        "score": 9.8,
+        "lastChecked": "2026-02-14T15:00:00Z",
+        "trusted": true
+      },
+      "tags": ["betting", "odds", "markets"],
+      "description": "Betting exchange data",
+      "addedBy": "system",
+      "addedAt": "2026-02-14T15:00:00Z"
+    },
+    {
+      "id": "source-003",
+      "name": "Flashscore",
+      "domain": "flashscore.com",
+      "category": "sports",
+      "status": "active",
+      "reputation": {
+        "score": 9.2,
+        "lastChecked": "2026-02-14T15:00:00Z",
+        "trusted": true
+      },
+      "tags": ["sports", "scores", "live-updates"],
+      "description": "Live scores and results",
+      "addedBy": "system",
+      "addedAt": "2026-02-14T15:00:00Z"
+    }
+  ],
+  "blocklist": [],
+  "pendingApproval": [],
+  "auditLog": []
+}

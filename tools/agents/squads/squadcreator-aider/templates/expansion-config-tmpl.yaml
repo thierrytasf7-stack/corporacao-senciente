@@ -1,0 +1,56 @@
+# Expansion Pack Configuration Template
+
+name: {pack-name}
+version: {version}
+short-title: {pack-title}
+description: >-
+  {pack-description}
+  
+  This expansion pack provides:
+  - {feature-1}
+  - {feature-2}
+  - {feature-3}
+
+author: {author-name}
+slashPrefix: {camelCasePrefix}
+
+# Pattern library configuration
+patterns:
+  prefix: {PREFIX}
+  categories:
+    - orchestration
+    - execution
+    - validation
+    - integration
+
+# Executor types
+executors:
+  - type: Agent
+    description: Complex reasoning, multi-step workflows
+  - type: Task
+    description: Defined workflows, repeatable operations
+  - type: Workflow
+    description: Multi-agent orchestration
+  - type: Script
+    description: Automated operations
+  - type: Manual
+    description: Human-driven processes
+
+# Quality gates
+quality_gates:
+  - gate_id: QG-001
+    transition: "Requirements → Design"
+    blocking: true
+    criteria: "All requirements approved"
+  - gate_id: QG-002
+    transition: "Design → Implementation"
+    blocking: true
+    criteria: "Architecture review passed"
+  - gate_id: QG-003
+    transition: "Implementation → Testing"
+    blocking: true
+    criteria: "Code review completed"
+  - gate_id: QG-004
+    transition: "Testing → Deployment"
+    blocking: true
+    criteria: "All tests passing"

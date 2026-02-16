@@ -1,0 +1,28 @@
+{
+  "_comment": "TEMPLATE para invocar @qa (Quinn) via Agent Zero",
+  "_comment2": "SUBSTITUIR: {task-id}, {codigo-alvo}, {tipo-review}",
+
+  "id": "invoke-qa-{task-id}",
+  "task_type": "invoke-aios-agent",
+  "agent": "qa",
+  "aios_agent_path": ".aios-core/development/agents/qa.md",
+
+  "context_files": [
+    "{codigo-a-revisar}",
+    "tests/{modulo}/*.test.ts",
+    ".aios-core/development/checklists/code-review-checklist.md"
+  ],
+
+  "tools_required": ["file_read", "skill_call"],
+
+  "prompt": "INVOCA @qa (Quinn) para review de {tipo-review}.\n\nLeia aios_agent_path e ABSORVA:\n- Persona: QA Engineer meticuloso\n- Style: Orientado a qualidade, security-first\n- Process: Checklist → Testes → Segurança → Report\n\nUse context_files e checklist obrigatório.\n\nTASK:\n1. Revisar código em {codigo-alvo}\n2. Validar testes (coverage, casos edge)\n3. Verificar segurança (injection, XSS, auth)\n4. Verificar padrões AIOS\n5. Gerar review report\n\nCRITERIA:\n- Todos os itens do checklist verificados\n- Security issues identificados\n- Test coverage analisado\n- Aprovação/rejeição com motivos claros\n\nOUTPUT: Review report markdown com sections (Summary, Issues, Security, Tests, Recommendation)",
+
+  "acceptance_criteria": [
+    "Checklist completo (all items)",
+    "Security analysis detalhado",
+    "Test coverage report",
+    "Clear approve/reject decision"
+  ],
+
+  "max_tool_iterations": 10
+}

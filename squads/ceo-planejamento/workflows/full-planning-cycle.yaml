@@ -1,0 +1,251 @@
+# Full Planning Cycle - Orchestrated by CEO Athena
+# Used for: Greenfield projects and comprehensive brownfield features
+# Mode: Standard or Comprehensive
+
+name: full-planning-cycle
+version: 1.0.0
+description: Ciclo completo de planejamento orquestrado pelo CEO - da ideia ao masterplan executavel
+trigger: "*plan" or "*plan-greenfield"
+
+phases:
+  # ═══════════════════════════════════════════════════
+  # PHASE 1: DISCOVERY - Entender o dominio
+  # ═══════════════════════════════════════════════════
+  - id: discovery
+    name: "Discovery & Research"
+    agent: analyst
+    skill: "Planejamento:Analyst-AIOS"
+    duration: "30-60min"
+    required_for: [standard, comprehensive]
+    skip_for: [blitz]
+
+    briefing: |
+      Preciso que voce pesquise e analise o dominio do projeto.
+      Contexto do que o usuario quer: {user_request}
+      Objetivo: Entender mercado, competidores, usuarios e viabilidade.
+
+    actions:
+      - command: "*create-project-brief"
+        when: "greenfield"
+        output: "project-brief.md"
+      - command: "*perform-market-research"
+        when: "comprehensive"
+        output: "market-research.md"
+      - command: "*create-competitor-analysis"
+        when: "comprehensive"
+        output: "competitor-analysis.md"
+      - command: "*brainstorm {topic}"
+        when: "scope unclear"
+        output: "brainstorm-output.md"
+
+    gate: gate-discovery.md
+    outputs:
+      - project-brief.md
+      - market-research.md (if comprehensive)
+      - competitor-analysis.md (if comprehensive)
+    handoff_to: strategy
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 2: STRATEGY - Definir o que construir
+  # ═══════════════════════════════════════════════════
+  - id: strategy
+    name: "Product Strategy"
+    agent: pm
+    skill: "Planejamento:PM-AIOS"
+    duration: "30-60min"
+    required_for: [blitz, standard, comprehensive]
+
+    briefing: |
+      Contexto acumulado: {previous_phase_outputs}
+      Preciso que voce crie a estrategia de produto.
+      Para greenfield: PRD completo.
+      Para brownfield: Epic structure com priorizacao.
+      Quality dimensions a priorizar: {quality_priorities}
+
+    actions:
+      - command: "*create-prd"
+        when: "greenfield"
+        output: "prd.md"
+      - command: "*create-brownfield-prd"
+        when: "brownfield AND scope > 3 stories"
+        output: "prd.md"
+      - command: "*create-epic"
+        when: "brownfield"
+        output: "epic.md"
+      - command: "*gather-requirements"
+        when: "requirements unclear"
+        output: "requirements.md"
+
+    gate: gate-strategy.md
+    outputs:
+      - prd.md OR epic.md
+      - prioritization (MoSCoW or RICE)
+    handoff_to: architecture
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 3: ARCHITECTURE - Definir como construir
+  # ═══════════════════════════════════════════════════
+  - id: architecture
+    name: "Technical Architecture"
+    agent: architect
+    skill: "Planejamento:Architect-AIOS"
+    duration: "30-60min"
+    required_for: [blitz, standard, comprehensive]
+
+    briefing: |
+      Contexto acumulado: {previous_phase_outputs}
+      PRD/Epic: {strategy_output}
+      Preciso da arquitetura tecnica que garanta:
+      - Performance nota 10 (caching, lazy loading, CDN)
+      - Escalabilidade nativa (stateless, sharding ready)
+      - Seguranca em cada camada (OWASP top 10)
+      - Testabilidade built-in
+      Constitution: CLI First, absolute imports, port range 21300-21399
+
+    actions:
+      - command: "*create-full-stack-architecture"
+        when: "greenfield"
+        output: "architecture.md"
+      - command: "*create-brownfield-architecture"
+        when: "brownfield"
+        output: "architecture.md"
+      - command: "*analyze-project-structure"
+        when: "brownfield AND needs code analysis"
+        output: "project-analysis.md"
+      - command: "*assess-complexity"
+        when: "always"
+        output: "complexity-assessment.md"
+      - command: "*create-plan"
+        when: "comprehensive"
+        output: "implementation-plan.md"
+
+    gate: gate-architecture.md
+    outputs:
+      - architecture.md
+      - complexity-assessment.md
+      - implementation-plan.md (if comprehensive)
+    handoff_to: design
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 4: DESIGN - Definir a experiencia
+  # ═══════════════════════════════════════════════════
+  - id: design
+    name: "UX/UI Design"
+    agent: ux-design-expert
+    skill: "Planejamento:UX-AIOS"
+    duration: "30-60min"
+    required_for: [standard, comprehensive]
+    skip_for: [blitz]
+    skip_when: "backend-only OR cli-only OR api-only"
+
+    briefing: |
+      Contexto acumulado: {previous_phase_outputs}
+      PRD: {strategy_output}
+      Arquitetura Frontend: {architecture_frontend_section}
+      Preciso que voce projete a experiencia do usuario:
+      - UX nivel 10000 (fluido, intuitivo, delightful)
+      - UI nivel 1000 (polished, moderno, consistente)
+      - Accessibility WCAG AA minimo
+      - Design system com atomic design
+      - Responsive first
+
+    actions:
+      - command: "*research"
+        when: "comprehensive AND user-facing"
+        output: "user-research.md"
+      - command: "*wireframe medium"
+        when: "standard"
+        output: "wireframes.md"
+      - command: "*wireframe high"
+        when: "comprehensive"
+        output: "wireframes-hifi.md"
+      - command: "*create-front-end-spec"
+        when: "always for UI features"
+        output: "front-end-spec.md"
+      - command: "*audit {path}"
+        when: "brownfield with existing UI"
+        output: "design-audit.md"
+      - command: "*generate-ui-prompt"
+        when: "needs AI UI generation"
+        output: "ui-prompts.md"
+
+    gate: gate-design.md
+    outputs:
+      - wireframes.md
+      - front-end-spec.md
+      - design-audit.md (if brownfield)
+    handoff_to: stories
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 5: STORIES - Criar backlog executavel
+  # ═══════════════════════════════════════════════════
+  - id: stories
+    name: "Story Creation & Backlog"
+    agents: [po, sm]
+    skills: ["Planejamento:PO-AIOS", "Planejamento:SM-AIOS"]
+    duration: "30-60min"
+    required_for: [blitz, standard, comprehensive]
+
+    briefing: |
+      Contexto acumulado: {all_previous_outputs}
+      PRD/Epic: {strategy_output}
+      Arquitetura: {architecture_output}
+      Design Spec: {design_output}
+      Preciso de stories detalhadas, priorizadas, prontas para @dev:
+      - Acceptance criteria claros e testáveis
+      - Estimativa de complexidade (fibonacci)
+      - Dependencias mapeadas
+      - CodeRabbit integration section
+      - Quality gates definidos
+
+    sub_phases:
+      - agent: po
+        skill: "Planejamento:PO-AIOS"
+        action: "Validar backlog structure e priorizar"
+        commands:
+          - "*create-story (from epic/prd)"
+          - "*validate-story-draft"
+          - "*backlog-review"
+      - agent: sm
+        skill: "Planejamento:SM-AIOS"
+        action: "Criar stories detalhadas com acceptance criteria"
+        commands:
+          - "*draft (detailed story)"
+          - "*story-checklist (validate)"
+
+    gate: gate-stories.md
+    outputs:
+      - stories/ (directory with individual story files)
+      - backlog-summary.md
+      - sprint-plan.md (if applicable)
+    handoff_to: validation
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 6: VALIDATION - Masterplan final
+  # ═══════════════════════════════════════════════════
+  - id: validation
+    name: "Final Validation & Masterplan"
+    agent: ceo-planejamento
+    duration: "15-30min"
+    required_for: [standard, comprehensive]
+
+    actions:
+      - "Consolidar todos os outputs em masterplan unico"
+      - "Verificar consistencia entre fases"
+      - "Avaliar quality scorecard (10 dimensoes)"
+      - "Identificar riscos e mitigacoes"
+      - "Gerar execution roadmap"
+      - "Preparar handoff para @dev"
+
+    gate: gate-final.md
+    outputs:
+      - masterplan.md
+      - quality-scorecard.md
+      - execution-roadmap.md
+
+success_criteria:
+  - "Todas as fases executadas com gates passed"
+  - "Masterplan completo e consistente"
+  - "Stories prontas para implementacao"
+  - "Quality scorecard com media >= 7 em todas dimensoes"
+  - "Zero gaps criticos identificados"

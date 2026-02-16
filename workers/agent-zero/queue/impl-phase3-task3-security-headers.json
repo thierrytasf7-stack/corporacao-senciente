@@ -1,0 +1,18 @@
+{
+  "id": "impl-phase3-task3-security-headers",
+  "agent": "dev",
+  "task_type": "implement-security",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_write"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [],
+  "prompt": "ADD SECURITY HEADERS\n\nCreate: modules/betting-platform/backend/middleware/security-headers.ts\n\nMiddleware that sets:\n1. Content-Security-Policy\n2. X-Frame-Options: DENY\n3. X-Content-Type-Options: nosniff\n4. Strict-Transport-Security\n5. X-XSS-Protection\n\nBasic helmet-like middleware.",
+  "acceptance_criteria": [
+    "security-headers.ts criado",
+    "5 headers configurados",
+    "Middleware exportado"
+  ],
+  "max_tool_iterations": 8,
+  "self_review": false,
+  "quality_threshold": 7
+}

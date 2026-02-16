@@ -1,0 +1,49 @@
+{
+    "mcpServers": {
+        "mcp-supabase-coorporacao-autonoma": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@supabase/mcp-server-supabase@latest",
+                "--access-token",
+                "sbp_c758193eb5185a82bb9350e1651bddd020137829",
+                "--project-ref",
+                "ffdszaiarxstxbafvedi"
+            ]
+        },
+        "byterover-mcp-server": {
+            "command": "node",
+            "args": [
+                "scripts/mcp/byterover_mcp_server.js"
+            ]
+        },
+        "GitKraken": {
+            "command": "c:\\Users\\Ryzen\\AppData\\Roaming\\Cursor\\User\\globalStorage\\eamodio.gitlens\\gk.exe",
+            "type": "stdio",
+            "name": "GitKraken",
+            "args": [
+                "mcp",
+                "--host=cursor",
+                "--source=gitlens",
+                "--scheme=cursor"
+            ],
+            "env": {}
+        },
+        "jira-rovo-remote": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "mcp-remote",
+                "https://mcp.atlassian.com/v1/sse",
+                "--client-id",
+                "88zOFYpcPpIfRXkfsnNBSNMDmeMLz1KB",
+                "--client-secret",
+                "ATCTT3xFfGN0puTGfptCxndQaidH--mD3dHOQEd1gh-21Xbs8YVMcHaj1rRrji3YVB8yaWN9ceh9wPNl00VvWPjCcp2c7xvlC8PYCqdp5qWceDdW5cjKxJPuDz5-6H2ciSmh5WWoI0qwiZoqwLjZgHmSY8-FkdQIbuWApeTTqAzRmvrJAHRnoRY=68DDD449",
+                "--redirect-uri",
+                "http://localhost:1919/callback",
+                "--scopes",
+                "read:jira-work write:jira-work read:confluence-content.summary write:confluence-content read:compass-component offline_access"
+            ]
+        }
+    }
+}

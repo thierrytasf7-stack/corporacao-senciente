@@ -1,0 +1,27 @@
+# ==============================================================================
+# CORPORACAO SENCIENTE - Oracle VPS Environment Variables
+# Copie este arquivo para .env e preencha os valores
+# ==============================================================================
+
+# Dominio (sem https://)
+DOMAIN=senciente.corp
+
+# Traefik - SSL
+ACME_EMAIL=admin@senciente.corp
+
+# Infisical - Gerenciamento de Segredos
+INFISICAL_ENCRYPTION_KEY=sua-chave-de-encriptacao-32-chars
+INFISICAL_JWT_SECRET=seu-jwt-secret-super-seguro
+
+# Infisical Token (gerado no painel Infisical)
+INFISICAL_TOKEN=
+
+# Notificacoes - Telegram
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_CHAT_ID=
+
+# Notificacoes - Discord
+DISCORD_WEBHOOK_URL=
+
+# Netdata Cloud (opcional)
+NETDATA_CLAIM_TOKEN=

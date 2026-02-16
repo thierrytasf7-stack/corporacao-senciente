@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1080px; height: 1920px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #0a0a2e 0%, #1a1a4e 50%, #0a0a2e 100%);
+    color: #fff;
+    display: flex; flex-direction: column;
+    align-items: center; padding: 60px 40px;
+  }
+  .header { text-align: center; margin-bottom: 40px; }
+  .header h1 { font-size: 36px; color: #00d4ff; letter-spacing: 4px; text-transform: uppercase; }
+  .header .subtitle { font-size: 20px; color: #8899aa; margin-top: 8px; }
+  .alvo-nome { font-size: 28px; color: #ffd700; margin-bottom: 30px; text-align: center; }
+
+  .gauge-container { position: relative; width: 400px; height: 220px; margin: 0 auto 30px; }
+  .gauge-bg {
+    width: 400px; height: 200px;
+    border-radius: 200px 200px 0 0;
+    background: conic-gradient(from 180deg, #ff4444 0deg, #ff8800 60deg, #ffcc00 120deg, #44cc44 160deg, #00cc88 180deg);
+    position: relative; overflow: hidden;
+  }
+  .gauge-inner {
+    position: absolute; bottom: 0; left: 30px; right: 30px;
+    height: 170px; border-radius: 170px 170px 0 0;
+    background: #0a0a2e;
+  }
+  .gauge-score {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    font-size: 72px; font-weight: 900; color: #ffd700;
+  }
+  .gauge-max { font-size: 28px; color: #8899aa; }
+  .gauge-class {
+    text-align: center; font-size: 24px; font-weight: 700;
+    padding: 8px 24px; border-radius: 20px; display: inline-block;
+    margin: 0 auto;
+  }
+  .class-fraco { background: #ff4444; }
+  .class-abaixo { background: #ff8800; }
+  .class-media { background: #ffcc00; color: #333; }
+  .class-forte { background: #44cc44; }
+  .class-excelente { background: #00cc88; }
+
+  .criterios { width: 100%; margin: 30px 0; }
+  .criterio {
+    display: flex; align-items: center;
+    margin: 12px 0; padding: 0 20px;
+  }
+  .criterio-nome { flex: 1; font-size: 18px; color: #ccc; }
+  .criterio-bar-bg {
+    width: 300px; height: 16px; background: #1a1a4e;
+    border-radius: 8px; margin: 0 16px; overflow: hidden;
+  }
+  .criterio-bar {
+    height: 100%; border-radius: 8px;
+    background: linear-gradient(90deg, #00d4ff, #ffd700);
+  }
+  .criterio-score { font-size: 20px; font-weight: 700; color: #ffd700; width: 40px; text-align: right; }
+
+  .acoes { width: 100%; margin: 20px 0; padding: 20px 30px; background: rgba(255,255,255,0.05); border-radius: 16px; }
+  .acoes h3 { font-size: 22px; color: #00d4ff; margin-bottom: 16px; }
+  .acao { font-size: 17px; color: #ddd; margin: 10px 0; padding-left: 20px; border-left: 3px solid #ffd700; }
+
+  .qr-section {
+    margin-top: auto; text-align: center; padding: 20px;
+    background: rgba(255,215,0,0.1); border-radius: 16px; border: 1px solid #ffd700;
+  }
+  .qr-section p { font-size: 18px; color: #ffd700; font-weight: 700; margin-bottom: 10px; }
+  .qr-placeholder {
+    width: 120px; height: 120px; background: #fff; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: #333;
+  }
+
+  .footer { margin-top: 20px; font-size: 14px; color: #556; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>PUV Score</h1>
+    <div class="subtitle">Diagnostico de Proposta Unica de Valor</div>
+  </div>
+
+  <div class="alvo-nome">Ian Restaurante - ianrestaurante.com.br</div>
+
+  <div class="gauge-container">
+    <div class="gauge-bg">
+      <div class="gauge-inner"></div>
+      <div class="gauge-score"><span>7</span><span class="gauge-max">/20</span></div>
+    </div>
+  </div>
+  <div style="text-align:center; margin-bottom: 20px;">
+    <span class="gauge-class class-abaixo">ABAIXO DA MEDIA</span>
+  </div>
+
+  <div class="criterios">
+    <div class="criterio">
+      <span class="criterio-nome">Diferenciacao</span>
+      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: 25%"></div></div>
+      <span class="criterio-score">1/4</span>
+    </div>
+    <div class="criterio">
+      <span class="criterio-nome">Clareza</span>
+      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: 50%"></div></div>
+      <span class="criterio-score">2/4</span>
+    </div>
+    <div class="criterio">
+      <span class="criterio-nome">Linguagem</span>
+      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: 25%"></div></div>
+      <span class="criterio-score">1/4</span>
+    </div>
+    <div class="criterio">
+      <span class="criterio-nome">Credibilidade</span>
+      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: 25%"></div></div>
+      <span class="criterio-score">1/4</span>
+    </div>
+    <div class="criterio">
+      <span class="criterio-nome">Jornada/CTA</span>
+      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: 50%"></div></div>
+      <span class="criterio-score">2/4</span>
+    </div>
+  </div>
+
+  <div class="acoes">
+    <h3>Top 3 Acoes Recomendadas</h3>
+    <div class="acao">1. Reposicionar headline: "Autentica Cozinha Armenia — Receitas de familia" (substitui "Cozinha Arabe" generico)</div>
+    <div class="acao">2. Adicionar prova social na homepage: embed Google Reviews + citacao materia Taste & Fly</div>
+    <div class="acao">3. Botao WhatsApp flutuante + CTA "Reserve sua Mesa" direto no banner principal</div>
+  </div>
+
+  <div class="qr-section">
+    <p>DESBLOQUEAR RELATORIO COMPLETO</p>
+    <div class="qr-placeholder">QR CODE</div>
+  </div>
+
+  <div class="footer">FNW - Freenat Work | Powered by Diana AIOS | 13/02/2026</div>
+</body>
+</html>

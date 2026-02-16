@@ -1,0 +1,254 @@
+{
+  "sessionId": "session_1771172141165",
+  "botId": "v2-periodic-gen255-1771172141163",
+  "botName": "Forge",
+  "generation": 255,
+  "genome": {
+    "id": "v2-periodic-gen255-1771172141163",
+    "name": "Forge",
+    "generation": 255,
+    "parentIds": [
+      "v2-periodic-gen253-1771171237419",
+      "v2-periodic-gen251-1771170937656"
+    ],
+    "strategyMask": [
+      false,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true
+    ],
+    "strategyWeights": [
+      1.3626505488997767,
+      0.9662714599061816,
+      1.097790875710547,
+      1.225744865314488,
+      1.3474140733193865,
+      1.3851183549133006,
+      0.383953369167392,
+      0.3530530430214806,
+      1.4581032065151516,
+      1.3626299735730367,
+      0.8319958519193038,
+      0.3279424352199519,
+      1.0927696777594906,
+      0.5854976274728687,
+      0.2187849573916797,
+      0.5873280129404855,
+      0.7797733713815518,
+      0.2,
+      0.496078044281261,
+      0.9561468080103537,
+      0.2579843192895431,
+      1.6807641161454903,
+      1.8754731994977885,
+      0.15472589783695578,
+      0.6053523072679522,
+      0.28815018327587444,
+      0.2531508603065492,
+      0.1,
+      2,
+      0.1
+    ],
+    "consensus": {
+      "minAgreeingSignals": 2,
+      "maxOpposingSignals": 4,
+      "minWeightedStrength": 54.816893856894666,
+      "preferredDirection": "ANY"
+    },
+    "risk": {
+      "atrMultiplierTP": 2.332473318160834,
+      "atrMultiplierSL": 1.2345276183441656,
+      "trailingStopATR": 1.056025092653077,
+      "flipExitThreshold": 6,
+      "leverage": 56,
+      "maxOpenPositions": 4,
+      "maxExposurePercent": 35
+    },
+    "betting": {
+      "basePercent": 4.277389445846281,
+      "winMultiplier": 1,
+      "lossMultiplier": 0.9536317491348757,
+      "maxBetPercent": 12,
+      "resetAfterLosses": 3
+    },
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "BNBUSDT",
+      "XRPUSDT"
+    ]
+  },
+  "startBankroll": 100,
+  "endBankroll": 99.93,
+  "peakBankroll": 100.03,
+  "totalTrades": 5,
+  "wins": 2,
+  "losses": 3,
+  "winRate": 40,
+  "maxDrawdown": 0.1,
+  "finalReason": "EVOLVED_OUT",
+  "startTime": "2026-02-15T16:15:41.165Z",
+  "endTime": "2026-02-15T16:20:39.214Z",
+  "trades": [
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5143,
+      "exitPrice": 1.5147,
+      "betAmount": 4.277389445846281,
+      "pnlPercent": -1.48,
+      "pnlValue": -0.06,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 99.94,
+      "timestamp": "2026-02-15T16:18:30.102Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 2,
+        "weightedStrength": 56.14663374706418,
+        "topStrategies": [
+          "ema_triple_9_21_55",
+          "ema_cross_12_26",
+          "roc_12",
+          "adx_trend",
+          "momentum_10"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5181,
+      "exitPrice": 1.518,
+      "betAmount": 4.076473459915451,
+      "pnlPercent": 0.37,
+      "pnlValue": 0.02,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.94,
+      "bankrollAfter": 99.95,
+      "timestamp": "2026-02-15T16:19:59.566Z",
+      "consensusSnapshot": {
+        "agreeingCount": 3,
+        "opposingCount": 3,
+        "weightedStrength": 72.12643150357361,
+        "topStrategies": [
+          "ema_triple_9_21_55",
+          "ema_cross_12_26",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.518,
+      "exitPrice": 1.5175,
+      "betAmount": 4.07708684295173,
+      "pnlPercent": 1.84,
+      "pnlValue": 0.08,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.95,
+      "bankrollAfter": 100.03,
+      "timestamp": "2026-02-15T16:20:07.160Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 4,
+        "weightedStrength": 59.82227962652999,
+        "topStrategies": [
+          "ema_triple_9_21_55",
+          "ema_cross_12_26",
+          "obv_trend",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5175,
+      "exitPrice": 1.5175,
+      "betAmount": 4.080154421675877,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.03,
+      "bankrollAfter": 100.03,
+      "timestamp": "2026-02-15T16:20:09.718Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 4,
+        "weightedStrength": 59.82227962652999,
+        "topStrategies": [
+          "ema_triple_9_21_55",
+          "ema_cross_12_26",
+          "obv_trend",
+          "trix_15"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.5175,
+      "exitPrice": 1.5182,
+      "betAmount": 3.890964797883164,
+      "pnlPercent": -2.58,
+      "pnlValue": -0.1,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.03,
+      "bankrollAfter": 99.93,
+      "timestamp": "2026-02-15T16:20:17.307Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 4,
+        "weightedStrength": 59.82227962652999,
+        "topStrategies": [
+          "ema_triple_9_21_55",
+          "ema_cross_12_26",
+          "obv_trend",
+          "trix_15"
+        ]
+      }
+    }
+  ],
+  "fitness": 19.609539833711388,
+  "activeStrategies": [
+    "ema_cross_12_26",
+    "ema_triple_9_21_55",
+    "adx_trend",
+    "roc_12",
+    "momentum_10",
+    "trix_15",
+    "elder_ray",
+    "bollinger_10_15",
+    "obv_trend",
+    "dpo"
+  ]
+}

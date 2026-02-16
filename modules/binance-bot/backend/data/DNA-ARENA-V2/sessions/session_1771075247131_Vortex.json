@@ -1,0 +1,181 @@
+{
+  "sessionId": "session_1771075247131",
+  "botId": "v2-periodic-gen107-1771075247128",
+  "botName": "Vortex",
+  "generation": 107,
+  "genome": {
+    "id": "v2-periodic-gen107-1771075247128",
+    "name": "Vortex",
+    "generation": 107,
+    "parentIds": [
+      "v2-periodic-gen100-1771073247726",
+      "v2-periodic-gen84-1771068978533"
+    ],
+    "strategyMask": [
+      false,
+      true,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      false
+    ],
+    "strategyWeights": [
+      0,
+      1.5,
+      0,
+      0.1,
+      0.2100774849726652,
+      0.1,
+      1.5,
+      0.1,
+      1.5,
+      1.3595478726982066,
+      1.5380050589025371,
+      1,
+      1.3826838393018994,
+      1.5190525134539865,
+      1.4319921402849571,
+      1.1584941392860615,
+      1,
+      1.2677160129648535,
+      1,
+      1.5174882173028497,
+      0.1,
+      0.1,
+      0.1,
+      0.1551821960130961,
+      0.2701546149124138,
+      0.3844230666568866,
+      0,
+      0.1554265917747716,
+      0.1,
+      0.25357843264545155
+    ],
+    "consensus": {
+      "minAgreeingSignals": 4,
+      "maxOpposingSignals": 2,
+      "minWeightedStrength": 63.54908499705235,
+      "preferredDirection": "ANY"
+    },
+    "risk": {
+      "atrMultiplierTP": 1.7370057586209944,
+      "atrMultiplierSL": 1.0839573991505265,
+      "trailingStopATR": 1.4586502606358192,
+      "flipExitThreshold": 2,
+      "leverage": 53,
+      "maxOpenPositions": 4,
+      "maxExposurePercent": 35
+    },
+    "betting": {
+      "basePercent": 3.7282739220085506,
+      "winMultiplier": 1.0668843924946179,
+      "lossMultiplier": 0.8416124910189196,
+      "maxBetPercent": 12,
+      "resetAfterLosses": 3
+    },
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "BNBUSDT",
+      "XRPUSDT"
+    ]
+  },
+  "startBankroll": 100,
+  "endBankroll": 99.86,
+  "peakBankroll": 100,
+  "totalTrades": 2,
+  "wins": 0,
+  "losses": 2,
+  "winRate": 0,
+  "maxDrawdown": 0.14,
+  "finalReason": "EVOLVED_OUT",
+  "startTime": "2026-02-14T13:20:47.131Z",
+  "endTime": "2026-02-14T13:26:50.964Z",
+  "trades": [
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 69461.3,
+      "exitPrice": 69475,
+      "betAmount": 3.7282739220085506,
+      "pnlPercent": -1.05,
+      "pnlValue": -0.04,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 99.96,
+      "timestamp": "2026-02-14T13:20:58.992Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 65.14999032504566,
+        "topStrategies": [
+          "parabolic_sar",
+          "ema_cross_12_26",
+          "obv_trend",
+          "macd_fast"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 86.14,
+      "exitPrice": 86.19,
+      "betAmount": 3.1365390297805833,
+      "pnlPercent": -3.08,
+      "pnlValue": -0.1,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.96,
+      "bankrollAfter": 99.86,
+      "timestamp": "2026-02-14T13:26:08.650Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 69.71752897877376,
+        "topStrategies": [
+          "parabolic_sar",
+          "ema_cross_12_26",
+          "obv_trend",
+          "macd_fast"
+        ]
+      }
+    }
+  ],
+  "fitness": 0,
+  "activeStrategies": [
+    "ema_cross_12_26",
+    "macd_fast",
+    "adx_trend",
+    "parabolic_sar",
+    "cci_20",
+    "atr_breakout",
+    "obv_trend",
+    "volume_spike",
+    "mass_index"
+  ]
+}

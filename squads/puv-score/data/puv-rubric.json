@@ -1,0 +1,75 @@
+{
+  "name": "PUV Score Rubric",
+  "version": "1.0",
+  "max_score": 20,
+  "criterios": [
+    {
+      "id": "diferenciacao",
+      "nome": "Diferenciacao e Posicionamento",
+      "peso": 4,
+      "niveis": {
+        "0": "Nenhuma diferenciacao visivel",
+        "1": "Diferenciacao vaga ou generica",
+        "2": "Diferenciacao basica, mas nao unica",
+        "3": "Diferenciacao clara e relevante",
+        "4": "Diferenciacao excepcional e memoravel"
+      }
+    },
+    {
+      "id": "clareza",
+      "nome": "Clareza da Proposta/Beneficio",
+      "peso": 4,
+      "niveis": {
+        "0": "Proposta confusa ou inexistente",
+        "1": "Proposta ambigua, requer esforco para entender",
+        "2": "Proposta razoavel, mas nao imediata",
+        "3": "Proposta clara em 10 segundos",
+        "4": "Proposta imediata em 5 segundos ou menos"
+      }
+    },
+    {
+      "id": "linguagem",
+      "nome": "Linguagem e Conexao Emocional",
+      "peso": 4,
+      "niveis": {
+        "0": "Linguagem generica e impessoal",
+        "1": "Linguagem funcional sem emocao",
+        "2": "Conexao parcial com a dor do cliente",
+        "3": "Linguagem emocional que ressoa com o publico",
+        "4": "Linguagem irresistivel que cria urgencia"
+      }
+    },
+    {
+      "id": "credibilidade",
+      "nome": "Credibilidade e Confianca",
+      "peso": 4,
+      "niveis": {
+        "0": "Sem prova social ou credibilidade",
+        "1": "Prova social minima",
+        "2": "Credibilidade moderada",
+        "3": "Forte credibilidade",
+        "4": "Credibilidade indiscutivel"
+      }
+    },
+    {
+      "id": "jornada",
+      "nome": "Jornada Guiada e CTA",
+      "peso": 4,
+      "niveis": {
+        "0": "Sem CTA ou proximo passo visivel",
+        "1": "CTA vago ou escondido",
+        "2": "CTA presente mas nao convincente",
+        "3": "CTA claro e visivel",
+        "4": "Jornada completa guiada com CTA irresistivel"
+      }
+    }
+  ],
+  "classificacoes": [
+    {"min": 0, "max": 5, "label": "Fraco", "css": "class-fraco"},
+    {"min": 6, "max": 9, "label": "Abaixo da Media", "css": "class-abaixo"},
+    {"min": 10, "max": 13, "label": "Media", "css": "class-media"},
+    {"min": 14, "max": 17, "label": "Forte", "css": "class-forte"},
+    {"min": 18, "max": 20, "label": "Excelente", "css": "class-excelente"}
+  ],
+  "canais": ["website", "google", "instagram", "mercadolivre"]
+}

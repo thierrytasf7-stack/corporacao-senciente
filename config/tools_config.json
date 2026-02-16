@@ -1,0 +1,13 @@
+{
+  "enabled_tools": ["search", "calculator", "file_system"],
+  "external_apis": {
+    "weather": {
+      "endpoint": "https://api.open-meteo.com/v1/forecast",
+      "status": "active"
+    }
+  },
+  "permissions": {
+    "file_system": ["read", "write"],
+    "network": ["outbound_only"]
+  }
+}

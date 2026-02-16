@@ -1,0 +1,117 @@
+name: binance-ceo
+version: 1.0.0
+description: Squad de gestao completa de operacoes de trading crypto - CEO coordena equipe de analistas, traders, quants e risk managers para obter lucro consistente na Binance
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: Binance
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - ceo.md
+    - trader.md
+    - analyst.md
+    - quant.md
+    - risk-manager.md
+    - ops-monitor.md
+  tasks:
+    # CEO Tasks
+    - ceo-daily-briefing.md
+    - ceo-portfolio-review.md
+    - ceo-strategy-decision.md
+    # Trader Tasks
+    - trader-execute-order.md
+    - trader-manage-positions.md
+    - trader-spot-rotation.md
+    - trader-futures-operation.md
+    # Analyst Tasks
+    - analyst-market-scan.md
+    - analyst-technical-analysis.md
+    - analyst-sentiment-analysis.md
+    - analyst-correlation-matrix.md
+    # Quant Tasks
+    - quant-backtest-strategy.md
+    - quant-optimize-params.md
+    - quant-create-strategy.md
+    - quant-indicator-research.md
+    # Risk Manager Tasks
+    - risk-evaluate-exposure.md
+    - risk-set-limits.md
+    - risk-drawdown-analysis.md
+    - risk-portfolio-rebalance.md
+    # Ops Tasks
+    - ops-health-check.md
+    - ops-monitor-triggers.md
+    - ops-api-status.md
+    - ops-log-analysis.md
+  workflows:
+    - daily-trading-cycle.yaml
+    - strategy-launch-workflow.yaml
+    - emergency-risk-workflow.yaml
+  checklists:
+    - pre-trade-checklist.md
+    - strategy-launch-checklist.md
+    - risk-assessment-checklist.md
+    - daily-operations-checklist.md
+  templates:
+    - daily-report-tmpl.md
+    - strategy-proposal-tmpl.md
+    - trade-journal-tmpl.md
+    - risk-report-tmpl.md
+  tools:
+    - postgres
+    - context7
+  scripts: []
+
+config:
+  extends: extend
+  tradingPairs:
+    focus: ["BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT", "XRPUSDT"]
+    watchlist: ["ADAUSDT", "DOTUSDT", "AVAXUSDT", "MATICUSDT", "LINKUSDT"]
+  riskDefaults:
+    maxPositionSize: 5
+    maxDrawdown: 10
+    stopLossDefault: 2
+    takeProfitDefault: 4
+    maxOpenPositions: 5
+    riskPerTrade: 1
+  timeframes:
+    scalping: ["10s", "1m"]
+    swing: ["5m", "15m", "1h"]
+    position: ["4h", "1d"]
+  backtestDefaults:
+    initialCapital: 1000
+    commission: 0.1
+    slippage: 0.05
+
+dependencies:
+  node:
+    - node-binance-api
+    - technicalindicators
+    - redis
+    - pg
+  python: []
+  squads: []
+
+codebase:
+  module: modules/binance-bot
+  frontend: modules/binance-bot/frontend
+  backend: modules/binance-bot/backend
+  strategies: modules/binance-bot/backend/data/trading-strategies.json
+  triggers: modules/binance-bot/backend/src/trigger-monitor.ts
+  database: modules/binance-bot/backend/src/database
+
+tags:
+  - trading
+  - crypto
+  - binance
+  - bot
+  - strategies
+  - analysis
+  - risk-management
+  - automation
+  - portfolio
+  - quant

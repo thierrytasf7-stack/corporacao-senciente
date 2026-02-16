@@ -1,0 +1,139 @@
+{
+  "version": "4.0.0-UNLEASHED",
+  "project_root": "../..",
+  "queue_path": "./workers/agent-zero/queue",
+  "results_path": "./workers/agent-zero/results",
+  "logs_path": "./workers/agent-zero/logs",
+  "poll_interval_ms": 3000,
+
+  "concurrency": {
+    "max_concurrent_batches": 2,
+    "comment": "NON-NEGOTIABLE: Never exceed 2 concurrent batches. Garantee quality, stable connection, and performance. Evidence: 100% success rate @ 2 batches vs 47% @ 3+ batches."
+  },
+
+  "openrouter": {
+    "base_url": "https://openrouter.ai/api/v1/chat/completions",
+    "keys": {
+      "primary": "OPENROUTER_API_KEY",
+      "free": [
+        "OPENROUTER_API_KEY_FREE_1",
+        "OPENROUTER_API_KEY_FREE_2",
+        "OPENROUTER_API_KEY_FREE_3",
+        "OPENROUTER_API_KEY_FREE_4",
+        "OPENROUTER_API_KEY_FREE_5"
+      ]
+    },
+    "key_rotation": "round_robin",
+    "timeout_ms": 120000,
+    "max_retries": 3,
+    "retry_delay_ms": 5000
+  },
+
+  "models": {
+    "reasoning": {
+      "cascade": [
+        "arcee-ai/trinity-large-preview:free",
+        "deepseek/deepseek-r1-0528:free",
+        "tngtech/deepseek-r1t-chimera:free"
+      ],
+      "temperature": 0.3,
+      "for": "code review, architecture, complex reasoning"
+    },
+    "coding": {
+      "cascade": [
+        "arcee-ai/trinity-large-preview:free",
+        "nvidia/nemotron-3-nano-30b-a3b:free",
+        "qwen/qwen3-coder:free",
+        "meta-llama/llama-3.3-70b-instruct:free"
+      ],
+      "temperature": 0.2,
+      "for": "implementation, tests, boilerplate, types"
+    },
+    "general": {
+      "cascade": [
+        "arcee-ai/trinity-large-preview:free",
+        "mistralai/mistral-small-3.1-24b-instruct:free",
+        "google/gemma-3-27b-it:free"
+      ],
+      "temperature": 0.3,
+      "for": "stories, docs, analysis, formatting"
+    }
+  },
+
+  "task_routing": {
+    "implement": "coding",
+    "test": "coding",
+    "refactor": "coding",
+    "types": "coding",
+    "review": "reasoning",
+    "architect": "reasoning",
+    "debug": "reasoning",
+    "analyze": "reasoning",
+    "audit": "reasoning",
+    "story": "general",
+    "docs": "general",
+    "format": "general",
+    "create-squad": "general",
+    "create-agent": "general",
+    "report": "general",
+    "plan": "general",
+    "scrape": "coding",
+    "generate-pdf": "coding",
+    "pipeline": "coding"
+  },
+
+  "tool_use": {
+    "enabled": true,
+    "max_iterations": 50,
+    "tools_enabled": ["web_fetch", "file_read", "file_write", "html_to_pdf", "db_query", "shell_exec", "skill_call", "git_operations", "bash_unrestricted"],
+    "security": {
+      "sandbox_bypass_enabled": true,
+      "file_write_dirs": ["*"],
+      "file_read_root": ".",
+      "shell_whitelist": ["*"],
+      "db_read_only": false,
+      "url_block_internal": false,
+      "max_output_chars": 50000
+    },
+    "timeouts": {
+      "web_fetch": 15000,
+      "file_read": 5000,
+      "file_write": 5000,
+      "html_to_pdf": 60000,
+      "db_query": 10000,
+      "shell_exec": 120000
+    }
+  },
+
+  "quality": {
+    "self_review": true,
+    "confidence_threshold": 9,
+    "max_output_tokens": null
+  },
+
+  "auto_confirm": {
+    "enabled": true,
+    "interactive_commands": {
+      "npx": "--yes",
+      "npm create": "--yes",
+      "npm init": "--yes",
+      "shadcn": "--defaults --yes",
+      "vite": "--yes"
+    },
+    "always_yes": true,
+    "description": "Auto-confirm interactive prompts with --yes, --defaults, or piping 'y'"
+  },
+
+  "task_splitting": {
+    "enabled": true,
+    "max_concurrent_batches": 2,
+    "thresholds": {
+      "f_score_max": 3,
+      "max_files_per_task": 5,
+      "max_tool_iterations": 50,
+      "max_lines_per_file": 200
+    },
+    "strategy": "horizontal",
+    "description": "Auto-split complex tasks (F-score >3 or >5 files) into sub-batches. Max 3 batches run simultaneously to avoid connection/CPU issues."
+  }
+}

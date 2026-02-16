@@ -1,0 +1,145 @@
+{
+  "generated_at": "2026-02-10T22:44:36.1234567-03:00",
+  "docker_version": "29.1.3",
+  "containers": [
+    {
+      "id": "e4eace9d05f1abc123def456...",
+      "name": "senciente-hive-guardian",
+      "image": "hive-guardian-hive-guardian",
+      "status": "running",
+      "created": "2026-02-08T10:30:00.0000000Z",
+      "started_at": "2026-02-10T08:00:00.0000000Z",
+      "platform": "linux",
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/var/run/docker.sock",
+          "destination": "/var/run/docker.sock",
+          "mode": "rw",
+          "rw": true,
+          "propagation": "rprivate"
+        },
+        {
+          "type": "volume",
+          "name": "hive-guardian-data",
+          "source": "/var/lib/docker/volumes/hive-guardian-data/_data",
+          "destination": "/app/data",
+          "mode": "rw",
+          "rw": true,
+          "propagation": "rprivate"
+        }
+      ],
+      "networks": [
+        {
+          "name": "senciente-network",
+          "network_id": "abc123def456...",
+          "endpoint_id": "xyz789...",
+          "gateway": "172.18.0.1",
+          "ip_address": "172.18.0.2",
+          "mac_address": "02:42:ac:12:00:02"
+        }
+      ],
+      "config": {
+        "hostname": "hive-guardian",
+        "env": [
+          "PATH=/usr/local/bin:/usr/bin:/bin",
+          "OPENROUTER_API_KEY=***MASKED***",
+          "PROJECT_ROOT=/app",
+          "LOG_LEVEL=INFO"
+        ],
+        "cmd": [
+          "nu",
+          "guardian-hive.nu"
+        ],
+        "entrypoint": null,
+        "working_dir": "/app",
+        "exposed_ports": [
+          "8080/tcp",
+          "9090/tcp"
+        ]
+      },
+      "port_bindings": [
+        {
+          "container_port": "8080/tcp",
+          "host_ip": "0.0.0.0",
+          "host_port": "8080"
+        },
+        {
+          "container_port": "9090/tcp",
+          "host_ip": "0.0.0.0",
+          "host_port": "9090"
+        }
+      ],
+      "resources": {
+        "memory_limit": 536870912,
+        "cpu_shares": 1024,
+        "cpu_quota": 100000
+      }
+    },
+    {
+      "id": "d3c78e4a20ab...",
+      "name": "senciente-agent-zero",
+      "image": "agent-zero:latest",
+      "status": "running",
+      "created": "2026-02-08T10:35:00.0000000Z",
+      "started_at": "2026-02-10T08:00:30.0000000Z",
+      "platform": "linux",
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/home/user/project",
+          "destination": "/workspace",
+          "mode": "rw",
+          "rw": true,
+          "propagation": "rprivate"
+        }
+      ],
+      "networks": [
+        {
+          "name": "senciente-network",
+          "network_id": "abc123def456...",
+          "endpoint_id": "xyz790...",
+          "gateway": "172.18.0.1",
+          "ip_address": "172.18.0.3",
+          "mac_address": "02:42:ac:12:00:03"
+        }
+      ],
+      "config": {
+        "hostname": "agent-zero",
+        "env": [
+          "PATH=/usr/local/bin:/usr/bin:/bin",
+          "AGENT_ZERO_CONFIG=/app/config.json",
+          "API_TOKEN=***MASKED***"
+        ],
+        "cmd": [
+          "python",
+          "agent_zero.py"
+        ],
+        "entrypoint": null,
+        "working_dir": "/app",
+        "exposed_ports": [
+          "5000/tcp"
+        ]
+      },
+      "port_bindings": [
+        {
+          "container_port": "5000/tcp",
+          "host_ip": "0.0.0.0",
+          "host_port": "5000"
+        }
+      ],
+      "resources": {
+        "memory_limit": 268435456,
+        "cpu_shares": 512,
+        "cpu_quota": 50000
+      }
+    }
+  ],
+  "summary": {
+    "total_containers": 13,
+    "running_containers": 13,
+    "stopped_containers": 0,
+    "total_volumes": 20,
+    "total_networks": 13
+  }
+}

@@ -1,0 +1,87 @@
+name: full-squad-evolution-workflow
+description: Workflow completo de auditoria, otimizacao e versionamento de uma squad AIOS
+version: 1.0.0
+trigger: manual
+
+input:
+  squad:
+    type: string
+    required: true
+    description: Nome da squad (ex. backend-audit, frontend-audit)
+  bump_type:
+    type: string
+    required: false
+    default: auto
+    description: Tipo de bump (major, minor, patch, auto)
+
+steps:
+  - id: locate-squad
+    task: audit-full-squad.md
+    phase: "Fase 0: Locate & Parse"
+    description: Encontrar squad e parsear squad.yaml
+
+  - id: audit-manifest
+    task: audit-manifest.md
+    phase: "Fase 1: Manifest Validity"
+    depends_on: [locate-squad]
+
+  - id: audit-structure
+    task: audit-structure.md
+    phase: "Fase 2: Structure Completeness"
+    depends_on: [locate-squad]
+
+  - id: audit-agents
+    task: audit-agents-quality.md
+    phase: "Fase 3: Agents Quality"
+    depends_on: [locate-squad]
+
+  - id: audit-tasks
+    task: audit-tasks-coverage.md
+    phase: "Fase 4: Tasks Coverage"
+    depends_on: [locate-squad]
+
+  - id: audit-workflows
+    task: audit-workflows-integrity.md
+    phase: "Fase 5: Workflows Integrity"
+    depends_on: [locate-squad]
+
+  - id: audit-checklists
+    task: audit-checklists-templates.md
+    phase: "Fase 6: Checklists & Templates"
+    depends_on: [locate-squad]
+
+  - id: audit-command
+    task: audit-command-registration.md
+    phase: "Fase 7: Command Registration"
+    depends_on: [locate-squad]
+
+  - id: audit-xref
+    task: audit-cross-references.md
+    phase: "Fase 8: Cross-References"
+    depends_on: [locate-squad]
+
+  - id: audit-docs
+    task: audit-documentation.md
+    phase: "Fase 9: Documentation"
+    depends_on: [locate-squad]
+
+  - id: optimize
+    task: optimize-squad.md
+    phase: "Fase 10: Optimize"
+    description: Apresentar e aplicar otimizacoes baseadas nos findings
+    depends_on: [audit-manifest, audit-structure, audit-agents, audit-tasks, audit-workflows, audit-checklists, audit-command, audit-xref, audit-docs]
+
+  - id: version
+    task: version-squad.md
+    phase: "Fase 11: Version & Changelog"
+    description: Bump versao, atualizar evolution header, append changelog
+    depends_on: [optimize]
+
+  - id: report
+    task: generate-squad-report.md
+    phase: "Fase 12: Evolution Report"
+    depends_on: [version]
+
+output:
+  report_path: evolution-report.md
+  changelog_path: data/changelogs/{squad-name}.changelog.md

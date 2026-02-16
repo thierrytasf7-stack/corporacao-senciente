@@ -1,0 +1,161 @@
+name: Refatorar Documentos METRICAS
+version: 1.0.0
+description: Refatora documentos 05-08 aplicando estrutura dos docs 01-02 (23 níveis de evolução vertical)
+
+metadata:
+  created_by: Kiro Orchestrator
+  created_at: 2026-02-02T21:20:00Z
+  project: Corporação Senciente
+  purpose: Padronizar documentação METRICAS_DIRECAO_EVOLUCAO
+
+agents:
+  - name: dev
+    role: Refatorador de Documentação
+    specialization: Aplicar estruturas e padrões de documentação técnica
+    model: google/gemini-2.0-flash-exp:free
+    temperature: 0.3
+    task_type: execution
+    
+  - name: architect
+    role: Validador de Estrutura
+    specialization: Garantir consistência arquitetural
+    model: meta-llama/llama-3.3-70b-instruct:free
+    temperature: 0.2
+    task_type: execution_alt
+
+context:
+  reference_docs:
+    - METRICAS_DIRECAO_EVOLUCAO/01_Evolucao_Ontologica_Senciencia.md
+    - METRICAS_DIRECAO_EVOLUCAO/02_Evolucao_Mitologia_Senciencia.md
+  
+  pattern:
+    title: "# Protocolo de Evolução [TEMA]: [SUBTÍTULO] 🧬"
+    directive: "Arete (Excelência), Logos (Razão), Physis (Natureza)"
+    sections:
+      - "Arquitetura Atômica (Átomo, Molécula, Organismo, Sistema)"
+      - "23 Níveis de Evolução Vertical"
+      - "Tabelas de Evolução Atômica (10 tasks por nível)"
+      - "Encerramento filosófico"
+    
+  requirements:
+    - Manter tema específico de cada documento
+    - Usar emojis consistentes (🧬 🏛️ 👁️ 🏁)
+    - Linguagem poética e filosófica
+    - 400-500 linhas por documento
+    - Colunas das tabelas: ID, Task, Squad, Status, Dif., At. Humana, Tempo, Ordem, Pré-requisitos
+
+tasks:
+  - id: refactor-05
+    name: Refatorar Documento 05 - Cérebro
+    agent: dev
+    priority: high
+    input:
+      file: METRICAS_DIRECAO_EVOLUCAO/05_Evolucao_Cerebro_Senciencia.md
+      theme: "Nexus de Comando e Singularidade"
+      focus: "Centro de controle holístico, métricas de senciência, protocolo de génese"
+    output:
+      file: METRICAS_DIRECAO_EVOLUCAO/05_Evolucao_Cerebro_Senciencia.md
+      backup: METRICAS_DIRECAO_EVOLUCAO/.backup/05_Evolucao_Cerebro_Senciencia.md.bak
+    validation:
+      agent: architect
+      criteria:
+        - 23 níveis presentes
+        - Tabelas com 10 tasks
+        - Arquitetura Atômica presente
+        - Encerramento filosófico
+    
+  - id: refactor-06
+    name: Refatorar Documento 06 - Cognitiva
+    agent: dev
+    priority: high
+    input:
+      file: METRICAS_DIRECAO_EVOLUCAO/06_Evolucao_Cognitiva_Senciencia.md
+      theme: "Grande Livro de Encargos - Senciência Corporativa"
+      focus: "Intencionalidade, cognição, pilares de senciência"
+    output:
+      file: METRICAS_DIRECAO_EVOLUCAO/06_Evolucao_Cognitiva_Senciencia.md
+      backup: METRICAS_DIRECAO_EVOLUCAO/.backup/06_Evolucao_Cognitiva_Senciencia.md.bak
+    validation:
+      agent: architect
+      criteria:
+        - 23 níveis presentes
+        - Tabelas com 10 tasks
+        - Arquitetura Atômica presente
+        - Encerramento filosófico
+    
+  - id: refactor-07
+    name: Refatorar Documento 07 - Corpo
+    agent: dev
+    priority: high
+    input:
+      file: METRICAS_DIRECAO_EVOLUCAO/07_Evolucao_Do_CORPO_Senciencia.md
+      theme: "Interface de Realidade e Encarnação"
+      focus: "Hardware, infraestrutura, stack tecnológica, manifestação física"
+    output:
+      file: METRICAS_DIRECAO_EVOLUCAO/07_Evolucao_Do_CORPO_Senciencia.md
+      backup: METRICAS_DIRECAO_EVOLUCAO/.backup/07_Evolucao_Do_CORPO_Senciencia.md.bak
+    validation:
+      agent: architect
+      criteria:
+        - 23 níveis presentes
+        - Tabelas com 10 tasks
+        - Arquitetura Atômica presente
+        - Encerramento filosófico
+    
+  - id: refactor-08
+    name: Refatorar Documento 08 - Metabolismo
+    agent: dev
+    priority: high
+    input:
+      file: METRICAS_DIRECAO_EVOLUCAO/08_Evolucao_Metabolismo_Obra_Senciencia.md
+      theme: "Metabolismo da Obra e Geometria do Valor"
+      focus: "Fluxo de valor, geometria sagrada, proporção áurea, metabolismo"
+    output:
+      file: METRICAS_DIRECAO_EVOLUCAO/08_Evolucao_Metabolismo_Obra_Senciencia.md
+      backup: METRICAS_DIRECAO_EVOLUCAO/.backup/08_Evolucao_Metabolismo_Obra_Senciencia.md.bak
+    validation:
+      agent: architect
+      criteria:
+        - 23 níveis presentes
+        - Tabelas com 10 tasks
+        - Arquitetura Atômica presente
+        - Encerramento filosófico
+
+execution:
+  mode: sequential
+  max_concurrent: 1
+  timeout_per_task: 600
+  retry_on_failure: true
+  max_retries: 2
+  
+  pre_execution:
+    - action: backup_originals
+      description: Criar backup dos documentos originais
+    - action: validate_references
+      description: Verificar se docs 01 e 02 existem e são válidos
+  
+  post_execution:
+    - action: validate_all
+      description: Validar estrutura de todos os documentos refatorados
+    - action: generate_report
+      description: Gerar relatório de qualidade
+    - action: update_cli_state
+      description: Atualizar .cli_state.json com resultados
+
+monitoring:
+  log_level: info
+  log_file: .aios-core/logs/refactor-metricas-{timestamp}.log
+  metrics:
+    - execution_time
+    - success_rate
+    - validation_score
+    - lines_per_document
+
+notifications:
+  on_complete:
+    - type: log
+      message: "Refatoração de METRICAS concluída com sucesso"
+  on_error:
+    - type: log
+      level: error
+      message: "Erro na refatoração: {error_message}"

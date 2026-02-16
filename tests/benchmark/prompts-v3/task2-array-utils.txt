@@ -1,0 +1,41 @@
+You are an expert TypeScript developer. Create a production-quality TypeScript file with these STRICT requirements:
+
+## File: array-utils.ts
+
+## Functions (5 total, all exported as named exports with generics):
+
+### 1. chunk<T>(arr: T[], size: number): T[][]
+- Split array into chunks of given size
+- Last chunk may be smaller
+- MUST throw RangeError if size <= 0
+- Empty array returns []
+
+### 2. unique<T>(arr: T[]): T[]
+- Remove duplicates using Set semantics
+- Preserve first-occurrence order
+- Handle NaN correctly (NaN === NaN in Set)
+
+### 3. flatten<T>(arr: unknown[], depth?: number): T[]
+- Flatten nested arrays to given depth (default Infinity)
+- depth=0 returns shallow copy (no flattening)
+- Use recursive approach, not Array.flat()
+
+### 4. groupBy<T>(arr: T[], keyFn: (item: T) => string): Record<string, T[]>
+- Group elements by key function result
+- Preserve order within groups
+- Empty array returns {}
+
+### 5. intersect<T>(a: T[], b: T[]): T[]
+- Return elements present in BOTH arrays
+- MUST deduplicate the result (no duplicate items in output)
+- Order follows first array
+
+## Quality Requirements:
+- Full JSDoc with @typeParam, @param, @returns, @throws, @example tags
+- TypeScript strict mode compatible, proper generic types
+- All edge cases handled (empty arrays, single elements, invalid inputs)
+- Add commented test section using console.assert() with descriptive messages
+- Minimum 4 assert tests per function (20+ total)
+- Tests MUST include: empty array, single element, error cases, typical usage
+- NO console.log tests - use console.assert ONLY
+- Export all functions as named exports

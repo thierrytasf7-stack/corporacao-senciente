@@ -1,0 +1,113 @@
+# Meta-Orchestrator Squad Configuration
+# Squad de Orquestração Universal e Criação Dinâmica
+
+name: meta-orchestrator
+title: "Meta-Orchestrator Squad - Universal Task Delegation & Squad Creation"
+version: "1.0.0"
+author: "AIOS System"
+description: |
+  Squad híbrido que combina orquestração inteligente de tarefas com criação
+  dinâmica de novos squads. Recebe qualquer tarefa, analisa, e decide se
+  delega para squads existentes ou cria novos squads especializados.
+
+prefix: metaOrch
+icon: "🧠"
+status: production
+
+# Arquitetura do Squad
+architecture:
+  type: hybrid-orchestrator
+  pattern: "analyze-route-create-monitor-learn"
+
+agents:
+  - id: nexus
+    role: coordinator
+    description: "Recebe tarefas, analisa contexto, decide roteamento"
+  - id: scanner
+    role: analyzer
+    description: "Mapeia capacidades dos squads existentes"
+  - id: forge
+    role: creator
+    description: "Cria novos squads quando necessário"
+  - id: sentinel
+    role: monitor
+    description: "Monitora execução e qualidade"
+  - id: cortex
+    role: memory
+    description: "Aprende padrões e otimiza decisões"
+
+# Workflow Principal
+main_workflow:
+  trigger: "any_task_request"
+  flow:
+    - step: receive
+      agent: nexus
+      action: "Recebe e interpreta a tarefa"
+    - step: analyze
+      agent: scanner
+      action: "Analisa squads disponíveis"
+    - step: decide
+      agent: nexus
+      action: "Decide: delegar ou criar"
+    - step: route_or_create
+      agents: [nexus, forge]
+      action: "Roteia para squad existente OU cria novo"
+    - step: monitor
+      agent: sentinel
+      action: "Monitora execução"
+    - step: learn
+      agent: cortex
+      action: "Registra padrões para otimização"
+
+# Padrões do Squad
+patterns:
+  prefix: "MO"
+  categories:
+    - orchestration
+    - delegation
+    - creation
+    - monitoring
+    - learning
+
+# Quality Gates
+quality_gates:
+  - id: QG-001
+    name: "Task Understanding"
+    from: receive
+    to: analyze
+    criteria: "Tarefa claramente interpretada"
+  - id: QG-002
+    name: "Squad Match"
+    from: analyze
+    to: decide
+    criteria: "Capacidades mapeadas corretamente"
+  - id: QG-003
+    name: "Delegation Valid"
+    from: decide
+    to: route_or_create
+    criteria: "Decisão fundamentada"
+  - id: QG-004
+    name: "Execution Quality"
+    from: monitor
+    to: learn
+    criteria: "Resultado dentro do esperado"
+
+# Dependências
+dependencies:
+  squads:
+    - squad-creator  # Para criar novos squads
+  core:
+    - aios-master    # Para orquestração base
+
+# Integração
+integration:
+  memory_layer: true
+  auto_learning: true
+  squad_registry: "squads/registry.json"
+
+tags:
+  - orchestration
+  - meta
+  - delegation
+  - squad-creation
+  - autonomous

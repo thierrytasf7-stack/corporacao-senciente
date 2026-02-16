@@ -1,0 +1,51 @@
+name: pre-release-docs-check
+description: Docs gate para pre-release - verifica que docs estao completos e atualizados
+version: 1.0.0
+trigger: "Pre-release docs gate"
+agent: docs-engineer
+timeout: 5min
+
+phases:
+  - name: quick-validate
+    description: Validacao rapida dos docs
+    tasks:
+      - task: docs-validate.md
+        params:
+          checks: "links,metadata"
+    outputs:
+      - validation_result
+
+  - name: changelog-check
+    description: Verificar que changelog esta atualizado
+    depends_on: [quick-validate]
+    parallel_with: []
+    tasks:
+      - action: "Verify CHANGELOG.md has entry for current version"
+      - action: "Verify all commits since last release are documented"
+    outputs:
+      - changelog_status
+
+  - name: coverage-check
+    description: Verificar cobertura minima
+    depends_on: [quick-validate]
+    parallel_with: [changelog-check]
+    tasks:
+      - action: "Verify new features have documentation"
+      - action: "Verify new APIs have endpoint docs"
+      - action: "Verify new agents/squads have README"
+    outputs:
+      - coverage_status
+
+  - name: gate-decision
+    description: Decisao final do gate de docs
+    depends_on: [changelog-check, coverage-check]
+    decision:
+      all_pass:
+        result: PASS
+        action: "Docs completos - release autorizado"
+      minor_gaps:
+        result: WARN
+        action: "Release com tracking de docs pendentes"
+      major_gaps:
+        result: FAIL
+        action: "BLOQUEAR - features sem docs, changelog desatualizado"

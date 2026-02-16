@@ -1,0 +1,85 @@
+name: full-backend-audit-workflow
+description: Workflow completo de auditoria backend - executa todas as dimensoes em ordem otimizada
+version: 1.0.0
+trigger: manual
+
+input:
+  backend_path:
+    type: string
+    required: true
+    description: Caminho do backend a auditar (ex. apps/backend/, src/, .)
+  focus:
+    type: array
+    required: false
+    description: Dimensoes especificas (omitir para auditoria completa)
+    default: [security, performance, code-quality, api, database, architecture, error-handling, observability, dependencies]
+
+steps:
+  - id: stack-detection
+    task: audit-full-backend.md
+    phase: "Fase 0: Stack Detection"
+    description: Detectar linguagem, framework, estrutura do projeto
+
+  - id: security-audit
+    task: audit-security.md
+    phase: "Fase 1: Security (OWASP Top 10)"
+    description: Vulnerabilidades de seguranca - prioridade maxima
+    depends_on: [stack-detection]
+
+  - id: performance-audit
+    task: audit-performance.md
+    phase: "Fase 2: Performance"
+    description: N+1, memory leaks, connection pooling, caching
+    depends_on: [stack-detection]
+
+  - id: code-quality-audit
+    task: audit-code-quality.md
+    phase: "Fase 3: Code Quality"
+    description: Complexidade, dead code, smells, typing
+    depends_on: [stack-detection]
+
+  - id: api-audit
+    task: audit-api-validation.md
+    phase: "Fase 4: API Validation"
+    description: REST best practices, status codes, pagination
+    depends_on: [stack-detection]
+
+  - id: database-audit
+    task: audit-database.md
+    phase: "Fase 5: Database"
+    description: Schema, indexes, queries, connections
+    depends_on: [stack-detection]
+
+  - id: architecture-audit
+    task: audit-architecture.md
+    phase: "Fase 6: Architecture"
+    description: Coupling, cohesion, SOLID, layers
+    depends_on: [code-quality-audit]
+
+  - id: error-handling-audit
+    task: audit-error-handling.md
+    phase: "Fase 7: Error Handling"
+    description: Global handlers, retry, circuit breakers, shutdown
+    depends_on: [stack-detection]
+
+  - id: observability-audit
+    task: audit-observability.md
+    phase: "Fase 8: Observability"
+    description: Logging, metrics, tracing, health checks
+    depends_on: [stack-detection]
+
+  - id: dependency-audit
+    task: audit-dependencies.md
+    phase: "Fase 9: Dependencies"
+    description: CVEs, outdated, unused, licenses
+    depends_on: [stack-detection]
+
+  - id: generate-report
+    task: generate-audit-report.md
+    phase: "Fase 10: Report Generation"
+    description: Consolidar findings e gerar relatorio final priorizado
+    depends_on: [security-audit, performance-audit, code-quality-audit, api-audit, database-audit, architecture-audit, error-handling-audit, observability-audit, dependency-audit]
+
+output:
+  report_path: audit-report.md
+  format: markdown

@@ -1,0 +1,118 @@
+name: performance
+version: 1.0.0
+description: Squad de Performance Engineering - profiling, load testing, bundle analysis, web vitals, memory profiling, performance budgets e otimizacao continua. Especialista que garante que o software e RAPIDO de verdade.
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: Performance
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - performance-engineer.md
+  tasks:
+    # Analysis
+    - perf-audit-full.md
+    - perf-profile-runtime.md
+    - perf-analyze-bundle.md
+    - perf-analyze-queries.md
+    - perf-web-vitals.md
+    # Testing
+    - perf-load-test.md
+    - perf-memory-check.md
+    - perf-benchmark.md
+    # Optimization
+    - perf-optimize.md
+    - perf-set-budget.md
+    # Reporting
+    - perf-report.md
+    - perf-regression-check.md
+  workflows:
+    - full-performance-audit.yaml
+    - pre-release-perf-check.yaml
+  checklists:
+    - perf-gate-frontend.md
+    - perf-gate-backend.md
+    - perf-gate-database.md
+    - perf-gate-release.md
+  templates:
+    - perf-audit-report-tmpl.md
+    - perf-budget-tmpl.md
+  tools:
+    - context7
+    - playwright
+  scripts: []
+
+config:
+  extends: extend
+  # Performance budgets (defaults - can be overridden per project)
+  budgets:
+    frontend:
+      bundle_size_max_kb: 250
+      initial_js_max_kb: 150
+      lcp_target_ms: 2500
+      fid_target_ms: 100
+      cls_target: 0.1
+      tti_target_ms: 3500
+      lighthouse_min_score: 90
+    backend:
+      api_p50_ms: 100
+      api_p95_ms: 500
+      api_p99_ms: 1000
+      throughput_min_rps: 100
+      error_rate_max_pct: 0.1
+    database:
+      query_p50_ms: 10
+      query_p95_ms: 100
+      query_p99_ms: 500
+      cache_hit_ratio_min: 0.95
+      connection_pool_max: 20
+    memory:
+      heap_max_mb: 512
+      rss_max_mb: 768
+      leak_threshold_mb_per_hour: 10
+      gc_pause_max_ms: 100
+
+  # Existing infrastructure to leverage (NOT duplicate)
+  existing_tools:
+    performance_analyzer: ".aios-core/infrastructure/scripts/performance-analyzer.js"
+    performance_optimizer: ".aios-core/infrastructure/scripts/performance-optimizer.js"
+    performance_tracker: ".aios-core/infrastructure/scripts/performance-tracker.js"
+    benchmark_tests: "tests/performance/"
+    db_analyze_task: ".aios-core/development/tasks/analyze-performance.md"
+    dev_optimize_task: ".aios-core/development/tasks/dev-optimize-performance.md"
+
+  # Severity classification
+  severity:
+    critical: "Impacto direto em UX - LCP > 4s, API > 2s, memory leak, crash"
+    high: "Degradacao perceptivel - LCP > 2.5s, API > 500ms, bundle > 300KB"
+    medium: "Sub-otimo mas funcional - LCP > 1.5s, API > 200ms"
+    low: "Oportunidade de melhoria - micro-optimizations"
+
+dependencies:
+  node:
+    - lighthouse
+    - autocannon
+    - clinic
+  python: []
+  squads: []
+
+# Integration with CEO-Desenvolvimento
+reports_to: ceo-desenvolvimento
+triggered_by:
+  - "Prometheus aciona quando story tem tag performance-critical"
+  - "Pre-release performance gate"
+  - "Qualquer story com high throughput, queries pesadas, bundle impact"
+  - "User solicita audit de performance"
+
+tags:
+  - performance
+  - profiling
+  - load-testing
+  - bundle-analysis
+  - web-vitals
+  - optimization
+  - benchmarks
+  - memory

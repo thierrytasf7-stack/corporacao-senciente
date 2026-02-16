@@ -1,0 +1,40 @@
+🚨 ALERTA CRÍTICO - DECISÃO NECESSÁRIA
+
+STATUS: Dashboard bloqueado por bug crítico
+BUG: Turbopack Next.js 16.1.6 não resolve exports
+ERRO: HTTP 500 - Dashboard inacessível
+PROTOCOLO: Preservação ativado
+
+SITUAÇÃO:
+- Código TypeScript: ✅ CORRETO
+- Backup: ✅ ÍNTEGRO
+- Dashboard: ❌ BLOQUEADO
+- Turbopack: ❌ BUG CONHECIDO
+
+OPÇÕES:
+
+1. ROLLBACK (Recomendado por Kiro)
+   - Restaurar dashboard original
+   - Sistema funciona imediatamente
+   - Perde customizações Diana
+   - Reimplementar quando bug for corrigido
+
+2. DOWNGRADE Next.js 15.x
+   - Mantém customizações
+   - Usa Webpack (sem Turbopack)
+   - Pode ter outros issues
+
+3. AGUARDAR Next.js 16.2
+   - Dashboard fica bloqueado
+   - Prazo indefinido
+   - Código preservado
+
+DOCUMENTAÇÃO:
+- ALERTA_CRITICO_TURBOPACK.md (análise completa)
+- VALIDACAO_FINAL_COM_ALERTA.md (validação)
+- validate-dashboard.ps1 (script de teste)
+
+AGUARDANDO: Decisão humana sobre qual opção escolher
+
+Data: 03/02/2026 01:50 UTC
+Kiro AI Assistant

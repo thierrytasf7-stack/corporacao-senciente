@@ -1,0 +1,233 @@
+{
+  "generated": "2025-12-26T17:47:25.066Z",
+  "total": 7,
+  "statistics": {
+    "configured": 5,
+    "testable": 3,
+    "working": 1
+  },
+  "integrations": [
+    {
+      "name": "Protocolo L.L.B. (Letta)",
+      "type": "State Management",
+      "configKeys": [
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "testScript": "scripts/memory/test_letta.js",
+      "docs": [
+        "docs/02-architecture/LETTA.md"
+      ],
+      "note": "Substitui Jira para gerenciamento de estado e tarefas",
+      "configStatus": {
+        "configured": true,
+        "missing": [],
+        "present": [
+          "SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY"
+        ]
+      },
+      "testStatus": {
+        "exists": false,
+        "runnable": false
+      },
+      "docsStatus": {
+        "found": [
+          "docs/02-architecture/LETTA.md"
+        ],
+        "missing": []
+      },
+      "status": "configurado",
+      "works": false
+    },
+    {
+      "name": "Protocolo L.L.B. (LangMem)",
+      "type": "Knowledge Management",
+      "configKeys": [
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "testScript": "scripts/memory/test_langmem.js",
+      "docs": [
+        "docs/02-architecture/LANGMEM.md"
+      ],
+      "note": "Substitui Confluence para armazenamento de conhecimento",
+      "configStatus": {
+        "configured": true,
+        "missing": [],
+        "present": [
+          "SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY"
+        ]
+      },
+      "testStatus": {
+        "exists": false,
+        "runnable": false
+      },
+      "docsStatus": {
+        "found": [
+          "docs/02-architecture/LANGMEM.md"
+        ],
+        "missing": []
+      },
+      "status": "configurado",
+      "works": false
+    },
+    {
+      "name": "Protocolo L.L.B. (ByteRover)",
+      "type": "Code Intelligence",
+      "configKeys": [],
+      "testScript": "scripts/memory/test_byterover.js",
+      "docs": [
+        "docs/02-architecture/BYTEROVER.md"
+      ],
+      "note": "Substitui GitKraken para navegação e análise de código",
+      "configStatus": {
+        "configured": true,
+        "missing": [],
+        "present": []
+      },
+      "testStatus": {
+        "exists": false,
+        "runnable": false
+      },
+      "docsStatus": {
+        "found": [
+          "docs/02-architecture/BYTEROVER.md"
+        ],
+        "missing": []
+      },
+      "status": "configurado",
+      "works": false
+    },
+    {
+      "name": "Supabase",
+      "type": "Database",
+      "configKeys": [
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "testScript": null,
+      "docs": [],
+      "configStatus": {
+        "configured": true,
+        "missing": [],
+        "present": [
+          "SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY"
+        ]
+      },
+      "testStatus": {
+        "exists": false,
+        "runnable": false
+      },
+      "docsStatus": {
+        "found": [],
+        "missing": []
+      },
+      "status": "configurado",
+      "works": false
+    },
+    {
+      "name": "Google Ads",
+      "type": "API",
+      "configKeys": [
+        "GOOGLE_ADS_CLIENT_ID",
+        "GOOGLE_ADS_CLIENT_SECRET",
+        "GOOGLE_ADS_REFRESH_TOKEN"
+      ],
+      "testScript": "scripts/test_google_ads_connection.js",
+      "docs": [
+        "docs/CONFIGURACAO_GOOGLE_ADS_COMPLETA.md"
+      ],
+      "configStatus": {
+        "configured": true,
+        "missing": [],
+        "present": [
+          "GOOGLE_ADS_CLIENT_ID",
+          "GOOGLE_ADS_CLIENT_SECRET",
+          "GOOGLE_ADS_REFRESH_TOKEN"
+        ]
+      },
+      "testStatus": {
+        "exists": true,
+        "runnable": true
+      },
+      "docsStatus": {
+        "found": [],
+        "missing": [
+          "docs/CONFIGURACAO_GOOGLE_ADS_COMPLETA.md"
+        ]
+      },
+      "status": "configurado_e_testavel",
+      "works": true
+    },
+    {
+      "name": "WordPress",
+      "type": "CMS",
+      "configKeys": [
+        "WORDPRESS_URL",
+        "WORDPRESS_USER",
+        "WORDPRESS_PASSWORD"
+      ],
+      "testScript": "scripts/test_wordpress_server.js",
+      "docs": [
+        "README_WORDPRESS.md",
+        "docs/WORDPRESS_SETUP.md"
+      ],
+      "configStatus": {
+        "configured": false,
+        "missing": [
+          "WORDPRESS_USER",
+          "WORDPRESS_PASSWORD"
+        ],
+        "present": [
+          "WORDPRESS_URL"
+        ]
+      },
+      "testStatus": {
+        "exists": true,
+        "runnable": true
+      },
+      "docsStatus": {
+        "found": [],
+        "missing": [
+          "README_WORDPRESS.md",
+          "docs/WORDPRESS_SETUP.md"
+        ]
+      },
+      "status": "testavel_mas_nao_configurado",
+      "works": false
+    },
+    {
+      "name": "Ollama",
+      "type": "LLM",
+      "configKeys": [
+        "OLLAMA_URL"
+      ],
+      "testScript": "scripts/test_ollama_simple.js",
+      "docs": [
+        "docs/CONFIGURACAO_OLLAMA_FINAL.md"
+      ],
+      "configStatus": {
+        "configured": false,
+        "missing": [
+          "OLLAMA_URL"
+        ],
+        "present": []
+      },
+      "testStatus": {
+        "exists": true,
+        "runnable": true
+      },
+      "docsStatus": {
+        "found": [],
+        "missing": [
+          "docs/CONFIGURACAO_OLLAMA_FINAL.md"
+        ]
+      },
+      "status": "testavel_mas_nao_configurado",
+      "works": false
+    }
+  ]
+}

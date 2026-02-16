@@ -1,0 +1,19 @@
+{
+  "id": "impl-phase2-task4-kyc",
+  "agent": "dev",
+  "task_type": "implement-compliance",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_write"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [],
+  "prompt": "KYC VALIDATION\n\nCreate: modules/betting-platform/backend/services/KYCService.ts\n\nBasic KYC check:\n1. checkKYCStatus(userId)\n   - Return {verified, level, reason}\n   - Levels: none, basic, full\n\n2. requireKYC(level)\n   - Middleware factory\n   - Check user KYC >= level\n   - 403 if insufficient\n\nSimple status check.",
+  "acceptance_criteria": [
+    "KYCService.ts criado",
+    "checkKYCStatus implementado",
+    "requireKYC middleware factory",
+    "403 se KYC insuficiente"
+  ],
+  "max_tool_iterations": 8,
+  "self_review": false,
+  "quality_threshold": 7
+}

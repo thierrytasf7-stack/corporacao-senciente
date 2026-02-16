@@ -1,0 +1,264 @@
+{
+  "sessionId": "session_1771136959253",
+  "botId": "v2-periodic-gen132-1771136959251",
+  "botName": "Omega",
+  "generation": 132,
+  "genome": {
+    "id": "v2-periodic-gen132-1771136959251",
+    "name": "Omega",
+    "generation": 132,
+    "parentIds": [
+      "v2-periodic-gen131-1771136659782",
+      "v2-periodic-gen109-1771130041591"
+    ],
+    "strategyMask": [
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      false
+    ],
+    "strategyWeights": [
+      1.1615806228697758,
+      0.9662714599061816,
+      1.1388170535807296,
+      1.3278689845131475,
+      1.5472499954030685,
+      1.430613808398239,
+      0.2,
+      0.2437332780029655,
+      1.2516267235384029,
+      1.264962331804039,
+      1,
+      0.19030013534342283,
+      1.0927696777594906,
+      1,
+      0.2187849573916797,
+      0.5399261308090331,
+      0.9507106879329323,
+      0.2,
+      0.3161002862434425,
+      1.1903366661650747,
+      0.1,
+      1.7958765557645637,
+      1.6805208342665754,
+      0.1,
+      0.3,
+      0.2518177813160412,
+      0.19277380941555258,
+      0.13558989274651326,
+      2,
+      0
+    ],
+    "consensus": {
+      "minAgreeingSignals": 2,
+      "maxOpposingSignals": 3,
+      "minWeightedStrength": 47.79755974477966,
+      "preferredDirection": "ANY"
+    },
+    "risk": {
+      "atrMultiplierTP": 1.9454500153763044,
+      "atrMultiplierSL": 0.9397098898126611,
+      "trailingStopATR": 1.3417302689064683,
+      "flipExitThreshold": 8,
+      "leverage": 46,
+      "maxOpenPositions": 4,
+      "maxExposurePercent": 35
+    },
+    "betting": {
+      "basePercent": 4.658164033622368,
+      "winMultiplier": 1,
+      "lossMultiplier": 0.8693510852856174,
+      "maxBetPercent": 12,
+      "resetAfterLosses": 3
+    },
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "BNBUSDT",
+      "XRPUSDT"
+    ]
+  },
+  "startBankroll": 100,
+  "endBankroll": 100.02,
+  "peakBankroll": 100.02,
+  "totalTrades": 5,
+  "wins": 1,
+  "losses": 4,
+  "winRate": 20,
+  "maxDrawdown": 0.22,
+  "finalReason": "EVOLVED_OUT",
+  "startTime": "2026-02-15T06:29:19.253Z",
+  "endTime": "2026-02-15T06:34:18.003Z",
+  "trades": [
+    {
+      "symbol": "BNBUSDT",
+      "side": "LONG",
+      "entryPrice": 637.21,
+      "exitPrice": 637.21,
+      "betAmount": 4.658164033622368,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 100,
+      "timestamp": "2026-02-15T06:29:33.176Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 2,
+        "weightedStrength": 58.25236023159069,
+        "topStrategies": [
+          "macd_fast",
+          "aroon",
+          "adx_trend",
+          "ema_cross_9_21",
+          "ema_cross_12_26"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 2090.44,
+      "exitPrice": 2089.85,
+      "betAmount": 4.049579958068035,
+      "pnlPercent": -1.3,
+      "pnlValue": -0.05,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 99.95,
+      "timestamp": "2026-02-15T06:29:55.292Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 2,
+        "weightedStrength": 53.51495994602751,
+        "topStrategies": [
+          "macd_fast",
+          "aroon",
+          "adx_trend",
+          "ema_cross_9_21",
+          "ema_cross_12_26"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.63,
+      "exitPrice": 89.72,
+      "betAmount": 3.518655813007217,
+      "pnlPercent": -4.62,
+      "pnlValue": -0.16,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.95,
+      "bankrollAfter": 99.78,
+      "timestamp": "2026-02-15T06:30:58.420Z",
+      "consensusSnapshot": {
+        "agreeingCount": 3,
+        "opposingCount": 3,
+        "weightedStrength": 54.597747599362975,
+        "topStrategies": [
+          "macd_fast",
+          "vwap_dev",
+          "cmf_20"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.78,
+      "exitPrice": 89.78,
+      "betAmount": 4.648144244797944,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.78,
+      "bankrollAfter": 99.78,
+      "timestamp": "2026-02-15T06:32:41.628Z",
+      "consensusSnapshot": {
+        "agreeingCount": 3,
+        "opposingCount": 3,
+        "weightedStrength": 54.597747599362975,
+        "topStrategies": [
+          "macd_fast",
+          "vwap_dev",
+          "cmf_20"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "LONG",
+      "entryPrice": 70357.8,
+      "exitPrice": 70434.8,
+      "betAmount": 4.648144244797944,
+      "pnlPercent": 5.03,
+      "pnlValue": 0.23,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 99.78,
+      "bankrollAfter": 100.02,
+      "timestamp": "2026-02-15T06:33:36.986Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 60.07658797431915,
+        "topStrategies": [
+          "macd_fast",
+          "aroon",
+          "adx_trend",
+          "ema_cross_9_21",
+          "ema_cross_12_26"
+        ]
+      }
+    }
+  ],
+  "fitness": 23.066403367633313,
+  "activeStrategies": [
+    "ema_cross_9_21",
+    "ema_cross_12_26",
+    "macd_fast",
+    "adx_trend",
+    "supertrend",
+    "aroon",
+    "rsi_14",
+    "rsi_7",
+    "stochastic_14",
+    "williams_r",
+    "cci_20",
+    "mfi_14",
+    "bollinger_20_2",
+    "keltner",
+    "atr_breakout",
+    "vwap_dev",
+    "cmf_20",
+    "volume_spike",
+    "mass_index"
+  ]
+}

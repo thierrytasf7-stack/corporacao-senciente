@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUV Scorecard - BrasilGov Summit 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        .score-section { padding: 40px; text-align: center; background: #f8f9fa; }
+        .score-circle { width: 200px; height: 200px; margin: 0 auto 20px; border-radius: 50%; background: conic-gradient(#e74c3c 0% 20%, #95a5a6 20% 100%); display: flex; align-items: center; justify-content: center; position: relative; }
+        .score-circle::before { content: ''; position: absolute; width: 160px; height: 160px; background: white; border-radius: 50%; }
+        .score-value { position: relative; z-index: 1; font-size: 3em; font-weight: bold; color: #e74c3c; }
+        .score-label { font-size: 1.2em; color: #666; margin-top: 10px; }
+        .criteria-section { padding: 40px; }
+        .criteria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .criterion { background: #f8f9fa; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea; }
+        .criterion h3 { color: #333; margin-bottom: 10px; font-size: 1.1em; }
+        .criterion-score { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .bar-container { flex: 1; height: 30px; background: #e0e0e0; border-radius: 15px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 15px; transition: width 0.3s; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: bold; font-size: 0.9em; }
+        .score-num { font-size: 1.2em; font-weight: bold; color: #667eea; min-width: 30px; text-align: right; }
+        .radar-section { padding: 40px; background: #f8f9fa; text-align: center; }
+        .radar-section h2 { margin-bottom: 30px; color: #333; }
+        svg { max-width: 600px; margin: 0 auto; display: block; }
+        .footer { background: #333; color: white; padding: 20px; text-align: center; font-size: 0.9em; }
+        .rating { margin: 20px 0; padding: 20px; background: white; border-radius: 10px; border: 2px solid #e74c3c; }
+        .rating h3 { color: #e74c3c; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 PUV Scorecard</h1>
+            <p>BrasilGov Summit 2026 - Página de Inscrições</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Avaliação: 14/02/2026 20:55</p>
+        </div>
+
+        <div class="score-section">
+            <div class="score-circle">
+                <span class="score-value">4/20</span>
+            </div>
+            <div class="score-label">Score Total de Proposta Única de Valor</div>
+            <div class="rating">
+                <h3>⚠️ CRÍTICO - Requer ação imediata</h3>
+                <p>A página de inscrições não comunica valor. Funciona apenas como formulário técnico, perdendo 80% das oportunidades de conversão.</p>
+            </div>
+        </div>
+
+        <div class="criteria-section">
+            <h2 style="margin-bottom: 30px; color: #333;">Análise Detalhada por Critério</h2>
+            <div class="criteria-grid">
+                <div class="criterion">
+                    <h3>1. Clareza da PUV</h3>
+                    <p style="color: #666; margin: 10px 0;">Inexistente. Sem headline, tagline ou proposta de valor.</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%;">0</div>
+                        </div>
+                        <span class="score-num">0/2</span>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <h3>2. Diferenciação</h3>
+                    <p style="color: #666; margin: 10px 0;">Nenhum diferencial mencionado vs concorrentes.</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%;">0</div>
+                        </div>
+                        <span class="score-num">0/2</span>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <h3>3. Público-Alvo Definido</h3>
+                    <p style="color: #666; margin: 10px 0;">Público não identificado ou descrito.</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%;">0</div>
+                        </div>
+                        <span class="score-num">0/2</span>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <h3>4. Benefícios Claros</h3>
+                    <p style="color: #666; margin: 10px 0;">Zero benefícios articulados para participantes.</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%;">0</div>
+                        </div>
+                        <span class="score-num">0/2</span>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <h3>5. Prova Social</h3>
+                    <p style="color: #666; margin: 10px 0;">Ausente. Sem depoimentos, números ou logos.</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%;">0</div>
+                        </div>
+                        <span class="score-num">0/2</span>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <h3>6. Call-to-Action</h3>
+                    <p style="color: #666; margin: 10px 0;">CTA genérico presente ("Clique para inscrição").</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 50%;">1</div>
+                        </div>
+                        <span class="score-num">1/2</span>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <h3>7. Força da Marca</h3>
+                    <p style="color: #666; margin: 10px 0;">Nome presente, sem construção de autoridade.</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 50%;">1</div>
+                        </div>
+                        <span class="score-num">1/2</span>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <h3>8. Presença Digital</h3>
+                    <p style="color: #666; margin: 10px 0;">Instagram citado, presença digital fraca.</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 50%;">1</div>
+                        </div>
+                        <span class="score-num">1/2</span>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <h3>9. UX/Design</h3>
+                    <p style="color: #666; margin: 10px 0;">Funcional básico, design sem impacto emocional.</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 50%;">1</div>
+                        </div>
+                        <span class="score-num">1/2</span>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <h3>10. Otimização de Conversão</h3>
+                    <p style="color: #666; margin: 10px 0;">Zero estratégias de conversão identificadas.</p>
+                    <div class="criterion-score">
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%;">0</div>
+                        </div>
+                        <span class="score-num">0/2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="radar-section">
+            <h2>Radar de Performance</h2>
+            <svg width="600" height="600" viewBox="0 0 600 600">
+                <!-- Grid circles -->
+                <circle cx="300" cy="300" r="250" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="200" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="150" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="100" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="50" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+
+                <!-- Axes -->
+                <line x1="300" y1="300" x2="300" y2="50" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="538" y2="181" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="538" y2="419" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="300" y2="550" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="62" y2="419" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="62" y2="181" stroke="#ccc" stroke-width="1"/>
+
+                <!-- Data polygon (4/20 = 20% average) -->
+                <polygon points="300,300 425,237.5 425,362.5 300,362.5 237.5,362.5 237.5,237.5"
+                         fill="rgba(102, 126, 234, 0.3)" stroke="#667eea" stroke-width="2"/>
+
+                <!-- Labels -->
+                <text x="300" y="35" text-anchor="middle" font-size="14" fill="#333">Clareza PUV</text>
+                <text x="560" y="175" text-anchor="start" font-size="14" fill="#333">Diferenciação</text>
+                <text x="560" y="425" text-anchor="start" font-size="14" fill="#333">Público-Alvo</text>
+                <text x="300" y="575" text-anchor="middle" font-size="14" fill="#333">Benefícios</text>
+                <text x="40" y="425" text-anchor="end" font-size="14" fill="#333">Prova Social</text>
+                <text x="40" y="175" text-anchor="end" font-size="14" fill="#333">CTA</text>
+
+                <!-- Center point -->
+                <circle cx="300" cy="300" r="5" fill="#667eea"/>
+            </svg>
+        </div>
+
+        <div class="footer">
+            <p>📊 PUV Score System - Diana Corporação Senciente</p>
+            <p style="margin-top: 10px; opacity: 0.8;">Análise automatizada de Proposta Única de Valor</p>
+        </div>
+    </div>
+</body>
+</html>

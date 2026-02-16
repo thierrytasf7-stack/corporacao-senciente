@@ -1,0 +1,60 @@
+name: squad-audit
+version: 1.0.0
+description: Squad de auditoria, otimizacao e versionamento de squads AIOS. Pega 1 squad, analisa cada componente (manifest, agents, tasks, workflows, checklists, templates, structure), otimiza, e registra evolucao com Semantic Versioning e metricas no proprio squad.yaml. Zero regression.
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: SquadAudit
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - squad-evolver.md
+  tasks:
+    - audit-full-squad.md
+    - audit-manifest.md
+    - audit-structure.md
+    - audit-agents-quality.md
+    - audit-tasks-coverage.md
+    - audit-workflows-integrity.md
+    - audit-checklists-templates.md
+    - audit-command-registration.md
+    - audit-cross-references.md
+    - audit-documentation.md
+    - optimize-squad.md
+    - version-squad.md
+    - generate-squad-report.md
+  workflows:
+    - full-squad-evolution-workflow.yaml
+  checklists:
+    - manifest-checklist.md
+    - structure-checklist.md
+    - tasks-coverage-checklist.md
+    - evolution-tracking-checklist.md
+  templates:
+    - squad-evolution-report-tmpl.md
+    - squad-changelog-tmpl.md
+    - squad-evolution-header-tmpl.yaml
+  tools: []
+  scripts: []
+
+config:
+  extends: extend
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+tags:
+  - squad
+  - audit
+  - optimization
+  - versioning
+  - evolution
+  - meta
+  - quality
+  - aios
+  - metrics

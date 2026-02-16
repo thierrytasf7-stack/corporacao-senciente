@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpar Cache - Sistema AURA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .step {
+            background: #ecf0f1;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+        }
+
+        .important {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        button {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .danger {
+            background: #e74c3c;
+        }
+
+        .danger:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧹 Limpeza de Cache - Sistema AURA</h1>
+
+        <div class="step important">
+            <h3>⚠️ Problema Identificado</h3>
+            <p>O frontend está usando timeout antigo (15s) em vez do novo (30s). Isso pode ser causado por cache do
+                navegador.</p>
+        </div>
+
+        <div class="step">
+            <h3>🔧 Soluções para Limpar Cache</h3>
+
+            <h4>1. Limpeza Manual do Navegador:</h4>
+            <ul>
+                <li><strong>Chrome/Edge:</strong> Ctrl + Shift + Delete</li>
+                <li><strong>Firefox:</strong> Ctrl + Shift + Delete</li>
+                <li>Selecione "Imagens e arquivos em cache"</li>
+                <li>Clique em "Limpar dados"</li>
+            </ul>
+
+            <h4>2. Hard Refresh (Forçar Atualização):</h4>
+            <ul>
+                <li><strong>Windows:</strong> Ctrl + F5 ou Ctrl + Shift + R</li>
+                <li><strong>Mac:</strong> Cmd + Shift + R</li>
+            </ul>
+
+            <h4>3. Modo Incógnito/Privado:</h4>
+            <ul>
+                <li>Abra uma nova aba incógnita/privada</li>
+                <li>Acesse: <code>http://localhost:13000</code></li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>🚀 Teste de Conectividade</h3>
+            <p>Teste se o backend está funcionando:</p>
+            <button onclick="testBackend()">Testar Backend</button>
+            <button onclick="testAPI()">Testar API Binance</button>
+            <div id="testResults"></div>
+        </div>
+
+        <div class="step success">
+            <h3>✅ Verificações</h3>
+            <ul>
+                <li>✅ Backend rodando na porta 13001</li>
+                <li>✅ Frontend rodando na porta 13000</li>
+                <li>✅ Timeout configurado para 30 segundos</li>
+                <li>✅ CORS configurado corretamente</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h3>🔄 Reiniciar Serviços</h3>
+            <p>Se o problema persistir, reinicie os serviços:</p>
+            <ol>
+                <li>Pare o frontend (Ctrl + C)</li>
+                <li>Pare o backend (Ctrl + C)</li>
+                <li>Execute: <code>npm run dev:13000</code> (frontend)</li>
+                <li>Execute: <code>cd backend && npm run dev:real</code> (backend)</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        async function testBackend() {
+            const results = document.getElementById('testResults');
+            results.innerHTML = '<p>🔄 Testando backend...</p>';
+
+            try {
+                const response = await fetch('http://localhost:13001/health');
+                const data = await response.json();
+                results.innerHTML = `
+                    <div style="background: #d4edda; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                        <h4>✅ Backend Funcionando!</h4>
+                        <p>Status: ${data.status}</p>
+                        <p>Binance Conectado: ${data.binanceConnected ? 'Sim' : 'Não'}</p>
+                        <p>Timestamp: ${data.timestamp}</p>
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML = `
+                    <div style="background: #f8d7da; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                        <h4>❌ Erro no Backend</h4>
+                        <p>Erro: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testAPI() {
+            const results = document.getElementById('testResults');
+            results.innerHTML = '<p>🔄 Testando API Binance...</p>';
+
+            try {
+                const response = await fetch('http://localhost:13001/api/v1/binance/test-connection');
+                const data = await response.json();
+                results.innerHTML = `
+                    <div style="background: #d4edda; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                        <h4>✅ API Binance Funcionando!</h4>
+                        <p>Sucesso: ${data.success}</p>
+                        <p>Mensagem: ${data.message}</p>
+                        <p>Status: ${data.status}</p>
+                    </div>
+                `;
+            } catch (error) {
+                results.innerHTML = `
+                    <div style="background: #f8d7da; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                        <h4>❌ Erro na API Binance</h4>
+                        <p>Erro: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Teste automático ao carregar a página
+        window.onload = function () {
+            testBackend();
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,468 @@
+{
+  "phases": [
+    {
+      "phase": "Phase 1: MVP",
+      "sprints": [
+        {
+          "sprint_id": "S1",
+          "stories": [
+            {
+              "id": "BET-001",
+              "title": "Setup monorepo + CI/CD pipeline",
+              "complexity": 3,
+              "agent": "dev-aider",
+              "database_story": false,
+              "dependencies": []
+            },
+            {
+              "id": "BET-002",
+              "title": "Database schema design for betting platform",
+              "complexity": 5,
+              "agent": "data-engineer",
+              "database_story": true,
+              "dependencies": []
+            },
+            {
+              "id": "BET-003",
+              "title": "Basic API structure with authentication",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-002"]
+            },
+            {
+              "id": "BET-004",
+              "title": "Authentication system implementation",
+              "complexity": 3,
+              "agent": "dev-aider",
+              "database_story": false,
+              "dependencies": ["BET-003"]
+            }
+          ]
+        },
+        {
+          "sprint_id": "S2",
+          "stories": [
+            {
+              "id": "BET-005",
+              "title": "Betfair Exchange API integration",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-003", "BET-004"]
+            },
+            {
+              "id": "BET-006",
+              "title": "Pinnacle API integration",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-003", "BET-004"]
+            },
+            {
+              "id": "BET-007",
+              "title": "Basic odds fetching and storage",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-005", "BET-006"]
+            },
+            {
+              "id": "BET-008",
+              "title": "Market data storage optimization",
+              "complexity": 5,
+              "agent": "data-engineer",
+              "database_story": true,
+              "dependencies": ["BET-002", "BET-007"]
+            }
+          ]
+        },
+        {
+          "sprint_id": "S3",
+          "stories": [
+            {
+              "id": "BET-009",
+              "title": "Historical data ingestion pipeline",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-008"]
+            },
+            {
+              "id": "BET-010",
+              "title": "Simple backtesting engine implementation",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-009"]
+            },
+            {
+              "id": "BET-011",
+              "title": "Basic strategy framework setup",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-010"]
+            },
+            {
+              "id": "BET-012",
+              "title": "Performance analytics system",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-010"]
+            }
+          ]
+        },
+        {
+          "sprint_id": "S4",
+          "stories": [
+            {
+              "id": "BET-013",
+              "title": "Dashboard interface setup",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-011", "BET-012"]
+            },
+            {
+              "id": "BET-014",
+              "title": "Strategy configuration UI",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-013"]
+            },
+            {
+              "id": "BET-015",
+              "title": "Backtest results visualization",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-013"]
+            },
+            {
+              "id": "BET-016",
+              "title": "Basic reporting system",
+              "complexity": 3,
+              "agent": "dev-aider",
+              "database_story": false,
+              "dependencies": ["BET-015"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "Phase 2: Core Features",
+      "sprints": [
+        {
+          "sprint_id": "S5",
+          "stories": [
+            {
+              "id": "BET-017",
+              "title": "Bet365 API integration",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-005", "BET-006"]
+            },
+            {
+              "id": "BET-018",
+              "title": "Betdaq API integration",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-005", "BET-006"]
+            },
+            {
+              "id": "BET-019",
+              "title": "Market data aggregators integration",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-017", "BET-018"]
+            },
+            {
+              "id": "BET-020",
+              "title": "Real-time data streaming architecture",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-019"]
+            }
+          ]
+        },
+        {
+          "sprint_id": "S6",
+          "stories": [
+            {
+              "id": "BET-021",
+              "title": "Advanced position management system",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-020"]
+            },
+            {
+              "id": "BET-022",
+              "title": "Advanced mathematical strategies implementation",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-021"]
+            },
+            {
+              "id": "BET-023",
+              "title": "Machine learning integration framework",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-022"]
+            },
+            {
+              "id": "BET-024",
+              "title": "Risk management system implementation",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-021"]
+            }
+          ]
+        },
+        {
+          "sprint_id": "S7",
+          "stories": [
+            {
+              "id": "BET-025",
+              "title": "Multi-strategy support architecture",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-023", "BET-024"]
+            },
+            {
+              "id": "BET-026",
+              "title": "Advanced analytics dashboard",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-025"]
+            },
+            {
+              "id": "BET-027",
+              "title": "Mobile responsiveness implementation",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-026"]
+            },
+            {
+              "id": "BET-028",
+              "title": "Security hardening implementation",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-027"]
+            }
+          ]
+        },
+        {
+          "sprint_id": "S8",
+          "stories": [
+            {
+              "id": "BET-029",
+              "title": "Live trading system architecture",
+              "complexity": 13,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-025", "BET-028"]
+            },
+            {
+              "id": "BET-030",
+              "title": "Advanced analytics implementation",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-029"]
+            },
+            {
+              "id": "BET-031",
+              "title": "Performance optimization implementation",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-030"]
+            },
+            {
+              "id": "BET-032",
+              "title": "Additional data sources integration",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-031"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "Phase 3: Production",
+      "sprints": [
+        {
+          "sprint_id": "S9",
+          "stories": [
+            {
+              "id": "BET-033",
+              "title": "Production deployment pipeline setup",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-032"]
+            },
+            {
+              "id": "BET-034",
+              "title": "Advanced features implementation",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-033"]
+            },
+            {
+              "id": "BET-035",
+              "title": "Community features implementation",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-034"]
+            },
+            {
+              "id": "BET-036",
+              "title": "Monitoring and alerting system",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-035"]
+            }
+          ]
+        },
+        {
+          "sprint_id": "S10",
+          "stories": [
+            {
+              "id": "BET-037",
+              "title": "Scalability testing and optimization",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-036"]
+            },
+            {
+              "id": "BET-038",
+              "title": "Load balancing implementation",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-037"]
+            },
+            {
+              "id": "BET-039",
+              "title": "Database sharding implementation",
+              "complexity": 8,
+              "agent": "data-engineer",
+              "database_story": true,
+              "dependencies": ["BET-038"]
+            },
+            {
+              "id": "BET-040",
+              "title": "CDN implementation for frontend",
+              "complexity": 3,
+              "agent": "dev-aider",
+              "database_story": false,
+              "dependencies": ["BET-038"]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": "Phase 4: Scale",
+      "sprints": [
+        {
+          "sprint_id": "S11",
+          "stories": [
+            {
+              "id": "BET-041",
+              "title": "Advanced performance optimization",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-040"]
+            },
+            {
+              "id": "BET-042",
+              "title": "Additional data sources integration",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-041"]
+            },
+            {
+              "id": "BET-043",
+              "title": "Advanced features implementation",
+              "complexity": 8,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-042"]
+            },
+            {
+              "id": "BET-044",
+              "title": "Community features enhancement",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-043"]
+            }
+          ]
+        },
+        {
+          "sprint_id": "S12",
+          "stories": [
+            {
+              "id": "BET-045",
+              "title": "Final production deployment",
+              "complexity": 5,
+              "agent": "dev",
+              "database_story": false,
+              "dependencies": ["BET-044"]
+            },
+            {
+              "id": "BET-046",
+              "title": "Production monitoring setup",
+              "complexity": 3,
+              "agent": "dev-aider",
+              "database_story": false,
+              "dependencies": ["BET-045"]
+            },
+            {
+              "id": "BET-047",
+              "title": "Documentation and knowledge transfer",
+              "complexity": 3,
+              "agent": "dev-aider",
+              "database_story": false,
+              "dependencies": ["BET-046"]
+            },
+            {
+              "id": "BET-048",
+              "title": "Post-launch support setup",
+              "complexity": 2,
+              "agent": "dev-aider",
+              "database_story": false,
+              "dependencies": ["BET-047"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

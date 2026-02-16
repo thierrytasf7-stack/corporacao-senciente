@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUV Score - ZARA Instagram</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #000000 0%, #434343 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .header .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .score-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 60px 40px;
+            background: #f8f9fa;
+        }
+        .score-circle {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+        }
+        .score-circle svg {
+            transform: rotate(-90deg);
+        }
+        .score-circle circle {
+            fill: none;
+            stroke-width: 20;
+        }
+        .score-circle .bg {
+            stroke: #e0e0e0;
+        }
+        .score-circle .progress {
+            stroke: #000000;
+            stroke-linecap: round;
+            stroke-dasharray: 691;
+            stroke-dashoffset: 207;
+            transition: stroke-dashoffset 2s ease;
+        }
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .score-number {
+            font-size: 5em;
+            font-weight: 700;
+            color: #000000;
+            line-height: 1;
+        }
+        .score-max {
+            font-size: 1.5em;
+            color: #666;
+            margin-top: 5px;
+        }
+        .score-percentage {
+            font-size: 2em;
+            color: #000000;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .info-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .info-item {
+            margin-bottom: 20px;
+        }
+        .info-label {
+            font-size: 0.9em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .info-value {
+            font-size: 1.3em;
+            color: #000;
+            font-weight: 600;
+        }
+        .criteria-section {
+            padding: 60px 40px;
+        }
+        .criteria-section h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #000;
+        }
+        .criterion {
+            background: white;
+            border-left: 4px solid #000;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .criterion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .criterion-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #000;
+        }
+        .criterion-score {
+            background: #000;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        .criterion-justificativa {
+            color: #666;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        .recommendations {
+            background: #fff3cd;
+            padding: 60px 40px;
+        }
+        .recommendations h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #856404;
+        }
+        .recommendation-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .footer {
+            background: #000;
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        @media (max-width: 768px) {
+            .score-section {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ZARA</h1>
+            <div class="subtitle">Análise PUV - Instagram @zara</div>
+        </div>
+
+        <div class="score-section">
+            <div>
+                <div class="score-circle">
+                    <svg width="280" height="280">
+                        <circle class="bg" cx="140" cy="140" r="110"></circle>
+                        <circle class="progress" cx="140" cy="140" r="110"></circle>
+                    </svg>
+                    <div class="score-text">
+                        <div class="score-number">14</div>
+                        <div class="score-max">/20</div>
+                        <div class="score-percentage">70%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <div class="info-item">
+                    <div class="info-label">Negócio</div>
+                    <div class="info-value">ZARA - Fast Fashion</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Plataforma</div>
+                    <div class="info-value">Instagram @zara</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Seguidores</div>
+                    <div class="info-value">62.2+ milhões</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Público-Alvo</div>
+                    <div class="info-value">18-35 anos, fashion-forward</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Classificação</div>
+                    <div class="info-value">⭐ BOM (70%)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="criteria-section">
+            <h2>Avaliação por Critério</h2>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">1. Clareza da proposta de valor</div>
+                    <div class="criterion-score">1/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    A proposta de valor existe (fast fashion acessível e trendy) mas não é comunicada explicitamente no perfil. Depende do conhecimento prévio da marca.
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">2. Diferenciação competitiva</div>
+                    <div class="criterion-score">2/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    Zara se diferencia pelo ciclo ultra-rápido (2-3 semanas design-to-shelf), pouco investimento em publicidade, e uso de IA para otimização de inventário. Estratégia única vs H&M/Forever21.
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">3. Público-alvo definido</div>
+                    <div class="criterion-score">2/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    Público claramente definido: 18-35 anos, consumidores urbanos, fashion-forward. Instagram e TikTok são plataformas estratégicas para esse público.
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">4. Comunicação dos benefícios</div>
+                    <div class="criterion-score">1/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    Benefícios comunicados visualmente através de produtos e lifestyle, mas sem messaging explícito sobre velocidade de tendências, preço acessível, ou qualidade.
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">5. Prova social/credibilidade</div>
+                    <div class="criterion-score">2/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    62.2M seguidores é prova social massiva. Marca estabelecida com décadas de credibilidade no fast fashion.
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">6. Call-to-action claro</div>
+                    <div class="criterion-score">0/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    Sem CTAs visíveis no perfil analisado. Estratégia de marketing minimalista (sem mega campanhas ou influencers) resulta em baixo direcionamento para conversão no Instagram.
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">7. Consistência visual/marca</div>
+                    <div class="criterion-score">2/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    Altíssima consistência visual. Feed cuidadosamente curado com estética minimalista, cores neutras, e fotografia profissional. Identidade de marca clara.
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">8. Presença digital integrada</div>
+                    <div class="criterion-score">1/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    Presença em Instagram e TikTok, mas estratégia fragmentada. Links externos não visíveis no perfil analisado. Integração com e-commerce não evidente.
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">9. Experiência do usuário</div>
+                    <div class="criterion-score">1/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    Feed visualmente atraente, mas baixo engajamento relativo (1.9M engagements para 1700 posts vs 53M de Forever21). EPI de 190 vs 400 de Forever21. Experiência passiva.
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <div class="criterion-name">10. Potencial de conversão</div>
+                    <div class="criterion-score">2/2</div>
+                </div>
+                <div class="criterion-justificativa">
+                    Alto potencial por força da marca e modelo de negócio (escassez artificial, renovação constante). Mas Instagram não é o canal principal de conversão - estratégia foca em lojas físicas e word-of-mouth.
+                </div>
+            </div>
+        </div>
+
+        <div class="recommendations">
+            <h2>🎯 Recomendações Prioritárias</h2>
+            <div class="recommendation-item">
+                <strong>1. Adicionar CTAs estratégicos</strong> - Incluir links para coleções novas, promoções flash no perfil e Stories
+            </div>
+            <div class="recommendation-item">
+                <strong>2. Aumentar engajamento</strong> - Conteúdo interativo (polls, quizzes, user-generated content)
+            </div>
+            <div class="recommendation-item">
+                <strong>3. Explicitar proposta de valor</strong> - Bio: "Novas tendências a cada 2 semanas"
+            </div>
+            <div class="recommendation-item">
+                <strong>4. Integrar Instagram Shopping</strong> - Conversão direta na plataforma
+            </div>
+            <div class="recommendation-item">
+                <strong>5. Influencer partnerships micro/nano</strong> - Autenticidade e engajamento
+            </div>
+            <div class="recommendation-item">
+                <strong>6. Criar urgência</strong> - Stories sobre peças de edição limitada
+            </div>
+            <div class="recommendation-item">
+                <strong>7. Humanizar a marca</strong> - Ativar comentários e responder
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Análise PUV Score - Diana Corporação Senciente</p>
+            <p style="opacity: 0.7; margin-top: 10px;">13 de Fevereiro de 2026</p>
+        </div>
+    </div>
+</body>
+</html>

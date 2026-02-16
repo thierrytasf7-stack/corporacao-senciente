@@ -1,0 +1,72 @@
+# Strategy Launch Workflow
+# Processo completo para lancamento de nova estrategia em producao
+
+name: strategy-launch-workflow
+description: Workflow para validar e lancar nova estrategia de trading em producao
+trigger: manual
+
+steps:
+  - id: create-strategy
+    agent: binance-quant
+    task: quant-create-strategy
+    description: Quant cria a estrategia com parametros iniciais
+    next: backtest
+
+  - id: backtest
+    agent: binance-quant
+    task: quant-backtest-strategy
+    description: Backtest rigoroso com validacao estatistica
+    next: optimize
+
+  - id: optimize
+    agent: binance-quant
+    task: quant-optimize-params
+    description: Otimizacao de parametros com walk-forward
+    next: risk-review
+
+  - id: risk-review
+    agent: binance-risk-manager
+    task: risk-evaluate-exposure
+    description: Risk Manager avalia impacto no portfolio
+    next: ceo-approval
+
+  - id: ceo-approval
+    agent: binance-ceo
+    task: ceo-strategy-decision
+    description: CEO decide se aprova para producao
+    gate: true
+    next: paper-trade
+
+  - id: paper-trade
+    agent: binance-trader
+    description: Periodo de paper trading (1-2 semanas simulado)
+    duration: "7d"
+    next: go-live-decision
+
+  - id: go-live-decision
+    agent: binance-ceo
+    task: ceo-strategy-decision
+    description: CEO avalia resultados do paper trading e decide go-live
+    gate: true
+    next: activate
+
+  - id: activate
+    agent: binance-trader
+    description: Ativar estrategia em producao com capital reduzido
+    next: monitor
+
+  - id: monitor
+    agent: binance-ops
+    task: ops-monitor-triggers
+    description: Monitoramento intensivo na primeira semana
+    duration: "7d"
+
+quality_gates:
+  backtest:
+    min_sharpe: 1.0
+    min_win_rate: 50
+    max_drawdown: 15
+    min_trades: 200
+  paper_trade:
+    min_win_rate: 45
+    max_drawdown: 10

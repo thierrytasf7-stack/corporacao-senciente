@@ -1,0 +1,84 @@
+name: data-sports
+version: 1.0.0
+description: Squad de coleta e processamento de dados esportivos em tempo real - especializada em odds, estatísticas, mercados e validação de dados para domínio BET-SPORTS
+team: BET-SPORTS
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: DataSports
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - data-lead.md
+    - data-scraper.md
+    - data-processor.md
+    - data-validator.md
+  tasks:
+    # Data Lead Tasks
+    - lead-daily-briefing.md
+    - lead-strategy-decision.md
+    - lead-data-quality-review.md
+    # Data Scraper Tasks
+    - scrape-odds.md
+    - scrape-stats.md
+    - scrape-markets.md
+    # Data Processor Tasks
+    - process-stats.md
+    - process-odds.md
+    - process-markets.md
+    # Data Validator Tasks
+    - validate-data.md
+    - validate-odds.md
+    - validate-stats.md
+  workflows:
+    - data-collection-cycle.yaml
+    - data-validation-pipeline.yaml
+    - data-processing-workflow.yaml
+  checklists:
+    - data-quality-checklist.md
+    - scraping-checklist.md
+    - validation-checklist.md
+  templates:
+    - data-report-tmpl.md
+    - odds-report-tmpl.md
+    - stats-report-tmpl.md
+  tools:
+    - postgres
+    - context7
+  scripts: []
+
+config:
+  extends: extend
+  sports:
+    focus: ["Football", "Basketball", "Tennis", "MMA", "Esports"]
+    markets: ["1X2", "Over/Under", "Asian Handicap", "BTTS"]
+  dataSources:
+    bookmakers: ["Bet365", "Betfair", "Pinnacle", "1xBet"]
+    statsProviders: ["Opta", "StatsBomb", "FBref"]
+    oddsProviders: ["OddsPortal", "OddsChecker"]
+  dataQuality:
+    freshnessThreshold: 30
+    accuracyThreshold: 95
+    completenessThreshold: 90
+    consistencyThreshold: 85
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+codebase:
+  module: modules/data-sports
+  frontend: modules/data-sports/frontend
+  backend: modules/data-sports/backend
+
+tags:
+  - data
+  - sports
+  - scraping
+  - processing
+  - validation
+  - real-time

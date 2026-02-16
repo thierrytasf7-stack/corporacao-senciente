@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar localStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .log-content {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .error {
+            color: #ff6b6b;
+        }
+
+        .success {
+            color: #51cf66;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔍 Verificador de localStorage</h1>
+    <div id="results"></div>
+
+    <script>
+        function checkLocalStorage() {
+            const results = document.getElementById('results');
+            let html = '<h2>📊 Verificação do localStorage:</h2>';
+
+            // Verificar chaves relacionadas a logs
+            const logKeys = [
+                'console-log-backup',
+                'console-log-latest',
+                'console-log-timestamp',
+                'console-log-session'
+            ];
+
+            let foundLogs = false;
+
+            for (const key of logKeys) {
+                const value = localStorage.getItem(key);
+                if (value) {
+                    foundLogs = true;
+                    html += `<h3>✅ ${key}:</h3>`;
+
+                    if (key === 'console-log-timestamp') {
+                        html += `<div class="success">${value}</div>`;
+                    } else {
+                        try {
+                            const parsed = JSON.parse(value);
+                            html += `<div class="log-content">${JSON.stringify(parsed, null, 2)}</div>`;
+                        } catch (e) {
+                            html += `<div class="log-content">${value}</div>`;
+                        }
+                    }
+                } else {
+                    html += `<h3>❌ ${key}: <span class="error">Não encontrado</span></h3>`;
+                }
+            }
+
+            // Verificar todas as chaves do localStorage
+            html += '<h2>🔍 Todas as chaves do localStorage:</h2>';
+            const allKeys = Object.keys(localStorage);
+            if (allKeys.length > 0) {
+                html += '<ul>';
+                allKeys.forEach(key => {
+                    html += `<li>${key}</li>`;
+                });
+                html += '</ul>';
+            } else {
+                html += '<p class="error">localStorage vazio</p>';
+            }
+
+            if (!foundLogs) {
+                html += '<h2 class="error">❌ Nenhum log encontrado no localStorage!</h2>';
+                html += '<p>Isso significa que o sistema de log não está funcionando corretamente.</p>';
+            }
+
+            results.innerHTML = html;
+        }
+
+        // Executar verificação automaticamente
+        window.addEventListener('load', checkLocalStorage);
+    </script>
+</body>
+
+</html>

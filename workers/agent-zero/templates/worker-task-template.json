@@ -1,0 +1,17 @@
+{
+  "task_id": "{{TASK_ID}}",
+  "worker": "{{WORKER_NAME}}",
+  "agent": "pm",
+  "aios_guide_path": ".aios-core/development/agents/pm.md",
+  "context_files": [],
+  "tools_required": ["file_read", "file_write", "shell_exec"],
+  "task": "{{TASK_DESCRIPTION}}",
+  "prompt": "{{FULL_PROMPT}}",
+  "output_path": ".output/{{WORKER_NAME}}/task_{{TASK_NUMBER}}.txt",
+  "priority": "normal",
+  "metadata": {
+    "source": "claude-wrapper",
+    "timestamp": "{{TIMESTAMP}}",
+    "model": "trinity-free"
+  }
+}

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diana Corporação Senciente - Paleta de Cores</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: #F5F5F5;
+      color: #1A1A1A;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1A1A1A;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #666666;
+      margin-bottom: 2rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #1A1A1A;
+      border-bottom: 2px solid #E0E0E0;
+      padding-bottom: 0.5rem;
+    }
+
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .color-card {
+      border: 1px solid #E0E0E0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .color-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .color-swatch {
+      height: 120px;
+      width: 100%;
+      position: relative;
+    }
+
+    .color-info {
+      padding: 1rem;
+    }
+
+    .color-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #1A1A1A;
+    }
+
+    .color-description {
+      font-size: 0.875rem;
+      color: #666666;
+      margin-bottom: 0.75rem;
+    }
+
+    .color-details {
+      font-size: 0.875rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .color-detail-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .detail-label {
+      color: #808080;
+    }
+
+    .detail-value {
+      font-family: 'Courier New', monospace;
+      font-weight: 600;
+      color: #1A1A1A;
+    }
+
+    .contrast-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: white;
+      margin-top: 0.5rem;
+    }
+
+    .badge-aaa { background-color: #10B981; }
+    .badge-aa { background-color: #3B82F6; }
+    .badge-fail { background-color: #EF4444; }
+
+    .gradient-card {
+      height: 100px;
+      border-radius: 8px;
+      border: 1px solid #E0E0E0;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gradient-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(26, 26, 26, 0.8);
+      color: white;
+      padding: 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .gradient-name {
+      font-weight: 600;
+    }
+
+    .gradient-usage {
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+
+    .gray-scale {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .gray-item {
+      text-align: center;
+    }
+
+    .gray-swatch {
+      height: 80px;
+      border-radius: 4px;
+      border: 1px solid #E0E0E0;
+      margin-bottom: 0.5rem;
+    }
+
+    .gray-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1A1A1A;
+    }
+
+    .gray-hex {
+      font-family: 'Courier New', monospace;
+      font-size: 0.625rem;
+      color: #666666;
+    }
+
+    .semantic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .semantic-card {
+      border-radius: 8px;
+      border: 1px solid #E0E0E0;
+      overflow: hidden;
+    }
+
+    .semantic-swatch {
+      height: 60px;
+    }
+
+    .semantic-info {
+      padding: 0.75rem;
+    }
+
+    .semantic-name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #1A1A1A;
+    }
+
+    .semantic-usage {
+      font-size: 0.75rem;
+      color: #666666;
+      margin-bottom: 0.5rem;
+    }
+
+    .semantic-hex {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: #808080;
+    }
+
+    .guide-box {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .guide-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #1E3A8A;
+    }
+
+    .guide-content {
+      font-size: 0.875rem;
+      color: #1E3A8A;
+    }
+
+    .guide-content ul {
+      list-style-position: inside;
+      margin-left: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .guide-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    .guide-content strong {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <h1>Diana Corporação Senciente</h1>
+    <p class="subtitle">Paleta de Cores Oficial - Sistema de Design v2.0</p>
+
+    <!-- Cores Principais -->
+    <div class="section">
+      <h2 class="section-title">Cores Principais</h2>
+      <div class="color-grid">
+        <!-- Prata Arete -->
+        <div class="color-card">
+          <div class="color-swatch" style="background-color: #C0C0C0;"></div>
+          <div class="color-info">
+            <div class="color-name">Prata Arete</div>
+            <div class="color-description">Virtuosidade, Ordem Inteligente</div>
+            <div class="color-details">
+              <div class="color-detail-row">
+                <span class="detail-label">HEX:</span>
+                <span class="detail-value">#C0C0C0</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">RGB:</span>
+                <span class="detail-value">192, 192, 192</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">CSS:</span>
+                <span class="detail-value">--diana-primary</span>
+              </div>
+            </div>
+            <span class="contrast-badge badge-aaa">AAA 9.2:1</span>
+          </div>
+        </div>
+
+        <!-- Azul Senciência -->
+        <div class="color-card">
+          <div class="color-swatch" style="background-color: #1E90FF;"></div>
+          <div class="color-info">
+            <div class="color-name">Azul Senciência</div>
+            <div class="color-description">Profundidade Cognitiva</div>
+            <div class="color-details">
+              <div class="color-detail-row">
+                <span class="detail-label">HEX:</span>
+                <span class="detail-value">#1E90FF</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">RGB:</span>
+                <span class="detail-value">30, 144, 255</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">CSS:</span>
+                <span class="detail-value">--diana-secondary</span>
+              </div>
+            </div>
+            <span class="contrast-badge badge-aa">AA 4.8:1</span>
+          </div>
+        </div>
+
+        <!-- Ouro Harmônico -->
+        <div class="color-card">
+          <div class="color-swatch" style="background-color: #FFD700;"></div>
+          <div class="color-info">
+            <div class="color-name">Ouro Harmônico</div>
+            <div class="color-description">Elegância, Sutileza</div>
+            <div class="color-details">
+              <div class="color-detail-row">
+                <span class="detail-label">HEX:</span>
+                <span class="detail-value">#FFD700</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">RGB:</span>
+                <span class="detail-value">255, 215, 0</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">CSS:</span>
+                <span class="detail-value">--diana-accent</span>
+              </div>
+            </div>
+            <span class="contrast-badge badge-aaa">AAA 10.4:1</span>
+          </div>
+        </div>
+
+        <!-- Neutral Dark -->
+        <div class="color-card">
+          <div class="color-swatch" style="background-color: #1A1A1A;"></div>
+          <div class="color-info">
+            <div class="color-name">Neutral Dark</div>
+            <div class="color-description">Base Confiável</div>
+            <div class="color-details">
+              <div class="color-detail-row">
+                <span class="detail-label">HEX:</span>
+                <span class="detail-value">#1A1A1A</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">RGB:</span>
+                <span class="detail-value">26, 26, 26</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">CSS:</span>
+                <span class="detail-value">--diana-neutral-dark</span>
+              </div>
+            </div>
+            <span class="contrast-badge badge-aaa">AAA 13.6:1</span>
+          </div>
+        </div>
+
+        <!-- Neutral Light -->
+        <div class="color-card">
+          <div class="color-swatch" style="background-color: #F5F5F5;"></div>
+          <div class="color-info">
+            <div class="color-name">Neutral Light</div>
+            <div class="color-description">Clareza</div>
+            <div class="color-details">
+              <div class="color-detail-row">
+                <span class="detail-label">HEX:</span>
+                <span class="detail-value">#F5F5F5</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">RGB:</span>
+                <span class="detail-value">245, 245, 245</span>
+              </div>
+              <div class="color-detail-row">
+                <span class="detail-label">CSS:</span>
+                <span class="detail-value">--diana-neutral-light</span>
+              </div>
+            </div>
+            <span class="contrast-badge badge-aaa">AAA 13.6:1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gradientes -->
+    <div class="section">
+      <h2 class="section-title">Gradientes Oficiais</h2>
+      <div class="gradient-card" style="background: linear-gradient(135deg, #C0C0C0 0%, #1E90FF 100%);">
+        <div class="gradient-label">
+          <div class="gradient-name">Gradient Primary</div>
+          <div class="gradient-usage">Headers, Hero Sections</div>
+        </div>
+      </div>
+      <div class="gradient-card" style="background: linear-gradient(135deg, #1E90FF 0%, #FFD700 100%);">
+        <div class="gradient-label">
+          <div class="gradient-name">Gradient Accent</div>
+          <div class="gradient-usage">Cards Especiais, CTAs</div>
+        </div>
+      </div>
+      <div class="gradient-card" style="background: linear-gradient(180deg, #1A1A1A 0%, #404040 100%);">
+        <div class="gradient-label">
+          <div class="gradient-name">Gradient Neutral</div>
+          <div class="gradient-usage">Backgrounds Sutis</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Escala de Cinzas -->
+    <div class="section">
+      <h2 class="section-title">Escala de Cinzas</h2>
+      <div class="gray-scale">
+        <div class="gray-item">
+          <div class="gray-swatch" style="background-color: #1A1A1A;"></div>
+          <div class="gray-label">900</div>
+          <div class="gray-hex">#1A1A1A</div>
+        </div>
+        <div class="gray-item">
+          <div class="gray-swatch" style="background-color: #2D2D2D;"></div>
+          <div class="gray-label">800</div>
+          <div class="gray-hex">#2D2D2D</div>
+        </div>
+        <div class="gray-item">
+          <div class="gray-swatch" style="background-color: #404040;"></div>
+          <div class="gray-label">700</div>
+          <div class="gray-hex">#404040</div>
+        </div>
+        <div class="gray-item">
+          <div class="gray-swatch" style="background-color: #666666;"></div>
+          <div class="gray-label">600</div>
+          <div class="gray-hex">#666666</div>
+        </div>
+        <div class="gray-item">
+          <div class="gray-swatch" style="background-color: #808080;"></div>
+          <div class="gray-label">500</div>
+          <div class="gray-hex">#808080</div>
+        </div>
+        <div class="gray-item">
+          <div class="gray-swatch" style="background-color: #A0A0A0;"></div>
+          <div class="gray-label">400</div>
+          <div class="gray-hex">#A0A0A0</div>
+        </div>
+        <div class="gray-item">
+          <div class="gray-swatch" style="background-color: #C0C0C0;"></div>
+          <div class="gray-label">300</div>
+          <div class="gray-hex">#C0C0C0</div>
+        </div>
+        <div class="gray-item">
+          <div class="gray-swatch" style="background-color: #E0E0E0;"></div>
+          <div class="gray-label">200</div>
+          <div class="gray-hex">#E0E0E0</div>
+        </div>
+        <div class="gray-item">
+          <div class="gray-swatch" style="background-color: #F5F5F5;"></div>
+          <div class="gray-label">100</div>
+          <div class="gray-hex">#F5F5F5</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cores Semânticas -->
+    <div class="section">
+      <h2 class="section-title">Cores Semânticas</h2>
+      <div class="semantic-grid">
+        <div class="semantic-card">
+          <div class="semantic-swatch" style="background-color: #10B981;"></div>
+          <div class="semantic-info">
+            <div class="semantic-name">Success</div>
+            <div class="semantic-usage">Confirmações, Estados Positivos</div>
+            <div class="semantic-hex">#10B981</div>
+          </div>
+        </div>
+        <div class="semantic-card">
+          <div class="semantic-swatch" style="background-color: #F59E0B;"></div>
+          <div class="semantic-info">
+            <div class="semantic-name">Warning</div>
+            <div class="semantic-usage">Alertas, Atenção</div>
+            <div class="semantic-hex">#F59E0B</div>
+          </div>
+        </div>
+        <div class="semantic-card">
+          <div class="semantic-swatch" style="background-color: #EF4444;"></div>
+          <div class="semantic-info">
+            <div class="semantic-name">Error</div>
+            <div class="semantic-usage">Erros, Estados Críticos</div>
+            <div class="semantic-hex">#EF4444</div>
+          </div>
+        </div>
+        <div class="semantic-card">
+          <div class="semantic-swatch" style="background-color: #3B82F6;"></div>
+          <div class="semantic-info">
+            <div class="semantic-name">Info</div>
+            <div class="semantic-usage">Informações, Dicas</div>
+            <div class="semantic-hex">#3B82F6</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guia de Uso -->
+    <div class="guide-box">
+      <div class="guide-title">Guia de Uso - WCAG Compliance</div>
+      <div class="guide-content">
+        <p><strong>Texto Pequeno (&lt; 18pt):</strong> Mínimo 4.5:1 (AA) / 7:1 (AAA)</p>
+        <p><strong>Texto Grande (≥ 18pt):</strong> Mínimo 3:1 (AA) / 4.5:1 (AAA)</p>
+        <p style="margin-top: 1rem;"><strong>Combinações Seguras:</strong></p>
+        <ul>
+          <li>Prata Arete em fundo escuro: 9.2:1 ✓ AAA</li>
+          <li>Ouro Harmônico em fundo escuro: 10.4:1 ✓ AAA</li>
+          <li>Neutral Dark em fundo claro: 13.6:1 ✓ AAA</li>
+          <li>Azul Senciência em fundo escuro: 4.8:1 ✓ AA (use dark variant em fundos claros)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+name: ds-audit-cycle
+description: Ciclo de auditoria de Design System
+agent: ds-architect
+trigger: "*audit"
+
+steps:
+  - id: consistency
+    task: ds-audit-consistency.md
+    description: "Audit de consistencia (tokens, components, naming)"
+
+  - id: accessibility
+    task: ds-audit-accessibility.md
+    description: "Audit de acessibilidade WCAG AA"
+
+  - id: report
+    description: "Consolidar findings em audit report"
+    template: ds-audit-report-tmpl.md
+    depends_on: [consistency, accessibility]

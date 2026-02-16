@@ -1,0 +1,18 @@
+{
+  "id": "impl-phase1-task4-websocket-reconnect-retry1",
+  "agent": "dev",
+  "task_type": "implement-reliability-fix",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_write"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [],
+  "prompt": "CREATE WEBSOCKET MANAGER\n\nCreate file: modules/betting-platform/frontend/src/services/WebSocketManager.ts\n\nSimple manager with:\n1. connect() method\n2. reconnect() with exponential backoff (1s, 2s, 4s, 8s, 30s max)\n3. State: CONNECTING | CONNECTED | RECONNECTING | DISCONNECTED\n4. Auto-reconnect on close/error\n\nBasic TypeScript class. No complex features.",
+  "acceptance_criteria": [
+    "WebSocketManager.ts criado",
+    "States: CONNECTING/CONNECTED/RECONNECTING/DISCONNECTED",
+    "Exponential backoff implementado"
+  ],
+  "max_tool_iterations": 8,
+  "self_review": false,
+  "quality_threshold": 7
+}

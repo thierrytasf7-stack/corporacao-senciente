@@ -1,0 +1,276 @@
+{
+  "timestamp": "2026-02-13T02:53:25.102Z",
+  "target": "http://localhost:21340",
+  "pages": [
+    "/backtest",
+    "/portfolio",
+    "/settings"
+  ],
+  "findings": [
+    {
+      "severity": "LOW",
+      "page": "/backtest",
+      "category": "Status",
+      "description": "Page shows \"EM DESENVOLVIMENTO\" badge - expected for beta feature",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Navigation",
+      "description": "No \"Resultados\" tab in navigation - Results view is only accessible after running a backtest, not via direct tab navigation",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Data",
+      "description": "Configure view shows \"Nenhuma Estratégia Configurada\" - no strategies loaded, backtest cannot be run",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Connection",
+      "description": "Binance connection warning shown - system is not connected to Binance API",
+      "details": ""
+    },
+    {
+      "severity": "LOW",
+      "page": "/backtest",
+      "category": "Data",
+      "description": "History view shows \"Nenhum Backtest Executado\" - expected for new installation",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Data",
+      "description": "Comparison view uses hardcoded mock data (RSI Oversold/Overbought, MACD Crossover, Bollinger Bands) - not connected to real backtest results",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "HIGH",
+      "page": "/backtest",
+      "category": "Console Error",
+      "description": "Network error: ❌ Erro na conexão REAL com Binance Testnet: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "HIGH",
+      "page": "/backtest",
+      "category": "Console Error",
+      "description": "Network error: ❌ Erro na conexão REAL com Binance Testnet: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "HIGH",
+      "page": "/backtest",
+      "category": "Console Error",
+      "description": "Network error: ❌ Credenciais REAIS inválidas: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "HIGH",
+      "page": "/backtest",
+      "category": "Console Error",
+      "description": "Network error: ❌ Credenciais REAIS inválidas: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "LOW",
+      "page": "/backtest",
+      "category": "Console Warning",
+      "description": "Network Error: Unable to connect to the server",
+      "details": ""
+    },
+    {
+      "severity": "LOW",
+      "page": "/backtest",
+      "category": "Console Warning",
+      "description": "Network Error: Unable to connect to the server",
+      "details": ""
+    },
+    {
+      "severity": "LOW",
+      "page": "/backtest",
+      "category": "Console Warning",
+      "description": "Network Error: Unable to connect to the server",
+      "details": ""
+    },
+    {
+      "severity": "LOW",
+      "page": "/backtest",
+      "category": "Console Warning",
+      "description": "Network Error: Unable to connect to the server",
+      "details": ""
+    },
+    {
+      "severity": "LOW",
+      "page": "/portfolio",
+      "category": "Status",
+      "description": "Page shows \"Funcionalidade em desenvolvimento\" placeholder - expected for in-development page",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/portfolio",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/portfolio",
+      "category": "Console Error",
+      "description": "❌ Erro na conexão REAL com Binance Testnet: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/portfolio",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/portfolio",
+      "category": "Console Error",
+      "description": "❌ Erro na conexão REAL com Binance Testnet: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/portfolio",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/portfolio",
+      "category": "Console Error",
+      "description": "❌ Credenciais REAIS inválidas: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/portfolio",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/portfolio",
+      "category": "Console Error",
+      "description": "❌ Credenciais REAIS inválidas: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/portfolio",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "LOW",
+      "page": "/settings",
+      "category": "Status",
+      "description": "Page shows \"Funcionalidade em desenvolvimento\" placeholder - expected for in-development page",
+      "details": ""
+    },
+    {
+      "severity": "LOW",
+      "page": "/settings",
+      "category": "Functionality",
+      "description": "No form inputs present - page is pure placeholder with no interactive settings",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/settings",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_FAILED",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/settings",
+      "category": "Console Error",
+      "description": "❌ Erro na conexão REAL com Binance Testnet: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/settings",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/settings",
+      "category": "Console Error",
+      "description": "❌ Erro na conexão REAL com Binance Testnet: Network Error",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/settings",
+      "category": "Console Error",
+      "description": "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+      "details": ""
+    },
+    {
+      "severity": "MEDIUM",
+      "page": "/backtest",
+      "category": "Responsiveness",
+      "description": "Horizontal overflow on mobile (375px): body width is 592px",
+      "details": ""
+    }
+  ],
+  "summary": {
+    "CRITICAL": 0,
+    "HIGH": 4,
+    "MEDIUM": 24,
+    "LOW": 9
+  }
+}

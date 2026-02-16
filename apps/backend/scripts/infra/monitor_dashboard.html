@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor - Corporação Senciente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .header .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .status-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .status-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-card .metric {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .status-card .metric.healthy {
+            color: #27ae60;
+        }
+
+        .status-card .metric.warning {
+            color: #f39c12;
+        }
+
+        .status-card .metric.error {
+            color: #e74c3c;
+        }
+
+        .specializations {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .specializations h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .spec-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .spec-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .spec-item .spec-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .spec-stat {
+            text-align: center;
+        }
+
+        .spec-stat .number {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .spec-stat .label {
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+
+        .alerts-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .alerts-section h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .alert-item {
+            background: #fff5f5;
+            border-left: 4px solid #e74c3c;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alert-item.warning {
+            background: #fffbf0;
+            border-left-color: #f39c12;
+        }
+
+        .alert-item.info {
+            background: #f0f8ff;
+            border-left-color: #3498db;
+        }
+
+        .alert-content h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .alert-content .details {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .alert-time {
+            color: #95a5a6;
+            font-size: 0.8em;
+        }
+
+        .pc-list {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .pc-list h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .pc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .pc-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #3498db;
+        }
+
+        .pc-card.online {
+            border-left-color: #27ae60;
+        }
+
+        .pc-card.offline {
+            border-left-color: #e74c3c;
+            opacity: 0.7;
+        }
+
+        .pc-card.warning {
+            border-left-color: #f39c12;
+        }
+
+        .pc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .pc-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .pc-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .pc-status.online {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+
+        .pc-status.offline {
+            background: #fadbd8;
+            color: #e74c3c;
+        }
+
+        .pc-status.warning {
+            background: #fdeaa7;
+            color: #f39c12;
+        }
+
+        .pc-info {
+            margin-bottom: 15px;
+        }
+
+        .pc-info div {
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .pc-metrics {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            color: #7f8c8d;
+        }
+
+        .metric-value {
+            font-weight: bold;
+        }
+
+        .connection-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        .connection-status.connected {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+
+        .connection-status.disconnected {
+            background: #fadbd8;
+            color: #e74c3c;
+        }
+
+        .last-update {
+            text-align: center;
+            color: #95a5a6;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #95a5a6;
+            font-style: italic;
+            padding: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖥️ Monitor da Corporação Senciente</h1>
+            <p class="subtitle">Infraestrutura Multi-PC em Tempo Real</p>
+        </div>
+
+        <div id="connection-status" class="connection-status disconnected">
+            🔌 Desconectado
+        </div>
+
+        <div id="status-overview" class="status-overview">
+            <!-- Status cards serão inseridos aqui -->
+        </div>
+
+        <div class="specializations">
+            <h2>🎯 Especializações</h2>
+            <div id="spec-grid" class="spec-grid">
+                <!-- Especializações serão inseridas aqui -->
+            </div>
+        </div>
+
+        <div class="alerts-section">
+            <h2>🚨 Alertas Ativos</h2>
+            <div id="alerts-list">
+                <div class="no-data">Nenhum alerta ativo no momento</div>
+            </div>
+        </div>
+
+        <div class="pc-list">
+            <h2>🖥️ PCs Conectados</h2>
+            <div id="pc-grid" class="pc-grid">
+                <!-- PCs serão inseridos aqui -->
+            </div>
+        </div>
+
+        <div id="last-update" class="last-update">
+            Última atualização: <span id="update-time">-</span>
+        </div>
+    </div>
+
+    <script>
+        class MonitorDashboard {
+            constructor() {
+                this.ws = null;
+                this.reconnectInterval = null;
+                this.data = {
+                    status: null,
+                    alerts: [],
+                    pcs: [],
+                    metrics: {}
+                };
+
+                this.init();
+            }
+
+            init() {
+                this.connectWebSocket();
+                this.loadInitialData();
+            }
+
+            connectWebSocket() {
+                const wsUrl = `ws://localhost:3003`; // Porta do WebSocket
+
+                try {
+                    this.ws = new WebSocket(wsUrl);
+
+                    this.ws.onopen = () => {
+                        console.log('WebSocket conectado');
+                        this.updateConnectionStatus(true);
+                        this.clearReconnectInterval();
+                    };
+
+                    this.ws.onmessage = (event) => {
+                        try {
+                            const message = JSON.parse(event.data);
+                            this.handleMessage(message);
+                        } catch (error) {
+                            console.error('Erro ao processar mensagem:', error);
+                        }
+                    };
+
+                    this.ws.onclose = () => {
+                        console.log('WebSocket desconectado');
+                        this.updateConnectionStatus(false);
+                        this.scheduleReconnect();
+                    };
+
+                    this.ws.onerror = (error) => {
+                        console.error('Erro WebSocket:', error);
+                        this.updateConnectionStatus(false);
+                    };
+
+                } catch (error) {
+                    console.error('Erro ao conectar WebSocket:', error);
+                    this.scheduleReconnect();
+                }
+            }
+
+            scheduleReconnect() {
+                if (!this.reconnectInterval) {
+                    this.reconnectInterval = setInterval(() => {
+                        console.log('Tentando reconectar WebSocket...');
+                        this.connectWebSocket();
+                    }, 5000);
+                }
+            }
+
+            clearReconnectInterval() {
+                if (this.reconnectInterval) {
+                    clearInterval(this.reconnectInterval);
+                    this.reconnectInterval = null;
+                }
+            }
+
+            updateConnectionStatus(connected) {
+                const statusEl = document.getElementById('connection-status');
+                if (connected) {
+                    statusEl.textContent = '🟢 Conectado';
+                    statusEl.className = 'connection-status connected';
+                } else {
+                    statusEl.textContent = '🔴 Desconectado';
+                    statusEl.className = 'connection-status disconnected';
+                }
+            }
+
+            async loadInitialData() {
+                try {
+                    // Carregar dados iniciais da API
+                    const [statusRes, alertsRes, pcsRes] = await Promise.all([
+                        fetch('/api/monitor/status'),
+                        fetch('/api/monitor/alerts'),
+                        fetch('/api/pcs/status')
+                    ]);
+
+                    this.data.status = await statusRes.json();
+                    const alertsData = await alertsRes.json();
+                    this.data.alerts = alertsData.active || [];
+                    this.data.pcs = pcsRes.ok ? await pcsRes.json() : [];
+
+                    this.updateUI();
+
+                } catch (error) {
+                    console.error('Erro ao carregar dados iniciais:', error);
+                }
+            }
+
+            handleMessage(message) {
+                switch (message.type) {
+                    case 'status':
+                        this.data.status = message.data;
+                        this.updateStatusOverview();
+                        this.updateSpecializations();
+                        break;
+
+                    case 'alert':
+                        this.data.alerts.unshift(message.data);
+                        this.updateAlerts();
+                        break;
+
+                    case 'metrics':
+                        this.data.metrics[message.data.hostname] = message.data.metrics;
+                        this.updatePCMetrics(message.data.hostname);
+                        break;
+                }
+
+                this.updateLastUpdate();
+            }
+
+            updateUI() {
+                this.updateStatusOverview();
+                this.updateSpecializations();
+                this.updateAlerts();
+                this.updatePCList();
+                this.updateLastUpdate();
+            }
+
+            updateStatusOverview() {
+                const status = this.data.status;
+                if (!status) return;
+
+                const overview = document.getElementById('status-overview');
+
+                overview.innerHTML = `
+                    <div class="status-card">
+                        <h3>🖥️ Total de PCs</h3>
+                        <div class="metric healthy">${status.total_pcs || 0}</div>
+                    </div>
+                    <div class="status-card">
+                        <h3>🟢 PCs Ativos</h3>
+                        <div class="metric healthy">${status.active_pcs || 0}</div>
+                    </div>
+                    <div class="status-card">
+                        <h3>🔴 PCs Offline</h3>
+                        <div class="metric ${status.offline_pcs > 0 ? 'error' : 'healthy'}">${status.offline_pcs || 0}</div>
+                    </div>
+                    <div class="status-card">
+                        <h3>⚠️ PCs com Aviso</h3>
+                        <div class="metric ${status.warning_pcs > 0 ? 'warning' : 'healthy'}">${status.warning_pcs || 0}</div>
+                    </div>
+                    <div class="status-card">
+                        <h3>🚨 Alertas Ativos</h3>
+                        <div class="metric ${status.alerts_count > 0 ? 'error' : 'healthy'}">${status.alerts_count || 0}</div>
+                    </div>
+                `;
+            }
+
+            updateSpecializations() {
+                const status = this.data.status;
+                if (!status || !status.specializations) return;
+
+                const specGrid = document.getElementById('spec-grid');
+                const specs = Object.entries(status.specializations);
+
+                specGrid.innerHTML = specs.map(([spec, data]) => `
+                    <div class="spec-item">
+                        <h4>${this.getSpecIcon(spec)} ${spec.charAt(0).toUpperCase() + spec.slice(1)}</h4>
+                        <div class="spec-stats">
+                            <div class="spec-stat">
+                                <div class="number">${data.total}</div>
+                                <div class="label">Total</div>
+                            </div>
+                            <div class="spec-stat">
+                                <div class="number">${data.active}</div>
+                                <div class="label">Ativos</div>
+                            </div>
+                            <div class="spec-stat">
+                                <div class="number">${data.offline}</div>
+                                <div class="label">Offline</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            getSpecIcon(spec) {
+                const icons = {
+                    brain: '🧠',
+                    business: '💼',
+                    technical: '🔧',
+                    operations: '⚙️'
+                };
+                return icons[spec] || '🖥️';
+            }
+
+            updateAlerts() {
+                const alertsList = document.getElementById('alerts-list');
+
+                if (this.data.alerts.length === 0) {
+                    alertsList.innerHTML = '<div class="no-data">Nenhum alerta ativo no momento</div>';
+                    return;
+                }
+
+                alertsList.innerHTML = this.data.alerts.slice(0, 10).map(alert => `
+                    <div class="alert-item ${alert.severity || 'error'}">
+                        <div class="alert-content">
+                            <h4>${alert.hostname}: ${alert.message}</h4>
+                            <div class="details">${alert.details || ''}</div>
+                        </div>
+                        <div class="alert-time">${this.formatTime(alert.created_at)}</div>
+                    </div>
+                `).join('');
+            }
+
+            updatePCList() {
+                const pcGrid = document.getElementById('pc-grid');
+
+                if (!this.data.pcs || this.data.pcs.length === 0) {
+                    pcGrid.innerHTML = '<div class="no-data">Nenhum PC registrado</div>';
+                    return;
+                }
+
+                pcGrid.innerHTML = this.data.pcs.map(pc => {
+                    const metrics = this.data.metrics[pc.hostname];
+                    const statusClass = pc.status || 'unknown';
+
+                    return `
+                        <div class="pc-card ${statusClass}">
+                            <div class="pc-header">
+                                <div class="pc-name">${this.getSpecIcon(pc.specialization)} ${pc.hostname}</div>
+                                <div class="pc-status ${statusClass}">${statusClass}</div>
+                            </div>
+                            <div class="pc-info">
+                                <div><strong>IP:</strong> ${pc.ip}</div>
+                                <div><strong>Especialização:</strong> ${pc.specialization || 'N/A'}</div>
+                                <div><strong>Última atividade:</strong> ${this.formatTime(pc.last_seen)}</div>
+                            </div>
+                            ${metrics ? `
+                                <div class="pc-metrics">
+                                    <div class="metric-item">
+                                        <span class="metric-label">CPU</span>
+                                        <span class="metric-value">${metrics.cpu?.usage_percent?.toFixed(1) || 'N/A'}%</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">Memória</span>
+                                        <span class="metric-value">${this.formatBytes(metrics.memory?.used || 0)} / ${this.formatBytes(metrics.memory?.total || 0)}</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">Disco</span>
+                                        <span class="metric-value">${metrics.disk?.used || 'N/A'} / ${metrics.disk?.total || 'N/A'}</span>
+                                    </div>
+                                    <div class="metric-item">
+                                        <span class="metric-label">Processos</span>
+                                        <span class="metric-value">${metrics.processes?.count || 'N/A'}</span>
+                                    </div>
+                                </div>
+                            ` : '<div class="pc-metrics"><em>Métricas não disponíveis</em></div>'}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            formatTime(timestamp) {
+                if (!timestamp) return 'Nunca';
+
+                const date = new Date(timestamp);
+                const now = new Date();
+                const diff = now - date;
+
+                if (diff < 60000) return 'Agora mesmo';
+                if (diff < 3600000) return `${Math.floor(diff / 60000)}min atrás`;
+                if (diff < 86400000) return `${Math.floor(diff / 3600000)}h atrás`;
+
+                return date.toLocaleDateString();
+            }
+
+            formatBytes(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+            }
+
+            updatePCMetrics(hostname) {
+                // Atualizar métricas do PC específico na lista
+                this.updatePCList();
+            }
+
+            updateLastUpdate() {
+                const updateTime = document.getElementById('update-time');
+                updateTime.textContent = new Date().toLocaleTimeString();
+            }
+        }
+
+        // Inicializar dashboard quando a página carregar
+        document.addEventListener('DOMContentLoaded', () => {
+            window.monitorDashboard = new MonitorDashboard();
+        });
+
+        // Atualizar dados periodicamente como fallback
+        setInterval(() => {
+            if (window.monitorDashboard) {
+                window.monitorDashboard.loadInitialData();
+            }
+        }, 30000); // A cada 30 segundos
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+

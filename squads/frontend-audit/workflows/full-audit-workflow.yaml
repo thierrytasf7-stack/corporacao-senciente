@@ -1,0 +1,56 @@
+name: full-audit-workflow
+description: Workflow completo de auditoria frontend - executa todas as auditorias em sequencia
+version: 1.0.0
+trigger: manual
+
+input:
+  base_url:
+    type: string
+    required: true
+    description: URL base do frontend (ex. http://localhost:21300)
+
+steps:
+  - id: discover-routes
+    task: audit-full-frontend.md
+    phase: "Fase 1: Descoberta de Rotas"
+    description: Navegar ao frontend e descobrir todas as rotas
+
+  - id: console-errors
+    task: audit-console-errors.md
+    phase: "Fase 2: Console & Network Errors"
+    description: Interceptar erros de console e network em cada rota
+    depends_on: [discover-routes]
+
+  - id: responsive-audit
+    task: audit-responsive.md
+    phase: "Fase 3: Responsividade"
+    description: Testar cada rota em 5 viewports
+    depends_on: [discover-routes]
+
+  - id: ux-audit
+    task: audit-ux-heuristics.md
+    phase: "Fase 4: UX Heuristics"
+    description: Avaliar 10 heuristicas de Nielsen
+    depends_on: [discover-routes]
+
+  - id: a11y-audit
+    task: audit-accessibility.md
+    phase: "Fase 5: Acessibilidade"
+    description: Validar WCAG 2.1 AA
+    depends_on: [discover-routes]
+
+  - id: perf-audit
+    task: audit-performance.md
+    phase: "Fase 6: Performance"
+    description: Medir Core Web Vitals e loading
+    depends_on: [discover-routes]
+
+  - id: generate-report
+    task: generate-audit-report.md
+    phase: "Fase 7: Relatorio"
+    description: Consolidar findings e gerar relatorio final
+    depends_on: [console-errors, responsive-audit, ux-audit, a11y-audit, perf-audit]
+
+output:
+  report_path: docs/qa/frontend-audit-report.md
+  screenshots_dir: docs/qa/screenshots/

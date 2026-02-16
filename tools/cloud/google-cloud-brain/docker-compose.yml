@@ -1,0 +1,79 @@
+# ==============================================================================
+# CORPORACAO SENCIENTE - Google Cloud Brain Stack (Rota Soberana)
+# Arquitetura: Maestro + Redis (Otimizado para 1GB RAM)
+# Deploy: Google Cloud e2-micro via Portainer
+# ==============================================================================
+
+services:
+  # Redis - Cache e Pub/Sub (Otimizado para baixo consumo)
+  redis:
+    image: redis:7-alpine
+    container_name: senciente-redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --maxmemory 128mb
+      --maxmemory-policy allkeys-lru
+      --save ""
+      --appendonly no
+      --tcp-backlog 511
+      --timeout 0
+      --tcp-keepalive 300
+    networks:
+      - senciente-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 150M
+        reservations:
+          memory: 100M
+    volumes:
+      - redis_data:/data
+
+  # Maestro - WebSocket Hub (FastAPI + Socket.IO)
+  maestro:
+    build:
+      context: ./maestro
+      dockerfile: Dockerfile
+    container_name: senciente-maestro
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - HEARTBEAT_INTERVAL=10
+      - HEARTBEAT_MISS_THRESHOLD=3
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL:-}
+      - TAILSCALE_IP=${TAILSCALE_IP:-}
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - senciente-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+
+volumes:
+  redis_data:
+    driver: local
+
+networks:
+  senciente-network:
+    driver: bridge

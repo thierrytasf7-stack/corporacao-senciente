@@ -1,0 +1,23 @@
+<#
+.SYNOPSIS
+    Inicia o Hive Guardian Reviewer Worker em modo Nativo (Windows).
+#>
+
+$ErrorActionPreference = "Stop"
+
+# Caminhos
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ProjectRoot = (Resolve-Path "$ScriptDir\..\..").Path
+$WorkerScript = "$ProjectRoot\docker\hive-guardian\aider-worker-reviewer.py"
+
+Write-Host ">>> Iniciando Hive Guardian Reviewer (Modo Nativo 2026)" -ForegroundColor Green
+Write-Host "Project Root: $ProjectRoot"
+
+# 1. Configurar Ambiente
+$env:PROJECT_ROOT = $ProjectRoot
+$env:PYTHONIOENCODING = "utf-8"
+$env:FORCE_COLOR = "true"
+
+# 2. Executar Worker
+Write-Host ">>> Executando Reviewer..." -ForegroundColor Green
+python $WorkerScript

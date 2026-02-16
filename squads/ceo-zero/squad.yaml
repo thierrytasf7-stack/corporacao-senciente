@@ -1,0 +1,102 @@
+squad:
+  name: ceo-zero
+  id: CeoZero
+  icon: '⚡'
+  title: "CEO-ZERO - Fire-and-Forget Orchestrator"
+  version: "3.1.0"
+  team: CEOs
+
+  description: |-
+    Cerebro do Agent Zero. Delega tasks F1-F3 para modelos free ($0) com
+    auto-revisao embutida no prompt, sem overhead de gestao. Fire-and-forget:
+    dispara e confia. Batch paralelo para multiplas tasks (3x speedup).
+    $0.002/task a 9.4/10 qualidade (benchmarked).
+
+    v3.1 GOLDEN RULES (Pareto):
+    - GR0: Opus = roteador puro (~350 tokens/task). Zero = executor ($0).
+    - GR1: Opus envia PATHS, nunca CONTENTS. Zero le sozinho.
+    - GR2: aios_guide_path obrigatorio (path do .md do especialista)
+    - GR3: context_files obrigatorio (paths de referencia)
+    - GR4: Prompt minimo: 1-2 frases + CRITERIA + OUTPUT
+    - GR5: Sagrado/F5+ → Skill tool direto
+
+  personas:
+    - ceo-zero (Zeus) - Fire-and-Forget Orchestrator
+
+  execution_modes:
+    fire_and_forget:
+      description: "1 task → 1 JSON → 1 delegate.js → resultado direto"
+      cost_per_task: "$0.009"
+      quality: "9.4/10"
+      latency: "~9s"
+      when: "Task individual F1-F3"
+
+    batch_parallel:
+      description: "N tasks → N JSONs → 1 batch-runner → N resultados paralelos"
+      cost_per_task: "$0.002 (N>=5)"
+      quality: "10.0/10"
+      latency: "~32s para 6 tasks (5s/task efetivo)"
+      when: "2+ tasks independentes"
+      speedup: "3.1x vs sequencial"
+      parallelism: "5 API keys round-robin"
+
+    daemon:
+      description: "Agent Zero roda 24/7 via PM2, processa queue/ sem supervisao"
+      cost_per_task: "$0.000"
+      quality: "9.4/10"
+      when: "Pipeline autonomo, geracao massiva"
+
+  auto_review:
+    description: "Todo prompt inclui bloco PROCESS+CRITERIA para auto-revisao interna"
+    cost: "~100 tokens input (gratis no free tier)"
+    quality_boost: "+8% (8.7 → 9.4)"
+    mandatory: true
+
+  routing:
+    agent_zero:
+      when: "F1-F3 AND tipo NOT IN [review, security, deploy, architect, database]"
+      no_fallback: true
+      reason: "Auto-review garante qualidade. Fallback adiciona overhead."
+    aios:
+      when: "F5+ OR tipo IN [review, security, deploy, architect, database]"
+      sacred: true
+
+  commands:
+    - "*fire {desc}" - Fire-and-forget (1 task)
+    - "*batch {t1} {t2} ..." - Batch paralelo (N tasks)
+    - "*aios @agent {desc}" - Forcar AIOS direto
+    - "*execute {story}" - Executar story (routing automatico)
+    - "*pipeline {masterplan}" - Pipeline completo
+    - "*status" - Status e metricas
+    - "*metrics" - Economia detalhada
+    - "*models" - Modelos disponiveis
+    - "*help" - Referencia
+    - "*exit" - Sair
+
+  benchmark_results:
+    date: "2026-02-13"
+    opus_direct: { cost: "$0.025/task", quality: "9.7/10", latency: "~2s" }
+    zero_manual: { cost: "$0.042/task", quality: "8.7/10", latency: "~11s", verdict: "PIOR que Opus" }
+    zero_fire_forget: { cost: "$0.009/task", quality: "9.4/10", latency: "~9s", verdict: "64% mais barato" }
+    zero_batch_parallel: { cost: "$0.002/task", quality: "10.0/10", latency: "~5s/task", verdict: "92% mais barato" }
+
+  integration:
+    agent_zero:
+      delegate_script: "workers/agent-zero/delegate.js"
+      config: "workers/agent-zero/config.json"
+      metrics: "workers/agent-zero/data/metrics.json"
+      queue: "workers/agent-zero/queue/"
+      results: "workers/agent-zero/results/"
+    primary_model: "arcee-ai/trinity-large-preview:free"
+    api_keys: 5
+    key_rotation: "round_robin"
+
+  dependencies:
+    agents:
+      - squads/ceo-zero/agents/ceo-zero.md
+    tasks:
+      - squads/ceo-zero/tasks/ceo-zero-delegate.md
+      - squads/ceo-zero/tasks/ceo-zero-execute-story.md
+      - squads/ceo-zero/tasks/ceo-zero-batch.md
+    templates:
+      - squads/ceo-zero/templates/delegation-task.md

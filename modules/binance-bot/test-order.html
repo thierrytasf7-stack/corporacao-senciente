@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Ordem - Sistema AURA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .loading {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧪 Teste de Ordem Manual - Sistema AURA</h1>
+
+        <div class="warning">
+            <strong>⚠️ ATENÇÃO:</strong> Este é um teste na Binance Testnet. As ordens são reais mas usam saldo de
+            teste.
+        </div>
+
+        <form id="testOrderForm">
+            <div class="form-group">
+                <label for="symbol">Símbolo:</label>
+                <select id="symbol" required>
+                    <option value="ADAUSDT">ADA/USDT - Cardano</option>
+                    <option value="BNBUSDT">BNB/USDT - Binance Coin</option>
+                    <option value="ETHUSDT">ETH/USDT - Ethereum</option>
+                    <option value="BTCUSDT">BTC/USDT - Bitcoin</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="side">Lado da Operação:</label>
+                <select id="side" required>
+                    <option value="BUY">BUY - Compra</option>
+                    <option value="SELL">SELL - Venda</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantidade:</label>
+                <input type="number" id="quantity" step="0.000001" min="0.000001" value="0.1" required>
+                <small>💡 Use valores pequenos para teste (ex: 0.1, 0.01, 0.001)</small>
+            </div>
+
+            <button type="submit">🚀 Executar Ordem de Teste</button>
+        </form>
+
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('testOrderForm');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const symbol = document.getElementById('symbol').value;
+            const side = document.getElementById('side').value;
+            const quantity = document.getElementById('quantity').value;
+
+            // Mostrar loading
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result loading';
+            resultDiv.textContent = '⏳ Executando ordem de teste...\n\n' +
+                `Símbolo: ${symbol}\n` +
+                `Lado: ${side}\n` +
+                `Quantidade: ${quantity}\n\n` +
+                'Aguarde...';
+
+            try {
+                console.log('🧪 Enviando ordem de teste:', { symbol, side, quantity });
+
+                const response = await fetch('http://localhost:13001/api/v1/rotative-analysis/test-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symbol: symbol,
+                        side: side,
+                        quantity: quantity
+                    })
+                });
+
+                const data = await response.json();
+
+                console.log('📊 Resposta recebida:', data);
+
+                if (data.success) {
+                    resultDiv.className = 'result success';
+                    resultDiv.innerHTML = `✅ <strong>ORDEM EXECUTADA COM SUCESSO!</strong>\n\n` +
+                        `📈 Símbolo: ${data.result.symbol}\n` +
+                        `📊 Lado: ${data.result.side}\n` +
+                        `💰 Quantidade: ${data.result.quantity}\n` +
+                        `💵 Preço: $${data.result.price}\n` +
+                        `🏷️ Order ID: ${data.result.orderResult?.orderId || 'N/A'}\n` +
+                        `⏰ Timestamp: ${data.result.timestamp}\n\n` +
+                        `📋 Detalhes completos da ordem:\n${JSON.stringify(data.result.orderResult, null, 2)}`;
+                } else {
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `❌ <strong>FALHA NA EXECUÇÃO</strong>\n\n` +
+                        `💬 Mensagem: ${data.message}\n\n` +
+                        `🔍 Detalhes do erro:\n${JSON.stringify(data.error, null, 2)}`;
+                }
+
+            } catch (error) {
+                console.error('❌ Erro na requisição:', error);
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `❌ <strong>ERRO DE CONEXÃO</strong>\n\n` +
+                    `Não foi possível conectar com o servidor.\n` +
+                    `Verifique se o backend está rodando na porta 13001.\n\n` +
+                    `Erro técnico: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+
+</html>

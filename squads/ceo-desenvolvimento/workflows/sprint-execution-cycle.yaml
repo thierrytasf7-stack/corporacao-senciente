@@ -1,0 +1,130 @@
+# Sprint Execution Cycle - Orchestrated by CEO Prometheus
+# Complete sprint from intake to ship
+
+name: sprint-execution-cycle
+version: 1.0.0
+description: Ciclo completo de sprint - do masterplan ao software em producao
+trigger: "*execute" or "*execute-sprint"
+
+phases:
+  # ═══════════════════════════════════════════════════
+  # PHASE 1: INTAKE - Receber e decompor masterplan
+  # ═══════════════════════════════════════════════════
+  - id: intake
+    name: "Masterplan Intake"
+    agent: ceo-desenvolvimento
+    duration: "15-30min"
+    actions:
+      - "Receber masterplan (de Athena ou usuario)"
+      - "Extrair stories com complexidade e dependencias"
+      - "Classificar cada story por complexidade routing"
+      - "Identificar stories com DB changes"
+      - "Mapear dependencias (DAG)"
+      - "Agrupar em sprint(s)"
+    output: sprint-plan.md
+    handoff_to: database_prep
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 2: DATABASE PREP - Preparar schema/migrations
+  # ═══════════════════════════════════════════════════
+  - id: database_prep
+    name: "Database Preparation"
+    agent: data-engineer
+    skill: "Desenvolvimento:DataEngineer-AIOS"
+    duration: "15-45min"
+    skip_when: "No stories with database changes"
+    actions:
+      - command: "*snapshot"
+        note: "Backup antes de qualquer alteracao"
+      - command: "*create-schema"
+        when: "New tables/columns needed"
+      - command: "*apply-migration"
+        when: "Schema changes needed"
+      - command: "*create-rls-policies"
+        when: "Security policies needed"
+      - command: "*security-audit"
+        note: "Validar seguranca das alteracoes"
+    gate: "Migration applied, security audit passed"
+    handoff_to: parallel_dev
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 3: PARALLEL DEV - Implementacao das stories
+  # ═══════════════════════════════════════════════════
+  - id: parallel_dev
+    name: "Story Implementation"
+    agents: [dev, dev-aider]
+    duration: "varies per story"
+    actions:
+      - "Para cada grupo de stories independentes:"
+      - "  1. Criar worktree (se paralelo)"
+      - "  2. Selecionar agente por complexidade"
+      - "  3. Executar *develop {story-id}"
+      - "  4. CodeRabbit pre-commit review"
+      - "  5. Marcar Ready for Review"
+    parallel: true
+    gate: "All stories in sprint implemented"
+    handoff_to: qa_review
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 4: QA REVIEW - Review e quality gates
+  # ═══════════════════════════════════════════════════
+  - id: qa_review
+    name: "QA Review Loop"
+    agents: [qa, qa-aider]
+    duration: "varies per story"
+    actions:
+      - "Para cada story implementada:"
+      - "  1. Selecionar QA agent por complexidade"
+      - "  2. Executar *code-review ou *review-build"
+      - "  3. CodeRabbit full review"
+      - "  4. Se issues: *create-fix-request → dev *apply-qa-fixes"
+      - "  5. Re-review (QA loop, max 5 iter)"
+      - "  6. *gate → APPROVED/NEEDS_REVISION/BLOCKED"
+    qa_loop:
+      max_iterations: 5
+      escalation: "human or CEO after max"
+    gate: "All stories QA-approved"
+    handoff_to: integration
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 5: INTEGRATION - Merge e verificacao
+  # ═══════════════════════════════════════════════════
+  - id: integration
+    name: "Integration & Merge"
+    agent: devops
+    skill: "Operacoes:DevOps-AIOS"
+    duration: "15-30min"
+    actions:
+      - "Merge all worktrees/branches"
+      - "Run full test suite post-merge"
+      - "Verify no integration regressions"
+      - "Resolve merge conflicts (if any)"
+    gate: "All tests pass post-merge"
+    handoff_to: release
+
+  # ═══════════════════════════════════════════════════
+  # PHASE 6: RELEASE - Ship para producao
+  # ═══════════════════════════════════════════════════
+  - id: release
+    name: "Release to Production"
+    agent: devops
+    skill: "Operacoes:DevOps-AIOS"
+    duration: "15-30min"
+    actions:
+      - command: "*pre-push"
+        note: "lint, typecheck, all tests, build, CodeRabbit"
+      - command: "*push"
+        note: "Push para remote"
+      - command: "*create-pr"
+        when: "PR-based workflow"
+      - command: "*release"
+        when: "Semantic version needed"
+    gate: "Code in production, PR merged"
+    output: release-notes.md
+
+success_criteria:
+  - "Todas as stories implementadas e testadas"
+  - "QA gates passed para todas as stories"
+  - "Zero CRITICAL issues no CodeRabbit"
+  - "Todos os testes passam"
+  - "Codigo em producao"

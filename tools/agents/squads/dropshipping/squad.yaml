@@ -1,0 +1,57 @@
+---
+name: dropshipping-expert
+prefix: /drop
+agents:
+  - product-hunter
+  - marketplace-integrator
+  - order-processor
+  - inventory-manager
+  - customer-service
+description: Squad especializada em dropshipping para gerenciar todo o fluxo de vendas, desde a captação de produtos até o pós-venda, de forma automatizada e integrada com marketplaces.
+workflows:
+  - id: dropshipping-main
+    path: workflows/dropshipping-main.yaml
+components:
+  tasks:
+    - id: product-research
+      name: Pesquisa de Produtos
+      description: Pesquisa e identificação de produtos com alto potencial de venda
+      agent: product-hunter
+      timeout: 300000
+      retries: 2
+    - id: marketplace-sync
+      name: Sincronização com Marketplaces
+      description: Sincronização de produtos com marketplaces integrados
+      agent: marketplace-integrator
+      timeout: 180000
+      retries: 1
+    - id: dynamic-pricing
+      name: Precificação Dinâmica
+      description: Ajuste automático de preços baseado em concorrência e demanda
+      agent: marketplace-integrator
+      timeout: 120000
+      retries: 1
+    - id: order-processing
+      name: Processamento de Pedidos
+      description: Processamento automatizado de pedidos recebidos
+      agent: order-processor
+      timeout: 240000
+      retries: 3
+    - id: order-tracking
+      name: Rastreamento de Pedidos
+      description: Rastreamento e atualização de status de pedidos
+      agent: order-processor
+      timeout: 300000
+      retries: 2
+    - id: inventory-management
+      name: Gestão de Inventário
+      description: Controle e gestão de níveis de estoque
+      agent: inventory-manager
+      timeout: 180000
+      retries: 2
+    - id: report-generation
+      name: Geração de Relatórios
+      description: Geração de relatórios de vendas e performance
+      agent: customer-service
+      timeout: 120000
+      retries: 1

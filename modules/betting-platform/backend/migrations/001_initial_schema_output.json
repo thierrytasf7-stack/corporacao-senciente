@@ -1,0 +1,58 @@
+{
+  "migration_file": "modules/betting-platform/backend/migrations/001_initial_schema.sql",
+  "tables_created": [
+    "users",
+    "betting_accounts",
+    "sports",
+    "leagues",
+    "teams",
+    "events",
+    "markets",
+    "odds_history",
+    "bets",
+    "strategies",
+    "backtest_runs",
+    "event_timeline",
+    "market_movements",
+    "audit_log"
+  ],
+  "hypertables": [
+    "odds_history",
+    "event_timeline",
+    "market_movements"
+  ],
+  "rls_policies": [
+    "user_own_data (users)",
+    "user_own_accounts (betting_accounts)",
+    "user_own_bets (bets)",
+    "user_own_strategies (strategies)",
+    "user_own_backtests (backtest_runs)",
+    "audit_read (audit_log)",
+    "audit_system_write (audit_log)"
+  ],
+  "indexes": [
+    "idx_users_email",
+    "idx_users_created_at",
+    "idx_betting_accounts_user_id",
+    "idx_betting_accounts_provider",
+    "idx_events_sport_league_date",
+    "idx_events_date_status",
+    "idx_odds_history_event_market_timestamp",
+    "idx_odds_history_timestamp",
+    "idx_bets_user_id",
+    "idx_bets_status",
+    "idx_bets_event_market",
+    "idx_strategies_user_id",
+    "idx_backtest_runs_user_strategy",
+    "idx_backtest_runs_status",
+    "idx_audit_log_user_table_action",
+    "idx_audit_log_timestamp"
+  ],
+  "seed_data": {
+    "sports": 6,
+    "leagues": 6,
+    "teams": 6,
+    "markets": 6,
+    "system_user": 1
+  }
+}

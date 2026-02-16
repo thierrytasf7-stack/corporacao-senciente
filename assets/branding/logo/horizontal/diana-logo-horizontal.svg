@@ -1,0 +1,76 @@
+<!--
+  Diana Logo - Horizontal Layout
+  Usage: Headers, navigation bars, wide spaces
+  Format: Icon + Text side-by-side
+-->
+<svg width="600" height="160" viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="h-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:1" />
+    </linearGradient>
+
+    <radialGradient id="h-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:0.3" />
+    </radialGradient>
+  </defs>
+
+  <!-- Icon Section (Left) -->
+  <g id="icon-section">
+    <!-- Outer Ring -->
+    <circle cx="80" cy="80" r="60"
+            fill="none"
+            stroke="url(#h-gradient)"
+            stroke-width="3" />
+
+    <!-- Neural Nodes -->
+    <circle cx="80" cy="25" r="6" fill="#C0C0C0" />
+    <circle cx="132" cy="80" r="6" fill="#C0C0C0" />
+    <circle cx="80" cy="135" r="6" fill="#C0C0C0" />
+    <circle cx="28" cy="80" r="6" fill="#C0C0C0" />
+
+    <!-- Connection Lines -->
+    <line x1="80" y1="25" x2="80" y2="80" stroke="#1E90FF" stroke-width="2" opacity="0.6" />
+    <line x1="132" y1="80" x2="80" y2="80" stroke="#1E90FF" stroke-width="2" opacity="0.6" />
+    <line x1="80" y1="135" x2="80" y2="80" stroke="#1E90FF" stroke-width="2" opacity="0.6" />
+    <line x1="28" y1="80" x2="80" y2="80" stroke="#1E90FF" stroke-width="2" opacity="0.6" />
+
+    <!-- Central Core -->
+    <circle cx="80" cy="80" r="22" fill="url(#h-glow)" />
+    <circle cx="80" cy="80" r="15" fill="#FFD700" opacity="0.95" />
+    <circle cx="80" cy="80" r="8" fill="#1A1A1A" />
+  </g>
+
+  <!-- Text Section (Right) -->
+  <g id="text-section">
+    <!-- Primary Text: DIANA -->
+    <text x="180" y="75"
+          font-family="monospace, 'Courier New', Courier"
+          font-size="56"
+          font-weight="bold"
+          fill="url(#h-gradient)"
+          letter-spacing="8">DIANA</text>
+
+    <!-- Subtitle: Corporação Senciente -->
+    <text x="180" y="105"
+          font-family="sans-serif, Arial"
+          font-size="18"
+          font-weight="300"
+          fill="#808080"
+          letter-spacing="3">CORPORAÇÃO SENCIENTE</text>
+
+    <!-- Tagline: Sistema Operacional Cognitivo -->
+    <text x="180" y="130"
+          font-family="monospace, 'Courier New', Courier"
+          font-size="12"
+          fill="#A0A0A0"
+          letter-spacing="1">SISTEMA OPERACIONAL COGNITIVO</text>
+  </g>
+
+  <!-- Decorative Separator Line -->
+  <line x1="180" y1="88" x2="580" y2="88"
+        stroke="#C0C0C0"
+        stroke-width="0.5"
+        opacity="0.3" />
+</svg>

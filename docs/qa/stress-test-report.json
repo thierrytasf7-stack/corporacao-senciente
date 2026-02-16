@@ -1,0 +1,815 @@
+{
+  "test_start": "2026-02-12T15:43:53.232673",
+  "test_end": "2026-02-12T16:09:37.518704",
+  "total_duration_s": 1544.29,
+  "genesis": {
+    "stories_created": 20,
+    "batches_run": 4,
+    "errors": 0,
+    "duration_s": 10.94,
+    "stories": [
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154353559992_tw5n.md",
+        "filename": "feature_genesis_20260212154353559992_tw5n.md",
+        "raw_size": 1028,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154353-1",
+        "title": "Sistema de Tags para Stories",
+        "objetivo": "Adicionar suporte a tags nas stories para facilitar filtragem e busca. Tags como 'performance', 'security', 'ux' permitem que agentes priorizem stories relevantes ao seu dominio de expertise.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154354784403_0czx.md",
+        "filename": "feature_genesis_20260212154354784403_0czx.md",
+        "raw_size": 1189,
+        "lines": 25,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "HARD",
+        "story_id": "STORY-20260212154354-5",
+        "title": "Websocket para Notificacoes em Tempo Real",
+        "objetivo": "Implementar canal websocket no monitor-server para emitir eventos de stories criadas, tasks completadas e alertas de agentes. O dashboard deve consumir esses eventos e atualizar a UI automaticamente sem polling.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154356343227_b0qk.md",
+        "filename": "feature_genesis_20260212154356343227_b0qk.md",
+        "raw_size": 1111,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "LOW",
+        "story_id": "STORY-20260212154356-1",
+        "title": "Health Check Endpoint para Monitor Server",
+        "objetivo": "O monitor-server nao possui endpoint de health check, dificultando monitoramento por PM2 e scripts externos. Criar endpoint /health que retorne status dos subsistemas: websocket, filesystem watcher e conexao com dashboard.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154356951268_rb6r.md",
+        "filename": "feature_genesis_20260212154356951268_rb6r.md",
+        "raw_size": 1111,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "LOW",
+        "story_id": "STORY-20260212154356-3",
+        "title": "Health Check Endpoint para Monitor Server",
+        "objetivo": "O monitor-server nao possui endpoint de health check, dificultando monitoramento por PM2 e scripts externos. Criar endpoint /health que retorne status dos subsistemas: websocket, filesystem watcher e conexao com dashboard.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154359029066_0krx.md",
+        "filename": "feature_genesis_20260212154359029066_0krx.md",
+        "raw_size": 1028,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154359-1",
+        "title": "Sistema de Tags para Stories",
+        "objetivo": "Adicionar suporte a tags nas stories para facilitar filtragem e busca. Tags como 'performance', 'security', 'ux' permitem que agentes priorizem stories relevantes ao seu dominio de expertise.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154359331573_v6de.md",
+        "filename": "feature_genesis_20260212154359331573_v6de.md",
+        "raw_size": 1117,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@agente-zero",
+        "difficulty": "LOW",
+        "story_id": "STORY-20260212154359-2",
+        "title": "Health Check Endpoint para Monitor Server",
+        "objetivo": "O monitor-server nao possui endpoint de health check, dificultando monitoramento por PM2 e scripts externos. Criar endpoint /health que retorne status dos subsistemas: websocket, filesystem watcher e conexao com dashboard.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154359633382_yjko.md",
+        "filename": "feature_genesis_20260212154359633382_yjko.md",
+        "raw_size": 1228,
+        "lines": 25,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "HARD",
+        "story_id": "STORY-20260212154359-3",
+        "title": "Painel de Metricas de Agentes no Dashboard",
+        "objetivo": "Criar componente de visualizacao de metricas por agente no dashboard. Exibir tasks completadas, tempo medio de execucao, taxa de sucesso e historico de atividade dos ultimos 7 dias com grafico de linha.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154401690363_uyxt.md",
+        "filename": "feature_genesis_20260212154401690363_uyxt.md",
+        "raw_size": 1028,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154401-1",
+        "title": "Sistema de Tags para Stories",
+        "objetivo": "Adicionar suporte a tags nas stories para facilitar filtragem e busca. Tags como 'performance', 'security', 'ux' permitem que agentes priorizem stories relevantes ao seu dominio de expertise.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154402600134_ia43.md",
+        "filename": "feature_genesis_20260212154402600134_ia43.md",
+        "raw_size": 1034,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@agente-zero",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154402-4",
+        "title": "Sistema de Tags para Stories",
+        "objetivo": "Adicionar suporte a tags nas stories para facilitar filtragem e busca. Tags como 'performance', 'security', 'ux' permitem que agentes priorizem stories relevantes ao seu dominio de expertise.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\feature_genesis_20260212154402901992_jbfn.md",
+        "filename": "feature_genesis_20260212154402901992_jbfn.md",
+        "raw_size": 1228,
+        "lines": 25,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "HARD",
+        "story_id": "STORY-20260212154402-5",
+        "title": "Painel de Metricas de Agentes no Dashboard",
+        "objetivo": "Criar componente de visualizacao de metricas por agente no dashboard. Exibir tasks completadas, tempo medio de execucao, taxa de sucesso e historico de atividade dos ultimos 7 dias com grafico de linha.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\optimization_genesis_20260212154400237171_rksc.md",
+        "filename": "optimization_genesis_20260212154400237171_rksc.md",
+        "raw_size": 1122,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154400-5",
+        "title": "Otimizar Queries do Dashboard API",
+        "objetivo": "As rotas de API do dashboard fazem queries N+1 ao buscar dados de agentes e workflows. Implementar agregacao no lado do servidor e cache em memoria para reduzir latencia. Priorizar as rotas mais acessadas: /api/agents, /api/workflows e /api/metrics.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\optimization_genesis_20260212154401996114_6wsu.md",
+        "filename": "optimization_genesis_20260212154401996114_6wsu.md",
+        "raw_size": 1128,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@agente-zero",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154401-2",
+        "title": "Otimizar Queries do Dashboard API",
+        "objetivo": "As rotas de API do dashboard fazem queries N+1 ao buscar dados de agentes e workflows. Implementar agregacao no lado do servidor e cache em memoria para reduzir latencia. Priorizar as rotas mais acessadas: /api/agents, /api/workflows e /api/metrics.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\optimization_genesis_20260212154402298236_jt6p.md",
+        "filename": "optimization_genesis_20260212154402298236_jt6p.md",
+        "raw_size": 1045,
+        "lines": 23,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "LOW",
+        "story_id": "STORY-20260212154402-3",
+        "title": "Cache de Configuracao no AIOS Core",
+        "objetivo": "O framework AIOS recarrega arquivos YAML de configuracao a cada chamada. Implementar cache em memoria com invalidacao baseada em mtime do arquivo para evitar leituras repetidas do disco.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\refactor_genesis_20260212154354482416_4p9e.md",
+        "filename": "refactor_genesis_20260212154354482416_4p9e.md",
+        "raw_size": 1037,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@agente-zero",
+        "difficulty": "LOW",
+        "story_id": "STORY-20260212154354-4",
+        "title": "Extrair Logica de Autenticacao para Middleware",
+        "objetivo": "A logica de validacao JWT esta duplicada em multiplas rotas da API do dashboard. Extrair para um middleware reutilizavel que valide tokens, extraia claims e injete o usuario autenticado no contexto da request.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\refactor_genesis_20260212154356648048_v4wm.md",
+        "filename": "refactor_genesis_20260212154356648048_v4wm.md",
+        "raw_size": 1037,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@agente-zero",
+        "difficulty": "LOW",
+        "story_id": "STORY-20260212154356-2",
+        "title": "Extrair Logica de Autenticacao para Middleware",
+        "objetivo": "A logica de validacao JWT esta duplicada em multiplas rotas da API do dashboard. Extrair para um middleware reutilizavel que valide tokens, extraia claims e injete o usuario autenticado no contexto da request.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\refactor_genesis_20260212154357253209_vxes.md",
+        "filename": "refactor_genesis_20260212154357253209_vxes.md",
+        "raw_size": 1123,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@agente-zero",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154357-4",
+        "title": "Migrar Stores do Dashboard para Padrao Slices",
+        "objetivo": "As stores Zustand do dashboard estao monoliticas com toda a logica em um arquivo. Refatorar para o padrao slices, separando concerns em fatias independentes que sao compostas na store principal.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\refactor_genesis_20260212154357555340_bvub.md",
+        "filename": "refactor_genesis_20260212154357555340_bvub.md",
+        "raw_size": 1031,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "LOW",
+        "story_id": "STORY-20260212154357-5",
+        "title": "Extrair Logica de Autenticacao para Middleware",
+        "objetivo": "A logica de validacao JWT esta duplicada em multiplas rotas da API do dashboard. Extrair para um middleware reutilizavel que valide tokens, extraia claims e injete o usuario autenticado no contexto da request.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\security_genesis_20260212154353863009_xg6y.md",
+        "filename": "security_genesis_20260212154353863009_xg6y.md",
+        "raw_size": 1176,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@agente-zero",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154353-2",
+        "title": "Implementar Rate Limiting nas API Routes",
+        "objetivo": "As rotas de API do dashboard nao possuem rate limiting, ficando vulneraveis a abuso e ataques de forca bruta. Implementar rate limiter baseado em IP com limites configuraves por rota e resposta 429 padronizada.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\security_genesis_20260212154354169130_tvs6.md",
+        "filename": "security_genesis_20260212154354169130_tvs6.md",
+        "raw_size": 1104,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@aider",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154354-3",
+        "title": "Auditoria e Correcao de Dependencias Vulneraveis",
+        "objetivo": "Executar auditoria completa de dependencias em todos os workspaces do monorepo. Corrigir vulnerabilidades criticas e altas, atualizar pacotes defasados e documentar quaisquer vulnerabilidades que nao possam ser corrigidas automaticamente.",
+        "has_sections": true,
+        "has_objective": true
+      },
+      {
+        "filepath": "C:/Users/User/Desktop/Diana-Corporacao-Senciente\\docs/stories\\security_genesis_20260212154359935194_3u7v.md",
+        "filename": "security_genesis_20260212154359935194_3u7v.md",
+        "raw_size": 1176,
+        "lines": 24,
+        "status": "TODO",
+        "substatus": "pending_worker",
+        "agent": "@agente-zero",
+        "difficulty": "MEDIUM",
+        "story_id": "STORY-20260212154359-4",
+        "title": "Implementar Rate Limiting nas API Routes",
+        "objetivo": "As rotas de API do dashboard nao possuem rate limiting, ficando vulneraveis a abuso e ataques de forca bruta. Implementar rate limiter baseado em IP com limites configuraves por rota e resposta 429 padronizada.",
+        "has_sections": true,
+        "has_objective": true
+      }
+    ]
+  },
+  "aider": {
+    "stories_processed": 12,
+    "stories_success": 12,
+    "stories_failed": 0,
+    "stories_fallback": 0,
+    "duration_s": 1527.91,
+    "avg_time_per_story_s": 127.33,
+    "stories": [
+      {
+        "filename": "feature_genesis_20260212154353559992_tw5n.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.36
+      },
+      {
+        "filename": "feature_genesis_20260212154354784403_0czx.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.42
+      },
+      {
+        "filename": "feature_genesis_20260212154356343227_b0qk.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.48
+      },
+      {
+        "filename": "feature_genesis_20260212154356951268_rb6r.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.47
+      },
+      {
+        "filename": "feature_genesis_20260212154359029066_0krx.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.5
+      },
+      {
+        "filename": "feature_genesis_20260212154359633382_yjko.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.47
+      },
+      {
+        "filename": "feature_genesis_20260212154401690363_uyxt.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.42
+      },
+      {
+        "filename": "feature_genesis_20260212154402901992_jbfn.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.37
+      },
+      {
+        "filename": "optimization_genesis_20260212154400237171_rksc.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.37
+      },
+      {
+        "filename": "optimization_genesis_20260212154402298236_jt6p.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.37
+      },
+      {
+        "filename": "refactor_genesis_20260212154357555340_bvub.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.81
+      },
+      {
+        "filename": "security_genesis_20260212154354169130_tvs6.md",
+        "result": "success",
+        "method": "engine_handled",
+        "duration_s": 120.49
+      }
+    ]
+  },
+  "zero": {
+    "stories_executed": 20,
+    "stories_reviewed": 0,
+    "errors": 0,
+    "duration_s": 4.85,
+    "avg_time_per_story_s": 0.24,
+    "stories": [
+      {
+        "filename": "cycle_1",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.22
+      },
+      {
+        "filename": "cycle_2",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.22
+      },
+      {
+        "filename": "cycle_3",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.18
+      },
+      {
+        "filename": "cycle_4",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.19
+      },
+      {
+        "filename": "cycle_5",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.2
+      },
+      {
+        "filename": "cycle_6",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.24
+      },
+      {
+        "filename": "cycle_7",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.19
+      },
+      {
+        "filename": "cycle_8",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.19
+      },
+      {
+        "filename": "cycle_9",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.27
+      },
+      {
+        "filename": "cycle_10",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.37
+      },
+      {
+        "filename": "cycle_11",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.21
+      },
+      {
+        "filename": "cycle_12",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.18
+      },
+      {
+        "filename": "cycle_13",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.13
+      },
+      {
+        "filename": "cycle_14",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.16
+      },
+      {
+        "filename": "cycle_15",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.22
+      },
+      {
+        "filename": "cycle_16",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.17
+      },
+      {
+        "filename": "cycle_17",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.23
+      },
+      {
+        "filename": "cycle_18",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.15
+      },
+      {
+        "filename": "cycle_19",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.19
+      },
+      {
+        "filename": "cycle_20",
+        "type": "execution",
+        "result": "success",
+        "duration_s": 0.2
+      }
+    ]
+  },
+  "pipeline": {
+    "total_stories": 20,
+    "fully_processed": 20,
+    "status_distribution": {
+      "REVISADO": 20
+    },
+    "agent_distribution": {
+      "@aider": 12,
+      "@agente-zero": 8
+    }
+  },
+  "quality": {
+    "genesis_quality": {
+      "avg_score": 100.0,
+      "min_score": 100,
+      "max_score": 100,
+      "stories": [
+        {
+          "filename": "feature_genesis_20260212154353559992_tw5n.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "feature_genesis_20260212154354784403_0czx.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "feature_genesis_20260212154356343227_b0qk.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "feature_genesis_20260212154356951268_rb6r.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "feature_genesis_20260212154359029066_0krx.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "feature_genesis_20260212154359331573_v6de.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "feature_genesis_20260212154359633382_yjko.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "feature_genesis_20260212154401690363_uyxt.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "feature_genesis_20260212154402600134_ia43.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "feature_genesis_20260212154402901992_jbfn.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "optimization_genesis_20260212154400237171_rksc.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "optimization_genesis_20260212154401996114_6wsu.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "optimization_genesis_20260212154402298236_jt6p.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "refactor_genesis_20260212154354482416_4p9e.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "refactor_genesis_20260212154356648048_v4wm.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "refactor_genesis_20260212154357253209_vxes.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "refactor_genesis_20260212154357555340_bvub.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "security_genesis_20260212154353863009_xg6y.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "security_genesis_20260212154354169130_tvs6.md",
+          "score": 100,
+          "issues": []
+        },
+        {
+          "filename": "security_genesis_20260212154359935194_3u7v.md",
+          "score": 100,
+          "issues": []
+        }
+      ]
+    },
+    "aider_quality": {
+      "avg_score": 90.0,
+      "real_processing_pct": 100.0,
+      "stories": [
+        {
+          "filename": "feature_genesis_20260212154353559992_tw5n.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "feature_genesis_20260212154354784403_0czx.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "feature_genesis_20260212154356343227_b0qk.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "feature_genesis_20260212154356951268_rb6r.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "feature_genesis_20260212154359029066_0krx.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "feature_genesis_20260212154359633382_yjko.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "feature_genesis_20260212154401690363_uyxt.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "feature_genesis_20260212154402901992_jbfn.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "optimization_genesis_20260212154400237171_rksc.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "optimization_genesis_20260212154402298236_jt6p.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "refactor_genesis_20260212154357555340_bvub.md",
+          "score": 90,
+          "method": "engine_handled"
+        },
+        {
+          "filename": "security_genesis_20260212154354169130_tvs6.md",
+          "score": 90,
+          "method": "engine_handled"
+        }
+      ]
+    },
+    "zero_quality": {
+      "avg_score": 85.0,
+      "stories": [
+        {
+          "filename": "cycle_1",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_2",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_3",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_4",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_5",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_6",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_7",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_8",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_9",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_10",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_11",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_12",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_13",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_14",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_15",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_16",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_17",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_18",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_19",
+          "score": 85,
+          "type": "execution"
+        },
+        {
+          "filename": "cycle_20",
+          "score": 85,
+          "type": "execution"
+        }
+      ]
+    }
+  }
+}

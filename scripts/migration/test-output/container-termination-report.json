@@ -1,0 +1,48 @@
+﻿{
+    "verification":  {
+                         "still_running":  [
+
+                                           ],
+                         "stopped":  [
+
+                                     ],
+                         "all_stopped":  true,
+                         "not_found":  [
+                                           "nonexistent123"
+                                       ]
+                     },
+    "summary":  {
+                    "successfully_stopped":  1,
+                    "forcefully_killed":  0,
+                    "failed_to_stop":  0,
+                    "total_containers":  1,
+                    "verification_passed":  true
+                },
+    "completed_at":  "2026-02-11T08:36:04.4896430-03:00",
+    "started_at":  "2026-02-11T08:36:00.7657317-03:00",
+    "inventory_source":  "C:\\Users\\User\\Desktop\\Diana-Corporacao-Senciente\\scripts\\migration\\test-output\\mock-inventory.json",
+    "containers":  [
+                       {
+                           "image":  "test-image:latest",
+                           "initial_status":  "running",
+                           "termination_completed_at":  "2026-02-11T08:36:04.0696366-03:00",
+                           "error":  null,
+                           "final_status":  "stopped",
+                           "success":  true,
+                           "termination_started_at":  "2026-02-11T08:36:01.2646554-03:00",
+                           "attempts":  [
+                                            {
+                                                "container_name":  "test-container-1",
+                                                "method":  "graceful",
+                                                "success":  true,
+                                                "container_id":  "nonexistent123",
+                                                "error":  null,
+                                                "duration_seconds":  0,
+                                                "stopped_at":  "2026-02-11T08:36:03.9511852-03:00"
+                                            }
+                                        ],
+                           "container_name":  "test-container-1",
+                           "container_id":  "nonexistent123"
+                       }
+                   ]
+}

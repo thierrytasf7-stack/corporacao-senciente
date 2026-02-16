@@ -1,0 +1,61 @@
+name: backend-audit
+version: 1.0.0
+description: Squad profissional de auditoria completa de backends - performance, seguranca, code quality, API validation, database, arquitetura, error handling e observabilidade. Stack-agnostic, nivel CTO Senior.
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: BackendAudit
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - backend-auditor.md
+  tasks:
+    - audit-full-backend.md
+    - audit-performance.md
+    - audit-security.md
+    - audit-code-quality.md
+    - audit-api-validation.md
+    - audit-database.md
+    - audit-architecture.md
+    - audit-error-handling.md
+    - audit-observability.md
+    - audit-dependencies.md
+    - generate-audit-report.md
+  workflows:
+    - full-audit-workflow.yaml
+  checklists:
+    - performance-checklist.md
+    - security-checklist.md
+    - code-quality-checklist.md
+    - api-checklist.md
+    - database-checklist.md
+    - architecture-checklist.md
+    - error-handling-checklist.md
+    - observability-checklist.md
+  templates:
+    - audit-report-tmpl.md
+  tools: []
+  scripts: []
+
+config:
+  extends: extend
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+tags:
+  - backend
+  - audit
+  - performance
+  - security
+  - code-quality
+  - api
+  - database
+  - architecture
+  - observability
+  - owasp

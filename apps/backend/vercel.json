@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/server.js"
+    }
+  ],
+  "env": {
+    "ENABLE_FILE_LOGGING": "false",
+    "NODE_ENV": "production",
+    "SUPABASE_URL": "https://ffdszaiarxstxbafvedi.supabase.co",
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZmZHN6YWlhcnhzdHhiYWZ2ZWRpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU0MDA3MTYsImV4cCI6MjA4MDk3NjcxNn0.pD36vrlixzGi7P9MYaTbOGE9MG8yfZCQx0uRNN0Ez6A"
+  },
+  "functions": {
+    "server.js": {
+      "includeFiles": "src_api/**, scripts/**",
+      "maxDuration": 15
+    }
+  }
+}

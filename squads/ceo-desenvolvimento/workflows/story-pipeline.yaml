@@ -1,0 +1,54 @@
+# Story Pipeline - Single story execution
+# Used for: *execute-story
+
+name: story-pipeline
+version: 1.0.0
+description: Pipeline completo para uma story individual
+trigger: "*execute-story {id}"
+
+phases:
+  - id: prepare
+    name: "Prepare Story"
+    agent: ceo-desenvolvimento
+    actions:
+      - "Read story from docs/stories/"
+      - "Classify complexity (fibonacci)"
+      - "Check for DB changes → route to @data-engineer first"
+      - "Select dev agent (Aider vs Dex)"
+      - "Create branch if needed"
+
+  - id: database
+    name: "Database Changes"
+    agent: data-engineer
+    skill: "Desenvolvimento:DataEngineer-AIOS"
+    skip_when: "No DB changes in story"
+    actions:
+      - "*snapshot"
+      - "*create-schema or *apply-migration"
+      - "*security-audit"
+
+  - id: implement
+    name: "Implementation"
+    agent: "dev or dev-aider (by complexity)"
+    actions:
+      - "*develop {story-id}"
+      - "CodeRabbit pre-commit (light)"
+      - "Mark Ready for Review"
+
+  - id: review
+    name: "QA Review"
+    agent: "qa or qa-aider (by complexity)"
+    actions:
+      - "*code-review or *review-build"
+      - "CodeRabbit full review"
+      - "QA Loop if issues (max 5)"
+      - "*gate → APPROVED"
+
+  - id: ship
+    name: "Ship"
+    agent: devops
+    skill: "Operacoes:DevOps-AIOS"
+    actions:
+      - "*pre-push"
+      - "*push"
+      - "Story → SHIPPED"

@@ -1,0 +1,145 @@
+workflow:
+  id: mordomo-guardian-extraction
+  name: "Mordomo Guardian: Harvesting & Self-Healing"
+  version: "1.1"
+  description: >-
+    Workflow executado pelo Guardian a cada 5 minutos para extração de conhecimento (Harvesting)
+    e recuperação de falhas em tempo real (Self-Healing). Monitora logs, detecta travamentos,
+    gera relatórios para o criador e gerencia o ciclo de vida dos workers.
+  type: maintenance
+  project_types:
+    - generic
+    - agent-orchestration
+
+  metadata:
+    elicit: false
+    confirmation_required: false
+    interval_minutes: 5
+
+  execution_modes:
+    - mode: yolo
+      description: Execução totalmente autônoma pelo Guardian
+      default: true
+
+  phases:
+    - phase_1: Knowledge Harvesting
+    - phase_2: Health Check & Detection
+    - phase_3: Recovery & Cleanup
+    - phase_4: Creator Communication
+
+  sequence:
+    - step: harvest_logs
+      id: harvesting
+      phase: 1
+      agent: aider-dev
+      action: Extrair ouro e necessidades do criador nos logs
+      notes: |
+        O Mordomo analisa logs buscando conhecimento e impedimentos.
+        Foco especial em identificar quando o Criador precisa intervir:
+        - Falta de API Keys / Credenciais
+        - Necessidade de login manual
+        - Escolhas de negócio bloqueantes
+      outputs:
+        - harvest_report
+        - knowledge_updates
+        - creator_action_items
+      next: health_check
+
+    - step: terminal_health_check
+      id: health_check
+      phase: 2
+      agent: status-monitor
+      action: Identificar terminais em erro ou travados
+      notes: |
+        Varredura de processos ativos para reconhecer:
+        - Loops infinitos
+        - Status FROZEN ou ERROR
+        - Travamentos por falta de resposta do modelo
+      outputs:
+        - stuck_terminals_list
+      next: recovery_logic
+
+    - step: task_recovery
+      id: recovery_logic
+      phase: 3
+      agent: mordomo
+      action: Mover tasks travadas para o backlog
+      requires: health_check
+      notes: |
+        Para cada terminal identificado como problemático:
+        1. Localizar a Task ID associada
+        2. Mover status de 'executing' para 'backlog'
+        3. Anexar logs da última sessão como contexto mandatório
+        4. Definir prioridade de "Fix Error" antes de prosseguir
+      outputs:
+        - backlog_updates
+      next: cleanup
+
+    - step: process_cleanup
+      id: cleanup
+      phase: 3
+      agent: deploy-aider
+      action: Finalizar terminais zumbis
+      requires: recovery_logic
+      notes: |
+        Executar a finalização segura (kill) de workers travados para liberar recursos
+        do sistema e manter a integridade do orquestrador.
+      outputs:
+        - cleanup_status
+      next: generate_creator_report
+
+    - step: generate_creator_report
+      id: creator_report
+      phase: 4
+      agent: mordomo
+      action: Gerar Relatório para o Criador
+      requires: harvesting
+      notes: |
+        Consolida todas as necessidades identificadas em um arquivo markdown
+        claro e acionável em .aios/reports/RELATORIO_PARA_CRIADOR.md.
+        O relatório deve ser honesto, sem mocks, e direto ao ponto sobre o que
+        o Criador precisa fazer para desbloquear os agentes.
+      outputs:
+        - creator_report_file
+      next: complete
+
+    - workflow_end:
+      id: complete
+      action: guardian_cycle_complete
+      notes: |
+        Ciclo de 5 minutos concluído.
+        ✅ Conhecimento extraído e persistido.
+        ✅ Terminais travados recuperados.
+        ✅ Relatório para o Criador atualizado.
+        ✅ Sistema limpo e pronto para o próximo ciclo.
+
+  flow_diagram: |
+    ```mermaid
+    graph TD
+        A[Start: 5-min Guardian Cycle] --> B[Harvesting: Logs Analysis]
+        B --> C[Health Check: Terminal Monitor]
+        C --> D{Problemas Detectados?}
+        D -->|Não| G[End: System Healthy]
+        D -->|Sim| E[Recovery: Backlog Rollback with Context]
+        E --> F[Cleanup: Terminate Broken Workers]
+        F --> H[Report: Communication with Creator]
+        H --> G
+    ```
+
+  decision_guidance:
+    when_to_use:
+      - Monitoramento contínuo de squads de agentes
+      - Prevenção de queima de tokens em loops
+      - Necessidade de feedback humano para credenciais
+    when_not_to_use:
+      - Sessões de debug manual onde o usuário quer manter o terminal aberto
+
+metadata:
+  author: Jasper (Mordomo)
+  created_date: 2026-02-07
+  version: 1.1.0
+  tags:
+    - guardian
+    - self-healing
+    - creator-report
+    - autonomy

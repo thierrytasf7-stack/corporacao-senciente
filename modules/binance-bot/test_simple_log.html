@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Simples - Sistema de Log</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .log-display {
+            background: #1e1e1e;
+            color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .test-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Teste Simples - Sistema de Log</h1>
+        
+        <div class="status success" id="status">
+            ✅ Inicializando sistema...
+        </div>
+
+        <div>
+            <button class="test-btn" onclick="testLog()">📝 Teste Log</button>
+            <button class="test-btn" onclick="testError()">❌ Teste Error</button>
+            <button class="test-btn" onclick="testSave()">💾 Forçar Salvamento</button>
+            <button class="test-btn" onclick="checkLocalStorage()">🔍 Verificar localStorage</button>
+        </div>
+
+        <h3>📊 Logs em Tempo Real:</h3>
+        <div class="log-display" id="logDisplay">
+            <div>Aguardando logs...</div>
+        </div>
+    </div>
+
+    <script>
+        // Sistema de Log Simplificado
+        class SimpleLogger {
+            constructor() {
+                this.logs = [];
+                this.sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+                this.startTime = new Date().toISOString();
+                this.isInitialized = false;
+                this.originalConsole = {
+                    log: console.log,
+                    error: console.error,
+                };
+                this.initialize();
+            }
+
+            createLogEntry(level, message) {
+                return {
+                    timestamp: new Date().toISOString(),
+                    level,
+                    message: typeof message === 'string' ? message : JSON.stringify(message),
+                    sessionId: this.sessionId,
+                };
+            }
+
+            interceptConsole() {
+                console.log = (...args) => {
+                    this.originalConsole.log(...args);
+                    const message = args.map(arg => 
+                        typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                    ).join(' ');
+                    this.logs.push(this.createLogEntry('log', message));
+                    this.updateDisplay();
+                };
+
+                console.error = (...args) => {
+                    this.originalConsole.error(...args);
+                    const message = args.map(arg => 
+                        typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                    ).join(' ');
+                    this.logs.push(this.createLogEntry('error', message));
+                    this.updateDisplay();
+                };
+            }
+
+            updateDisplay() {
+                const logDisplay = document.getElementById('logDisplay');
+                if (!logDisplay) return;
+
+                const lastLog = this.logs[this.logs.length - 1];
+                const logElement = document.createElement('div');
+                logElement.style.color = lastLog.level === 'error' ? '#ff6b6b' : '#ffffff';
+                
+                const time = new Date(lastLog.timestamp).toLocaleTimeString();
+                logElement.textContent = `[${time}] ${lastLog.level.toUpperCase()}: ${lastLog.message}`;
+                
+                logDisplay.appendChild(logElement);
+                logDisplay.scrollTop = logDisplay.scrollHeight;
+            }
+
+            saveToLocalStorage() {
+                try {
+                    const report = {
+                        sessionId: this.sessionId,
+                        startTime: this.startTime,
+                        endTime: new Date().toISOString(),
+                        totalLogs: this.logs.length,
+                        logs: this.logs,
+                    };
+
+                    const logContent = JSON.stringify(report, null, 2);
+                    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                    const filename = `LOG-CONSOLE-${timestamp}.json`;
+
+                    // Salvar no localStorage
+                    localStorage.setItem('console-log-backup', logContent);
+                    localStorage.setItem('console-log-latest', logContent);
+                    localStorage.setItem('console-log-timestamp', timestamp);
+
+                    console.log(`📄 Log salvo no localStorage: ${filename}`);
+                    return true;
+                } catch (error) {
+                    console.error('Erro ao salvar log:', error);
+                    return false;
+                }
+            }
+
+            initialize() {
+                if (this.isInitialized) return;
+                
+                console.log('🚀 Inicializando Sistema de Log Simplificado...');
+                
+                this.interceptConsole();
+                
+                // Salvar log a cada 5 segundos
+                setInterval(() => {
+                    this.saveToLocalStorage();
+                }, 5000);
+                
+                // Salvar log quando a página for fechada
+                window.addEventListener('beforeunload', () => {
+                    this.saveToLocalStorage();
+                });
+                
+                this.isInitialized = true;
+                console.log('✅ Sistema de Log Simplificado inicializado com sucesso!');
+                
+                // Atualizar status
+                document.getElementById('status').innerHTML = '✅ Sistema de Log Ativo - Capturando logs...';
+                document.getElementById('status').className = 'status success';
+            }
+
+            getLogs() {
+                return [...this.logs];
+            }
+
+            forceSave() {
+                return this.saveToLocalStorage();
+            }
+        }
+
+        // Inicializar sistema de log
+        const simpleLogger = new SimpleLogger();
+
+        // Funções de teste
+        function testLog() {
+            console.log('📝 Teste de log normal');
+            console.log('Objeto de teste:', { nome: 'Teste', valor: 123, array: [1, 2, 3] });
+        }
+
+        function testError() {
+            console.error('❌ Erro simulado');
+            try {
+                throw new Error('Erro de teste intencional');
+            } catch (error) {
+                console.error('Erro capturado:', error);
+            }
+        }
+
+        function testSave() {
+            const success = simpleLogger.forceSave();
+            if (success) {
+                alert('✅ Log salvo com sucesso no localStorage!');
+            } else {
+                alert('❌ Erro ao salvar log!');
+            }
+        }
+
+        function checkLocalStorage() {
+            const latest = localStorage.getItem('console-log-latest');
+            const timestamp = localStorage.getItem('console-log-timestamp');
+            
+            if (latest) {
+                const logData = JSON.parse(latest);
+                alert(`📊 Logs encontrados:\n- Session ID: ${logData.sessionId}\n- Total de logs: ${logData.totalLogs}\n- Timestamp: ${timestamp}`);
+            } else {
+                alert('❌ Nenhum log encontrado no localStorage');
+            }
+        }
+
+        // Inicializar após carregamento da página
+        window.addEventListener('load', () => {
+            console.log('🌐 Página carregada - Sistema de log ativo');
+        });
+    </script>
+</body>
+</html>

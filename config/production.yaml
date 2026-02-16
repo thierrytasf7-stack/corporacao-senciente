@@ -1,0 +1,148 @@
+# ========================================
+# CORPORAÇÃO SENCIENTE - CONFIGURAÇÃO DE PRODUÇÃO
+# ========================================
+
+production:
+  # Database
+  database:
+    supabase_url: "https://ffdszaiarxstxbafvedi.supabase.co"
+    supabase_service_role_key: "sbp_70c0ffec86b74792d61bdf9ec73e29ced565ddaa"
+    pool_min_size: 10
+    pool_max_size: 50
+    request_timeout: 15
+    enable_metrics: true
+
+  # AI Services
+  ai:
+    openai_api_key: "sk-your-openai-production-key-here"
+    model: "gpt-4"
+    temperature: 0.7
+    max_tokens: 2000
+    rate_limit_per_minute: 50
+
+  # Payments
+  payments:
+    stripe_secret_key: "sk_live_your-stripe-secret-key"
+    stripe_publishable_key: "pk_live_your-stripe-publishable-key"
+    stripe_webhook_secret: "whsec_your-webhook-secret"
+    default_currency: "USD"
+    trial_period_days: 14
+    plans:
+      freemium:
+        name: "Freemium"
+        price_monthly: 0
+        features: ["3_subsidiaries", "basic_support", "community_access"]
+      premium:
+        name: "Premium"
+        price_monthly: 49.99
+        features: ["unlimited_subsidiaries", "priority_support", "advanced_analytics", "api_access"]
+      enterprise:
+        name: "Enterprise"
+        price_monthly: 199.99
+        features: ["all_premium", "white_label", "dedicated_support", "custom_integrations"]
+
+  # System
+  system:
+    environment: "production"
+    log_level: "WARNING"
+    debug: false
+    timezone: "UTC"
+
+  # Agents
+  agents:
+    auto_evolution_interval_hours: 6
+    max_concurrent_agents: 20
+    agent_autonomy_threshold: 90
+    enable_learning: true
+    performance_monitoring: true
+
+  # Holding
+  holding:
+    main_holding_id: "550e8400-e29b-41d4-a716-446655440000"
+    default_vision: "Holding que constrói empresas automaticamente"
+    auto_create_subsidiaries: true
+    max_subsidiaries_per_holding: 50
+
+  # Security
+  security:
+    jwt_secret_key: "your-production-jwt-secret-key-64-chars-minimum"
+    jwt_algorithm: "HS256"
+    jwt_expiration_hours: 8
+    bcrypt_rounds: 12
+    cors_origins:
+      - "https://corporacao-senciente.com"
+      - "https://app.corporacao-senciente.com"
+      - "https://dashboard.corporacao-senciente.com"
+    rate_limiting:
+      requests_per_minute: 100
+      burst_limit: 20
+
+  # Monitoring
+  monitoring:
+    enable_metrics: true
+    metrics_retention_days: 90
+    health_check_interval: 30
+    alert_email: "alerts@corporacao-senciente.com"
+    uptime_monitoring: true
+    error_tracking: true
+
+  # Cache
+  cache:
+    redis_url: "redis://localhost:6379/0"
+    ttl_seconds: 3600
+    enable_fallback: true
+
+  # Email
+  email:
+    smtp_server: "smtp.gmail.com"
+    smtp_port: 587
+    smtp_username: "admin@corporacao-senciente.com"
+    smtp_password: "your-smtp-password"
+    from_email: "admin@corporacao-senciente.com"
+    templates:
+      welcome: "templates/email/welcome.html"
+      invoice: "templates/email/invoice.html"
+      alert: "templates/email/alert.html"
+
+  # File Storage
+  storage:
+    provider: "aws_s3"
+    aws_access_key_id: "your-aws-access-key"
+    aws_secret_access_key: "your-aws-secret-key"
+    s3_bucket: "corporacao-senciente-files"
+    s3_region: "us-east-1"
+    max_file_size_mb: 10
+    allowed_extensions: [".pdf", ".doc", ".docx", ".xls", ".xlsx", ".txt", ".json"]
+
+  # Analytics
+  analytics:
+    google_analytics_id: "GA_MEASUREMENT_ID"
+    mixpanel_token: "your-mixpanel-token"
+    enable_user_tracking: true
+    privacy_compliant: true
+
+  # Business Rules
+  business_rules:
+    min_subsidiary_autonomy: 70
+    max_opportunity_evaluation_time: 180
+    revenue_growth_target: 0.15
+    agent_performance_threshold: 85
+    max_failed_tasks_per_hour: 10
+    emergency_shutdown_threshold: 50  # % of failed operations
+
+  # Deployment
+  deployment:
+    domain: "corporacao-senciente.com"
+    ssl_enabled: true
+    backup_schedule: "0 2 * * *"  # Daily at 2 AM
+    maintenance_window: "sunday 03:00"
+    auto_scaling_enabled: true
+    min_instances: 2
+    max_instances: 10
+
+  # Third-party Integrations
+  integrations:
+    slack_webhook: "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
+    discord_webhook: "https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK"
+    github_token: "your-github-token"
+    linear_api_key: "your-linear-api-key"

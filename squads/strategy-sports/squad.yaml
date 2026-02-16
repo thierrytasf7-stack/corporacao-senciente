@@ -1,0 +1,77 @@
+name: strategy-sports
+version: 1.0.0
+description: Squad de desenvolvimento de estratégias de apostas - criação, backtesting, otimização e validação de edge
+team: BET-SPORTS
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: StrategySports
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - strategy-lead.md
+    - quant-sports.md
+    - backtest-engineer.md
+    - optimizer.md
+  tasks:
+    # Strategy Lead Tasks
+    - strategy-roadmap.md
+    - strategy-evaluation.md
+    - strategy-deployment.md
+    # Quant Tasks
+    - quant-create-model.md
+    - quant-statistical-analysis.md
+    - quant-edge-detection.md
+    # Backtest Tasks
+    - backtest-run-simulation.md
+    - backtest-validate-results.md
+    - backtest-compare-strategies.md
+    # Optimizer Tasks
+    - optimizer-parameter-tuning.md
+    - optimizer-portfolio-allocation.md
+    - optimizer-kelly-calculation.md
+  workflows:
+    - strategy-development-workflow.yaml
+    - backtesting-workflow.yaml
+    - optimization-workflow.yaml
+  checklists:
+    - strategy-validation-checklist.md
+    - backtest-quality-checklist.md
+  templates:
+    - strategy-proposal-tmpl.md
+    - backtest-report-tmpl.md
+  tools:
+    - postgres
+    - context7
+  scripts: []
+
+config:
+  extends: extend
+  backtesting:
+    minSampleSize: 1000
+    minConfidence: 95
+    minROI: 5
+    maxDrawdown: 20
+  optimization:
+    algorithm: ["grid-search", "bayesian", "genetic"]
+    objective: "sharpe-ratio"
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+codebase:
+  module: modules/strategy-sports
+  backend: modules/strategy-sports/backend
+  models: modules/strategy-sports/models
+
+tags:
+  - strategy
+  - sports
+  - quant
+  - backtesting
+  - optimization

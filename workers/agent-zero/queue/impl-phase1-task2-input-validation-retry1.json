@@ -1,0 +1,20 @@
+{
+  "id": "impl-phase1-task2-input-validation-retry1",
+  "agent": "dev",
+  "task_type": "implement-security-fix",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_read", "file_write"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [
+    "modules/betting-platform/backend/services/QueryOptimizer.ts"
+  ],
+  "prompt": "ADD INPUT VALIDATION\n\nFile: modules/betting-platform/backend/services/QueryOptimizer.ts\nMissing: Key validation\n\nSIMPLE FIX:\n1. Read QueryOptimizer.ts\n2. Add helper function:\n   validateKey(key: string) {\n     if (!/^[a-zA-Z0-9:_-]+$/.test(key)) throw new Error('Invalid cache key');\n   }\n3. Call validateKey em get/set/delete methods\n\nDONE.",
+  "acceptance_criteria": [
+    "validateKey function implementada",
+    "Regex whitelist: [a-zA-Z0-9:_-]+",
+    "Chamada em get/set/delete"
+  ],
+  "max_tool_iterations": 8,
+  "self_review": false,
+  "quality_threshold": 7
+}

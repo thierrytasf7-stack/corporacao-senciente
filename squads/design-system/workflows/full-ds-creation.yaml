@@ -1,0 +1,56 @@
+name: full-ds-creation
+description: Workflow completo para criacao de Design System do zero
+agent: ds-architect
+trigger: "*create-system"
+
+steps:
+  - id: discovery
+    task: ds-create-system.md
+    phase: "Phase 1: Discovery"
+    description: "Elicitacao de requisitos e brand inputs"
+    gate: null
+
+  - id: tokens
+    task: ds-create-tokens.md
+    phase: "Phase 2: Token Architecture"
+    description: "Criar todos os token sets (primitive, semantic, component)"
+    gate: ds-gate-tokens.md
+    depends_on: [discovery]
+
+  - id: components
+    task: ds-create-components.md
+    phase: "Phase 3: Component Specs"
+    description: "Especificar componentes por tier"
+    gate: ds-gate-components.md
+    depends_on: [tokens]
+
+  - id: icons
+    task: ds-create-icons.md
+    phase: "Phase 3b: Icon System"
+    description: "Definir icon system"
+    depends_on: [tokens]
+
+  - id: themes
+    task: ds-create-theme.md
+    phase: "Phase 4: Themes"
+    description: "Criar temas (light + dark)"
+    depends_on: [tokens]
+
+  - id: accessibility
+    task: ds-audit-accessibility.md
+    phase: "Phase 5: Accessibility Audit"
+    description: "Verificar WCAG AA compliance"
+    gate: ds-gate-accessibility.md
+    depends_on: [components, themes]
+
+  - id: documentation
+    task: ds-document-guidelines.md
+    phase: "Phase 6: Documentation"
+    description: "Gerar documentacao completa"
+    gate: ds-gate-documentation.md
+    depends_on: [components, themes, icons]
+
+  - id: registration
+    phase: "Phase 7: Registration"
+    description: "Registrar na biblioteca e atualizar catalog"
+    depends_on: [documentation, accessibility]

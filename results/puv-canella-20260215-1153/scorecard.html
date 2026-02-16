@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scorecard PUV - Canella Comunica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .score-section {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+        }
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(#667eea 0% 40%, #e0e0e0 40% 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .score-circle::before {
+            content: '';
+            width: 160px;
+            height: 160px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .score-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            z-index: 1;
+        }
+        .score-label {
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 10px;
+        }
+        .criteria-section {
+            padding: 40px;
+        }
+        .criteria-section h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+        .criterion {
+            margin-bottom: 25px;
+        }
+        .criterion-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .criterion-name {
+            font-weight: 600;
+            color: #333;
+        }
+        .criterion-score {
+            font-weight: bold;
+            color: #667eea;
+        }
+        .bar-container {
+            background: #e0e0e0;
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            transition: width 0.3s ease;
+        }
+        .radar-section {
+            padding: 40px;
+            background: #f8f9fa;
+        }
+        .radar-section h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2em;
+        }
+        svg {
+            display: block;
+            margin: 0 auto;
+        }
+        .footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Scorecard PUV</h1>
+            <p>Canella Comunica - Comunicação para Arquitetura, Construção e Engenharia</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Data: 15/02/2026</p>
+        </div>
+
+        <div class="score-section">
+            <div class="score-circle">
+                <span class="score-number">8/20</span>
+            </div>
+            <div class="score-label">Score Total PUV</div>
+        </div>
+
+        <div class="criteria-section">
+            <h2>Avaliação por Critério</h2>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">1. Clareza da PUV</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">2. Diferenciação</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">3. Público-alvo Definido</span>
+                    <span class="criterion-score">2/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">4. Benefícios Claros</span>
+                    <span class="criterion-score">0/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">5. Prova Social</span>
+                    <span class="criterion-score">0/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">6. CTA (Chamada para Ação)</span>
+                    <span class="criterion-score">0/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">7. Identidade de Marca</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">8. Presença Digital</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">9. UX/Navegabilidade</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">10. Otimização para Conversão</span>
+                    <span class="criterion-score">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill" style="width: 50%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="radar-section">
+            <h2>Radar de Desempenho</h2>
+            <svg width="600" height="600" viewBox="0 0 600 600">
+                <!-- Grid circles -->
+                <circle cx="300" cy="300" r="250" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="200" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="150" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="100" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                <circle cx="300" cy="300" r="50" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+
+                <!-- Axis lines -->
+                <line x1="300" y1="300" x2="300" y2="50" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="526" y2="163" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="526" y2="437" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="300" y2="550" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="74" y2="437" stroke="#ccc" stroke-width="1"/>
+                <line x1="300" y1="300" x2="74" y2="163" stroke="#ccc" stroke-width="1"/>
+
+                <!-- Data polygon -->
+                <polygon points="300,175 388,213 388,387 300,425 212,387 212,213"
+                         fill="rgba(102, 126, 234, 0.3)"
+                         stroke="#667eea"
+                         stroke-width="3"/>
+
+                <!-- Data points -->
+                <circle cx="300" cy="175" r="6" fill="#667eea"/>
+                <circle cx="388" cy="213" r="6" fill="#667eea"/>
+                <circle cx="388" cy="387" r="6" fill="#667eea"/>
+                <circle cx="300" cy="425" r="6" fill="#667eea"/>
+                <circle cx="212" cy="387" r="6" fill="#667eea"/>
+                <circle cx="212" cy="213" r="6" fill="#667eea"/>
+
+                <!-- Labels -->
+                <text x="300" y="35" text-anchor="middle" fill="#333" font-size="12">Clareza</text>
+                <text x="540" y="150" text-anchor="start" fill="#333" font-size="12">Diferenciação</text>
+                <text x="540" y="450" text-anchor="start" fill="#333" font-size="12">Público-alvo</text>
+                <text x="300" y="575" text-anchor="middle" fill="#333" font-size="12">Benefícios</text>
+                <text x="60" y="450" text-anchor="end" fill="#333" font-size="12">Prova Social</text>
+                <text x="60" y="150" text-anchor="end" fill="#333" font-size="12">CTA</text>
+            </svg>
+        </div>
+
+        <div class="footer">
+            <p>Diagnóstico PUV - Diana Corporação Senciente | Squad PUV Score</p>
+            <p style="font-size: 0.8em; margin-top: 5px;">Gerado em 15/02/2026</p>
+        </div>
+    </div>
+</body>
+</html>

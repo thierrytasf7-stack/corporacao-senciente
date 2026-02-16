@@ -1,0 +1,51 @@
+name: social-media-squad
+version: 1.0.0
+short-title: Social Media Management Squad
+description: >-
+  Expert squad for social media strategy, content creation, analytics, and community engagement.
+  Built using squadcreator-aider framework following AIOS standards.
+
+  Includes specialized agents based on elite minds in social media:
+  - Content Strategist (Gary Vaynerchuk patterns)
+  - Creative Content Creator (Jay Baer methodology)
+  - Analytics Expert (Neil Patel framework)
+  - Community Manager (industry best practices)
+
+author: AIOS Team
+slashPrefix: socialMediaSquad
+
+patterns:
+  prefix: SMS
+  categories:
+    - content-strategy
+    - creative-execution
+    - analytics-insights
+    - community-relations
+
+executors:
+  - type: Agent
+    description: Strategic decision-making and planning
+  - type: Task
+    description: Workflow execution (content creation, posting, monitoring)
+  - type: Workflow
+    description: Multi-step campaigns and processes
+  - type: Worker
+    description: Automated social media operations
+
+quality_gates:
+  - gate_id: QG-001
+    transition: "Strategy → Content Creation"
+    blocking: true
+    criteria: "Strategy approved by Content Strategist"
+  - gate_id: QG-002
+    transition: "Content → Publishing"
+    blocking: true
+    criteria: "Content passes quality review"
+  - gate_id: QG-003
+    transition: "Publishing → Analytics"
+    blocking: true
+    criteria: "Post published and tracked"
+  - gate_id: QG-004
+    transition: "Analytics → Optimization"
+    blocking: false
+    criteria: "Metrics reviewed"

@@ -1,0 +1,31 @@
+{
+  "_comment": "TEMPLATE OBRIGATÓRIO para criação de squads via Agent Zero v3",
+  "_comment2": "SUBSTITUIR: {nome}, {TEAM}, {agentes}, {tasks} conforme necessário",
+  "_comment3": "NUNCA remover: aios_guide_path, context_files, tools_required",
+
+  "id": "squad-{nome}",
+  "agent": "squad-creator",
+  "task_type": "create-squad",
+  "tools_required": ["file_read", "file_write", "shell_exec"],
+
+  "prompt": "CRIA SQUAD COMPLETO {nome} para {TEAM}.\n\nLeia o AIOS Guide em aios_guide_path e EXECUTE o processo *create-squad COMPLETO:\n\n1. Criar estrutura: mkdir -p squads/{nome}/{config,agents,tasks,workflows,checklists,templates,tools,scripts,data}\n2. Gerar squad.yaml com team: {TEAM}, {N} agentes ({lista_agentes}), {M} tasks\n3. Criar agents/{lead}.md\n4. Criar tasks/{exemplo}.md\n5. Criar .claude/commands/{TEAM}/{Nome}-AIOS.md\n\nSiga formato EXATO dos context_files.\n\nCRITERIA:\n- Estrutura completa criada em squads/{nome}/\n- squad.yaml com team: {TEAM}\n- agents/{lead}.md criado\n- tasks/{exemplo}.md criado\n- .claude/commands/{TEAM}/{Nome}-AIOS.md criado\n\nOUTPUT: Lista arquivos criados com paths",
+
+  "aios_guide_path": ".aios-core/development/agents/squad-creator.md",
+
+  "context_files": [
+    "squads/betting-ops/squad.yaml",
+    "squads/betting-ops/agents/betting-ceo.md",
+    "squads/betting-ops/tasks/bettor-execute-bet.md",
+    ".claude/commands/BET-SPORTS/BettingOps-AIOS.md"
+  ],
+
+  "acceptance_criteria": [
+    "squads/{nome}/ com 10 pastas",
+    "squad.yaml com team: {TEAM}",
+    "agents/{lead}.md existente",
+    "tasks/{exemplo}.md existente",
+    ".claude/commands/{TEAM}/{Nome}-AIOS.md existente"
+  ],
+
+  "max_tool_iterations": 15
+}

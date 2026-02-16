@@ -1,0 +1,163 @@
+# Universal Orchestration Workflow
+# Main workflow for the Meta-Orchestrator Squad
+
+name: universal-orchestration
+version: "1.0.0"
+description: |
+  Complete workflow for receiving any task and routing it to the
+  optimal executor - either an existing squad or a newly created one.
+
+trigger:
+  type: user_request
+  pattern: any
+
+agents_involved:
+  - nexus      # Coordinator - receives and routes
+  - scanner    # Analyzer - checks capabilities
+  - forge      # Creator - creates new squads
+  - sentinel   # Monitor - tracks execution
+  - cortex     # Memory - learns from outcomes
+
+phases:
+  - id: intake
+    name: "Task Intake"
+    agent: nexus
+    steps:
+      - receive_task
+      - parse_requirements
+      - extract_domain
+      - assess_complexity
+    output: task_profile
+    quality_gate: QG-001
+
+  - id: analysis
+    name: "Capability Analysis"
+    agent: scanner
+    steps:
+      - load_squad_registry
+      - analyze_required_capabilities
+      - score_squad_matches
+      - identify_gaps
+    output: capability_report
+    quality_gate: QG-002
+
+  - id: decision
+    name: "Routing Decision"
+    agent: nexus
+    steps:
+      - evaluate_match_scores
+      - determine_path
+    decision:
+      delegate_threshold: 0.7
+      ask_threshold: 0.5
+    output: routing_decision
+    quality_gate: QG-003
+
+  - id: execution
+    name: "Task Execution"
+    conditional: true
+    paths:
+      - condition: "match_score >= 0.7"
+        name: "Delegation"
+        steps:
+          - format_for_target_squad
+          - invoke_target_agent
+          - initiate_monitoring
+        agent: nexus
+
+      - condition: "match_score < 0.5"
+        name: "Squad Creation"
+        steps:
+          - invoke_forge
+          - create_new_squad
+          - register_squad
+          - delegate_to_new_squad
+        agent: forge
+
+      - condition: "0.5 <= match_score < 0.7"
+        name: "User Choice"
+        steps:
+          - present_options
+          - await_user_decision
+          - execute_chosen_path
+        agent: nexus
+
+  - id: monitoring
+    name: "Execution Monitoring"
+    agent: sentinel
+    parallel: true
+    steps:
+      - track_progress
+      - check_quality
+      - detect_issues
+      - report_status
+    output: execution_status
+
+  - id: completion
+    name: "Completion & Learning"
+    agents: [sentinel, cortex]
+    steps:
+      - validate_output
+      - record_outcome
+      - extract_patterns
+      - update_routing_intelligence
+    output: final_result
+    quality_gate: QG-004
+
+quality_gates:
+  QG-001:
+    name: "Task Understanding"
+    criteria:
+      - domain_identified: true
+      - requirements_clear: true
+      - complexity_assessed: true
+
+  QG-002:
+    name: "Analysis Complete"
+    criteria:
+      - all_squads_checked: true
+      - scores_calculated: true
+      - gaps_identified: true
+
+  QG-003:
+    name: "Decision Valid"
+    criteria:
+      - decision_justified: true
+      - path_selected: true
+
+  QG-004:
+    name: "Execution Quality"
+    criteria:
+      - output_complete: true
+      - quality_acceptable: true
+      - learning_recorded: true
+
+error_handling:
+  on_analysis_failure:
+    action: "Retry with broader search"
+    max_retries: 2
+
+  on_delegation_failure:
+    action: "Try alternative squad or create new"
+    fallback: forge
+
+  on_creation_failure:
+    action: "Alert user and suggest manual intervention"
+    escalate: true
+
+metrics:
+  tracked:
+    - routing_accuracy
+    - execution_time
+    - squad_creation_count
+    - success_rate
+    - learning_improvements
+
+integration:
+  memory_layer: true
+  logging: verbose
+  notifications: on_completion
+
+---
+# Workflow execution is managed by @nexus
+# Invoke with: @nexus *workflow universal-orchestration

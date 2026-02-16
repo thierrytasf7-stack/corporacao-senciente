@@ -1,0 +1,45 @@
+# Release Pipeline
+# Used for: *ship, post-sprint release
+
+name: release-pipeline
+version: 1.0.0
+description: Pipeline de release - do codigo aprovado ate producao
+trigger: "*ship"
+
+phases:
+  - id: pre_flight
+    name: "Pre-flight Checks"
+    agent: devops
+    skill: "Operacoes:DevOps-AIOS"
+    actions:
+      - "*version-check"
+      - "Verify all stories QA-approved"
+      - "Run full test suite"
+      - "Build production"
+      - "CodeRabbit pre-PR validation"
+    gate: "All checks pass, zero CRITICAL"
+
+  - id: push
+    name: "Push to Remote"
+    agent: devops
+    actions:
+      - "*pre-push"
+      - "*push"
+      - "*create-pr (if PR workflow)"
+
+  - id: release
+    name: "Create Release"
+    agent: devops
+    actions:
+      - "*release (semantic versioning)"
+      - "Generate release notes"
+      - "Tag version"
+
+  - id: verify
+    name: "Post-deploy Verification"
+    agent: ceo-desenvolvimento
+    actions:
+      - "Verify deployment success"
+      - "Run smoke tests (if configured)"
+      - "Update story statuses → SHIPPED"
+      - "Generate sprint summary"

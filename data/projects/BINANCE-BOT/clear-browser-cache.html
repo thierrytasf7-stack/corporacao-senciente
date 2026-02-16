@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Limpar Cache do Sistema AURA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .button {
+            background: #dc3545;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+
+        .button:hover {
+            background: #c82333;
+        }
+
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧹 Limpeza do Sistema AURA</h1>
+        <p>Este script irá limpar todas as posições fictícias e dados simulados do localStorage.</p>
+
+        <div class="info">
+            <strong>⚠️ Atenção:</strong> Esta ação irá remover todos os dados temporários do sistema.
+            Apenas dados reais da Binance Testnet serão mantidos.
+        </div>
+
+        <button class="button" onclick="clearAllData()">🗑️ Limpar Todos os Dados Fictícios</button>
+        <button class="button" onclick="clearPositions()">📊 Limpar Apenas Posições</button>
+        <button class="button" onclick="clearSignals()">📈 Limpar Apenas Sinais</button>
+
+        <div id="result"></div>
+
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function clearAllData() {
+            try {
+                let clearedCount = 0;
+                const keysToRemove = [];
+
+                // Identificar todas as chaves relacionadas ao AURA
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && (key.includes('aura') || key.includes('position') || key.includes('signal'))) {
+                        keysToRemove.push(key);
+                    }
+                }
+
+                // Remover todas as chaves identificadas
+                keysToRemove.forEach(key => {
+                    localStorage.removeItem(key);
+                    clearedCount++;
+                });
+
+                document.getElementById('result').innerHTML = `
+                    <div class="success">
+                        ✅ Limpeza completa realizada!<br>
+                        📊 Chaves removidas: ${clearedCount}<br>
+                        🎯 Sistema limpo e pronto para dados reais
+                    </div>
+                `;
+
+                updateStatus();
+                console.log('✅ Limpeza completa realizada:', clearedCount, 'chaves removidas');
+
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <div class="error">❌ Erro durante a limpeza: ${error.message}</div>
+                `;
+                console.error('❌ Erro durante a limpeza:', error);
+            }
+        }
+
+        function clearPositions() {
+            try {
+                const positionKeys = ['aura-position-monitoring', 'aura_position_history'];
+                let clearedCount = 0;
+
+                positionKeys.forEach(key => {
+                    if (localStorage.getItem(key)) {
+                        localStorage.removeItem(key);
+                        clearedCount++;
+                    }
+                });
+
+                document.getElementById('result').innerHTML = `
+                    <div class="success">
+                        ✅ Posições fictícias removidas!<br>
+                        📊 Chaves removidas: ${clearedCount}
+                    </div>
+                `;
+
+                updateStatus();
+                console.log('✅ Posições fictícias removidas:', clearedCount, 'chaves');
+
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <div class="error">❌ Erro ao limpar posições: ${error.message}</div>
+                `;
+            }
+        }
+
+        function clearSignals() {
+            try {
+                const signalKeys = ['aura-signals', 'accumulated-signals'];
+                let clearedCount = 0;
+
+                signalKeys.forEach(key => {
+                    if (localStorage.getItem(key)) {
+                        localStorage.removeItem(key);
+                        clearedCount++;
+                    }
+                });
+
+                document.getElementById('result').innerHTML = `
+                    <div class="success">
+                        ✅ Sinais simulados removidos!<br>
+                        📊 Chaves removidas: ${clearedCount}
+                    </div>
+                `;
+
+                updateStatus();
+                console.log('✅ Sinais simulados removidos:', clearedCount, 'chaves');
+
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <div class="error">❌ Erro ao limpar sinais: ${error.message}</div>
+                `;
+            }
+        }
+
+        function updateStatus() {
+            const totalKeys = localStorage.length;
+            const auraKeys = [];
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.includes('aura')) {
+                    auraKeys.push(key);
+                }
+            }
+
+            document.getElementById('status').innerHTML = `
+                <div class="info">
+                    <strong>📊 Status Atual:</strong><br>
+                    • Total de chaves no localStorage: ${totalKeys}<br>
+                    • Chaves relacionadas ao AURA: ${auraKeys.length}<br>
+                    • Chaves AURA: ${auraKeys.join(', ') || 'Nenhuma'}
+                </div>
+            `;
+        }
+
+        // Atualizar status ao carregar a página
+        updateStatus();
+    </script>
+</body>
+
+</html>

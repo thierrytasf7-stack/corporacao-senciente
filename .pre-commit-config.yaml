@@ -1,0 +1,42 @@
+# ==============================================================================
+# CORPORAÇÃO SENCIENTE - Pre-commit Hooks
+# Disciplina Espartana: Código sujo não entra no repositório
+# ==============================================================================
+
+repos:
+  # Ruff - Linting e Formatting 100x mais rápido (escrito em Rust)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.0
+    hooks:
+      # Linting com auto-fix
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        types_or: [python, pyi, jupyter]
+      # Formatting (substitui Black)
+      - id: ruff-format
+        types_or: [python, pyi, jupyter]
+
+  # Verificar YAML
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  # Verificar tipos Python
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [types-requests]
+        args: [--ignore-missing-imports]
+        exclude: ^(tests/|scripts/legacy/)
+
+# Configuração global
+default_language_version:
+  python: python3.11

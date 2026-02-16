@@ -1,0 +1,21 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source code
+COPY . .
+
+# Use simple config
+RUN cp vite.config.simple.ts vite.config.ts
+
+# Expose port - Porta fixa para o frontend AURA
+EXPOSE 13000
+
+# Start the application in development mode - Porta única 13000 para evitar conflitos
+CMD ["npm", "run", "dev:13000"]

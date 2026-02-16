@@ -1,0 +1,27 @@
+{
+  "_comment": "TEMPLATE para invocar @analyst (Alex) via Agent Zero",
+  "_comment2": "SUBSTITUIR: {task-id}, {objetivo-analise}, {mercado/dominio}",
+
+  "id": "invoke-analyst-{task-id}",
+  "task_type": "invoke-aios-agent",
+  "agent": "analyst",
+  "aios_agent_path": ".aios-core/development/agents/analyst.md",
+
+  "context_files": [
+    "docs/market-research/{dominio}.md",
+    "docs/prd/{dominio}-analysis.md"
+  ],
+
+  "tools_required": ["file_read", "web_fetch", "skill_call"],
+
+  "prompt": "INVOCA @analyst (Alex) para {objetivo-analise}.\n\nLeia aios_agent_path e ABSORVA:\n- Persona: Business Analyst data-driven\n- Style: Analítico, baseado em evidências\n- Process: Pesquisa → Análise competitiva → SWOT → Recomendação\n\nUse context_files e web_fetch para dados atualizados.\n\nTASK:\n1. Pesquisar mercado de {mercado/dominio} (web)\n2. Analisar competidores principais (5+)\n3. Criar SWOT analysis\n4. Avaliar viabilidade\n5. Gerar relatório com recomendação\n\nCRITERIA:\n- Dados de mercado atualizados (2026)\n- 5+ competidores analisados\n- SWOT matrix completa\n- Recomendação Go/No-go clara\n- Fontes citadas\n\nOUTPUT: Market analysis report markdown (Market Overview, Competitors, SWOT, Recommendation)",
+
+  "acceptance_criteria": [
+    "Market size e growth data",
+    "Competitor analysis (5+ players)",
+    "SWOT matrix",
+    "Clear Go/No-go recommendation com motivos"
+  ],
+
+  "max_tool_iterations": 12
+}

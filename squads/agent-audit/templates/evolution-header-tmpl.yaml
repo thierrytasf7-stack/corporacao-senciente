@@ -1,0 +1,12 @@
+# Evolution Header Template
+# Inject this into the agent's YAML block under the root level
+# Managed exclusively by Helix (Agent Evolver)
+
+evolution:
+  version: "1.0.0"
+  quality_score: 0
+  last_audit: "YYYY-MM-DD"
+  total_optimizations: 0
+  changelog: "squads/agent-audit/data/changelogs/{agent-id}.changelog.md"
+  lineage:
+    - { version: "1.0.0", score: 0, date: "YYYY-MM-DD", auditor: "Helix" }

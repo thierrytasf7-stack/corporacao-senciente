@@ -1,0 +1,23 @@
+{
+  "id": "impl-phase1-task3-bet-locking",
+  "agent": "dev",
+  "task_type": "implement-concurrency-fix",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_read", "file_write", "shell_exec"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [
+    "modules/betting-platform/backend/services/QueryOptimizer.ts",
+    "modules/betting-platform/backend/package.json"
+  ],
+  "prompt": "CRITICAL FIX #3: Add bet locking mechanism to prevent race conditions\n\nISSUE: Race condition em bet placement - múltiplas apostas simultâneas no mesmo evento\nRISK: Double-spending, balance inconsistency, financial loss\n\nIMPLEMENTATION:\n1. Instalar ioredis dependency (se não existir):\n   npm install ioredis --save\n2. Criar BetLockManager class:\n   - acquireLock(userId, eventId, ttlMs = 5000)\n   - releaseLock(userId, eventId)\n   - Usar Redis SET NX EX (atomic operation)\n3. Implementar lock pattern:\n   ```typescript\n   async placeBet(userId, eventId, amount) {\n     const lock = await acquireLock(userId, eventId);\n     if (!lock) throw new Error('Concurrent bet detected');\n     try {\n       // Process bet\n       return result;\n     } finally {\n       await releaseLock(userId, eventId);\n     }\n   }\n   ```\n4. Add timeout handling: lock TTL 5s (auto-release)\n5. Add monitoring: log lock contention events\n6. Criar testes de concorrência\n\nACCEPTANCE CRITERIA:\n- BetLockManager implementado com Redis\n- acquireLock usa SET NX EX (atomic)\n- Lock auto-release após TTL\n- Try-finally garante release\n- Testes de race condition pass\n\nOUTPUT: BetLockManager + integration + tests",
+  "acceptance_criteria": [
+    "BetLockManager class criada",
+    "acquireLock/releaseLock com Redis SET NX EX",
+    "Lock TTL configurável (default 5s)",
+    "Try-finally pattern implementado",
+    "Testes de concorrência incluídos"
+  ],
+  "max_tool_iterations": 15,
+  "self_review": true,
+  "quality_threshold": 8
+}

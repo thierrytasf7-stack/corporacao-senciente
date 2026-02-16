@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUV Score - Academia Lendária</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); padding: 40px 20px; min-height: 100vh; }
+        .container { max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 40px; text-align: center; }
+        .header h1 { font-size: 2.2em; margin-bottom: 8px; letter-spacing: 1px; }
+        .header .subtitle { font-size: 1.1em; opacity: 0.85; }
+        .header .meta { margin-top: 12px; opacity: 0.7; font-size: 0.9em; }
+        .score-hero { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 50px 40px; text-align: center; border-bottom: 3px solid #0f3460; }
+        .score-circle { width: 180px; height: 180px; margin: 0 auto 20px; border-radius: 50%; background: conic-gradient(#2ecc71 0% 80%, #e0e0e0 80% 100%); display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 8px 25px rgba(46,204,113,0.3); }
+        .score-circle::before { content: ''; position: absolute; width: 140px; height: 140px; background: white; border-radius: 50%; }
+        .score-number { position: relative; z-index: 1; font-size: 3.5em; font-weight: 800; color: #2ecc71; }
+        .score-label { font-size: 1.3em; color: #555; }
+        .score-status { display: inline-block; background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; padding: 10px 28px; border-radius: 25px; font-weight: 700; margin-top: 15px; font-size: 1.1em; letter-spacing: 1px; }
+        .criteria-section { padding: 40px; }
+        .criteria-section h2 { color: #1a1a2e; font-size: 1.6em; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid #e9ecef; }
+        .criterion { background: #f8f9fa; border-radius: 12px; padding: 22px; margin-bottom: 20px; border-left: 5px solid #0f3460; transition: transform 0.2s, box-shadow 0.2s; }
+        .criterion:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .criterion-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .criterion h3 { color: #1a1a2e; font-size: 1.1em; }
+        .criterion .score-badge { background: #0f3460; color: white; padding: 4px 14px; border-radius: 15px; font-weight: 700; font-size: 0.95em; }
+        .score-bar { background: #e0e0e0; height: 24px; border-radius: 12px; overflow: hidden; margin: 8px 0; }
+        .score-fill { height: 100%; border-radius: 12px; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; color: white; font-weight: 700; font-size: 0.85em; transition: width 0.6s ease; }
+        .fill-4 { background: linear-gradient(90deg, #2ecc71, #27ae60); }
+        .fill-3 { background: linear-gradient(90deg, #3498db, #2980b9); }
+        .fill-2 { background: linear-gradient(90deg, #f39c12, #e67e22); }
+        .fill-1 { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+        .criterion p { color: #555; line-height: 1.6; margin-top: 8px; font-size: 0.95em; }
+        .radar-section { padding: 40px; background: #f8f9fa; text-align: center; }
+        .radar-section h2 { color: #1a1a2e; margin-bottom: 25px; font-size: 1.6em; }
+        svg text { font-family: 'Segoe UI', sans-serif; }
+        .recs-section { padding: 40px; }
+        .recs-section h2 { color: #1a1a2e; font-size: 1.6em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #e9ecef; }
+        .rec-item { display: flex; align-items: flex-start; gap: 15px; padding: 15px; margin-bottom: 12px; background: #f0f7ff; border-radius: 10px; border-left: 4px solid #3498db; }
+        .rec-num { background: #3498db; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85em; flex-shrink: 0; }
+        .rec-text { color: #333; line-height: 1.5; font-size: 0.95em; }
+        .footer { background: #1a1a2e; color: white; padding: 25px; text-align: center; }
+        .footer p { opacity: 0.8; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PUV Score Analysis</h1>
+            <p class="subtitle">Proposta Unica de Valor — Academia Lendaria</p>
+            <p class="meta">academialendaria.ai | 13 de Fevereiro de 2026</p>
+        </div>
+
+        <div class="score-hero">
+            <div class="score-circle">
+                <div class="score-number">16</div>
+            </div>
+            <p class="score-label">Pontuacao Total (de 20)</p>
+            <span class="score-status">FORTE</span>
+        </div>
+
+        <div class="criteria-section">
+            <h2>Criterios de Avaliacao</h2>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>1. Diferenciacao e Posicionamento</h3>
+                    <span class="score-badge">3/4</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-fill fill-3" style="width: 75%;">75%</div>
+                </div>
+                <p>Posicionamento claro como ecossistema de comunidade + IA Generativa. Alan Nicolas como lider de pensamento (R$200M+ faturamento). +15K alunos em +40 paises. Diferencial: comunidade > curso tradicional. Ponto fraco: categoria ainda generica ('IA para negocios').</p>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>2. Clareza da Proposta/Beneficio</h3>
+                    <span class="score-badge">3/4</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-fill fill-3" style="width: 75%;">75%</div>
+                </div>
+                <p>Proposta compreensivel em ~8s: 'Educacao + Inovacao + IA Generativa'. Beneficios tangiveis: publicacao GitHub em 4 semanas, economia R$1.6M/ano (Advanced), payback 2.2 dias. Poderia ser mais direta no hero — 'ecossistema' e abstrato para quem nao conhece.</p>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>3. Linguagem e Conexao Emocional</h3>
+                    <span class="score-badge">3/4</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-fill fill-3" style="width: 75%;">75%</div>
+                </div>
+                <p>'Sucesso nao vem do que voce sabe, mas de com quem voce caminha' — forte conexao emocional de pertencimento. 'Lendario' como identidade aspiracional. Falta: urgencia explicita e dor do cliente mais explorada antes da solucao.</p>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>4. Credibilidade e Confianca</h3>
+                    <span class="score-badge">4/4</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-fill fill-4" style="width: 100%;">100%</div>
+                </div>
+                <p>Prova social excepcional: logos Globo, Red Bull, Meta, Amazon, Caixa, BTG. +15K alunos globais. Midia: G1, Exame, Estadao, IstoE. Reclame Aqui: 8.15/10, 92.3% resolucao. App na Google Play. CNPJ publico. Credibilidade indiscutivel.</p>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <h3>5. Jornada Guiada e CTA</h3>
+                    <span class="score-badge">3/4</span>
+                </div>
+                <div class="score-bar">
+                    <div class="score-fill fill-3" style="width: 75%;">75%</div>
+                </div>
+                <p>Multiplos CTAs estrategicos: Explorar, Saiba Mais, Lista de Espera, Newsletter. Estrategia de escassez via lista de espera. Hierarquia visual clara. Falta: CTA principal mais agressivo no hero e urgencia temporal (countdown, vagas limitadas).</p>
+            </div>
+        </div>
+
+        <div class="radar-section">
+            <h2>Radar de Desempenho PUV</h2>
+            <svg viewBox="0 0 500 420" xmlns="http://www.w3.org/2000/svg" style="max-width:550px;">
+                <!-- Grid pentagons -->
+                <polygon points="250,50 440,188 367,370 133,370 60,188" fill="none" stroke="#ddd" stroke-width="1"/>
+                <polygon points="250,90 400,196 343,340 157,340 100,196" fill="none" stroke="#ddd" stroke-width="1"/>
+                <polygon points="250,130 360,204 319,310 181,310 140,204" fill="none" stroke="#ddd" stroke-width="1"/>
+                <polygon points="250,170 320,212 295,280 205,280 180,212" fill="none" stroke="#ddd" stroke-width="1"/>
+                <!-- Axes -->
+                <line x1="250" y1="210" x2="250" y2="50" stroke="#ccc" stroke-width="1"/>
+                <line x1="250" y1="210" x2="440" y2="188" stroke="#ccc" stroke-width="1"/>
+                <line x1="250" y1="210" x2="367" y2="370" stroke="#ccc" stroke-width="1"/>
+                <line x1="250" y1="210" x2="133" y2="370" stroke="#ccc" stroke-width="1"/>
+                <line x1="250" y1="210" x2="60" y2="188" stroke="#ccc" stroke-width="1"/>
+                <!-- Data (3/4, 3/4, 3/4, 4/4, 3/4) = 75%, 75%, 75%, 100%, 75% -->
+                <polygon points="250,90 400,196 343,340 157,340 100,196" fill="rgba(52,152,219,0.25)" stroke="#3498db" stroke-width="2.5"/>
+                <!-- Adjust credibilidade to 100% -->
+                <polygon points="250,90 400,196 367,370 157,340 100,196" fill="rgba(46,204,113,0.2)" stroke="#2ecc71" stroke-width="2"/>
+                <!-- Data points -->
+                <circle cx="250" cy="90" r="5" fill="#3498db"/>
+                <circle cx="400" cy="196" r="5" fill="#3498db"/>
+                <circle cx="367" cy="370" r="5" fill="#2ecc71"/>
+                <circle cx="157" cy="340" r="5" fill="#3498db"/>
+                <circle cx="100" cy="196" r="5" fill="#3498db"/>
+                <!-- Labels -->
+                <text x="250" y="38" text-anchor="middle" font-size="13" fill="#1a1a2e" font-weight="600">Diferenciacao</text>
+                <text x="455" y="192" text-anchor="start" font-size="13" fill="#1a1a2e" font-weight="600">Clareza</text>
+                <text x="380" y="390" text-anchor="start" font-size="13" fill="#1a1a2e" font-weight="600">Linguagem</text>
+                <text x="50" y="390" text-anchor="end" font-size="13" fill="#1a1a2e" font-weight="600">Credibilidade</text>
+                <text x="45" y="192" text-anchor="end" font-size="13" fill="#1a1a2e" font-weight="600">Jornada/CTA</text>
+                <!-- Score labels -->
+                <text x="250" y="100" text-anchor="middle" font-size="11" fill="#3498db">3/4</text>
+                <text x="390" y="210" text-anchor="start" font-size="11" fill="#3498db">3/4</text>
+                <text x="370" y="360" text-anchor="start" font-size="11" fill="#2ecc71">3/4</text>
+                <text x="150" y="355" text-anchor="end" font-size="11" fill="#2ecc71">4/4</text>
+                <text x="105" y="210" text-anchor="end" font-size="11" fill="#3498db">3/4</text>
+            </svg>
+        </div>
+
+        <div class="recs-section">
+            <h2>Recomendacoes Prioritarias</h2>
+            <div class="rec-item">
+                <div class="rec-num">1</div>
+                <div class="rec-text"><strong>Simplificar headline do hero:</strong> Trocar 'Ecossistema de Educacao & Inovacao' por algo mais direto como 'Domine IA Generativa em 4 Semanas — Mesmo Sem Saber Programar'.</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-num">2</div>
+                <div class="rec-text"><strong>Adicionar urgencia temporal:</strong> Countdown para proximo cohort, vagas limitadas visiveis, 'ultima turma do semestre'.</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-num">3</div>
+                <div class="rec-text"><strong>Explorar mais a dor:</strong> Secao 'Profissionais que nao dominam IA estao perdendo X oportunidades/mes' antes de apresentar a solucao.</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-num">4</div>
+                <div class="rec-text"><strong>CTA do hero mais agressivo:</strong> Trocar 'Explorar' por 'Quero Minha Vaga' ou 'Comecar Agora — Vagas Limitadas'.</div>
+            </div>
+            <div class="rec-item">
+                <div class="rec-num">5</div>
+                <div class="rec-text"><strong>Calculadora de ROI interativa:</strong> Input salario atual → output ganho estimado com IA. Torna o beneficio tangivel e personalizado.</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Diana Corporacao Senciente</strong> — PUV Score Analysis System</p>
+            <p>Gerado em: 13/02/2026 | CEO-ZERO → AIOS Direct</p>
+        </div>
+    </div>
+</body>
+</html>

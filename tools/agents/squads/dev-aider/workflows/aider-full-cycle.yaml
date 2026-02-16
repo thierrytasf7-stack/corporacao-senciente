@@ -1,0 +1,280 @@
+name: aider-full-cycle
+version: "1.0.0"
+description: |
+  Complete cost-optimized development cycle from story to deployment.
+  ALL heavy work runs via Aider (free models).
+  Claude reads ONLY minimal summaries at two decision gates.
+  Savings: 80-100% reduction in AI costs while maintaining quality.
+
+# 🚨 MANDATORY: See AIDER-EXECUTION-RULES.md for enforcement rules
+# ALL agents MUST use Aider CLI via Bash tool for implementation
+# Claude Write/Edit tools are FORBIDDEN for code generation
+
+execution_enforcement:
+  mandatory_rules_file: "AIDER-EXECUTION-RULES.md"
+  aider_cli_command: |
+    aider --model openrouter/arcee-ai/trinity-large-preview:free \
+          --no-auto-commits \
+          --yes \
+          --file {target_files} \
+          --message "{task_prompt}"
+  forbidden_actions:
+    - "Using Write tool for implementation code"
+    - "Using Edit tool for implementation code"
+    - "Generating code directly in response"
+  required_actions:
+    - "Use Bash tool to invoke Aider CLI"
+    - "Track cost savings ($0 per task)"
+    - "Report Aider execution in session log"
+
+trigger:
+  type: user_request
+  pattern: "*full-cycle"
+  available_in: [po-aider, sm-aider, dev-aider, qa-aider, deploy-aider]
+
+agents_involved:
+  - po-aider       # Story creation via Aider (FREE)
+  - sm-aider       # Task decomposition via Aider (FREE)
+  - dev-aider      # Implementation via Aider (FREE) [existing]
+  - qa-aider       # Validation via Aider (FREE)
+  - deploy-aider   # Git operations (FREE)
+
+phases:
+  - phase_1: Story Generation (Aider - FREE)
+  - phase_2: Task Decomposition (Aider - FREE)
+  - phase_3: Plan Review (Claude - MINIMAL)
+  - phase_4: Implementation (Aider - FREE)
+  - phase_5: Pre-Validation (Aider - FREE)
+  - phase_6: QA Sign-Off (Claude - MINIMAL)
+  - phase_7: Deployment (Git Operations)
+
+sequence:
+  - step: create_story
+    id: step_1
+    phase: 1
+    agent: po-aider
+    action: "Generate user story from requirements via Aider subprocess"
+    requires: null
+    inputs:
+      - featureName: string
+      - userPersona: string
+      - valueStatement: string
+    outputs:
+      - story_file: story-{name}.md
+      - story_summary: story-summary-{name}.md
+    next: create_tasks
+    on_failure: create_story
+
+  - step: create_tasks
+    id: step_2
+    phase: 2
+    agent: sm-aider
+    action: "Decompose story into atomic tasks via Aider"
+    requires: step_1
+    inputs:
+      - story_file: story-{name}.md
+    outputs:
+      - tasks_list: tasks-{name}.md
+      - task_dependencies: graph-{name}.json
+      - updated_summary: story-summary-{name}.md (updated with task count)
+    next: review_plan
+    on_failure: create_tasks
+
+  - step: review_plan
+    id: step_3
+    phase: 3
+    agent: null
+    action: |
+      Claude (human) reads story-summary-{name}.md (ONLY the summary, ~150 tokens).
+      Makes binary decision: APPROVED or CHANGES_REQUESTED.
+      Summary includes: scope, task count, risk, effort estimate.
+    requires: step_2
+    inputs:
+      - story_summary: story-summary-{name}.md (MINIMAL context)
+    outputs:
+      - plan_decision: APPROVED | CHANGES_REQUESTED
+    next: implement (if APPROVED) | create_story (if CHANGES_REQUESTED)
+    on_failure: review_plan
+    note: "Claude reads ONLY the summary. Cost: minimal (~$0.0001 for 150 tokens)"
+
+  - step: implement
+    id: step_4
+    phase: 4
+    agent: aider-dev
+    action: "Implement each task via Aider, commit per task"
+    requires: step_3
+    inputs:
+      - story_file: story-{name}.md
+      - tasks_list: tasks-{name}.md
+    outputs:
+      - implementation_complete: true
+      - commits_count: integer
+    next: validate
+    on_failure: implement
+
+  - step: validate
+    id: step_5
+    phase: 5
+    agent: qa-aider
+    action: "Run lint, typecheck, tests via local commands. Generate QA summary."
+    requires: step_4
+    inputs: null
+    outputs:
+      - qa_summary: qa-summary-{name}.md
+      - validation_passed: boolean
+    next: qa_signoff
+    on_failure: validate
+
+  - step: qa_signoff
+    id: step_6
+    phase: 6
+    agent: null
+    action: |
+      Claude (human) reads qa-summary-{name}.md (ONLY the summary, ~100 tokens).
+      Makes binary decision: APPROVED or BLOCKED.
+      Summary includes: lint status, typecheck status, test status, overall pass/fail.
+    requires: step_5
+    inputs:
+      - qa_summary: qa-summary-{name}.md (MINIMAL context)
+    outputs:
+      - qa_decision: APPROVED | BLOCKED
+    next: deploy (if APPROVED) | implement (if BLOCKED)
+    on_failure: qa_signoff
+    note: "Claude reads ONLY the summary. Cost: minimal (~$0.00005 for 100 tokens)"
+
+  - step: deploy
+    id: step_7
+    phase: 7
+    agent: deploy-aider
+    action: |
+      Verify deploy-checklist. Stage files explicitly.
+      Commit with conventional message. Dry-run push. Get user confirmation. Push.
+    requires: step_6
+    inputs:
+      - story_id: string (for commit attribution)
+    outputs:
+      - deployment_report: deploy-{name}.md
+      - push_success: boolean
+    next: null
+    on_failure: deploy
+
+quality_gates:
+  QG-PLAN:
+    name: "Plan Approval Gate"
+    description: "Claude approves story and task plan before implementation begins"
+    criteria:
+      - story_summary_populated: true
+      - tasks_structured: true
+      - claude_approved: true
+      - risk_assessed: true
+    on_fail: return_to_story_creation
+    on_pass: proceed_to_implementation
+
+  QG-QA:
+    name: "QA Approval Gate"
+    description: "Claude reviews validation results before deployment"
+    criteria:
+      - lint_result: PASS | FAIL
+      - typecheck_result: PASS | FAIL
+      - test_result: PASS | FAIL
+      - claude_signed_off: true
+    on_fail: return_to_implementation
+    on_pass: proceed_to_deployment
+
+error_handling:
+  aider_failure:
+    trigger: "Aider subprocess fails or returns non-zero exit code"
+    action: "Retry with fallback model via model-selector"
+    max_retries: 2
+    escalate_after: "Hand off to @dev (Claude) for manual implementation"
+
+  qa_failure:
+    trigger: "Lint/typecheck/test fails"
+    action: "Report in qa-summary, escalate to @dev for fixes"
+    max_retries: 1
+    escalate_after: "Claude decides if work returns to dev or new approach needed"
+
+  push_failure:
+    trigger: "Git push fails (auth, conflicts, branch protection)"
+    action: "Alert user with specific error message"
+    recovery: "Do NOT retry automatically. User must resolve and restart deploy step."
+    escalate: true
+
+decision_tree:
+  plan_approval:
+    question: "Is the story scope clear and tasks are reasonable?"
+    if_yes: "→ Proceed to implementation"
+    if_no: "→ Return to @po-aider for refinement"
+
+  qa_approval:
+    question: "Do all checks pass (lint, typecheck, tests)?"
+    if_yes: "→ Ready for deployment"
+    if_no: "→ Return to @dev-aider for fixes"
+
+metrics:
+  tracked:
+    - tasks_completed_via_aider: "Number of tasks processed by free models"
+    - claude_gate_token_usage: "Total Claude tokens spent at two gates only"
+    - qa_pass_rate_first_try: "% of tasks passing QA on first run"
+    - deployment_success_rate: "% of stories successfully deployed"
+    - cost_per_story: "AI cost breakdown (expected: mostly $0 with minimal Claude)"
+    - speed_vs_all_claude: "Time to complete story (expected: faster due to no context switching)"
+
+monitoring:
+  enabled: true
+  check_interval: 5m
+  alert_on:
+    - repeated_aider_failure: "Aider fails >3 times for same task"
+    - stuck_in_loop: "Plan rejection and resubmission >3 times"
+    - long_execution: "Single phase exceeds 1 hour"
+
+documentation:
+  architecture: |
+    This workflow implements a "minimal Claude gateway" architecture.
+
+    Traditional all-Claude approach:
+      User → Claude (context: full story, full code, full tests) → Deploy
+      Cost: High per task
+
+    Dev-Aider approach:
+      User → @po-aider (Aider, $0) → @sm-aider (Aider, $0) → Claude gateway (150 tokens, ~$0.0001)
+        → @dev-aider (Aider, $0) → @qa-aider (Aider, $0) → Claude gateway (100 tokens, ~$0.00005)
+        → @deploy-aider ($0) → Deploy
+      Cost: ~$0.00015 per story (vs $3-5 for all-Claude)
+
+    Key insight: Claude only makes binary decisions on summaries, not complex reasoning.
+    Free models do the heavy lifting (story generation, implementation, validation).
+    Claude provides guidance only where human judgment matters (plan approval, QA sign-off).
+
+  cost_analysis: |
+    Per-story breakdown (typical ~8 task story):
+
+    Phase 1 (Story):      $0 (Aider)
+    Phase 2 (Tasks):      $0 (Aider)
+    Phase 3 (Review):     ~$0.0001 (Claude reads 150 tokens @ 0.5 input price)
+    Phase 4 (Implement):  $0 (Aider, 8 tasks)
+    Phase 5 (Validate):   $0 (Aider, local commands)
+    Phase 6 (QA):         ~$0.00005 (Claude reads 100 tokens)
+    Phase 7 (Deploy):     $0 (Git, local)
+
+    TOTAL PER STORY:      ~$0.00015
+
+    Compare to all-Claude:  $3-5 per story
+    Annual savings (100 stories/year):  $300-500 saved
+
+metadata:
+  created_at: "2026-02-04T00:00:00Z"
+  created_by: "dev-aider squad"
+  version: "1.0.0"
+  status: "production"
+  tags:
+    - cost-optimization
+    - aider-integration
+    - claude-gateway
+    - full-cycle
+  references:
+    - dev-aider/config.yaml
+    - dev-aider/agents/po-aider.md
+    - dev-aider/agents/sm-aider.md
+    - dev-aider/agents/qa-aider.md
+    - dev-aider/agents/deploy-aider.md

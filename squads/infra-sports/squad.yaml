@@ -1,0 +1,73 @@
+name: infra-sports
+version: 1.0.0
+description: Squad de infraestrutura e monitoramento para betting - deployment, uptime, segurança e integração com APIs de bookmakers
+team: BET-SPORTS
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: InfraSports
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - infra-lead.md
+    - devops-sports.md
+    - monitor-ops.md
+    - security-sports.md
+  tasks:
+    # Infra Lead Tasks
+    - infra-daily-briefing.md
+    - infra-capacity-planning.md
+    # DevOps Tasks
+    - devops-deployment.md
+    - devops-ci-cd-pipeline.md
+    # Monitor Tasks
+    - monitor-uptime.md
+    - monitor-performance.md
+    # Security Tasks
+    - security-vulnerability-scan.md
+    - security-api-key-management.md
+  workflows:
+    - deployment-workflow.yaml
+    - monitoring-workflow.yaml
+    - security-workflow.yaml
+  checklists:
+    - pre-deployment-checklist.md
+    - security-audit-checklist.md
+  templates:
+    - deployment-report-tmpl.md
+    - security-audit-tmpl.md
+  tools:
+    - docker
+    - kubernetes
+    - prometheus
+    - postgres
+  scripts: []
+
+config:
+  extends: extend
+  deployment:
+    environments: [development, staging, production]
+    strategy: rolling-update
+  monitoring:
+    metrics: [cpu-usage, memory-usage, request-rate, error-rate]
+  security:
+    compliance: [pci-dss, gdpr]
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+codebase:
+  module: modules/infra-sports
+  deployment: modules/infra-sports/deployment
+
+tags:
+  - infrastructure
+  - monitoring
+  - security
+  - betting
+  - deployment

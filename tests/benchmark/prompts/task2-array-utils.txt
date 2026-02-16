@@ -1,0 +1,9 @@
+Create a TypeScript file at tests/benchmark/aider-results/array-utils.ts with the following functions, all with full JSDoc documentation and TypeScript types:
+
+1. chunk<T>(arr: T[], size: number): T[][] - Splits array into chunks of given size
+2. unique<T>(arr: T[]): T[] - Removes duplicate values from array
+3. flatten<T>(arr: any[], depth?: number): T[] - Flattens nested array to given depth (default Infinity)
+4. groupBy<T>(arr: T[], keyFn: (item: T) => string): Record<string, T[]> - Groups array elements by key function
+5. intersect<T>(a: T[], b: T[]): T[] - Returns intersection of two arrays
+
+Export all as named exports. Add a commented test section at the bottom with at least 3 test cases per function.

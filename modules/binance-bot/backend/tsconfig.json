@@ -1,0 +1,74 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": [
+      "ES2020"
+    ],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noEmitOnError": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noImplicitThis": false,
+    "forceConsistentCasingInFileNames": false,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "noEmitOnError": false,
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    }
+  },
+  "include": [
+    "src/real-server.ts",
+    "src/types/SpotStrategy.ts",
+    "src/controllers/SpotStrategyController.ts",
+    "src/controllers/SpotRotativeAnalysisController.ts",
+    "src/services/SpotStrategyService.ts",
+    "src/services/SpotRotativeAnalysisService.ts",
+    "src/services/BinanceApiService.ts",
+    "src/services/RotativeAnalysisService.ts",
+    "src/controllers/MathStrategyController.ts",
+    "src/controllers/TradingStrategyController.ts",
+    "src/controllers/RotativeAnalysisController.ts",
+    "src/trigger-storage.ts",
+    "src/routes/realRotativeAnalysis.ts",
+    "src/routes/testExecution.ts",
+    "src/config/ConfigLoader.ts",
+    "src/simple-favorites-server.ts",
+    "src/controllers/SimpleSpotFavoritesController.ts",
+    "src/services/SimpleSpotFavoritesService.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "**/__tests__/**",
+    "**/scripts/**",
+    "**/setup-*.ts",
+    "**/test-*.ts",
+    "src/services/StrategyStorageService.ts",
+    "src/services/MarketService.ts",
+    "src/services/PositionMonitorService.ts",
+    "src/services/PositionStorageService.ts",
+    "src/services/TradingStrategyService.ts",
+    "src/routes/analysis.ts",
+    "src/routes/markets.ts",
+    "src/routes/positionMonitor.ts",
+    "src/routes/strategyRiskRoutes.ts",
+    "src/services/StrategyStorageService.ts",
+    "src/routes/analysis.ts",
+    "src/routes/markets.ts",
+    "src/routes/positionMonitor.ts",
+    "src/routes/strategyRiskRoutes.ts"
+  ]
+}

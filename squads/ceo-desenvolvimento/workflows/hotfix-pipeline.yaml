@@ -1,0 +1,38 @@
+# Hotfix Pipeline
+# Used for: urgent fixes that need to ship NOW
+
+name: hotfix-pipeline
+version: 1.0.0
+description: Pipeline urgente para correcoes criticas
+trigger: "*hotfix"
+
+phases:
+  - id: fix
+    name: "Implement Fix"
+    agent: dev
+    skill: "Desenvolvimento:Dev-AIOS"
+    actions:
+      - "Create hotfix branch"
+      - "*develop (focused fix only)"
+      - "Minimal scope - fix only, no refactoring"
+
+  - id: quick_qa
+    name: "Quick QA"
+    agent: qa
+    skill: "Desenvolvimento:QA-AIOS"
+    actions:
+      - "*code-review (focused on fix)"
+      - "Verify fix addresses the issue"
+      - "Verify no regressions"
+      - "*gate → APPROVED"
+
+  - id: emergency_ship
+    name: "Emergency Ship"
+    agent: devops
+    skill: "Operacoes:DevOps-AIOS"
+    actions:
+      - "*pre-push"
+      - "*push"
+      - "*release (patch version)"
+
+time_target: "< 1 hour from start to production"

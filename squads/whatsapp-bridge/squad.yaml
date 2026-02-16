@@ -1,0 +1,40 @@
+name: whatsapp-bridge
+version: 1.0.0
+description: Squad de interacao com WhatsApp - scraper, messenger e exportador
+icon: "📱"
+author: Diana Corp
+category: communication
+
+agents:
+  - id: whatsapp-agent
+    name: WhatsApp Agent
+    file: agents/whatsapp-agent.md
+
+tasks:
+  - id: query-messages
+    name: Buscar conversas
+    file: tasks/query-messages.md
+  - id: send-message
+    name: Enviar mensagem
+    file: tasks/send-message.md
+  - id: export-conversation
+    name: Exportar conversa
+    file: tasks/export-conversation.md
+  - id: download-media
+    name: Baixar midias
+    file: tasks/download-media.md
+  - id: transcribe-audio
+    name: Transcrever audios
+    file: tasks/transcribe-audio.md
+
+scripts:
+  - scripts/wa-query.js
+  - scripts/wa-export.js
+  - scripts/wa-transcribe.py
+
+dependencies:
+  requires:
+    - whatsapp-listener running on port 21350
+    - messages.jsonl log file
+  python:
+    - faster-whisper

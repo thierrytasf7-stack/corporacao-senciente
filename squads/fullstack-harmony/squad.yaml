@@ -1,0 +1,60 @@
+name: fullstack-harmony
+version: 1.0.0
+description: Squad de auditoria de harmonia Backend-Frontend. Valida que toda comunicacao entre camadas esta funcional - API contracts, data flow, auth flow, error propagation, real-time, CORS, state sync e loading states. Stack-agnostic.
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: FullstackHarmony
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - harmony-auditor.md
+  tasks:
+    - audit-full-harmony.md
+    - audit-api-contracts.md
+    - audit-data-flow.md
+    - audit-auth-flow.md
+    - audit-error-propagation.md
+    - audit-realtime.md
+    - audit-cors-headers.md
+    - audit-state-sync.md
+    - audit-loading-states.md
+    - audit-type-consistency.md
+    - audit-env-config.md
+    - generate-harmony-report.md
+  workflows:
+    - full-harmony-workflow.yaml
+  checklists:
+    - api-contracts-checklist.md
+    - data-flow-checklist.md
+    - auth-flow-checklist.md
+    - error-propagation-checklist.md
+    - realtime-checklist.md
+    - state-sync-checklist.md
+  templates:
+    - harmony-report-tmpl.md
+  tools: []
+  scripts: []
+
+config:
+  extends: extend
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+tags:
+  - fullstack
+  - harmony
+  - integration
+  - api-contracts
+  - data-flow
+  - auth
+  - cors
+  - realtime
+  - websocket
+  - state-sync

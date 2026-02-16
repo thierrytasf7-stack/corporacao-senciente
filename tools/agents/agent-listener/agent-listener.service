@@ -1,0 +1,18 @@
+[Unit]
+Description=Corporacao Senciente Agent Listener
+Documentation=https://github.com/senciente/diana-corporacao-senciente
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=%h/agent-listener
+Environment="PATH=%h/venv/bin"
+ExecStart=%h/venv/bin/python %h/agent-listener/listener.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,6 @@
+@echo off
+title SENTINELA CORPORACAO SENCIENTE
+set DIANA_CORP_GROUP=120363405403485324
+set DIANA_MY_NUMBER=554598211665
+python scripts/sentinela_corp.py
+pause

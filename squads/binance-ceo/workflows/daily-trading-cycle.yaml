@@ -1,0 +1,73 @@
+# Daily Trading Cycle Workflow
+# Ciclo diario completo de operacoes de trading
+
+name: daily-trading-cycle
+description: Workflow completo do ciclo diario de trading - briefing, analise, operacao, revisao
+trigger: manual
+schedule: "09:00 BRT"
+
+steps:
+  - id: morning-briefing
+    agent: binance-ceo
+    task: ceo-daily-briefing
+    description: CEO faz briefing matinal
+    next: market-scan
+
+  - id: market-scan
+    agent: binance-analyst
+    task: analyst-market-scan
+    description: Analyst faz scan completo do mercado
+    next: risk-check
+
+  - id: risk-check
+    agent: binance-risk-manager
+    task: risk-evaluate-exposure
+    description: Risk Manager avalia exposicao atual
+    next: health-check
+    parallel: true
+
+  - id: health-check
+    agent: binance-ops
+    task: ops-health-check
+    description: Ops verifica saude dos sistemas
+    next: ceo-decision
+    parallel: true
+
+  - id: ceo-decision
+    agent: binance-ceo
+    task: ceo-strategy-decision
+    description: CEO decide operacoes do dia baseado nas analises
+    depends_on: [market-scan, risk-check, health-check]
+    next: execute-trades
+
+  - id: execute-trades
+    agent: binance-trader
+    task: trader-manage-positions
+    description: Trader executa decisoes do CEO
+    next: monitor-triggers
+
+  - id: monitor-triggers
+    agent: binance-ops
+    task: ops-monitor-triggers
+    description: Ops monitora triggers ao longo do dia
+    next: evening-review
+    duration: continuous
+
+  - id: evening-review
+    agent: binance-ceo
+    task: ceo-portfolio-review
+    description: CEO faz revisao de fim de dia
+    schedule: "18:00 BRT"
+
+error_handling:
+  on_failure: notify-ceo
+  retry_policy:
+    max_retries: 2
+    backoff: exponential
+
+notifications:
+  channels:
+    - type: log
+      level: info
+    - type: alert
+      on: [error, risk-breach]

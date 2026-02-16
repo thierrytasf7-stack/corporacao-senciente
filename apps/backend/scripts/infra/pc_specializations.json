@@ -1,0 +1,255 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "description": "Definições de especializações para PCs da Corporação Senciente",
+    "updated_at": "2025-01-19"
+  },
+  "specializations": {
+    "brain": {
+      "name": "PC Central (Brain)",
+      "description": "Coordenação e decisão central da corporação",
+      "role": "Orquestrador principal do swarm, tomada de decisões estratégicas",
+      "capabilities": [
+        "Coordenação de swarm distribuído",
+        "Tomada de decisões estratégicas",
+        "Gerenciamento de estado global",
+        "Interface de controle remoto",
+        "Processamento de inteligência central"
+      ],
+      "required_tools": [
+        "Node.js (runtime principal)",
+        "Python (scripts de automação)",
+        "Git (controle de versão)",
+        "Supabase CLI (banco de dados)",
+        "SSH Server (comunicação remota)"
+      ],
+      "agents_specialized": [
+        "SwarmCoordinator",
+        "DecisionMaker",
+        "ResourceManager",
+        "CommunicationHub",
+        "MonitoringCenter"
+      ],
+      "hardware_requirements": {
+        "min_cpu_cores": 4,
+        "min_memory_gb": 8,
+        "min_disk_gb": 50,
+        "recommended_gpu": true
+      },
+      "network_requirements": {
+        "static_ip": true,
+        "open_ports": [
+          2222,
+          3000,
+          5432
+        ],
+        "bandwidth_mbps": 50
+      }
+    },
+    "business": {
+      "name": "PC Business",
+      "description": "Especializado em marketing, vendas e finanças",
+      "role": "Processamento de dados empresariais e geração de insights comerciais",
+      "capabilities": [
+        "Análise de mercado e concorrência",
+        "Geração de conteúdo de marketing",
+        "Processamento de dados financeiros",
+        "Automação de vendas e CRM",
+        "Relatórios e dashboards empresariais"
+      ],
+      "required_tools": [
+        "Node.js + Puppeteer (automação web)",
+        "Python + Pandas/Matplotlib (análise de dados)",
+        "Google Ads API (publicidade)",
+        "CRM tools (SuiteCRM/Odoo)",
+        "Analytics platforms (Google Analytics)"
+      ],
+      "agents_specialized": [
+        "MarketingAgent",
+        "SalesAgent",
+        "FinancialAnalyst",
+        "ContentGenerator",
+        "MarketResearcher"
+      ],
+      "hardware_requirements": {
+        "min_cpu_cores": 2,
+        "min_memory_gb": 4,
+        "min_disk_gb": 25,
+        "recommended_gpu": false
+      },
+      "network_requirements": {
+        "static_ip": false,
+        "open_ports": [
+          2222
+        ],
+        "bandwidth_mbps": 10
+      }
+    },
+    "technical": {
+      "name": "PC Technical",
+      "description": "Especializado em desenvolvimento, testes e DevEx",
+      "role": "Desenvolvimento de software, testes automatizados e experiência do desenvolvedor",
+      "capabilities": [
+        "Desenvolvimento full-stack",
+        "Testes automatizados (unitários, integração, E2E)",
+        "CI/CD pipelines",
+        "Code review e qualidade",
+        "Documentação técnica"
+      ],
+      "required_tools": [
+        "Node.js + npm/yarn",
+        "Python + testing frameworks",
+        "Docker (containerização)",
+        "Git + GitHub/GitLab",
+        "ESLint, Prettier, Jest",
+        "SonarQube/Gerrit (qualidade de código)"
+      ],
+      "agents_specialized": [
+        "DevAgent",
+        "TestAgent",
+        "DevOpsAgent",
+        "CodeReviewer",
+        "DocumentationAgent"
+      ],
+      "hardware_requirements": {
+        "min_cpu_cores": 4,
+        "min_memory_gb": 8,
+        "min_disk_gb": 50,
+        "recommended_gpu": false
+      },
+      "network_requirements": {
+        "static_ip": false,
+        "open_ports": [
+          2222,
+          3000,
+          5432
+        ],
+        "bandwidth_mbps": 25
+      }
+    },
+    "operations": {
+      "name": "PC Operations",
+      "description": "Especializado em métricas, segurança e monitoramento",
+      "role": "Observabilidade, segurança e gestão operacional contínua",
+      "capabilities": [
+        "Monitoramento de sistemas e aplicações",
+        "Análise de segurança e vulnerabilidades",
+        "Gestão de métricas e KPIs",
+        "Alertas e notificações",
+        "Backup e recuperação"
+      ],
+      "required_tools": [
+        "Prometheus/Grafana (monitoramento)",
+        "ELK Stack (logs)",
+        "Fail2Ban + UFW (segurança)",
+        "PM2 (gerenciamento de processos)",
+        "Nagios/Zabbix (monitoramento infraestrutura)"
+      ],
+      "agents_specialized": [
+        "MonitoringAgent",
+        "SecurityAgent",
+        "MetricsAgent",
+        "AlertAgent",
+        "BackupAgent"
+      ],
+      "hardware_requirements": {
+        "min_cpu_cores": 2,
+        "min_memory_gb": 4,
+        "min_disk_gb": 100,
+        "recommended_gpu": false
+      },
+      "network_requirements": {
+        "static_ip": false,
+        "open_ports": [
+          2222
+        ],
+        "bandwidth_mbps": 10
+      }
+    }
+  },
+  "deployment_rules": {
+    "min_pcs_per_specialization": {
+      "brain": 1,
+      "business": 0,
+      "technical": 0,
+      "operations": 0
+    },
+    "max_pcs_per_specialization": {
+      "brain": 1,
+      "business": 5,
+      "technical": 10,
+      "operations": 3
+    },
+    "load_balancing": {
+      "strategy": "round_robin",
+      "health_checks": true,
+      "auto_scaling": false
+    }
+  },
+  "communication_matrix": {
+    "brain_to_business": {
+      "protocols": [
+        "SSH",
+        "HTTP_API"
+      ],
+      "frequency": "continuous",
+      "data_types": [
+        "commands",
+        "metrics",
+        "status"
+      ]
+    },
+    "brain_to_technical": {
+      "protocols": [
+        "SSH",
+        "WebSocket"
+      ],
+      "frequency": "high",
+      "data_types": [
+        "code",
+        "tests",
+        "deployments"
+      ]
+    },
+    "brain_to_operations": {
+      "protocols": [
+        "SSH",
+        "HTTP_API"
+      ],
+      "frequency": "continuous",
+      "data_types": [
+        "logs",
+        "metrics",
+        "alerts"
+      ]
+    },
+    "business_to_technical": {
+      "protocols": [
+        "HTTP_API"
+      ],
+      "frequency": "medium",
+      "data_types": [
+        "requirements",
+        "feedback"
+      ]
+    },
+    "technical_to_operations": {
+      "protocols": [
+        "HTTP_API",
+        "WebSocket"
+      ],
+      "frequency": "high",
+      "data_types": [
+        "metrics",
+        "logs",
+        "alerts"
+      ]
+    }
+  }
+}
+
+
+
+
+
+

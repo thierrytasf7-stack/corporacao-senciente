@@ -1,0 +1,238 @@
+{
+  "sessionId": "session_1771116203904",
+  "botId": "v2-periodic-gen61-1771116203902",
+  "botName": "Phoenix",
+  "generation": 61,
+  "genome": {
+    "id": "v2-periodic-gen61-1771116203902",
+    "name": "Phoenix",
+    "generation": 61,
+    "parentIds": [
+      "v2-periodic-gen56-1771114703326",
+      "v2-periodic-gen33-1771107782403"
+    ],
+    "strategyMask": [
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false,
+      true,
+      false,
+      true
+    ],
+    "strategyWeights": [
+      1.1615806228697758,
+      1,
+      1,
+      1.5138515115152116,
+      1.5,
+      1.4570534007540363,
+      0.120283067645686,
+      0.2,
+      1.2218107349480238,
+      1.5,
+      1,
+      0.2,
+      1.0927696777594906,
+      1,
+      0.3712767265701563,
+      0.6880728795956961,
+      1.2102993564541054,
+      0.2,
+      0.2,
+      1,
+      0.1,
+      1.8,
+      1.8969909354652046,
+      0.1,
+      0.3,
+      0.1,
+      0.3545616328123564,
+      0.20938365860378172,
+      1.9072130950393134,
+      0
+    ],
+    "consensus": {
+      "minAgreeingSignals": 5,
+      "maxOpposingSignals": 3,
+      "minWeightedStrength": 47.79755974477966,
+      "preferredDirection": "ANY"
+    },
+    "risk": {
+      "atrMultiplierTP": 2,
+      "atrMultiplierSL": 1.2,
+      "trailingStopATR": 1.3071752160178447,
+      "flipExitThreshold": 8,
+      "leverage": 50,
+      "maxOpenPositions": 4,
+      "maxExposurePercent": 35
+    },
+    "betting": {
+      "basePercent": 4.658164033622368,
+      "winMultiplier": 1,
+      "lossMultiplier": 0.8424509086528529,
+      "maxBetPercent": 12,
+      "resetAfterLosses": 3
+    },
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "BNBUSDT",
+      "XRPUSDT"
+    ]
+  },
+  "startBankroll": 100,
+  "endBankroll": 99.97,
+  "peakBankroll": 100.08,
+  "totalTrades": 4,
+  "wins": 1,
+  "losses": 3,
+  "winRate": 25,
+  "maxDrawdown": 0.11,
+  "finalReason": "EVOLVED_OUT",
+  "startTime": "2026-02-15T00:43:23.904Z",
+  "endTime": "2026-02-15T00:48:25.694Z",
+  "trades": [
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2075.26,
+      "exitPrice": 2075.28,
+      "betAmount": 4.658164033622368,
+      "pnlPercent": -0.05,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 100,
+      "timestamp": "2026-02-15T00:44:00.097Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 2,
+        "weightedStrength": 66.34810739824802,
+        "topStrategies": [
+          "macd_standard",
+          "momentum_10",
+          "ichimoku",
+          "adx_trend",
+          "roc_12"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2075.82,
+      "exitPrice": 2074.93,
+      "betAmount": 3.924186437843146,
+      "pnlPercent": 2.14,
+      "pnlValue": 0.08,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 100,
+      "bankrollAfter": 100.08,
+      "timestamp": "2026-02-15T00:45:54.591Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 56.83032319223433,
+        "topStrategies": [
+          "macd_standard",
+          "ichimoku",
+          "momentum_10",
+          "roc_12",
+          "adx_trend"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2074.92,
+      "exitPrice": 2076.05,
+      "betAmount": 3.9274876948225557,
+      "pnlPercent": -2.72,
+      "pnlValue": -0.11,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.08,
+      "bankrollAfter": 99.97,
+      "timestamp": "2026-02-15T00:46:05.802Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 56.83032319223433,
+        "topStrategies": [
+          "macd_standard",
+          "ichimoku",
+          "momentum_10",
+          "roc_12",
+          "adx_trend"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2075.79,
+      "exitPrice": 2075.89,
+      "betAmount": 3.3051799545721785,
+      "pnlPercent": -0.24,
+      "pnlValue": -0.01,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.97,
+      "bankrollAfter": 99.97,
+      "timestamp": "2026-02-15T00:47:24.868Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 3,
+        "weightedStrength": 56.83032319223433,
+        "topStrategies": [
+          "macd_standard",
+          "ichimoku",
+          "momentum_10",
+          "roc_12",
+          "adx_trend"
+        ]
+      }
+    }
+  ],
+  "fitness": 24.78640918509772,
+  "activeStrategies": [
+    "macd_standard",
+    "adx_trend",
+    "supertrend",
+    "ichimoku",
+    "rsi_14",
+    "stochastic_14",
+    "cci_20",
+    "roc_12",
+    "momentum_10",
+    "elder_ray",
+    "obv_trend",
+    "vwap_dev",
+    "volume_spike",
+    "dpo"
+  ]
+}

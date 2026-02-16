@@ -1,0 +1,72 @@
+name: ceo-bet
+version: 1.0.0
+description: CEO orquestrador do domínio BET-SPORTS - coordena os 5 squads (live-betting, data-sports, strategy-sports, infra-sports, analytics-sports)
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: CEO-BET
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - ceo-bet.md
+  tasks:
+    # Orchestration Tasks
+    - orchestrate-live-betting.md
+    - orchestrate-data.md
+    - orchestrate-strategy.md
+    - orchestrate-infra.md
+    - orchestrate-analytics.md
+    # Management Tasks
+    - daily-briefing.md
+    - strategic-decision.md
+    - portfolio-review.md
+  workflows:
+    - betting-orchestration-cycle.yaml
+    - strategic-management.yaml
+  checklists:
+    - squad-health-checklist.md
+    - risk-assessment-checklist.md
+    - portfolio-review-checklist.md
+  templates:
+    - daily-briefing-tmpl.md
+    - strategic-decision-tmpl.md
+    - portfolio-review-tmpl.md
+  tools:
+    - postgres
+    - context7
+  scripts: []
+
+config:
+  extends: extend
+  bettingDomain:
+    focus: ["Football", "Basketball", "Tennis", "MMA", "Esports"]
+    markets: ["1X2", "Over/Under", "Asian Handicap", "BTTS"]
+  riskManagement:
+    maxOpenBets: 10
+    maxDailyRisk: 15
+    stopLossDaily: 10
+  strategicFocus:
+    dataDriven: true
+    riskAware: true
+    roiFocused: true
+
+dependencies:
+  node: []
+  python: []
+  squads:
+    - live-betting
+    - data-sports
+    - strategy-sports
+    - infra-sports
+    - analytics-sports
+
+tags:
+  - betting
+  - sports
+  - orchestration
+  - strategic
+  - risk-management
+  - portfolio

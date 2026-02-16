@@ -1,0 +1,134 @@
+# ==============================================================================
+# CORPORACAO SENCIENTE - Oracle VPS Stack (Arete)
+# Arquitetura: Maestro + Infisical + Netdata + Redis
+# Deploy: Oracle Cloud Always Free
+# ==============================================================================
+
+services:
+  # Reverse Proxy com SSL automatico (Let's Encrypt)
+  traefik:
+    image: traefik:v3.0
+    container_name: senciente-traefik
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/acme.json:/acme.json
+    networks:
+      - senciente-network
+    labels:
+      - "traefik.enable=true"
+
+  # Maestro - WebSocket Hub (FastAPI + Socket.IO)
+  maestro:
+    build: ./maestro
+    container_name: senciente-maestro
+    restart: always
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - INFISICAL_TOKEN=${INFISICAL_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - HEARTBEAT_INTERVAL=10
+      - HEARTBEAT_MISS_THRESHOLD=3
+    depends_on:
+      - redis
+    networks:
+      - senciente-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.maestro.rule=Host(`api.${DOMAIN}`)"
+      - "traefik.http.routers.maestro.tls=true"
+      - "traefik.http.routers.maestro.tls.certresolver=letsencrypt"
+      - "traefik.http.services.maestro.loadbalancer.server.port=8080"
+
+  # Redis - Cache e Pub/Sub
+  redis:
+    image: redis:7-alpine
+    container_name: senciente-redis
+    restart: always
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - senciente-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Infisical - Gerenciamento de Segredos Self-Hosted
+  infisical:
+    image: infisical/infisical:latest
+    container_name: senciente-infisical
+    restart: always
+    environment:
+      - ENCRYPTION_KEY=${INFISICAL_ENCRYPTION_KEY}
+      - JWT_SECRET=${INFISICAL_JWT_SECRET}
+      - MONGO_URL=mongodb://mongo:27017/infisical
+    depends_on:
+      - mongo
+    networks:
+      - senciente-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.infisical.rule=Host(`secrets.${DOMAIN}`)"
+      - "traefik.http.routers.infisical.tls=true"
+      - "traefik.http.routers.infisical.tls.certresolver=letsencrypt"
+      - "traefik.http.services.infisical.loadbalancer.server.port=8080"
+
+  # MongoDB para Infisical
+  mongo:
+    image: mongo:6
+    container_name: senciente-mongo
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - senciente-network
+
+  # Netdata Parent - War Room Central (Observabilidade 1s)
+  netdata:
+    image: netdata/netdata:latest
+    container_name: senciente-netdata
+    restart: always
+    hostname: oracle-vps
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdata_config:/etc/netdata
+      - netdata_lib:/var/lib/netdata
+      - netdata_cache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NETDATA_CLAIM_TOKEN=${NETDATA_CLAIM_TOKEN}
+      - NETDATA_CLAIM_URL=https://app.netdata.cloud
+    networks:
+      - senciente-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.netdata.rule=Host(`metrics.${DOMAIN}`)"
+      - "traefik.http.routers.netdata.tls=true"
+      - "traefik.http.routers.netdata.tls.certresolver=letsencrypt"
+      - "traefik.http.services.netdata.loadbalancer.server.port=19999"
+
+volumes:
+  redis_data:
+  mongo_data:
+  netdata_config:
+  netdata_lib:
+  netdata_cache:
+
+networks:
+  senciente-network:
+    driver: bridge

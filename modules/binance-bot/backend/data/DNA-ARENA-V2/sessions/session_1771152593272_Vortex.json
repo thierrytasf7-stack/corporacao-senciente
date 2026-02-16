@@ -1,0 +1,264 @@
+{
+  "sessionId": "session_1771152593272",
+  "botId": "v2-periodic-gen187-1771152593270",
+  "botName": "Vortex",
+  "generation": 187,
+  "genome": {
+    "id": "v2-periodic-gen187-1771152593270",
+    "name": "Vortex",
+    "generation": 187,
+    "parentIds": [
+      "v2-periodic-gen174-1771148383279",
+      "v2-periodic-gen178-1771149888991"
+    ],
+    "strategyMask": [
+      true,
+      true,
+      false,
+      true,
+      true,
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      true,
+      false,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false
+    ],
+    "strategyWeights": [
+      1.1962092096587127,
+      0.9662714599061816,
+      1.097790875710547,
+      1.3278689845131475,
+      1.3474140733193865,
+      1.3631598599203607,
+      0.2,
+      0.30788310088524673,
+      1.3596033116530581,
+      1.3626299735730367,
+      1,
+      0.34798415161533625,
+      1.0927696777594906,
+      0.840859824129668,
+      0.2187849573916797,
+      0.5399261308090331,
+      1.0962274506606122,
+      0.2,
+      0.3161002862434425,
+      1,
+      0.26996280425789626,
+      1.6807641161454903,
+      1.6805208342665754,
+      0.1,
+      0.3,
+      0.26565540611182553,
+      0.1,
+      0.2035136280986114,
+      1.9025632791658216,
+      0.1
+    ],
+    "consensus": {
+      "minAgreeingSignals": 2,
+      "maxOpposingSignals": 3,
+      "minWeightedStrength": 52.169943876671475,
+      "preferredDirection": "ANY"
+    },
+    "risk": {
+      "atrMultiplierTP": 2.400028368233822,
+      "atrMultiplierSL": 1.1528743945856181,
+      "trailingStopATR": 1.340036426550464,
+      "flipExitThreshold": 9,
+      "leverage": 54,
+      "maxOpenPositions": 4,
+      "maxExposurePercent": 35
+    },
+    "betting": {
+      "basePercent": 4.277389445846281,
+      "winMultiplier": 1,
+      "lossMultiplier": 0.8693510852856174,
+      "maxBetPercent": 12,
+      "resetAfterLosses": 3
+    },
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "BNBUSDT",
+      "XRPUSDT"
+    ]
+  },
+  "startBankroll": 100,
+  "endBankroll": 98.92,
+  "peakBankroll": 100.1,
+  "totalTrades": 5,
+  "wins": 1,
+  "losses": 4,
+  "winRate": 20,
+  "maxDrawdown": 1.18,
+  "finalReason": "EVOLVED_OUT",
+  "startTime": "2026-02-15T10:49:53.272Z",
+  "endTime": "2026-02-15T10:54:53.583Z",
+  "trades": [
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.48,
+      "exitPrice": 89.44,
+      "betAmount": 4.277389445846281,
+      "pnlPercent": 2.41,
+      "pnlValue": 0.1,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 100,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-15T10:50:38.956Z",
+      "consensusSnapshot": {
+        "agreeingCount": 7,
+        "opposingCount": 2,
+        "weightedStrength": 54.46768583472741,
+        "topStrategies": [
+          "stochastic_14",
+          "bollinger_10_15",
+          "macd_standard",
+          "williams_r",
+          "ema_cross_12_26"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.44,
+      "exitPrice": 89.47,
+      "betAmount": 4.281806018333799,
+      "pnlPercent": -1.81,
+      "pnlValue": -0.08,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.03,
+      "timestamp": "2026-02-15T10:50:43.186Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 60.077985308570476,
+        "topStrategies": [
+          "bollinger_10_15",
+          "stochastic_14",
+          "williams_r",
+          "supertrend",
+          "bollinger_20_2"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.51,
+      "exitPrice": 89.53,
+      "betAmount": 3.719508782397014,
+      "pnlPercent": -1.21,
+      "pnlValue": -0.04,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.03,
+      "bankrollAfter": 99.98,
+      "timestamp": "2026-02-15T10:51:52.176Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 60.077985308570476,
+        "topStrategies": [
+          "bollinger_10_15",
+          "stochastic_14",
+          "williams_r",
+          "supertrend",
+          "bollinger_20_2"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "SHORT",
+      "entryPrice": 89.53,
+      "exitPrice": 89.53,
+      "betAmount": 3.2321081985946707,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.98,
+      "bankrollAfter": 99.98,
+      "timestamp": "2026-02-15T10:53:04.325Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 61.24575053859621,
+        "topStrategies": [
+          "bollinger_10_15",
+          "stochastic_14",
+          "williams_r",
+          "bollinger_20_2",
+          "supertrend"
+        ]
+      }
+    },
+    {
+      "symbol": "SOLUSDT",
+      "side": "LONG",
+      "entryPrice": 89.53,
+      "exitPrice": 89.12,
+      "betAmount": 4.276569060007517,
+      "pnlPercent": -24.73,
+      "pnlValue": -1.06,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.98,
+      "bankrollAfter": 98.92,
+      "timestamp": "2026-02-15T10:53:32.840Z",
+      "consensusSnapshot": {
+        "agreeingCount": 6,
+        "opposingCount": 3,
+        "weightedStrength": 55.285431419076126,
+        "topStrategies": [
+          "macd_fast",
+          "macd_standard",
+          "ema_cross_9_21",
+          "ema_cross_12_26",
+          "trix_15"
+        ]
+      }
+    }
+  ],
+  "fitness": 6.864400484594119,
+  "activeStrategies": [
+    "ema_cross_9_21",
+    "ema_cross_12_26",
+    "macd_standard",
+    "macd_fast",
+    "supertrend",
+    "ichimoku",
+    "stochastic_14",
+    "williams_r",
+    "cci_20",
+    "trix_15",
+    "mfi_14",
+    "bollinger_20_2",
+    "bollinger_10_15",
+    "keltner",
+    "volume_spike"
+  ]
+}

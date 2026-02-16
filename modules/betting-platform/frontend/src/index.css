@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #1f2937;
+    --card: #ffffff;
+    --card-foreground: #1f2937;
+    --primary: #3b82f6;
+    --primary-foreground: #ffffff;
+    --secondary: #64748b;
+    --secondary-foreground: #ffffff;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --accent: #f59e0b;
+    --accent-foreground: #ffffff;
+    --border: #e5e7eb;
+    --input: #f3f4f6;
+    --ring: #3b82f6;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: #111827;
+    --foreground: #f9fafb;
+    --card: #1f2937;
+    --card-foreground: #f9fafb;
+    --primary: #3b82f6;
+    --primary-foreground: #ffffff;
+    --secondary: #4b5563;
+    --secondary-foreground: #f9fafb;
+    --destructive: #ef4444;
+    --destructive-foreground: #ffffff;
+    --accent: #f59e0b;
+    --accent-foreground: #ffffff;
+    --border: #374151;
+    --input: #374151;
+    --ring: #3b82f6;
+  }
+}
+
+@layer base {
+  html {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+@layer components {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+  }
+
+  .badge.success {
+    background-color: var(--success);
+    color: var(--success-foreground);
+  }
+
+  .badge.warning {
+    background-color: var(--warning);
+    color: var(--warning-foreground);
+  }
+
+  .badge.destructive {
+    background-color: var(--destructive);
+    color: var(--destructive-foreground);
+  }
+
+  .badge.secondary {
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+  }
+}

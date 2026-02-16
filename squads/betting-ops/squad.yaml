@@ -1,0 +1,85 @@
+name: betting-ops
+version: 1.0.0
+description: Squad de operações de apostas esportivas ao vivo - coordena execução de apostas, análise de odds, gestão de bankroll e monitoramento de posições
+team: BET-SPORTS
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: BettingOps
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - betting-ceo.md
+    - bettor.md
+    - odds-analyst.md
+    - bankroll-manager.md
+  tasks:
+    # CEO Tasks
+    - ceo-daily-briefing.md
+    - ceo-portfolio-review.md
+    - ceo-strategy-decision.md
+    # Bettor Tasks
+    - bettor-execute-bet.md
+    - bettor-manage-positions.md
+    - bettor-live-betting.md
+    # Odds Analyst Tasks
+    - odds-analyze-value.md
+    - odds-compare-bookmakers.md
+    - odds-movement-tracking.md
+    # Bankroll Tasks
+    - bankroll-calculate-stake.md
+    - bankroll-risk-assessment.md
+    - bankroll-withdraw-deposit.md
+  workflows:
+    - live-betting-cycle.yaml
+    - pre-match-analysis.yaml
+    - bankroll-management.yaml
+  checklists:
+    - pre-bet-checklist.md
+    - risk-assessment-checklist.md
+    - daily-operations-checklist.md
+  templates:
+    - bet-report-tmpl.md
+    - analysis-report-tmpl.md
+    - bankroll-statement-tmpl.md
+  tools:
+    - postgres
+    - context7
+  scripts: []
+
+config:
+  extends: extend
+  sports:
+    focus: ["Football", "Basketball", "Tennis", "MMA", "Esports"]
+    markets: ["1X2", "Over/Under", "Asian Handicap", "BTTS"]
+  bankrollDefaults:
+    initialBankroll: 10000
+    maxStakePercent: 5
+    minOdds: 1.5
+    maxOdds: 10.0
+    kellyFraction: 0.25
+  riskManagement:
+    maxOpenBets: 10
+    maxDailyRisk: 15
+    stopLossDaily: 10
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+codebase:
+  module: modules/betting-ops
+  frontend: modules/betting-ops/frontend
+  backend: modules/betting-ops/backend
+
+tags:
+  - betting
+  - sports
+  - operations
+  - bankroll
+  - odds
+  - live-betting

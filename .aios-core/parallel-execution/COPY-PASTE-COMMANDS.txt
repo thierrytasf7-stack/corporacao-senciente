@@ -1,0 +1,170 @@
+================================================================================
+🎩 MORDOMO PARALLEL EXECUTION - COPY/PASTE COMMANDS
+================================================================================
+
+📍 IMPORTANT: Each command goes in a SEPARATE terminal window/tab
+📍 Directory: C:\Users\Ryzen\Desktop\AIOS_CLAUDE\aios-core
+📍 All tasks run SIMULTANEOUSLY (parallel execution)
+
+================================================================================
+🎯 TERMINAL 1: JEST NAMESPACE FIX
+================================================================================
+
+Copy this entire command and paste into Terminal 1:
+
+```
+aider --model openrouter/arcee-ai/trinity-large-preview:free --no-auto-commits --yes --file jest.config.js --file tsconfig.json --message "Fix Jest namespace collision by ignoring AIDER-AIOS subdirectory. Update testPathIgnorePatterns in jest.config.js to exclude AIDER-AIOS from test discovery. Verify configuration prevents haste-map warnings. Ensure all existing tests still pass."
+```
+
+Expected output:
+✓ jest.config.js modified with testPathIgnorePatterns
+✓ AIDER-AIOS excluded from test discovery
+✓ No haste-map warnings
+
+Duration: 5-10 minutes
+
+================================================================================
+🎯 TERMINAL 2: AIDER-FIRST UNIVERSALIZATION
+================================================================================
+
+Copy this entire command and paste into Terminal 2:
+
+```
+aider --model openrouter/arcee-ai/trinity-large-preview:free --no-auto-commits --yes --file squads/dev-aider/README.md --file squads/games-squad/squad.yaml --file squads/marketing-squad/squad.yaml --file squads/dropshipping/squad.yaml --file squads/social-media-squad/squad.yaml --message "Create comprehensive Aider-First universalization strategy. Analyze current cost model for all 13 squads. For each squad (games, marketing, dropshipping, social-media, etl, software-inc), document: current costs, proposed Aider-First approach, estimated savings (80-100%), conversion timeline, dependencies. Create new file: squads/AIDER-FIRST-STRATEGY.md with detailed conversion roadmap. Include cost comparison matrix and risk assessment."
+```
+
+Expected output:
+✓ squads/AIDER-FIRST-STRATEGY.md created
+✓ Cost analysis documented for all squads
+✓ 80-100% savings projections
+✓ Conversion timeline with milestones
+
+Duration: 10-15 minutes
+
+================================================================================
+🎯 TERMINAL 3: SPEC PIPELINE PREPARATION
+================================================================================
+
+Copy this entire command and paste into Terminal 3:
+
+```
+aider --model openrouter/arcee-ai/trinity-large-preview:free --no-auto-commits --yes --file .aios-core/core-config.yaml --file .aios-core/constitution.md --message "Prepare spec pipeline for Fase 3 activation (autoClaude.specPipeline). Create two new task files: (1) .aios-core/development/tasks/spec-generate-prd.md - generates PRD from story acceptance criteria via Aider, (2) .aios-core/development/tasks/spec-generate-architecture.md - generates architecture from PRD. Create docs/specifications/spec-pipeline-guide.md documenting: workflow, validation gates, integration with story system, configuration steps, example outputs."
+```
+
+Expected output:
+✓ spec-generate-prd.md created
+✓ spec-generate-architecture.md created
+✓ spec-pipeline-guide.md created
+✓ Ready for Fase 3 activation
+
+Duration: 10-15 minutes
+
+================================================================================
+🎯 TERMINAL 4: MULTI-DOMAIN EXPANSION ROADMAP
+================================================================================
+
+Copy this entire command and paste into Terminal 4:
+
+```
+aider --model openrouter/arcee-ai/trinity-large-preview:free --no-auto-commits --yes --file squads/ --file docs/ --message "Create multi-domain expansion roadmap for AIOS beyond software development. Analyze 5 strategic domains: (1) Education - learning management & curriculum, (2) Healthcare - patient records & diagnostics, (3) Creative Services - content & design, (4) Business Strategy - competitive analysis & planning, (5) Wellness - health coaching. For each domain: define squad composition, required agents, specialized tasks. Create reusable squads/templates/domain-squad-template.yaml. Develop docs/strategy/MULTI-DOMAIN-EXPANSION.md with vision, timeline (Q1-Q4 2026), resource estimates, risk assessment, success metrics."
+```
+
+Expected output:
+✓ MULTI-DOMAIN-EXPANSION.md created
+✓ domain-squad-template.yaml created
+✓ 5 domain strategies detailed
+✓ Q1-Q4 2026 timeline established
+
+Duration: 10-15 minutes
+
+================================================================================
+📋 EXECUTION CHECKLIST
+================================================================================
+
+BEFORE EXECUTION:
+[ ] 4 terminal windows open
+[ ] All navigated to: C:\Users\Ryzen\Desktop\AIOS_CLAUDE\aios-core
+[ ] OPENROUTER_API_KEY environment variable set (if needed)
+[ ] Each command copied to correct terminal
+
+DURING EXECUTION:
+[ ] Terminal 1: Jest fix in progress
+[ ] Terminal 2: Aider-First analysis in progress
+[ ] Terminal 3: Spec pipeline prep in progress
+[ ] Terminal 4: Multi-domain expansion in progress
+[ ] All running SIMULTANEOUSLY
+
+AFTER EXECUTION (When all 4 terminals complete):
+[ ] Review git status: git status
+[ ] Check for errors: grep -i "error\|fail" in terminal outputs
+[ ] Lint validation: npm run lint
+[ ] Type validation: npm run typecheck
+[ ] Test validation: npm test
+
+FINAL STEPS:
+[ ] Create commit with all changes (conventional commits format)
+[ ] Push to feat/software-inc-integration branch
+
+================================================================================
+💰 COST SUMMARY
+================================================================================
+
+EXECUTION COST: Use (FREE - trinity-large-preview:free)
+COST IF CLAUDE:  ~$0.50-1.00
+TOTAL SAVINGS:   100% (Use instead of $$)
+
+TASKS DELEGATED TO AIDER: 4
+CLAUDE TASKS:              0
+PARALLELISM SPEEDUP:      ~3x (15-20 min vs 45-55 min sequential)
+
+================================================================================
+🚀 NEXT STEPS AFTER EXECUTION
+================================================================================
+
+1. Monitor all 4 terminals until completion
+2. Review generated files:
+   - jest.config.js (modified)
+   - squads/AIDER-FIRST-STRATEGY.md (new)
+   - .aios-core/development/tasks/spec-generate-prd.md (new)
+   - .aios-core/development/tasks/spec-generate-architecture.md (new)
+   - docs/specifications/spec-pipeline-guide.md (new)
+   - docs/strategy/MULTI-DOMAIN-EXPANSION.md (new)
+   - squads/templates/domain-squad-template.yaml (new)
+
+3. Run quality gates:
+   npm run lint
+   npm run typecheck
+   npm test
+
+4. Create commit:
+   git add .
+   git commit -m "feat(genesis-observer): execute cartography optimization via parallel Aider
+
+   - Fix Jest namespace collision (AIDER-AIOS isolation)
+   - Create Aider-First universalization strategy (all squads)
+   - Prepare Spec Pipeline for Fase 3 activation
+   - Develop Multi-Domain expansion roadmap
+
+   Execution via Mordomo orchestrator: 4 parallel Aiders
+   Cost: Use (free - trinity-large-preview:free)
+   Time saved: ~30 minutes vs sequential execution"
+
+5. Push to remote:
+   git push origin feat/software-inc-integration
+
+================================================================================
+✅ READY TO EXECUTE!
+================================================================================
+
+1. Open 4 terminal windows
+2. Navigate to: C:\Users\Ryzen\Desktop\AIOS_CLAUDE\aios-core
+3. Copy ONE command per terminal from above
+4. Press ENTER in all 4 terminals simultaneously
+5. Monitor output and wait for completion
+6. Run quality gates and create commit
+
+🎯 Total execution: ~15-20 minutes (parallel)
+💰 Total cost: Use (FREE)
+⚡ Speedup: ~3x faster than sequential
+
+Questions? Refer back to this file or check EXECUTE-PARALLEL.sh for detailed instructions.

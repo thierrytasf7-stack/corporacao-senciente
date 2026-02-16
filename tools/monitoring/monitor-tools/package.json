@@ -1,0 +1,27 @@
+{
+    "name": "monitor-tools",
+    "version": "1.0.0",
+    "description": "Servidor de acesso remoto para controle de PC via web",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "nodemon server.js"
+    },
+    "keywords": [
+        "remote-desktop",
+        "screen-sharing",
+        "remote-control"
+    ],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.18.2",
+        "socket.io": "^4.6.1",
+        "screenshot-desktop": "^1.15.0",
+        "robotjs": "^0.6.0",
+        "cors": "^2.8.5"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}

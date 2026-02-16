@@ -1,0 +1,109 @@
+name: ceo-audit
+version: 1.0.0
+description: CEO de Auditoria que orquestra autonomamente todos os squads de audit (agent-audit, squad-audit, backend-audit, frontend-audit, fullstack-harmony) e @qa para garantir qualidade continua do ecossistema AIOS
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: CeoAudit
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - ceo-audit.md
+  tasks:
+    - ceo-audit-sweep.md
+    - ceo-audit-agent.md
+    - ceo-audit-squad.md
+    - ceo-audit-backend.md
+    - ceo-audit-frontend.md
+    - ceo-audit-harmony.md
+    - ceo-audit-report.md
+    - ceo-audit-status.md
+    - ceo-audit-schedule.md
+    - ceo-audit-routing.md
+  workflows:
+    - full-audit-sweep.yaml
+    - single-target-audit.yaml
+    - continuous-audit.yaml
+  checklists:
+    - gate-audit-ready.md
+    - gate-audit-complete.md
+    - gate-findings-resolved.md
+  templates:
+    - audit-report-tmpl.md
+    - audit-findings-tmpl.md
+    - executive-summary-tmpl.md
+  tools:
+    - sequential-thinking
+  scripts: []
+
+config:
+  extends: extend
+  executionModes:
+    single-audit:
+      description: "Auditar target unico com routing automatico"
+      flow: identify-type → route-to-squad → execute → report
+      agents: [agent-evolver, squad-evolver, backend-audit, frontend-audit, fullstack-harmony]
+    full-sweep:
+      description: "Todos os squads de audit em sequencia coordenada"
+      flow: agent-audit → squad-audit → backend → frontend → harmony → consolidate
+      agents: [agent-evolver, squad-evolver, backend-audit, frontend-audit, fullstack-harmony, qa]
+    continuous:
+      description: "Agendamento periodico de auditorias"
+      flow: schedule → trigger → execute → report → notify
+      agents: [agent-evolver, squad-evolver, backend-audit, frontend-audit, fullstack-harmony]
+
+  qualityPipeline:
+    findings_severity: [CRITICAL, HIGH, MEDIUM, LOW]
+    resolution:
+      CRITICAL: "immediate - bloqueia progresso"
+      HIGH: "sprint - resolver no sprint atual"
+      MEDIUM: "backlog - documentar como tech debt"
+      LOW: "optional - melhoria futura"
+
+dependencies:
+  node: []
+  python: []
+  squads:
+    - agent-audit
+    - squad-audit
+    - backend-audit
+    - frontend-audit
+    - fullstack-harmony
+
+orchestrates:
+  - agent: agent-evolver
+    skill: "Audit:AgentEvolver-AIOS"
+    authority: "audit agents, optimize, version"
+    when: "Auditar agentes individuais do AIOS"
+  - agent: squad-evolver
+    skill: "Audit:SquadEvolver-AIOS"
+    authority: "audit squads, optimize, version"
+    when: "Auditar squads completos"
+  - agent: backend-audit
+    skill: "Audit:Backend-AIOS"
+    authority: "audit backend code, APIs, security"
+    when: "Auditar codigo backend, APIs, patterns"
+  - agent: frontend-audit
+    skill: "Audit:Frontend-AIOS"
+    authority: "audit frontend code, UX, accessibility"
+    when: "Auditar codigo frontend, componentes, UX"
+  - agent: fullstack-harmony
+    skill: "Audit:FullstackHarmony-AIOS"
+    authority: "audit cross-layer integration"
+    when: "Auditar harmonia e integracao fullstack"
+  - agent: qa
+    skill: "Desenvolvimento:QA-AIOS"
+    authority: "code review, quality gates (read-only)"
+    when: "Quality gates e code review"
+
+tags:
+  - audit
+  - orchestration
+  - ceo
+  - quality
+  - compliance
+  - evolution
+  - meta

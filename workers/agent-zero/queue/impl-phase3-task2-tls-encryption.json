@@ -1,0 +1,18 @@
+{
+  "id": "impl-phase3-task2-tls-encryption",
+  "agent": "dev",
+  "task_type": "implement-security",
+  "model": "arcee-ai/trinity-large-preview:free",
+  "tools_required": ["file_write"],
+  "aios_guide_path": ".aios-core/development/agents/dev.md",
+  "context_files": [],
+  "prompt": "ADD TLS CONFIG\n\nCreate: modules/betting-platform/backend/config/tls.ts\n\nBasic TLS setup:\n1. Export tlsOptions with:\n   - key: path to server.key\n   - cert: path to server.crt\n   - ca: path to ca.crt\n   - rejectUnauthorized: true\n\nJust the config structure.",
+  "acceptance_criteria": [
+    "tls.ts criado",
+    "tlsOptions exported",
+    "Paths configurados"
+  ],
+  "max_tool_iterations": 5,
+  "self_review": false,
+  "quality_threshold": 7
+}

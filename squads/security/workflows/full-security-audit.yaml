@@ -1,0 +1,84 @@
+name: full-security-audit
+description: Workflow completo de audit de seguranca em 4 dominios
+version: 1.0.0
+trigger: "*audit --scope full"
+agent: security-engineer
+
+phases:
+  - name: preparation
+    description: Coletar informacoes do ambiente
+    tasks:
+      - action: "Identificar servicos ativos (portas 21300-21399)"
+      - action: "Identificar package.json locations"
+      - action: "Identificar diretorios de codigo fonte"
+    outputs:
+      - services_inventory
+      - package_locations
+      - source_directories
+
+  - name: code-security
+    description: SAST - Static Application Security Testing
+    depends_on: [preparation]
+    tasks:
+      - task: sec-scan-sast.md
+        params:
+          target: "{source_directories}"
+    outputs:
+      - sast_findings
+
+  - name: dependency-security
+    description: Dependency vulnerability scanning
+    depends_on: [preparation]
+    parallel_with: [code-security]
+    tasks:
+      - task: sec-scan-dependencies.md
+        params:
+          target: "{package_locations}"
+    outputs:
+      - dependency_findings
+
+  - name: secret-detection
+    description: Credential and secret scanning
+    depends_on: [preparation]
+    parallel_with: [code-security, dependency-security]
+    tasks:
+      - task: sec-scan-secrets.md
+        params:
+          scope: files
+    outputs:
+      - secret_findings
+
+  - name: api-security
+    description: API security audit
+    depends_on: [preparation]
+    tasks:
+      - task: sec-check-headers.md
+      - task: sec-check-auth.md
+      - task: sec-check-api.md
+    outputs:
+      - api_findings
+
+  - name: report-generation
+    description: Consolidar findings e gerar relatorio
+    depends_on: [code-security, dependency-security, secret-detection, api-security]
+    tasks:
+      - task: sec-report.md
+        params:
+          scope: full
+          format: terminal
+    outputs:
+      - security_report
+      - security_score
+      - gate_decision
+
+  - name: action-plan
+    description: Definir plano de acao baseado nos findings
+    depends_on: [report-generation]
+    tasks:
+      - action: "Priorizar findings por severidade"
+      - action: "Atribuir owners (@dev, @data-engineer, @devops)"
+      - action: "Definir timeline de correcao"
+    decision:
+      all_pass: "Nenhuma vulnerabilidade - PASS"
+      warnings_only: "Apenas medium/low - WARN, track no sprint"
+      critical_found: "Critical/high encontrado - FAIL, fix imediato"

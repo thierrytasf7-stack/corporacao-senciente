@@ -1,0 +1,19 @@
+# AIOS Sync Configuration
+# Synchronizes squads to IDE configurations (Claude Code, Cursor, etc.)
+
+active_ides:
+  - claude
+
+pack_aliases:
+  dev-aider: Aider
+  squad-creator: SquadCreator
+  etl-squad: ETL
+
+# Status Monitor Configuration
+monitoring:
+  cost_accumulator_enabled: true
+  cost_accumulator_path: '.aios-core/monitor/cost-accumulator.js'
+  status_hook_enabled: true
+  status_hook_path: '.aios-core/monitor/hooks/status-monitor.py'
+  display_in_statusline: true
+  refresh_interval_ms: 1000

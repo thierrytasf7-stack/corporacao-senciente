@@ -1,0 +1,77 @@
+name: full-agent-evolution-workflow
+description: Workflow completo de auditoria, otimizacao e versionamento de um agente AIOS
+version: 1.0.0
+trigger: manual
+
+input:
+  agent:
+    type: string
+    required: true
+    description: Nome ou path do agente (ex. @dev, squads/backend-audit/agents/backend-auditor.md)
+  bump_type:
+    type: string
+    required: false
+    default: auto
+    description: Tipo de bump (major, minor, patch, auto)
+
+steps:
+  - id: locate-agent
+    task: audit-full-agent.md
+    phase: "Fase 0: Locate & Parse"
+    description: Encontrar arquivo do agente e parsear YAML
+
+  - id: audit-persona
+    task: audit-persona-quality.md
+    phase: "Fase 1: Persona Quality"
+    depends_on: [locate-agent]
+
+  - id: audit-commands
+    task: audit-commands-coverage.md
+    phase: "Fase 2: Commands Coverage"
+    depends_on: [locate-agent]
+
+  - id: audit-tasks
+    task: audit-task-alignment.md
+    phase: "Fase 3: Task Alignment"
+    depends_on: [locate-agent]
+
+  - id: audit-principles
+    task: audit-principles-coherence.md
+    phase: "Fase 4: Principles Coherence"
+    depends_on: [locate-agent]
+
+  - id: audit-greeting
+    task: audit-greeting-activation.md
+    phase: "Fase 5: Greeting & Activation"
+    depends_on: [locate-agent]
+
+  - id: audit-deps
+    task: audit-dependencies-integrity.md
+    phase: "Fase 6: Dependencies Integrity"
+    depends_on: [locate-agent]
+
+  - id: audit-collab
+    task: audit-collaboration-map.md
+    phase: "Fase 7: Collaboration Map"
+    depends_on: [locate-agent]
+
+  - id: optimize
+    task: optimize-agent.md
+    phase: "Fase 8: Optimize"
+    description: Apresentar e aplicar otimizacoes
+    depends_on: [audit-persona, audit-commands, audit-tasks, audit-principles, audit-greeting, audit-deps, audit-collab]
+
+  - id: version
+    task: version-agent.md
+    phase: "Fase 9: Version & Changelog"
+    description: Bump versao, atualizar evolution header, append changelog
+    depends_on: [optimize]
+
+  - id: report
+    task: generate-evolution-report.md
+    phase: "Fase 10: Evolution Report"
+    depends_on: [version]
+
+output:
+  report_path: evolution-report.md
+  changelog_path: data/changelogs/{agent-id}.changelog.md

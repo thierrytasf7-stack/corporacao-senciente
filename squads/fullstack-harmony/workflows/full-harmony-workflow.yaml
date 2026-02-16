@@ -1,0 +1,90 @@
+name: full-harmony-audit-workflow
+description: Workflow completo de auditoria de harmonia Backend-Frontend
+version: 1.0.0
+trigger: manual
+
+input:
+  frontend_path:
+    type: string
+    required: true
+    description: Caminho do frontend (ex. apps/dashboard)
+  backend_path:
+    type: string
+    required: true
+    description: Caminho do backend (ex. apps/backend)
+
+steps:
+  - id: stack-detection
+    task: audit-full-harmony.md
+    phase: "Fase 0: Stack Detection & Mapping"
+    description: Detectar stacks, mapear endpoints e chamadas
+
+  - id: env-config
+    task: audit-env-config.md
+    phase: "Fase 1: Env & Config"
+    description: Verificar que URLs, portas e configs alinham
+    depends_on: [stack-detection]
+
+  - id: cors-headers
+    task: audit-cors-headers.md
+    phase: "Fase 2: CORS & Headers"
+    description: Verificar cross-origin configurado
+    depends_on: [stack-detection]
+
+  - id: api-contracts
+    task: audit-api-contracts.md
+    phase: "Fase 3: API Contracts"
+    description: Cruzar endpoints backend vs chamadas frontend
+    depends_on: [env-config]
+
+  - id: type-consistency
+    task: audit-type-consistency.md
+    phase: "Fase 4: Type Consistency"
+    description: Verificar tipos alinham entre camadas
+    depends_on: [api-contracts]
+
+  - id: auth-flow
+    task: audit-auth-flow.md
+    phase: "Fase 5: Auth Flow"
+    description: Validar autenticacao end-to-end
+    depends_on: [api-contracts]
+
+  - id: data-flow
+    task: audit-data-flow.md
+    phase: "Fase 6: Data Flow"
+    description: Validar CRUD completo end-to-end
+    depends_on: [api-contracts]
+
+  - id: error-propagation
+    task: audit-error-propagation.md
+    phase: "Fase 7: Error Propagation"
+    description: Erros do backend chegam ao frontend corretamente
+    depends_on: [api-contracts]
+
+  - id: realtime
+    task: audit-realtime.md
+    phase: "Fase 8: Real-time"
+    description: WebSocket/SSE/polling funcional
+    depends_on: [env-config]
+
+  - id: state-sync
+    task: audit-state-sync.md
+    phase: "Fase 9: State Sync"
+    description: Estado do frontend reflete backend
+    depends_on: [data-flow]
+
+  - id: loading-states
+    task: audit-loading-states.md
+    phase: "Fase 10: Loading States"
+    description: Loading, error, empty states no frontend
+    depends_on: [data-flow]
+
+  - id: generate-report
+    task: generate-harmony-report.md
+    phase: "Fase 11: Report Generation"
+    description: Consolidar e gerar relatorio de harmonia
+    depends_on: [api-contracts, type-consistency, auth-flow, data-flow, error-propagation, realtime, state-sync, loading-states, cors-headers, env-config]
+
+output:
+  report_path: harmony-report.md
+  format: markdown

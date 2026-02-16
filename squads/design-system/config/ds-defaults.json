@@ -1,0 +1,68 @@
+{
+  "naming": {
+    "tokens": "kebab-case",
+    "components": "PascalCase",
+    "files": "kebab-case",
+    "css_prefix": "--ds-"
+  },
+  "spacing_base": 4,
+  "spacing_scale": [0, 1, 2, 4, 6, 8, 10, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96],
+  "font_size_scale": {
+    "xs": 12,
+    "sm": 14,
+    "base": 16,
+    "lg": 18,
+    "xl": 20,
+    "2xl": 24,
+    "3xl": 30,
+    "4xl": 36,
+    "5xl": 48
+  },
+  "radius_scale": {
+    "none": 0,
+    "sm": 4,
+    "md": 8,
+    "lg": 12,
+    "xl": 16,
+    "2xl": 24,
+    "full": 9999
+  },
+  "breakpoints": {
+    "sm": 640,
+    "md": 768,
+    "lg": 1024,
+    "xl": 1280,
+    "2xl": 1536
+  },
+  "z_index_scale": {
+    "base": 0,
+    "dropdown": 1000,
+    "sticky": 1100,
+    "overlay": 1200,
+    "modal": 1300,
+    "popover": 1400,
+    "toast": 1500
+  },
+  "motion": {
+    "duration": {
+      "instant": 0,
+      "fast": 100,
+      "normal": 200,
+      "slow": 300,
+      "slower": 500
+    },
+    "easing": {
+      "ease-in": "cubic-bezier(0.4, 0, 1, 1)",
+      "ease-out": "cubic-bezier(0, 0, 0.2, 1)",
+      "ease-in-out": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "spring": "cubic-bezier(0.34, 1.56, 0.64, 1)"
+    }
+  },
+  "accessibility": {
+    "wcag_level": "AA",
+    "min_contrast_normal": 4.5,
+    "min_contrast_large": 3.0,
+    "min_touch_target": 44
+  },
+  "output_formats": ["css", "json", "tailwind", "scss"]
+}

@@ -1,0 +1,758 @@
+{
+  "sessionId": "session_1771050086170",
+  "botId": "v2-periodic-gen23-1771050086167",
+  "botName": "Atlas",
+  "generation": 23,
+  "genome": {
+    "id": "v2-periodic-gen23-1771050086167",
+    "name": "Atlas",
+    "generation": 23,
+    "parentIds": [
+      "v2-periodic-gen6-1771045575014",
+      "v2-periodic-gen15-1771048275717"
+    ],
+    "strategyMask": [
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      true,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      true,
+      true
+    ],
+    "strategyWeights": [
+      0,
+      1.5,
+      0.1,
+      0,
+      0.1467361559554944,
+      0,
+      1.5,
+      0,
+      1.5,
+      1.5,
+      1,
+      1,
+      1.5,
+      1.5,
+      1.5,
+      1,
+      1,
+      1.5,
+      1.0890015621529585,
+      1,
+      0.1,
+      0.1,
+      0,
+      0,
+      0,
+      0.3,
+      0.3,
+      0,
+      0,
+      0
+    ],
+    "consensus": {
+      "minAgreeingSignals": 4,
+      "maxOpposingSignals": 2,
+      "minWeightedStrength": 50,
+      "preferredDirection": "ANY"
+    },
+    "risk": {
+      "atrMultiplierTP": 2,
+      "atrMultiplierSL": 0.8,
+      "trailingStopATR": 1.3600737179121585,
+      "flipExitThreshold": 5,
+      "leverage": 45,
+      "maxOpenPositions": 4,
+      "maxExposurePercent": 35
+    },
+    "betting": {
+      "basePercent": 4.422972833750388,
+      "winMultiplier": 1.3112309340796913,
+      "lossMultiplier": 0.85,
+      "maxBetPercent": 12,
+      "resetAfterLosses": 3
+    },
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT",
+      "BNBUSDT",
+      "XRPUSDT"
+    ]
+  },
+  "startBankroll": 100,
+  "endBankroll": 99.69,
+  "peakBankroll": 100.18,
+  "totalTrades": 26,
+  "wins": 5,
+  "losses": 21,
+  "winRate": 19.2,
+  "maxDrawdown": 0.49,
+  "finalReason": "EVOLVED_OUT",
+  "startTime": "2026-02-14T06:21:26.170Z",
+  "endTime": "2026-02-14T06:26:22.399Z",
+  "trades": [
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68814.9,
+      "exitPrice": 68814.9,
+      "betAmount": 4.422972833750388,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 100,
+      "timestamp": "2026-02-14T06:21:34.708Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 98.5,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 2050.1,
+      "exitPrice": 2050.1,
+      "betAmount": 4.422972833750388,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100,
+      "bankrollAfter": 100,
+      "timestamp": "2026-02-14T06:21:34.978Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 70.125,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "dpo",
+          "momentum_10"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68814.9,
+      "exitPrice": 68810.5,
+      "betAmount": 3.1955978723846554,
+      "pnlPercent": 0.29,
+      "pnlValue": 0.01,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 100,
+      "bankrollAfter": 100.01,
+      "timestamp": "2026-02-14T06:21:42.322Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 98.5,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 2050.1,
+      "exitPrice": 2050.06,
+      "betAmount": 3.1955978723846554,
+      "pnlPercent": -0.09,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.01,
+      "bankrollAfter": 100.01,
+      "timestamp": "2026-02-14T06:21:42.595Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 70.125,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "dpo",
+          "momentum_10"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68810.5,
+      "exitPrice": 68810.5,
+      "betAmount": 3.5618693149873413,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.01,
+      "bankrollAfter": 100.01,
+      "timestamp": "2026-02-14T06:21:49.978Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 93.625,
+        "topStrategies": [
+          "parabolic_sar",
+          "cci_20",
+          "stochastic_14",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68810.5,
+      "exitPrice": 68810.5,
+      "betAmount": 3.02758891773924,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.01,
+      "bankrollAfter": 100.01,
+      "timestamp": "2026-02-14T06:21:55.637Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 98.5,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68810.5,
+      "exitPrice": 68810.5,
+      "betAmount": 4.423255412539037,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.01,
+      "bankrollAfter": 100.01,
+      "timestamp": "2026-02-14T06:22:00.129Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 98.5,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68810.5,
+      "exitPrice": 68810.5,
+      "betAmount": 4.423255412539037,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.01,
+      "bankrollAfter": 100.01,
+      "timestamp": "2026-02-14T06:22:08.072Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 93.625,
+        "topStrategies": [
+          "parabolic_sar",
+          "cci_20",
+          "stochastic_14",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68810.5,
+      "exitPrice": 68798.9,
+      "betAmount": 4.423255412539037,
+      "pnlPercent": 0.76,
+      "pnlValue": 0.03,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 100.01,
+      "bankrollAfter": 100.04,
+      "timestamp": "2026-02-14T06:22:12.398Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 93.625,
+        "topStrategies": [
+          "parabolic_sar",
+          "cci_20",
+          "stochastic_14",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68800.1,
+      "exitPrice": 68798.9,
+      "betAmount": 5.80185536402769,
+      "pnlPercent": 0.08,
+      "pnlValue": 0,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 100.04,
+      "bankrollAfter": 100.04,
+      "timestamp": "2026-02-14T06:22:18.711Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 98.5,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68813,
+      "exitPrice": 68801.8,
+      "betAmount": 7.607918521784125,
+      "pnlPercent": 0.73,
+      "pnlValue": 0.06,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 100.04,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:22:27.616Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 83.875,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68801.8,
+      "exitPrice": 68801.8,
+      "betAmount": 9.981294307908112,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:22:30.222Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 83.875,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68801.8,
+      "exitPrice": 68801.8,
+      "betAmount": 8.484100161721894,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:22:37.537Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 98.5,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68803.5,
+      "exitPrice": 68803.5,
+      "betAmount": 7.211485137463609,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:22:48.213Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 83.875,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "LONG",
+      "entryPrice": 2049.6,
+      "exitPrice": 2049.59,
+      "betAmount": 7.211485137463609,
+      "pnlPercent": -0.02,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:22:48.485Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 70.125,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "dpo",
+          "momentum_10"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68803.6,
+      "exitPrice": 68803.6,
+      "betAmount": 4.427335489911669,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:22:54.786Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 83.875,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68803.6,
+      "exitPrice": 68803.6,
+      "betAmount": 4.427335489911669,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:23:02.146Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 83.875,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "BTCUSDT",
+      "side": "SHORT",
+      "entryPrice": 68803.6,
+      "exitPrice": 68803.7,
+      "betAmount": 4.427335489911669,
+      "pnlPercent": -0.01,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:23:12.775Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 83.875,
+        "topStrategies": [
+          "parabolic_sar",
+          "stochastic_14",
+          "cci_20",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.4094,
+      "exitPrice": 1.4094,
+      "betAmount": 4.427322682597708,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:24:15.319Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 79.125,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "mfi_14",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.4094,
+      "exitPrice": 1.4094,
+      "betAmount": 4.427322682597708,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:24:18.598Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 79.125,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "mfi_14",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.4094,
+      "exitPrice": 1.4094,
+      "betAmount": 4.427322682597708,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.1,
+      "timestamp": "2026-02-14T06:24:26.242Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 79.125,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "mfi_14",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.4094,
+      "exitPrice": 1.4088,
+      "betAmount": 4.427322682597708,
+      "pnlPercent": 1.92,
+      "pnlValue": 0.08,
+      "reason": "TAKE_PROFIT",
+      "bankrollBefore": 100.1,
+      "bankrollAfter": 100.18,
+      "timestamp": "2026-02-14T06:24:36.183Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 79.125,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "mfi_14",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.4089,
+      "exitPrice": 1.4089,
+      "betAmount": 5.810161312835097,
+      "pnlPercent": 0,
+      "pnlValue": 0,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.18,
+      "bankrollAfter": 100.18,
+      "timestamp": "2026-02-14T06:25:10.400Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 79.125,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "mfi_14",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "XRPUSDT",
+      "side": "SHORT",
+      "entryPrice": 1.4088,
+      "exitPrice": 1.4102,
+      "betAmount": 4.938637115909832,
+      "pnlPercent": -4.47,
+      "pnlValue": -0.22,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 100.18,
+      "bankrollAfter": 99.96,
+      "timestamp": "2026-02-14T06:25:27.182Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 2,
+        "weightedStrength": 79.125,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "mfi_14",
+          "rsi_14"
+        ]
+      }
+    },
+    {
+      "symbol": "ETHUSDT",
+      "side": "SHORT",
+      "entryPrice": 2049.35,
+      "exitPrice": 2051.69,
+      "betAmount": 4.427322682597708,
+      "pnlPercent": -5.14,
+      "pnlValue": -0.23,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.96,
+      "bankrollAfter": 99.73,
+      "timestamp": "2026-02-14T06:25:45.231Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 1,
+        "weightedStrength": 53.875,
+        "topStrategies": [
+          "parabolic_sar",
+          "mfi_14",
+          "cmf_20",
+          "ema_triple_9_21_55"
+        ]
+      }
+    },
+    {
+      "symbol": "BNBUSDT",
+      "side": "SHORT",
+      "entryPrice": 617.12,
+      "exitPrice": 617.27,
+      "betAmount": 4.188587545603012,
+      "pnlPercent": -1.09,
+      "pnlValue": -0.05,
+      "reason": "STOP_LOSS",
+      "bankrollBefore": 99.73,
+      "bankrollAfter": 99.69,
+      "timestamp": "2026-02-14T06:25:55.540Z",
+      "consensusSnapshot": {
+        "agreeingCount": 4,
+        "opposingCount": 1,
+        "weightedStrength": 73.375,
+        "topStrategies": [
+          "parabolic_sar",
+          "mass_index",
+          "stochastic_14",
+          "cmf_20"
+        ]
+      }
+    }
+  ],
+  "fitness": 17.257946031962657,
+  "activeStrategies": [
+    "ema_triple_9_21_55",
+    "parabolic_sar",
+    "rsi_14",
+    "stochastic_14",
+    "cci_20",
+    "momentum_10",
+    "mfi_14",
+    "cmf_20",
+    "mass_index",
+    "dpo"
+  ]
+}

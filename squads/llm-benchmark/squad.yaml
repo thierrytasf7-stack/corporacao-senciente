@@ -1,0 +1,52 @@
+name: llm-benchmark
+version: 1.0.0
+description: >
+  Squad de benchmark especializado em calcular qualidade e custos de modelos LLM,
+  analisar agentes/workflows para identificar desperdício, e otimizar o trade-off
+  custo vs qualidade usando Pareto 80/20. Lê qualquer agente, workflow ou forma de
+  trabalho e define o que é desnecessário.
+team: Evolucao
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: Benchmark
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - benchmark-analyst.md
+  tasks:
+    - benchmark-model.md
+    - benchmark-agent.md
+    - benchmark-workflow.md
+    - benchmark-compare.md
+    - benchmark-optimize-cost.md
+    - benchmark-optimize-quality.md
+    - benchmark-report.md
+  workflows: []
+  checklists:
+    - benchmark-checklist.md
+  templates:
+    - benchmark-report-tmpl.md
+  tools: []
+  scripts: []
+
+config:
+  extends: extend
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+tags:
+  - benchmark
+  - cost-optimization
+  - quality-optimization
+  - pareto
+  - llm
+  - token-economy
+  - evolution
+  - metrics

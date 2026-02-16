@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scorecard PUV - Clínica Integrativa Alpherat</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: white;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            font-weight: bold;
+            color: #2ecc71;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .content { padding: 40px; }
+        .criteria { margin-bottom: 30px; }
+        .criterion {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #2ecc71;
+        }
+        .criterion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .criterion-name { font-weight: 600; font-size: 1.1em; color: #2c3e50; }
+        .criterion-score {
+            background: #2ecc71;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .bar-container {
+            background: #e0e0e0;
+            height: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);
+            border-radius: 15px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .radar-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+        .radar-container h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .summary {
+            background: #e8f5e9;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .summary h3 {
+            color: #2ecc71;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .summary p {
+            line-height: 1.8;
+            color: #555;
+        }
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            color: #777;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Clínica Integrativa Alpherat</h1>
+            <p>Análise da Proposta Única de Valor</p>
+            <div class="score-circle">13/20</div>
+            <p style="font-size: 1em; margin-top: 10px;">Score PUV: <strong>MODERADO</strong></p>
+        </div>
+
+        <div class="content">
+            <h2 style="color: #2c3e50; margin-bottom: 30px;">Avaliação por Critério</h2>
+
+            <div class="criteria">
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">1. Clareza da Proposta de Valor</span>
+                        <span class="criterion-score">1/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 50%;">50%</div>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">2. Diferenciação Competitiva</span>
+                        <span class="criterion-score">2/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 100%;">100%</div>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">3. Definição de Público-Alvo</span>
+                        <span class="criterion-score">1/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 50%;">50%</div>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">4. Comunicação de Benefícios</span>
+                        <span class="criterion-score">1/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 50%;">50%</div>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">5. Prova Social e Credibilidade</span>
+                        <span class="criterion-score">1/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 50%;">50%</div>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">6. Chamadas para Ação (CTA)</span>
+                        <span class="criterion-score">2/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 100%;">100%</div>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">7. Força da Marca</span>
+                        <span class="criterion-score">1/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 50%;">50%</div>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">8. Presença Digital e SEO</span>
+                        <span class="criterion-score">1/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 50%;">50%</div>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">9. Experiência do Usuário (UX)</span>
+                        <span class="criterion-score">2/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 100%;">100%</div>
+                    </div>
+                </div>
+
+                <div class="criterion">
+                    <div class="criterion-header">
+                        <span class="criterion-name">10. Otimização para Conversão</span>
+                        <span class="criterion-score">1/2</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 50%;">50%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="radar-container">
+                <h3>Radar de Performance</h3>
+                <svg width="500" height="500" viewBox="0 0 500 500">
+                    <!-- Background circles -->
+                    <circle cx="250" cy="250" r="200" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                    <circle cx="250" cy="250" r="150" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                    <circle cx="250" cy="250" r="100" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+                    <circle cx="250" cy="250" r="50" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+
+                    <!-- Axis lines -->
+                    <line x1="250" y1="250" x2="250" y2="50" stroke="#e0e0e0" stroke-width="1"/>
+                    <line x1="250" y1="250" x2="428" y2="135" stroke="#e0e0e0" stroke-width="1"/>
+                    <line x1="250" y1="250" x2="428" y2="365" stroke="#e0e0e0" stroke-width="1"/>
+                    <line x1="250" y1="250" x2="250" y2="450" stroke="#e0e0e0" stroke-width="1"/>
+                    <line x1="250" y1="250" x2="72" y2="365" stroke="#e0e0e0" stroke-width="1"/>
+                    <line x1="250" y1="250" x2="72" y2="135" stroke="#e0e0e0" stroke-width="1"/>
+
+                    <!-- Data polygon (valores normalizados para escala 0-200 radius) -->
+                    <polygon points="250,150 350,157 350,293 250,350 150,293 150,157"
+                             fill="rgba(46, 204, 113, 0.3)"
+                             stroke="#2ecc71"
+                             stroke-width="3"/>
+
+                    <!-- Labels -->
+                    <text x="250" y="35" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Clareza</text>
+                    <text x="445" y="125" text-anchor="start" fill="#2c3e50" font-size="12" font-weight="bold">Diferenciação</text>
+                    <text x="445" y="375" text-anchor="start" fill="#2c3e50" font-size="12" font-weight="bold">Público</text>
+                    <text x="250" y="475" text-anchor="middle" fill="#2c3e50" font-size="12" font-weight="bold">Benefícios</text>
+                    <text x="55" y="375" text-anchor="end" fill="#2c3e50" font-size="12" font-weight="bold">Prova Social</text>
+                    <text x="55" y="125" text-anchor="end" fill="#2c3e50" font-size="12" font-weight="bold">CTA</text>
+                </svg>
+            </div>
+
+            <div class="summary">
+                <h3>📊 Resumo Executivo</h3>
+                <p><strong>Pontos Fortes:</strong> Diferenciação tecnológica excepcional (equipamentos de ponta), CTAs bem posicionados, UX limpa e profissional.</p>
+                <p style="margin-top: 15px;"><strong>Principais Gaps:</strong> Proposta de valor genérica ("Cuidamos da sua saúde"), falta de prova social quantitativa (reviews, casos de sucesso), presença digital limitada (baixa visibilidade SEO), público-alvo amplo demais.</p>
+                <p style="margin-top: 15px;"><strong>Oportunidade Crítica:</strong> Transformar os diferenciais tecnológicos únicos em uma proposta de valor específica e mensurável que ressoe com um nicho definido (ex: "Recuperação acelerada para atletas de alta performance com terapias avançadas").</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🤖 Análise gerada por PUV Score Squad - Diana AIOS | 14/02/2026 22:56</p>
+            <p style="margin-top: 10px;">Metodologia: Avaliação em 10 critérios (0-2 pontos cada) | Score máximo: 20 pontos</p>
+        </div>
+    </div>
+</body>
+</html>

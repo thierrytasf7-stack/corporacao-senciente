@@ -1,0 +1,76 @@
+name: full-performance-audit
+description: Workflow completo de audit de performance em 3 camadas com report final
+version: 1.0.0
+trigger: manual # Acionado via *audit ou por Prometheus (pre-release)
+
+phases:
+  - name: preparation
+    description: Verificar ambiente e ferramentas disponiveis
+    steps:
+      - action: verify-environment
+        description: Confirmar Node.js, PostgreSQL, apps rodando
+      - action: load-budgets
+        description: Carregar performance budgets do squad.yaml
+      - action: check-baseline
+        description: Verificar se existe baseline anterior para comparacao
+
+  - name: frontend-audit
+    description: Analisar performance do frontend
+    agent: performance-engineer
+    task: perf-analyze-bundle.md
+    parallel_with: backend-audit # Pode rodar em paralelo com backend
+    gate:
+      checklist: perf-gate-frontend.md
+      on_fail: continue-with-warnings
+
+  - name: backend-audit
+    description: Profiling do backend Node.js
+    agent: performance-engineer
+    tasks:
+      - perf-profile-runtime.md
+      - perf-load-test.md
+      - perf-memory-check.md
+    gate:
+      checklist: perf-gate-backend.md
+      on_fail: continue-with-warnings
+
+  - name: database-audit
+    description: Analisar performance do PostgreSQL
+    agent: performance-engineer
+    task: perf-analyze-queries.md
+    gate:
+      checklist: perf-gate-database.md
+      on_fail: continue-with-warnings
+
+  - name: benchmarks
+    description: Executar benchmarks e comparar com baseline
+    agent: performance-engineer
+    task: perf-benchmark.md
+    depends_on: [frontend-audit, backend-audit, database-audit]
+
+  - name: report-generation
+    description: Gerar relatorio consolidado
+    agent: performance-engineer
+    task: perf-report.md
+    depends_on: [benchmarks]
+    template: perf-audit-report-tmpl.md
+
+  - name: optimization-plan
+    description: Priorizar e planejar otimizacoes
+    agent: performance-engineer
+    task: perf-optimize.md
+    depends_on: [report-generation]
+    gate:
+      checklist: perf-gate-release.md
+      on_fail: block-release
+
+output:
+  - performance-audit-report.md
+  - optimization-plan.md
+  - budget-scorecard.md
+  - baseline-update (se melhorias)
+
+escalation:
+  critical_findings: notify-prometheus
+  budget_violations: block-release
+  regressions: require-fix-before-ship

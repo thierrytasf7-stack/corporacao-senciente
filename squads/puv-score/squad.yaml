@@ -1,0 +1,67 @@
+name: puv-score
+version: 1.0.0
+description: Pipeline automatizado de diagnostico PUV Score - scraping, analise IA, geracao de entregaveis
+icon: "🎯"
+author: Diana Corp + FNW (Freenat Work)
+category: business-automation
+
+agents:
+  - id: puv-agent
+    name: PUV Score Agent
+    file: agents/puv-agent.md
+
+tasks:
+  - id: scrape-website
+    name: Scrape Website
+    file: tasks/scrape-website.md
+  - id: scrape-google
+    name: Scrape Google Business
+    file: tasks/scrape-google.md
+  - id: scrape-instagram
+    name: Scrape Instagram
+    file: tasks/scrape-instagram.md
+  - id: scrape-mercadolivre
+    name: Scrape Mercado Livre
+    file: tasks/scrape-mercadolivre.md
+  - id: analyze-puv
+    name: Analise PUV Score
+    file: tasks/analyze-puv.md
+  - id: generate-scorecard
+    name: Gerar Scorecard
+    file: tasks/generate-scorecard.md
+  - id: generate-slides
+    name: Gerar Slides
+    file: tasks/generate-slides.md
+  - id: generate-document
+    name: Gerar Documento PDF
+    file: tasks/generate-document.md
+  - id: deliver-results
+    name: Entregar Resultados
+    file: tasks/deliver-results.md
+
+scripts:
+  - scripts/puv-pipeline.js
+  - scripts/scraper.js
+  - scripts/analyzer.js
+  - scripts/scorecard-gen.js
+  - scripts/slides-gen.js
+  - scripts/document-gen.js
+
+templates:
+  - templates/scorecard.html
+  - templates/slides.html
+  - templates/document.md
+  - templates/puv-prompt.md
+
+dependencies:
+  requires:
+    - playwright (headless browser)
+    - puppeteer (screenshot/PDF)
+    - Claude API key configurada
+    - WhatsApp Bridge na porta 21350 (para entrega)
+  npm:
+    - playwright
+    - puppeteer
+    - qrcode
+  external:
+    - Claude API (anthropic)

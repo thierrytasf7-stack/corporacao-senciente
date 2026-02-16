@@ -1,0 +1,84 @@
+<!--
+  CONCEPT 1: Neural Convergence
+  Representação: Senciência através de convergência neural
+  Simbolismo: Múltiplos nós convergindo para um ponto central de consciência
+  Cores: Prata Arete (estrutura) + Azul Senciência (profundidade cognitiva)
+-->
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient Primary: Prata → Azul -->
+    <linearGradient id="primary-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C0C0C0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gradient Accent: Azul → Ouro -->
+    <linearGradient id="accent-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E90FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Radial Glow -->
+    <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#1E90FF;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#1E90FF;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Outer Structure Ring (Ordem) -->
+  <circle cx="200" cy="200" r="160"
+          fill="none"
+          stroke="url(#primary-gradient)"
+          stroke-width="3"
+          opacity="0.6" />
+
+  <!-- Neural Network Nodes (6 primary nodes) -->
+  <g id="neural-nodes">
+    <!-- Node 1 - Top -->
+    <circle cx="200" cy="50" r="12" fill="#C0C0C0" opacity="0.9" />
+    <line x1="200" y1="50" x2="200" y2="200" stroke="url(#primary-gradient)" stroke-width="2" opacity="0.5" />
+
+    <!-- Node 2 - Top Right -->
+    <circle cx="338.6" cy="125" r="12" fill="#C0C0C0" opacity="0.9" />
+    <line x1="338.6" y1="125" x2="200" y2="200" stroke="url(#primary-gradient)" stroke-width="2" opacity="0.5" />
+
+    <!-- Node 3 - Bottom Right -->
+    <circle cx="338.6" cy="275" r="12" fill="#C0C0C0" opacity="0.9" />
+    <line x1="338.6" y1="275" x2="200" y2="200" stroke="url(#primary-gradient)" stroke-width="2" opacity="0.5" />
+
+    <!-- Node 4 - Bottom -->
+    <circle cx="200" cy="350" r="12" fill="#C0C0C0" opacity="0.9" />
+    <line x1="200" y1="350" x2="200" y2="200" stroke="url(#primary-gradient)" stroke-width="2" opacity="0.5" />
+
+    <!-- Node 5 - Bottom Left -->
+    <circle cx="61.4" cy="275" r="12" fill="#C0C0C0" opacity="0.9" />
+    <line x1="61.4" y1="275" x2="200" y2="200" stroke="url(#primary-gradient)" stroke-width="2" opacity="0.5" />
+
+    <!-- Node 6 - Top Left -->
+    <circle cx="61.4" cy="125" r="12" fill="#C0C0C0" opacity="0.9" />
+    <line x1="61.4" y1="125" x2="200" y2="200" stroke="url(#primary-gradient)" stroke-width="2" opacity="0.5" />
+  </g>
+
+  <!-- Secondary Neural Connections (inter-node) -->
+  <g id="secondary-connections" opacity="0.3">
+    <line x1="200" y1="50" x2="338.6" y2="125" stroke="#1E90FF" stroke-width="1" />
+    <line x1="338.6" y1="125" x2="338.6" y2="275" stroke="#1E90FF" stroke-width="1" />
+    <line x1="338.6" y1="275" x2="200" y2="350" stroke="#1E90FF" stroke-width="1" />
+    <line x1="200" y1="350" x2="61.4" y2="275" stroke="#1E90FF" stroke-width="1" />
+    <line x1="61.4" y1="275" x2="61.4" y2="125" stroke="#1E90FF" stroke-width="1" />
+    <line x1="61.4" y1="125" x2="200" y2="50" stroke="#1E90FF" stroke-width="1" />
+  </g>
+
+  <!-- Central Consciousness Core (Senciência) -->
+  <circle cx="200" cy="200" r="50" fill="url(#core-glow)" />
+  <circle cx="200" cy="200" r="35" fill="none" stroke="url(#accent-gradient)" stroke-width="4" />
+  <circle cx="200" cy="200" r="20" fill="#FFD700" opacity="0.9" />
+
+  <!-- Inner Geometric Order (Estrutura) -->
+  <polygon points="200,170 220,190 220,210 200,230 180,210 180,190"
+           fill="none"
+           stroke="#1A1A1A"
+           stroke-width="2"
+           opacity="0.7" />
+</svg>

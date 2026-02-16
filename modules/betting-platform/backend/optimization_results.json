@@ -1,0 +1,121 @@
+{
+  "migration_file": "modules/betting-platform/backend/migrations/002_timescaledb_optimizations.sql",
+  "optimization_results": {
+    "hypertable_compression": {
+      "status": "configured",
+      "tables": [
+        {
+          "table": "odds_history",
+          "compression_policy": "30 days",
+          "segment_by": "event_id, market_id, betting_account_id",
+          "expected_compression": "70-80%"
+        },
+        {
+          "table": "event_timeline",
+          "compression_policy": "30 days",
+          "segment_by": "event_id",
+          "expected_compression": "75-85%"
+        },
+        {
+          "table": "market_movements",
+          "compression_policy": "30 days",
+          "segment_by": "event_id, market_id, betting_account_id",
+          "expected_compression": "65-75%"
+        }
+      ]
+    },
+    "retention_policy": {
+      "status": "enabled",
+      "duration": "90 days",
+      "tables": ["odds_history", "event_timeline", "market_movements"],
+      "expected_storage_savings": "40-50%"
+    },
+    "indexes": {
+      "created": 3,
+      "strategic_indexes": [
+        {
+          "index": "idx_odds_event_market_time",
+          "columns": "(event_id, market_id, timestamp DESC)",
+          "purpose": "Primary time-series queries for odds data"
+        },
+        {
+          "index": "idx_odds_account_time",
+          "columns": "(betting_account_id, timestamp DESC)",
+          "purpose": "Provider-specific odds analysis"
+        },
+        {
+          "index": "idx_market_movements_time",
+          "columns": "(timestamp DESC)",
+          "purpose": "Recent market movement analysis"
+        }
+      ]
+    },
+    "continuous_aggregates": {
+      "created": 3,
+      "aggregates": [
+        {
+          "name": "hourly_odds_avg",
+          "refresh_interval": "15 minutes",
+          "data_scope": "1 hour",
+          "purpose": "Hourly average odds for trend analysis"
+        },
+        {
+          "name": "daily_market_stats",
+          "refresh_interval": "1 hour",
+          "data_scope": "1 day",
+          "purpose": "Daily market statistics and price ranges"
+        },
+        {
+          "name": "provider_performance",
+          "refresh_interval": "30 minutes",
+          "data_scope": "1 hour",
+          "purpose": "Provider performance monitoring"
+        }
+      ]
+    },
+    "materialized_views": {
+      "created": 2,
+      "views": [
+        {
+          "name": "active_events_with_odds",
+          "purpose": "Real-time betting interface data",
+          "refresh_method": "CONCURRENTLY",
+          "refresh_interval": "5 minutes"
+        },
+        {
+          "name": "recent_market_movements",
+          "purpose": "Market movement monitoring",
+          "refresh_method": "CONCURRENTLY",
+          "refresh_interval": "5 minutes"
+        }
+      ]
+    },
+    "performance_improvements": {
+      "estimated_query_performance": "50-70%",
+      "storage_optimization": "60-75%",
+      "maintenance_overhead": "minimal",
+      "key_benefits": [
+        "Reduced query latency for time-series data",
+        "Significant storage savings through compression",
+        "Automated data lifecycle management",
+        "Real-time analytics through continuous aggregates",
+        "Improved monitoring and observability"
+      ]
+    },
+    "monitoring_setup": {
+      "query_performance_tracking": "enabled",
+      "storage_usage_tracking": "enabled",
+      "compression_metrics": "enabled",
+      "maintenance_jobs": [
+        {
+          "job": "refresh_materialized_views",
+          "schedule": "every 5 minutes"
+        },
+        {
+          "job": "analyze_hypertables",
+          "schedule": "every 1 hour"
+        }
+      ]
+    }
+  }
+}

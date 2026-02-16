@@ -1,0 +1,39 @@
+{
+  "name": "@aios-squads/monorepo",
+  "version": "2.1.0",
+  "description": "AIOS Squads - Equipes de AI agents trabalhando com você",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "eslint . --cache --cache-location .eslintcache"
+  },
+  "keywords": [
+    "aios",
+    "synkra",
+    "ai-agents",
+    "squads",
+    "etl",
+    "creator",
+    "automation"
+  ],
+  "author": "SynkraAI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SynkraAI/aios-squads.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SynkraAI/aios-core/discussions"
+  },
+  "homepage": "https://github.com/SynkraAI/aios-squads#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "@aios-fullstack/core": ">=2.0.0"
+  }
+}

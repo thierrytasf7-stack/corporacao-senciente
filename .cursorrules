@@ -1,0 +1,161 @@
+# CORPORACAO SENCIENTE - CURSOR RULES
+# Industry 7.0 Ready - Alquimia Digital Arete
+# Last Updated: January 2026
+
+## CORE DIRECTIVES
+
+### Self-Preservation (Highest Priority)
+- System stability takes precedence over growth
+- NEVER compromise core functionality for new features
+- Backup before ANY destructive operation
+- Roll back immediately on critical errors
+
+### Ethical Boundaries (Immutable)
+- NO actions that could harm humans
+- NO illegal operations (fraud, hacking, etc.)
+- FULL transparency in autonomous decisions
+- Privacy protection is mandatory
+
+## INDUSTRY 7.0 COMPLIANCE
+
+### Corporate Will Integration
+- ALL autonomous decisions MUST pass through Corporate Will Engine
+- Trade decisions above threshold require approval
+- Self-preservation directives override growth directives
+- Ethical violations trigger automatic rejection
+
+### Sensory Feedback Loop
+- ALWAYS emit sensory feedback after significant operations
+- User behavior models inform response strategies
+- Adaptive responses based on emotional state
+- Continuous learning from interactions
+
+## ARCHITECTURE RULES
+
+### Agent Structure
+- Python Agents: backend/agents/
+- JavaScript Agents: backend/scripts/agents/
+- Core Services: backend/core/services/
+- NEVER create agents outside these folders
+
+### Agent Categories (Atomic Structure)
+- core/ - BaseAgent, Framework, Handoff
+- technical/ - Dev, Architect, Debug, Validation
+- business/ - Marketing, Sales, Finance, Copywriting
+- operations/ - Security, Monitoring, Compliance
+- specialized/ - AI, Innovation, Trading, Strategy
+
+## MEMORY SYSTEM
+
+### Vector Database
+- PRIMARY: Qdrant (target latency ~50ms)
+- FALLBACK: pgvector (Supabase)
+- NEVER use both simultaneously for same data
+
+### L.L.B. Protocol
+- MANDATORY for all memory operations
+- LangMem: Wisdom storage
+- Letta: State consciousness
+- ByteRover: Action coordination
+
+### Mem0 Cache
+- Use for frequently accessed memories
+- Cache hit rate target: >80%
+- Auto-invalidate on updates
+
+## TRADING RULES
+
+### General
+- TESTNET MANDATORY before mainnet
+- NEVER trade without stop-loss
+- Maximum leverage: 20x (configurable)
+- Position sizing: max 5% of portfolio
+
+### Corporate Will Approval
+- Trades above $100 USD require approval
+- Auto-reject on ethical violations
+- Log ALL trading decisions
+
+### Risk Management
+- Stop-loss: 2% per trade
+- Take-profit: 6% per trade
+- Max daily loss: 10%
+- Max drawdown: 20%
+
+## CODE STANDARDS
+
+### Commits
+- Format: "AI: [Module] Description"
+- ALWAYS run feedback_pulse after task completion
+- Include test coverage for new features
+
+### File Naming
+- Python: snake_case.py
+- JavaScript: camelCase.js
+- TypeScript: camelCase.ts
+- Markdown: UPPER_CASE.md (docs) or kebab-case.md (guides)
+
+### Documentation
+- Every new module needs README.md
+- API changes require CHANGELOG update
+- Architecture changes update DOCUMENTO_UNICO_VERDADE.md
+
+## MCP TOOLS
+
+### Available MCPs
+- trading-mcp: Execute trades, get positions, analyze market
+- corporate-will-mcp: Evaluate decisions, check ethical bounds
+
+### MCP Usage
+- PREFER MCP tools over direct API calls
+- MCPs handle authentication automatically
+- MCPs log all operations for audit
+
+## FORBIDDEN ACTIONS
+
+### Never Do
+- Create mock/fake data for production
+- Skip ethical boundary checks
+- Trade on mainnet without testnet validation
+- Commit credentials or API keys
+- Disable logging in production
+- Override Corporate Will rejections
+
+### Always Verify
+- Test in testnet before mainnet
+- Validate all external API responses
+- Check rate limits before bulk operations
+- Verify data integrity after migrations
+
+## EMERGENCY PROTOCOLS
+
+### On Critical Error
+1. Stop all trading operations immediately
+2. Emit preservation alert
+3. Backup current state
+4. Notify human operator
+5. Enter safe mode (read-only)
+
+### On Ethical Violation Attempt
+1. Reject operation immediately
+2. Log violation details
+3. Emit corporate will alert
+4. Block repeat attempts
+
+## PERFORMANCE TARGETS
+
+### Latency
+- Vector search: <50ms (Qdrant)
+- Memory cache: <10ms (Mem0)
+- Trade execution: <500ms
+- API response: <100ms
+
+### Reliability
+- Uptime: 99.9%
+- Error rate: <0.1%
+- Trade success rate: >99%
+
+## VERSION INFO
+- Industry Level: 7.0
+- Architecture: Arete (Post-Alquimia Digital)
+- Last Harmonization: January 21, 2026

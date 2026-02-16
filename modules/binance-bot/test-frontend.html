@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema AURA - Teste</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .status-card h3 {
+            margin-top: 0;
+            color: #ffd700;
+        }
+
+        .status-indicator {
+            font-size: 2em;
+            margin: 10px 0;
+        }
+
+        .success {
+            color: #4CAF50;
+        }
+
+        .error {
+            color: #f44336;
+        }
+
+        .loading {
+            color: #ff9800;
+        }
+
+        .data-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .data-section h3 {
+            color: #ffd700;
+            margin-top: 0;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 Sistema AURA - Teste de Conectividade</h1>
+
+        <div class="status">
+            <div class="status-card">
+                <h3>Backend Status</h3>
+                <div id="backend-status" class="status-indicator loading">⏳ Verificando...</div>
+                <button onclick="checkBackend()">Verificar Backend</button>
+            </div>
+
+            <div class="status-card">
+                <h3>Health Check</h3>
+                <div id="health-status" class="status-indicator loading">⏳ Verificando...</div>
+                <button onclick="checkHealth()">Verificar Health</button>
+            </div>
+
+            <div class="status-card">
+                <h3>Histórico de Posições</h3>
+                <div id="positions-status" class="status-indicator loading">⏳ Verificando...</div>
+                <button onclick="checkPositions()">Verificar Posições</button>
+            </div>
+        </div>
+
+        <div class="data-section">
+            <h3>📊 Dados do Backend</h3>
+            <pre id="backend-data">Aguardando verificação...</pre>
+        </div>
+
+        <div class="data-section">
+            <h3>📈 Histórico de Posições</h3>
+            <pre id="positions-data">Aguardando verificação...</pre>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:13001';
+
+        async function checkBackend() {
+            const statusEl = document.getElementById('backend-status');
+            const dataEl = document.getElementById('backend-data');
+
+            try {
+                statusEl.textContent = '⏳ Verificando...';
+                statusEl.className = 'status-indicator loading';
+
+                const response = await fetch(`${API_BASE}/api/v1/real-analysis/status`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    statusEl.textContent = '✅ Conectado';
+                    statusEl.className = 'status-indicator success';
+                    dataEl.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    throw new Error(`Erro ${response.status}: ${data.message || 'Erro desconhecido'}`);
+                }
+            } catch (error) {
+                statusEl.textContent = '❌ Erro';
+                statusEl.className = 'status-indicator error';
+                dataEl.textContent = `Erro ao conectar com o backend:\n${error.message}`;
+            }
+        }
+
+        async function checkHealth() {
+            const statusEl = document.getElementById('health-status');
+
+            try {
+                statusEl.textContent = '⏳ Verificando...';
+                statusEl.className = 'status-indicator loading';
+
+                const response = await fetch(`${API_BASE}/health`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    statusEl.textContent = '✅ Saudável';
+                    statusEl.className = 'status-indicator success';
+                } else {
+                    throw new Error(`Erro ${response.status}: ${data.message || 'Erro desconhecido'}`);
+                }
+            } catch (error) {
+                statusEl.textContent = '❌ Erro';
+                statusEl.className = 'status-indicator error';
+            }
+        }
+
+        async function checkPositions() {
+            const statusEl = document.getElementById('positions-status');
+            const dataEl = document.getElementById('positions-data');
+
+            try {
+                statusEl.textContent = '⏳ Verificando...';
+                statusEl.className = 'status-indicator loading';
+
+                const response = await fetch(`${API_BASE}/api/analysis/position-history?page=1&limit=5`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    statusEl.textContent = `✅ ${data.positions.length} posições`;
+                    statusEl.className = 'status-indicator success';
+                    dataEl.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    throw new Error(`Erro ${response.status}: ${data.message || 'Erro desconhecido'}`);
+                }
+            } catch (error) {
+                statusEl.textContent = '❌ Erro';
+                statusEl.className = 'status-indicator error';
+                dataEl.textContent = `Erro ao buscar posições:\n${error.message}`;
+            }
+        }
+
+        // Verificar automaticamente ao carregar a página
+        window.onload = function () {
+            checkBackend();
+            checkHealth();
+            checkPositions();
+        };
+    </script>
+</body>
+
+</html>

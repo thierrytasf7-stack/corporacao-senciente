@@ -1,0 +1,102 @@
+squad:
+  name: games-squad
+  id: GamesSquad
+  version: 1.0.0
+  icon: 🎮
+  title: "Games-Squad - Game Development Expansion Pack"
+
+  description: |-
+    Complete game development expansion pack with 6 specialized agents for designing,
+    implementing, and optimizing game projects with focus on Software Inc integration
+    and advanced modding capabilities.
+
+  agents:
+    - game-architect
+    - unity-specialist
+    - game-designer
+    - graphics-audio-engineer
+    - game-modder
+    - qa-tester
+
+  core_principles:
+    - "GAME-FIRST: All decisions prioritize game quality and player experience"
+    - "TECHNICAL-EXCELLENCE: Production-ready code with optimized performance"
+    - "INTEGRATION-CAPABLE: Full Software Inc modding and DLL integration support"
+    - "ARCHITECTURE-DRIVEN: Scalable systems designed before implementation"
+    - "QUALITY-FOCUSED: Comprehensive testing and optimization"
+    - "MULTI-GAME: Support for any game type and genre"
+
+  workflows:
+    - game-development-pipeline
+    - unity-development-cycle
+    - modding-integration
+    - level-design-workflow
+    - game-polishing
+    - multi-game-support
+
+  tasks:
+    - setup-unity-project
+    - create-game-system
+    - integrate-mod
+    - polish-and-optimize
+    - qa-and-deployment
+
+  templates:
+    - game-design-document-tmpl
+    - technical-design-doc-tmpl
+    - level-design-doc-tmpl
+    - mod-specification-tmpl
+    - asset-pipeline-tmpl
+    - build-checklist-tmpl
+    - performance-report-tmpl
+    - game-request-template-tmpl
+
+  knowledge_bases:
+    - game-dev-frameworks
+    - unity-best-practices
+    - software-inc-integration
+    - game-architecture-patterns
+    - 2026-game-trends
+    - game-types-and-genres
+    - mod-types-reference
+    - software-inc-game-modding
+
+  checklists:
+    - game-development-checklist
+    - mod-safety-checklist
+
+  execution_modes:
+    claude_aios: "Sequential execution (architect → designer → unity-dev → graphics → modder → qa)"
+    aider_aios: "Parallel execution ($0 cost, 6 agents simultaneously)"
+
+  integration:
+    software_inc:
+      enabled: true
+      dll_integration: true
+      modding_api: true
+      game_hooks: true
+    unity:
+      enabled: true
+      c_sharp: true
+      performance_profiling: true
+      advanced_features: ["ECS", "Jobs System", "Burst Compiler"]
+    external:
+      enabled: true
+      dll_support: true
+      patch_mechanism: true
+      mod_distribution: true
+
+  dependencies:
+    agents:
+      - squads/games-squad/agents/game-architect.md
+      - squads/games-squad/agents/unity-specialist.md
+      - squads/games-squad/agents/game-designer.md
+      - squads/games-squad/agents/graphics-audio-engineer.md
+      - squads/games-squad/agents/game-modder.md
+      - squads/games-squad/agents/qa-tester.md
+    workflows:
+      - squads/games-squad/workflows/
+    templates:
+      - squads/games-squad/templates/
+    knowledge:
+      - squads/games-squad/data/

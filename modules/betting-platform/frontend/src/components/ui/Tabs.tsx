@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@@/lib/utils';
+import { cn } from '@/lib/utils';
 
 export interface TabsProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -41,7 +41,7 @@ export const TabsList = React.forwardRef<HTMLUListElement, TabsListProps>(
     );
   }
 );
-TabsList.displayName = 'TabsList</TabsList>
+TabsList.displayName = 'TabsList'
 
 export interface TabsTriggerProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -62,7 +62,7 @@ export const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>
     );
   }
 );
-TabsTrigger.displayName = 'TabsTrigger</TabsTrigger>
+TabsTrigger.displayName = 'TabsTrigger'
 
 export interface TabsPanelProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -83,6 +83,6 @@ export const TabsPanel = React.forwardRef<HTMLDivElement, TabsPanelProps>(
     );
   }
 );
-TabsPanel.displayName = 'TabsPanel</TabsPanel>
+TabsPanel.displayName = 'TabsPanel'
 
 export default Tabs;

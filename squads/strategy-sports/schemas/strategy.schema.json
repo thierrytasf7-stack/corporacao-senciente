@@ -1,0 +1,547 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://diana-corporacao-senciente.com/schemas/strategy.schema.json",
+  "title": "Strategy Schema",
+  "description": "JSON Schema para validação de Estratégias BET-SPORTS (LÓGICA PURA). Este schema valida APENAS a lógica de trigger e entrada, NÃO contém parâmetros de gestão.",
+  "version": "1.0.0",
+
+  "type": "object",
+  "required": [
+    "strategyId",
+    "version",
+    "name",
+    "description",
+    "sport",
+    "marketType",
+    "trigger",
+    "entryConditions",
+    "exitConditions",
+    "dataSchema"
+  ],
+
+  "properties": {
+    "strategyId": {
+      "type": "string",
+      "description": "ID único da estratégia (formato: SNAKE_CASE)",
+      "pattern": "^[A-Z][A-Z0-9_]*$",
+      "examples": ["TENNIS_FAV_30_0_COMEBACK", "FOOTBALL_UNDERDOG_LIVE"]
+    },
+
+    "version": {
+      "type": "string",
+      "description": "Versão da estratégia (SemVer)",
+      "pattern": "^v\\d+\\.\\d+\\.\\d+$",
+      "examples": ["v1.0.0", "v2.1.3"]
+    },
+
+    "name": {
+      "type": "string",
+      "description": "Nome legível da estratégia",
+      "minLength": 5,
+      "maxLength": 100,
+      "examples": ["Favorite 30-0 Comeback", "Underdog Live Value"]
+    },
+
+    "description": {
+      "type": "string",
+      "description": "Descrição detalhada da hipótese da estratégia",
+      "minLength": 20,
+      "maxLength": 1000
+    },
+
+    "hypothesis": {
+      "type": "string",
+      "description": "Hipótese testável que a estratégia valida",
+      "minLength": 20,
+      "maxLength": 500
+    },
+
+    "assumptions": {
+      "type": "array",
+      "description": "Premissas que a estratégia assume como verdadeiras",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+
+    "sport": {
+      "type": "string",
+      "description": "Esporte alvo",
+      "enum": ["TENNIS", "FOOTBALL", "BASKETBALL", "BASEBALL", "HOCKEY"]
+    },
+
+    "marketType": {
+      "type": "string",
+      "description": "Tipo de mercado alvo",
+      "enum": [
+        "MATCH_WINNER",
+        "GAME_WINNER",
+        "SET_WINNER",
+        "POINT_WINNER",
+        "HANDICAP",
+        "TOTALS",
+        "CORRECT_SCORE"
+      ]
+    },
+
+    "trigger": {
+      "type": "object",
+      "description": "Definição do gatilho de entrada (LÓGICA PURA)",
+      "required": ["conditions", "pseudocode"],
+
+      "properties": {
+        "conditions": {
+          "type": "object",
+          "description": "Condições que ativam o trigger",
+          "required": ["criteria"],
+
+          "properties": {
+            "criteria": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "field", "operator", "value"],
+
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Nome descritivo da condição"
+                  },
+
+                  "field": {
+                    "type": "string",
+                    "description": "Campo a ser verificado (notação dot)"
+                  },
+
+                  "operator": {
+                    "type": "string",
+                    "enum": [
+                      "==", "!=", ">", ">=", "<", "<=",
+                      "contains", "startsWith", "endsWith",
+                      "in", "notIn", "regex", "exists"
+                    ]
+                  },
+
+                  "value": {
+                    "description": "Valor para comparação",
+                    "oneOf": [
+                      {"type": "string"},
+                      {"type": "number"},
+                      {"type": "boolean"},
+                      {"type": "array"}
+                    ]
+                  },
+
+                  "required": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Se true, condição é obrigatória"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "pseudocode": {
+          "type": "string",
+          "description": "Pseudocódigo da lógica de trigger",
+          "minLength": 10
+        },
+
+        "temporalWindow": {
+          "type": "object",
+          "description": "Janela temporal para execução do trigger",
+
+          "properties": {
+            "durationSeconds": {
+              "type": "number",
+              "description": "Duração máxima da janela (segundos)"
+            },
+
+            "expiresOn": {
+              "type": "string",
+              "description": "Evento que fecha a janela",
+              "enum": ["TIME", "SCORE_CHANGE", "MARKET_CHANGE", "GAME_END"]
+            }
+          }
+        }
+      }
+    },
+
+    "entryConditions": {
+      "type": "object",
+      "description": "Condições de validação de entrada",
+      "required": ["validations", "exclusionRules"],
+
+      "properties": {
+        "validations": {
+          "type": "array",
+          "description": "Validações que devem passar para entrar",
+          "items": {
+            "type": "object",
+            "required": ["name", "check"],
+
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+
+              "check": {
+                "type": "string",
+                "description": "Expressão ou função de validação"
+              },
+
+              "message": {
+                "type": "string",
+                "description": "Mensagem se validação falhar"
+              }
+            }
+          }
+        },
+
+        "exclusionRules": {
+          "type": "array",
+          "description": "Regras que excluem entrada se verdadeiras",
+          "items": {
+            "type": "object",
+            "required": ["name", "condition"],
+
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Nome da regra de exclusão"
+              },
+
+              "condition": {
+                "type": "string",
+                "description": "Condição que, se verdadeira, exclui entrada"
+              },
+
+              "description": {
+                "type": "string",
+                "description": "Descrição da regra"
+              },
+
+              "severity": {
+                "type": "string",
+                "enum": ["HARD", "SOFT"],
+                "description": "HARD = sempre exclui, SOFT = pode ignorar com override"
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "selection": {
+      "type": "object",
+      "description": "Definição da seleção alvo",
+      "required": ["type", "criteria"],
+
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["FAVORITE", "UNDERDOG", "HOME", "AWAY", "CUSTOM"],
+          "description": "Tipo de seleção"
+        },
+
+        "criteria": {
+          "type": "object",
+          "description": "Critérios para identificar seleção",
+
+          "properties": {
+            "field": {
+              "type": "string",
+              "description": "Campo para identificação"
+            },
+
+            "operator": {
+              "type": "string",
+              "enum": ["min", "max", "equals", "custom"]
+            },
+
+            "customLogic": {
+              "type": "string",
+              "description": "Lógica customizada se operator = custom"
+            }
+          }
+        },
+
+        "role": {
+          "type": "string",
+          "description": "Papel da seleção na estratégia"
+        }
+      }
+    },
+
+    "exitConditions": {
+      "type": "object",
+      "description": "Condições de saída/resolução",
+      "required": ["resolution"],
+
+      "properties": {
+        "resolution": {
+          "type": "string",
+          "description": "Como a aposta é resolvida",
+          "enum": ["NATURAL", "CASHOUT", "STOP_LOSS", "TIME"]
+        },
+
+        "naturalExit": {
+          "type": "object",
+          "description": "Condições de saída natural",
+
+          "properties": {
+            "event": {
+              "type": "string",
+              "description": "Evento que resolve naturalmente"
+            },
+
+            "outcomes": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["WIN", "LOSS", "VOID"]
+              }
+            }
+          }
+        },
+
+        "cashout": {
+          "type": "object",
+          "description": "Regras de cashout (se aplicável)",
+
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+
+            "conditions": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "profitPercent": {"type": "number"},
+                  "lossPercent": {"type": "number"},
+                  "timeElapsed": {"type": "number"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "dataSchema": {
+      "type": "object",
+      "description": "Schema de dados esperado",
+      "required": ["signal", "result"],
+
+      "properties": {
+        "signal": {
+          "type": "object",
+          "description": "Schema do signal de entrada",
+          "required": ["requiredFields"],
+
+          "properties": {
+            "requiredFields": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+
+            "optionalFields": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        },
+
+        "result": {
+          "type": "object",
+          "description": "Schema do resultado esperado",
+          "required": ["requiredFields"],
+
+          "properties": {
+            "requiredFields": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        }
+      }
+    },
+
+    "integrations": {
+      "type": "object",
+      "description": "Integrações técnicas necessárias",
+
+      "properties": {
+        "apis": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "purpose", "criticality"],
+
+            "properties": {
+              "name": {"type": "string"},
+              "purpose": {"type": "string"},
+              "criticality": {"type": "string", "enum": ["CRITICAL", "HIGH", "MEDIUM", "LOW"]},
+              "endpoints": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          }
+        },
+
+        "providers": {
+          "type": "object",
+          "properties": {
+            "live_score": {
+              "type": "object",
+              "properties": {
+                "primary": {"type": "string"},
+                "secondary": {"type": "string"},
+                "fallback": {"type": "string"}
+              }
+            },
+
+            "odds_feed": {
+              "type": "object",
+              "properties": {
+                "primary": {"type": "string"},
+                "secondary": {"type": "string"},
+                "fallback": {"type": "string"}
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "metadata": {
+      "type": "object",
+      "description": "Metadados da estratégia",
+
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date"
+        },
+
+        "updatedAt": {
+          "type": "string",
+          "format": "date"
+        },
+
+        "author": {
+          "type": "string"
+        },
+
+        "status": {
+          "type": "string",
+          "enum": ["DRAFT", "PENDING_REVIEW", "APPROVED", "DEPRECATED"]
+        },
+
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    }
+  },
+
+  "additionalProperties": false,
+
+  "examples": [
+    {
+      "strategyId": "TENNIS_FAV_30_0_COMEBACK",
+      "version": "v1.0.0",
+      "name": "Favorite 30-0 Comeback",
+      "description": "Estratégia que aposta no favorito quando está perdendo por 30-0 no próprio saque",
+      "hypothesis": "Favoritos em partidas de tênis possuem probabilidade real de vencer o game superior à probabilidade implícita nas odds quando estão perdendo por 30-0 no próprio saque",
+      "assumptions": [
+        "O favorito é definido pela menor odd inicial de Match Winner",
+        "O favorito deve estar sacando no momento do gatilho",
+        "O mercado de Game Winner deve estar disponível"
+      ],
+      "sport": "TENNIS",
+      "marketType": "GAME_WINNER",
+      "trigger": {
+        "conditions": {
+          "criteria": [
+            {
+              "name": "Esporte é tênis",
+              "field": "match.sport",
+              "operator": "==",
+              "value": "TENNIS",
+              "required": true
+            },
+            {
+              "name": "Favorito está sacando",
+              "field": "liveScore.server",
+              "operator": "==",
+              "value": "FAVORITE",
+              "required": true
+            },
+            {
+              "name": "Placar é 30-0",
+              "field": "liveScore.gameScore",
+              "operator": "==",
+              "value": "30-0",
+              "required": true
+            }
+          ]
+        },
+        "pseudocode": "function shouldTrigger(match, liveScore) {\n  if (match.sport !== 'TENNIS') return false;\n  if (liveScore.server !== 'FAVORITE') return false;\n  if (liveScore.gameScore !== '30-0') return false;\n  return true;\n}"
+      },
+      "entryConditions": {
+        "validations": [
+          {
+            "name": "Mercado disponível",
+            "check": "market.status === 'ACTIVE'",
+            "message": "Mercado não está disponível"
+          }
+        ],
+        "exclusionRules": [
+          {
+            "name": "Injury timeout",
+            "condition": "match.hasInjuryTimeout === true",
+            "description": "Não entrar se há timeout médico ativo",
+            "severity": "HARD"
+          }
+        ]
+      },
+      "selection": {
+        "type": "FAVORITE",
+        "criteria": {
+          "field": "preMatchOdds",
+          "operator": "min"
+        },
+        "role": "Servindo a 30-0 contra"
+      },
+      "exitConditions": {
+        "resolution": "NATURAL",
+        "naturalExit": {
+          "event": "Game finalizado",
+          "outcomes": ["WIN", "LOSS", "VOID"]
+        }
+      },
+      "dataSchema": {
+        "signal": {
+          "requiredFields": ["signalId", "strategyId", "match", "selection", "market"],
+          "optionalFields": ["metadata", "analysis"]
+        },
+        "result": {
+          "requiredFields": ["signalId", "result", "profit", "settledAt"]
+        }
+      },
+      "metadata": {
+        "createdAt": "2026-02-17",
+        "author": "strategy-sports",
+        "status": "APPROVED"
+      }
+    }
+  ]
+}

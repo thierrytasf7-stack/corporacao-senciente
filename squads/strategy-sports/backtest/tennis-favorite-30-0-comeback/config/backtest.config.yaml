@@ -1,0 +1,398 @@
+# Backtest Configuration: Tennis Favorite 30-0 Comeback
+# Version: 1.0.0
+# Status: Ready for Execution
+
+backtest:
+  name: "Tennis Favorite 30-0 Comeback"
+  version: "1.0.0"
+  strategy: "tennis-favorite-30-0-comeback"
+  strategyVersion: "1.0.0"
+  configVersion: "cfg-backtest-v1.0"
+  createdAt: "2026-02-17"
+  status: "ready"
+
+# =============================================================================
+# PERÍODO DE ANÁLISE
+# =============================================================================
+period:
+  start: "2025-08-01T00:00:00Z"
+  end: "2026-02-17T23:59:59Z"
+  timezone: "UTC"
+  durationMonths: 6
+
+# =============================================================================
+# DADOS
+# =============================================================================
+data:
+  source: "internal-search-system"
+  format: "json"
+  
+  tournaments:
+    include:
+      - "ATP"
+      - "WTA"
+      - "Challenger"
+      - "ITF"
+      - "Grand Slam"
+    exclude: []
+  
+  surfaces:
+    include:
+      - "Clay"
+      - "Grass"
+      - "Hard"
+      - "Carpet"
+    exclude: []
+  
+  # Campos obrigatórios por jogo
+  requiredFields:
+    match:
+      - "matchId"
+      - "date"
+      - "tournament"
+      - "surface"
+      - "round"
+      - "player1"
+      - "player2"
+      - "preMatchOdds"
+      - "sets"
+      - "games"
+      - "status"
+    game:
+      - "gameId"
+      - "setNumber"
+      - "gameNumber"
+      - "server"
+      - "points"
+      - "winner"
+      - "liveOdds"
+      - "interrupted"
+
+# =============================================================================
+# ESTRATÉGIA (LÓGICA PURA - SEM GESTÃO)
+# =============================================================================
+strategy:
+  # Tipo de trigger
+  trigger:
+    type: "exact_30-0"
+    description: "Favorito perde game por 30-0 no próprio saque"
+    
+  # Janela de entrada
+  window:
+    type: "immediate"
+    seconds: 10
+    description: "Aposta deve ser feita em até 10 segundos após 30-0"
+  
+  # Condições de entrada
+  entryConditions:
+    # Favorito definido como menor odd inicial
+    favoriteDefinition: "lower_initial_odd"
+    
+    # Favorito deve estar sacando
+    serverMustBeFavorite: true
+    
+    # Placar exato do game
+    gameScore:
+      favoritePoints: 0
+      opponentPoints: 30
+      
+  # Validação de odds
+  oddsValidation:
+    enabled: true
+    min: 1.70
+    max: 2.10
+    ideal: 1.85
+    
+  # Condições de saída
+  exitConditions:
+    type: "game_result"
+    description: "Saída quando favorito vence ou perde o game"
+    
+  # Regras de exclusão
+  exclusionRules:
+    - name: "interrupted_game"
+      description: "Excluir jogos interrompidos no game da aposta"
+      condition: "game.interrupted == true"
+      action: "exclude"
+      
+    - name: "walkover"
+      description: "Excluir jogos com walkover"
+      condition: "match.status == 'walkover'"
+      action: "exclude"
+      
+    - name: "retired"
+      description: "Excluir jogos com abandono"
+      condition: "match.status == 'retired'"
+      action: "exclude"
+
+# =============================================================================
+# GESTÃO (PARÂMETROS INJETÁVEIS)
+# =============================================================================
+management:
+  # Método de stake
+  staking:
+    method: "fixed"
+    value: 1.0
+    currency: "units"
+    description: "Stake fixa de 1 unidade por aposta"
+  
+  # Bankroll
+  bankroll:
+    initial: 1000
+    currency: "units"
+    rebalance: false
+    
+  # Limites (null = sem limites para teste puro)
+  limits:
+    daily:
+      maxBets: null
+      maxLoss: null
+      maxStake: null
+      
+    perMatch:
+      maxBets: null
+      maxStake: null
+      
+    weekly:
+      maxBets: null
+      maxLoss: null
+      
+    monthly:
+      maxBets: null
+      maxLoss: null
+      
+    stopLoss:
+      daily: null
+      weekly: null
+      monthly: null
+      total: null
+      
+  # Circuit breakers (desativados para teste)
+  circuitBreakers:
+    enabled: false
+    consecutiveLosses: null
+    drawdownPercent: null
+    dailyLossPercent: null
+
+# =============================================================================
+# FILTROS
+# =============================================================================
+filters:
+  # Excluir jogos interrompidos
+  excludeInterrupted: true
+  
+  # Excluir walkovers
+  excludeWalkover: true
+  
+  # Excluir abandonos (retired)
+  excludeRetired: true
+  
+  # Liquidez mínima (null = sem filtro)
+  minLiquidity: null
+  
+  # Odd mínima absoluta (não apostar se odd disponível < isto)
+  absoluteMinOdds: 1.0
+  
+  # Odd máxima absoluta
+  absoluteMaxOdds: 10.0
+
+# =============================================================================
+# VALIDAÇÃO ESTATÍSTICA
+# =============================================================================
+validation:
+  # Nível de significância
+  significanceLevel: 0.05  # 95% confiança
+  
+  # Mínimo de apostas para validade estatística
+  minBets: 50
+  
+  # Targets para aprovação
+  targets:
+    roi: 0.05              # 5%
+    winRate: 0.48          # 48%
+    profitFactor: 1.10     # 1.10
+    maxDrawdown: 0.25      # 25%
+    sharpeRatio: 0.5       # 0.5
+    
+  # Pesos para decisão
+  weights:
+    roi: 0.30
+    winRate: 0.25
+    profitFactor: 0.20
+    drawdown: 0.15
+    sharpeRatio: 0.10
+    
+  # Comparação com baseline
+  baseline:
+    enabled: true
+    description: "Apostar sempre no favorito para vencer game"
+    
+  # Testes de robustez
+  robustness:
+    enabled: true
+    parameterSensitivity: true
+    outOfSample: true
+    monteCarlo: false
+
+# =============================================================================
+# ANÁLISE DETALHADA
+# =============================================================================
+analysis:
+  # Agrupamentos para análise
+  groupBy:
+    - "month"
+    - "surface"
+    - "tournament"
+    - "oddsRange"
+    - "setNumber"
+    
+  # Faixas de odds para análise
+  oddsRanges:
+    - label: "1.70-1.80"
+      min: 1.70
+      max: 1.80
+    - label: "1.80-1.90"
+      min: 1.80
+      max: 1.90
+    - label: "1.90-2.00"
+      min: 1.90
+      max: 2.00
+    - label: "2.00-2.10"
+      min: 2.00
+      max: 2.10
+      
+  # Sequências para análise
+  streaks:
+    enabled: true
+    minLength: 3
+
+# =============================================================================
+# SAÍDA (OUTPUT)
+# =============================================================================
+output:
+  # Diretório de saída
+  directory: "./output"
+  
+  # Formatos de saída
+  formats:
+    - "json"      # Dados brutos
+    - "csv"       # Para análise em Excel
+    - "markdown"  # Relatório legível
+    
+  # Nível de detalhe
+  detailed: true
+  
+  # Incluir visualizações
+  includeCharts: true
+  
+  # Incluir dados brutos
+  includeRawData: true
+  
+  # Arquivos de saída
+  files:
+    results: "results.json"
+    analysis: "analysis.csv"
+    report: "report.md"
+    log: "backtest.log"
+
+# =============================================================================
+# LOGS E AUDITORIA
+# =============================================================================
+logging:
+  enabled: true
+  level: "info"  # debug, info, warn, error
+  
+  # Incluir detalhes de cada aposta
+  includeBetDetails: true
+  
+  # Incluir triggers rejeitados
+  includeRejectedTriggers: true
+  
+  # Incluir erros
+  includeErrors: true
+
+# =============================================================================
+# PERFORMANCE
+# =============================================================================
+performance:
+  # Processamento paralelo
+  parallelProcessing: true
+  maxWorkers: 4
+  
+  # Cache de dados
+  cache:
+    enabled: true
+    ttl: 3600  # 1 hora
+    
+  # Batch size
+  batchSize: 100
+
+# =============================================================================
+# CRITÉRIOS DE APROVAÇÃO
+# =============================================================================
+approvalCriteria:
+  # Status de aprovação
+  statuses:
+    approved: "APPROVED"
+    conditional: "CONDITIONAL"
+    rejected: "REJECTED"
+    
+  # Regras de aprovação
+  rules:
+    approved:
+      - "roi > 0.05"
+      - "winRate > 0.48"
+      - "profitFactor > 1.10"
+      - "totalBets >= 50"
+      - "isStatisticallySignificant == true"
+      
+    conditional:
+      - "(roi > 0.03 AND winRate > 0.45) OR (profitFactor > 1.05)"
+      - "totalBets >= 30"
+      
+    rejected:
+      - "roi <= 0"
+      - "winRate < 0.40"
+      - "profitFactor < 1.0"
+      - "totalBets < 30"
+      
+  # Pontuação mínima (0-100)
+  minScore: 70
+
+# =============================================================================
+# PRÓXIMOS PASSOS (AUTOMÁTICOS)
+# =============================================================================
+nextSteps:
+  onApproved:
+    - "Iniciar paper trading"
+    - "Configurar monitoramento"
+    - "Definir limites de produção"
+    
+  onConditional:
+    - "Otimizar parâmetros"
+    - "Expandir período de teste"
+    - "Analisar subgrupos"
+    
+  onRejected:
+    - "Revisar lógica da estratégia"
+    - "Coletar mais dados"
+    - "Considerar ajustes no trigger"
+
+# =============================================================================
+# METADADOS
+# =============================================================================
+metadata:
+  author: "CEO-BET / Strategy-Sports"
+  createdAt: "2026-02-17T00:00:00Z"
+  updatedAt: "2026-02-17T00:00:00Z"
+  tags:
+    - "tennis"
+    - "favorite"
+    - "30-0"
+    - "comeback"
+    - "game-winner"
+    - "backtest"
+  relatedDocuments:
+    - "strategy/tennis-favorite-30-0-comeback.md"
+    - "config/management/tennis-favorite-30-0-comeback-config.yaml"
+    - "PROTOCOLS.md"

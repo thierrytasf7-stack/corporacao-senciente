@@ -2,6 +2,7 @@ import pytest
 import time
 from unittest.mock import MagicMock
 from src.az_os.core import TaskState, TaskResult
+from src.az_os.core.model_router import ModelType, TaskComplexity, Task
 
 
 @pytest.fixture
@@ -101,3 +102,36 @@ def sample_metric():
         "labels": {"env": "test"},
         "unit": "units"
     }
+
+
+@pytest.fixture
+def sample_task_simple():
+    """Create a simple task."""
+    return Task(
+        task_type="simple_query",
+        complexity=TaskComplexity.SIMPLE,
+        prompt_length=50,
+        urgency=False
+    )
+
+
+@pytest.fixture
+def sample_task_medium():
+    """Create a medium task."""
+    return Task(
+        task_type="data_analysis",
+        complexity=TaskComplexity.MEDIUM,
+        prompt_length=200,
+        urgency=True
+    )
+
+
+@pytest.fixture
+def sample_task_complex():
+    """Create a complex task."""
+    return Task(
+        task_type="code_generation",
+        complexity=TaskComplexity.COMPLEX,
+        prompt_length=500,
+        urgency=False
+    )

@@ -28,8 +28,8 @@ export default class AnalyticsService {
       };
     }
 
-    const totalProfit = strategyBets.reduce((sum, bet) => sum + (bet.profit || 0), 0);
-    const winningBets = strategyBets.filter(bet => (bet.profit || 0) > 0).length;
+    const totalProfit = strategyBets.reduce((sum, bet) => sum + (bet.profitPotential || 0), 0);
+    const winningBets = strategyBets.filter(bet => (bet.profitPotential || 0) > 0).length;
     const averageProfit = totalProfit / strategyBets.length;
     const winRate = winningBets / strategyBets.length;
     const roi = totalProfit / strategyBets.reduce((sum, bet) => sum + (bet.recommendedStake || 0), 0);
@@ -67,7 +67,7 @@ export default class AnalyticsService {
       return 0;
     }
 
-    const totalProfit = filteredBets.reduce((sum, bet) => sum + (bet.profit || 0), 0);
+    const totalProfit = filteredBets.reduce((sum, bet) => sum + (bet.profitPotential || 0), 0);
     const totalStake = filteredBets.reduce((sum, bet) => sum + (bet.recommendedStake || 0), 0);
 
     return totalStake > 0 ? totalProfit / totalStake : 0;
@@ -80,7 +80,7 @@ export default class AnalyticsService {
       return 0;
     }
 
-    const winningBets = strategyBets.filter(bet => (bet.profit || 0) > 0).length;
+    const winningBets = strategyBets.filter(bet => (bet.profitPotential || 0) > 0).length;
     return winningBets / strategyBets.length;
   }
 

@@ -42,6 +42,8 @@ export interface BinanceApiCredentials {
   apiKey: string;
   secretKey: string;
   isTestnet?: boolean;
+  futuresTestnet?: boolean;       // Se true, usa testnet.binancefuture.com para ordens futures
+  futuresBaseURLOverride?: string; // Override direto da URL futures (e.g. de BINANCE_API_URL no .env)
 }
 
 export class BinanceApiService {
@@ -62,10 +64,9 @@ export class BinanceApiService {
       ? process.env.BINANCE_TESTNET_URL || 'https://testnet.binance.vision'
       : process.env.BINANCE_BASE_URL || 'https://api.binance.com';
 
-    // Futures URL (separate domain on testnet)
-    this.futuresBaseURL = credentials.isTestnet
-      ? process.env.BINANCE_FUTURES_TESTNET_URL || 'https://testnet.binancefuture.com'
-      : 'https://fapi.binance.com';
+    // Futures URL: override > futuresTestnet flag > mainnet padrão
+    this.futuresBaseURL = credentials.futuresBaseURLOverride
+      || (credentials.futuresTestnet ? 'https://testnet.binancefuture.com' : 'https://fapi.binance.com');
 
     this.client = axios.create({
       baseURL: this.baseURL,

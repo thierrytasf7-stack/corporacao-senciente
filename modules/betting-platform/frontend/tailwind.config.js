@@ -1,11 +1,9 @@
-const { defineConfig } = require('tailwindcss');
-const { tailwindExtractor } = require('tailwindcss/lib/lib/purgecss');
-
-module.exports = defineConfig({
+/** @type {import('tailwindcss').Config} */
+module.exports = {
   darkMode: 'class',
   content: [
-    './src/**/*.{ts,tsx}',
-    './node_modules/@synkra/ui/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx,js,jsx}',
+    './index.html',
   ],
   theme: {
     extend: {
@@ -22,25 +20,8 @@ module.exports = defineConfig({
           800: '#1e40af',
           900: '#1e3a8a',
         },
-        background: {
-          default: 'var(--background)',
-          paper: 'var(--paper)',
-        },
-        surface: {
-          default: 'var(--surface)',
-          paper: 'var(--surface-paper)',
-        },
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'var(--radius-md)',
-        sm: 'var(--radius-sm)',
-      },
-      spacing: {
-        18: '4.5rem',
-        20: '5rem',
       },
     },
   },
   plugins: [],
-});
+};

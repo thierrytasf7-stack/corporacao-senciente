@@ -29,10 +29,17 @@ interface GroupSnapshot {
   activeBots: number;
   recentTrades: number;
   winRate: number;
+  lossRate: number;
+  avgTakeProfitOdd: number;
+  avgStopLossOdd: number;
+  expectedValue: number;
   topBot: {
     name: string;
     fitness: number;
     bankroll: number;
+    avgTakeProfitOdd: number;
+    avgStopLossOdd: number;
+    expectedValue: number;
   };
 }
 
@@ -116,6 +123,7 @@ export class PeriodicReporter {
         const groupTrades = g.bots.reduce((sum: number, b: any) => sum + b.trades, 0);
         const groupWins = g.bots.reduce((sum: number, b: any) => sum + (b.trades * b.winRate / 100), 0);
         const groupWR = groupTrades > 0 ? (groupWins / groupTrades * 100) : 0;
+        const groupLR = 100 - groupWR;
 
         const topBot = [...g.bots].sort((a: any, b: any) => b.fitness - a.fitness)[0];
 
@@ -128,10 +136,17 @@ export class PeriodicReporter {
           activeBots,
           recentTrades: groupTrades,
           winRate: groupWR,
+          lossRate: groupLR,
+          avgTakeProfitOdd: g.avgTakeProfitOdd || 0,
+          avgStopLossOdd: g.avgStopLossOdd || 0,
+          expectedValue: g.expectedValue || 0,
           topBot: {
             name: topBot.name,
             fitness: topBot.fitness,
-            bankroll: topBot.bankroll
+            bankroll: topBot.bankroll,
+            avgTakeProfitOdd: topBot.avgTakeProfitOdd || 0,
+            avgStopLossOdd: topBot.avgStopLossOdd || 0,
+            expectedValue: topBot.expectedValue || 0
           }
         };
       });
@@ -200,6 +215,10 @@ export class PeriodicReporter {
 
     sortedGroups.forEach((group, idx) => {
       const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : '  ';
+      
+      // Calculate expected value interpretation
+      let evStatus = group.expectedValue > 0.1 ? '✅ POSITIVO' : group.expectedValue > 0 ? '⚠️ NEUTRO' : '❌ NEGATIVO';
+      let evEmoji = group.expectedValue > 0.1 ? '🟢' : group.expectedValue > 0 ? '🟡' : '🔴';
 
       lines.push('');
       lines.push(`${medal} ${group.groupId}`);
@@ -207,9 +226,11 @@ export class PeriodicReporter {
       lines.push(`   📈 ROI: ${group.roi >= 0 ? '+' : ''}${group.roi.toFixed(2)}%`);
       lines.push(`   🧬 Geração: ${group.generation} | Fitness: ${group.fitness.toFixed(1)}`);
       lines.push(`   🤖 Bots Ativos: ${group.activeBots}/5`);
-      lines.push(`   📊 Trades: ${group.recentTrades} | WR: ${group.winRate.toFixed(1)}%`);
+      lines.push(`   📊 Trades: ${group.recentTrades} | WR: ${group.winRate.toFixed(1)}% | LR: ${group.lossRate.toFixed(1)}%`);
+      lines.push(`   🎯 TP Odd Média: ${group.avgTakeProfitOdd.toFixed(2)}x | SL Odd Média: ${group.avgStopLossOdd.toFixed(2)}x`);
+      lines.push(`   ${evEmoji} Expected Value: ${group.expectedValue.toFixed(3)} (${evStatus})`);
       lines.push(`   ⭐ Top Bot: ${group.topBot.name}`);
-      lines.push(`      └─ Fitness: ${group.topBot.fitness.toFixed(1)} | $${group.topBot.bankroll.toFixed(2)}`);
+      lines.push(`      └─ TP: ${group.topBot.avgTakeProfitOdd.toFixed(2)}x | SL: ${group.topBot.avgStopLossOdd.toFixed(2)}x | EV: ${group.topBot.expectedValue.toFixed(3)}`);
     });
     lines.push('');
 

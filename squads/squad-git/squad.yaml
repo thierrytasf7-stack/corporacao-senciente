@@ -1,0 +1,197 @@
+# Squad-GIT - Sincronização Distribuída
+
+**Descrição:** Squad especializada em sincronizar código, commits e configurações entre múltiplos PCs e ambientes de desenvolvimento.
+
+**Team:** Infraestrutura  
+**Tipo:** Operacional  
+**Prioridade:** Alta
+
+---
+
+## 🎯 **Objetivo**
+
+Sincronizar automaticamente:
+- ✅ Código entre múltiplos PCs
+- ✅ Commits e branches
+- ✅ Configurações (.env, configs)
+- ✅ PM2 processes
+- ✅ Dependências
+- ✅ Estados de execução
+
+---
+
+## 🏗️ **Arquitetura**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  🖥️ PC 1 (Principal)                                    │
+│     ├─ binance-bot                                      │
+│     ├─ configs                                          │
+│     └─ Git Remote (Origin)                              │
+└─────────────────────────────────────────────────────────┘
+                          ↕️ sync
+┌─────────────────────────────────────────────────────────┐
+│  🖥️ PC 2 (Secundário)                                   │
+│     ├─ binance-bot (espelho)                            │
+│     ├─ configs (espelho)                                │
+│     └─ Git Local                                        │
+└─────────────────────────────────────────────────────────┘
+                          ↕️ sync
+┌─────────────────────────────────────────────────────────┐
+│  🖥️ PC 3 (Backup)                                       │
+│     ├─ binance-bot (backup)                             │
+│     ├─ configs (backup)                                 │
+│     └─ Git Local                                        │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📋 **Funcionalidades**
+
+### **1. Sync Automático**
+- ✅ Monitora mudanças em arquivos
+- ✅ Auto-commit em intervalos
+- ✅ Push/Pull automático
+- ✅ Resolução de conflitos
+
+### **2. Multi-PC Sync**
+- ✅ Identifica PC principal
+- ✅ Replica para secundários
+- ✅ Health check entre PCs
+- ✅ Failover automático
+
+### **3. Config Sync**
+- ✅ .env files (criptografado)
+- ✅ PM2 configs
+- ✅ Database configs
+- ✅ API keys (secure)
+
+### **4. State Sync**
+- ✅ PM2 process status
+- ✅ Trading state
+- ✅ Bot positions
+- ✅ Performance metrics
+
+---
+
+## 🤖 **Agentes**
+
+### **@sync-master (Orion)**
+- **Role:** Coordenador de sincronização
+- **Responsabilidades:**
+  - Orquestrar sync entre PCs
+  - Detectar conflitos
+  - Decidir estratégia de merge
+  - Reportar status
+
+### **@git-guardian (Shield)**
+- **Role:** Guardião do Git
+- **Responsabilidades:**
+  - Monitorar mudanças
+  - Auto-commit
+  - Auto-push/pull
+  - Resolver conflitos simples
+
+### **@config-keeper (Sage)**
+- **Role:** Guardião de Configurações
+- **Responsabilidades:**
+  - Sincronizar .env files
+  - Criptografar secrets
+  - Validar configs
+  - Backup de configs
+
+### **@pm2-sync (Harmony)**
+- **Role:** Sincronizador PM2
+- **Responsabilidades:**
+  - Sync PM2 process lists
+  - Replicar restarts
+  - Sync logs
+  - Health monitoring
+
+### **@conflict-resolver (Mediator)**
+- **Role:** Resolvedor de Conflitos
+- **Responsabilidades:**
+  - Detectar conflitos
+  - Sugerir resoluções
+  - Auto-merge (quando seguro)
+  - Escalar conflitos complexos
+
+---
+
+## 📝 **Tasks Principais**
+
+1. **`*sync-status`** - Status da sincronização
+2. **`*sync-now`** - Forçar sincronização imediata
+3. **`*sync-config`** - Configurar sincronização
+4. **`*sync-pcs`** - Listar PCs sincronizados
+5. **`*sync-conflicts`** - Resolver conflitos
+6. **`*sync-logs`** - Logs de sincronização
+
+---
+
+## 🔧 **Comandos**
+
+```bash
+# Status
+*sync-status
+
+# Sincronizar agora
+*sync-now
+
+# Configurar
+*sync-config --pc principal --name "PC-Casa"
+*sync-config --add-pc "PC-Trabalho"
+*sync-config --set-interval 300  # 5 minutos
+
+# Listar PCs
+*sync-pcs
+
+# Resolver conflitos
+*sync-conflicts --list
+*sync-conflicts --resolve {id}
+
+# Logs
+*sync-logs --last 50
+*sync-logs --watch
+```
+
+---
+
+## 🔐 **Segurança**
+
+- ✅ .env files criptografados
+- ✅ API keys nunca em plain text
+- ✅ Git LFS para arquivos grandes
+- ✅ .gitignore configurado
+- ✅ Backup automático antes de sync
+
+---
+
+## 📊 **Métricas**
+
+- **Sync Latency:** < 30 segundos
+- **Conflict Rate:** < 5%
+- **Success Rate:** > 95%
+- **PCs Suportados:** 2-10 PCs
+
+---
+
+## 🚀 **Setup**
+
+```bash
+# PC Principal
+*sync-config --init --role principal
+*sync-config --add-pc "PC-Secundario"
+
+# PC Secundário
+*sync-config --init --role secundario
+*sync-config --set-primary "PC-Principal"
+
+# Iniciar sync
+*sync-now
+```
+
+---
+
+*— Squad-GIT | Sincronização Distribuída 🔄*

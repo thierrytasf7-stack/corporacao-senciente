@@ -1,0 +1,986 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://diana-corporacao-senciente.com/schemas/management.schema.json",
+  "title": "Management Configuration Schema",
+  "description": "JSON Schema para validação de Configuração de Gestão BET-SPORTS. Este schema valida APENAS parâmetros de gestão (stake, limits, circuit breakers), NÃO contém lógica de trigger ou entrada.",
+  "version": "1.0.0",
+
+  "type": "object",
+  "required": [
+    "strategy",
+    "odds",
+    "staking",
+    "exposure",
+    "circuit_breakers"
+  ],
+
+  "properties": {
+    "strategy": {
+      "type": "object",
+      "description": "Identificação da estratégia",
+      "required": ["id", "name", "version"],
+
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID da estratégia vinculada",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+
+        "name": {
+          "type": "string",
+          "description": "Nome da estratégia"
+        },
+
+        "version": {
+          "type": "string",
+          "description": "Versão da config (formato: cfg-X.X.X)",
+          "pattern": "^cfg-\\d+\\.\\d+\\.\\d+$"
+        }
+      }
+    },
+
+    "odds": {
+      "type": "object",
+      "description": "Filtro de odds de mercado",
+      "required": ["min", "max"],
+
+      "properties": {
+        "min": {
+          "type": "number",
+          "description": "Odd mínima aceitável",
+          "minimum": 1.01,
+          "examples": [1.70, 1.80]
+        },
+
+        "max": {
+          "type": "number",
+          "description": "Odd máxima aceitável",
+          "minimum": 1.01,
+          "examples": [3.50, 5.00]
+        },
+
+        "ideal": {
+          "type": "object",
+          "description": "Faixa ideal para análise de performance",
+
+          "properties": {
+            "min": {
+              "type": "number",
+              "minimum": 1.01
+            },
+
+            "max": {
+              "type": "number",
+              "minimum": 1.01
+            }
+          }
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "staking": {
+      "type": "object",
+      "description": "Método de cálculo de stake",
+      "required": ["method", "value", "limits"],
+
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "Método de staking",
+          "enum": ["percentage", "kelly", "fixed"],
+          "examples": ["percentage", "kelly", "fixed"]
+        },
+
+        "value": {
+          "type": "number",
+          "description": "Valor base conforme método",
+          "minimum": 0,
+
+          "examples": [
+            1.0,
+            0.25
+          ]
+        },
+
+        "limits": {
+          "type": "object",
+          "description": "Limites absolutos de stake",
+          "required": ["min", "max"],
+
+          "properties": {
+            "min": {
+              "type": "number",
+              "description": "Stake mínima",
+              "minimum": 0,
+              "examples": [0.25, 0.5]
+            },
+
+            "max": {
+              "type": "number",
+              "description": "Stake máxima",
+              "minimum": 0,
+              "examples": [2.0, 3.0]
+            }
+          },
+
+          "additionalProperties": false
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "bankroll": {
+      "type": "object",
+      "description": "Gestão de bankroll (alocação de capital)",
+
+      "properties": {
+        "initial": {
+          "type": "number",
+          "description": "Bankroll inicial para tracking",
+          "minimum": 0,
+          "examples": [10000, 50000]
+        },
+
+        "allocation": {
+          "type": "object",
+          "description": "Alocação percentual do capital",
+          "required": ["active", "reserve", "emergency"],
+
+          "properties": {
+            "active": {
+              "type": "number",
+              "description": "Capital ativo para apostas (%)",
+              "minimum": 0,
+              "maximum": 100
+            },
+
+            "reserve": {
+              "type": "number",
+              "description": "Reserva para drawdowns (%)",
+              "minimum": 0,
+              "maximum": 100
+            },
+
+            "emergency": {
+              "type": "number",
+              "description": "Emergência (não usar em operação normal) (%)",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+
+          "additionalProperties": false
+        },
+
+        "rebalance": {
+          "type": "object",
+          "description": "Thresholds de rebalance de alocação",
+
+          "properties": {
+            "active_threshold": {
+              "type": "number",
+              "description": "Rebalancear se ativo cair abaixo de X%"
+            },
+
+            "reserve_threshold": {
+              "type": "number",
+              "description": "Rebalancear se reserva cair abaixo de X%"
+            },
+
+            "take_profit_threshold": {
+              "type": "number",
+              "description": "Realizar lucros se bankroll crescer X%"
+            }
+          }
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "exposure": {
+      "type": "object",
+      "description": "Limites de exposição (controle de risco)",
+      "required": ["per_match", "per_day"],
+
+      "properties": {
+        "per_match": {
+          "type": "object",
+          "description": "Limites por partida",
+          "required": ["max_bets", "max_stake"],
+
+          "properties": {
+            "max_bets": {
+              "type": "integer",
+              "description": "Número máximo de apostas na mesma partida",
+              "minimum": 1,
+              "examples": [3, 5]
+            },
+
+            "max_stake": {
+              "type": "number",
+              "description": "Stake total máxima na partida (% da bankroll)",
+              "minimum": 0,
+              "examples": [3.0, 5.0]
+            },
+
+            "stop_after_losses": {
+              "type": "integer",
+              "description": "Parar após X losses na mesma partida",
+              "minimum": 1,
+              "examples": [2, 3]
+            }
+          },
+
+          "additionalProperties": false
+        },
+
+        "per_day": {
+          "type": "object",
+          "description": "Limites por dia",
+          "required": ["max_bets", "max_stake", "max_loss"],
+
+          "properties": {
+            "max_bets": {
+              "type": "integer",
+              "description": "Número máximo de apostas no dia",
+              "minimum": 1,
+              "examples": [15, 20]
+            },
+
+            "max_stake": {
+              "type": "number",
+              "description": "Stake total máxima no dia (% da bankroll)",
+              "minimum": 0,
+              "examples": [10.0, 15.0]
+            },
+
+            "max_loss": {
+              "type": "number",
+              "description": "Perda máxima no dia (% da bankroll) - STOP LOSS",
+              "minimum": 0,
+              "examples": [5.0, 7.0]
+            },
+
+            "consecutive_loss_pause": {
+              "type": "integer",
+              "description": "Pausar após X losses consecutivas",
+              "minimum": 1,
+              "examples": [5, 7]
+            }
+          },
+
+          "additionalProperties": false
+        },
+
+        "per_week": {
+          "type": "object",
+          "description": "Limites por semana",
+
+          "properties": {
+            "max_drawdown": {
+              "type": "number",
+              "description": "Drawdown máximo na semana (% da bankroll)",
+              "minimum": 0,
+              "examples": [15.0, 20.0]
+            },
+
+            "max_bets": {
+              "type": "integer",
+              "description": "Número máximo de apostas na semana",
+              "minimum": 1,
+              "examples": [75, 100]
+            }
+          },
+
+          "additionalProperties": false
+        },
+
+        "per_month": {
+          "type": "object",
+          "description": "Limites por mês",
+
+          "properties": {
+            "max_drawdown": {
+              "type": "number",
+              "description": "Drawdown máximo no mês (% da bankroll)",
+              "minimum": 0,
+              "examples": [25.0, 30.0]
+            },
+
+            "target_roi": {
+              "type": "number",
+              "description": "Target de ROI mensal (%)",
+              "minimum": 0,
+              "examples": [5.0, 10.0]
+            }
+          },
+
+          "additionalProperties": false
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "circuit_breakers": {
+      "type": "object",
+      "description": "Gatilhos automáticos de parada de emergência",
+      "required": ["daily"],
+
+      "properties": {
+        "daily": {
+          "type": "object",
+          "description": "Circuit breakers diários",
+          "required": ["loss_stop"],
+
+          "properties": {
+            "loss_stop": {
+              "type": "number",
+              "description": "Parar se perda atingir X% da bankroll",
+              "minimum": 0,
+              "examples": [5.0, 7.0]
+            },
+
+            "consecutive_loss_pause_hours": {
+              "type": "number",
+              "description": "Pausar por X horas após perda consecutiva",
+              "minimum": 0,
+              "examples": [4, 6, 12]
+            },
+
+            "stake_reduction": {
+              "type": "object",
+              "description": "Reduzir stake após perda",
+
+              "properties": {
+                "trigger_loss": {
+                  "type": "number",
+                  "description": "Reduzir stake após perda de X%"
+                },
+
+                "reduction_percent": {
+                  "type": "number",
+                  "description": "Reduzir stake em X%",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              }
+            }
+          },
+
+          "additionalProperties": false
+        },
+
+        "weekly": {
+          "type": "object",
+          "description": "Circuit breakers semanais",
+
+          "properties": {
+            "drawdown_stop": {
+              "type": "number",
+              "description": "Parar semana se drawdown atingir X%",
+              "minimum": 0
+            },
+
+            "roi_review_threshold": {
+              "type": "number",
+              "description": "Revisão obrigatória se ROI semanal < X%"
+            }
+          },
+
+          "additionalProperties": false
+        },
+
+        "monthly": {
+          "type": "object",
+          "description": "Circuit breakers mensais",
+
+          "properties": {
+            "drawdown_stop": {
+              "type": "number",
+              "description": "Parar mês se drawdown atingir X%",
+              "minimum": 0
+            },
+
+            "deactivate_after_negative_months": {
+              "type": "integer",
+              "description": "Desativar estratégia se X meses consecutivos negativos",
+              "minimum": 1
+            }
+          },
+
+          "additionalProperties": false
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "risk_adjustment": {
+      "type": "object",
+      "description": "Ajuste de stake por nível de risco",
+
+      "properties": {
+        "low_risk": {
+          "type": "object",
+          "description": "Nível BAIXO: Aumentar stake",
+
+          "properties": {
+            "criteria": {
+              "type": "object",
+              "properties": {
+                "favorite_ranking_max": {"type": "integer"},
+                "surface_win_rate_min": {"type": "number", "minimum": 0, "maximum": 1},
+                "no_injury_concerns": {"type": "boolean"}
+              }
+            },
+
+            "stake_multiplier": {
+              "type": "number",
+              "description": "Multiplicador da stake (1.25 = +25%)",
+              "minimum": 0
+            },
+
+            "max_stake": {
+              "type": "number",
+              "description": "Stake máxima neste nível",
+              "minimum": 0
+            }
+          }
+        },
+
+        "medium_risk": {
+          "type": "object",
+          "description": "Nível MÉDIO: Stake padrão",
+
+          "properties": {
+            "criteria": {
+              "type": "object",
+              "properties": {
+                "favorite_ranking_max": {"type": "integer"},
+                "surface_win_rate_min": {"type": "number", "minimum": 0, "maximum": 1}
+              }
+            },
+
+            "stake_multiplier": {
+              "type": "number",
+              "default": 1.0
+            },
+
+            "max_stake": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+
+        "high_risk": {
+          "type": "object",
+          "description": "Nível ALTO: Reduzir stake",
+
+          "properties": {
+            "criteria": {
+              "type": "object",
+              "properties": {
+                "favorite_ranking_max": {"type": "integer"},
+                "surface_win_rate_min": {"type": "number", "minimum": 0, "maximum": 1}
+              }
+            },
+
+            "stake_multiplier": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+
+            "max_stake": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "drawdown_response": {
+      "type": "array",
+      "description": "Resposta progressiva a drawdown",
+      "items": {
+        "type": "object",
+        "required": ["threshold", "action", "description"],
+
+        "properties": {
+          "threshold": {
+            "type": "number",
+            "description": "Threshold de drawdown (%)"
+          },
+
+          "action": {
+            "type": "string",
+            "enum": [
+              "ALERT",
+              "REDUCE_STAKE_25",
+              "REDUCE_STAKE_50",
+              "REDUCE_STAKE_75",
+              "STOP"
+            ]
+          },
+
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+
+    "market_filters": {
+      "type": "object",
+      "description": "Filtros de qualidade de mercado",
+
+      "properties": {
+        "exclusions": {
+          "type": "object",
+          "description": "Condições que excluem entrada",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+
+        "inclusions": {
+          "type": "object",
+          "description": "Condições que permitem entrada",
+
+          "properties": {
+            "tournament_tiers": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+
+            "min_round": {
+              "type": "string"
+            },
+
+            "surface_known": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "execution": {
+      "type": "object",
+      "description": "Parâmetros de execução operacional",
+
+      "properties": {
+        "max_latency_ms": {
+          "type": "integer",
+          "description": "Latência máxima aceitável (ms)",
+          "minimum": 0,
+          "examples": [3000, 5000]
+        },
+
+        "max_slippage": {
+          "type": "number",
+          "description": "Slippage máximo (diferença entre signal e execução)",
+          "minimum": 0,
+          "maximum": 1,
+          "examples": [0.10, 0.15]
+        },
+
+        "max_retries": {
+          "type": "integer",
+          "description": "Tentativas máximas de execução",
+          "minimum": 0,
+          "examples": [3, 5]
+        },
+
+        "confirmation_timeout_sec": {
+          "type": "integer",
+          "description": "Timeout para confirmação de aposta (segundos)",
+          "minimum": 0,
+          "examples": [30, 60]
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "profiles": {
+      "type": "object",
+      "description": "Perfis de gestão (presets)",
+
+      "properties": {
+        "conservative": {
+          "type": "object",
+          "description": "Perfil CONSERVADOR: Validação inicial",
+          "required": ["description", "staking", "exposure", "circuit_breakers"],
+
+          "properties": {
+            "description": {"type": "string"},
+
+            "staking": {
+              "type": "object",
+              "required": ["method", "value", "limits"],
+
+              "properties": {
+                "method": {"type": "string", "enum": ["percentage", "kelly", "fixed"]},
+                "value": {"type": "number", "minimum": 0},
+                "limits": {
+                  "type": "object",
+                  "required": ["min", "max"],
+                  "properties": {
+                    "min": {"type": "number", "minimum": 0},
+                    "max": {"type": "number", "minimum": 0}
+                  }
+                }
+              }
+            },
+
+            "exposure": {
+              "type": "object",
+              "properties": {
+                "per_day": {
+                  "type": "object",
+                  "properties": {
+                    "max_bets": {"type": "integer", "minimum": 1},
+                    "max_loss": {"type": "number", "minimum": 0}
+                  }
+                }
+              }
+            },
+
+            "circuit_breakers": {
+              "type": "object",
+              "properties": {
+                "daily": {
+                  "type": "object",
+                  "properties": {
+                    "loss_stop": {"type": "number", "minimum": 0}
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "moderate": {
+          "$ref": "#/properties/profiles/properties/conservative"
+        },
+
+        "aggressive": {
+          "$ref": "#/properties/profiles/properties/conservative"
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "phases": {
+      "type": "object",
+      "description": "Fases de operação (ramp-up progressivo)",
+
+      "properties": {
+        "validation": {
+          "type": "object",
+          "required": ["min_bets", "max_bets", "profile"],
+
+          "properties": {
+            "min_bets": {
+              "type": "integer",
+              "minimum": 0
+            },
+
+            "max_bets": {
+              "type": ["integer", "null"],
+              "minimum": 0
+            },
+
+            "profile": {
+              "type": "string",
+              "enum": ["conservative", "moderate", "aggressive"]
+            },
+
+            "criteria_graduation": {
+              "type": ["object", "null"],
+              "properties": {
+                "win_rate_min": {"type": "number", "minimum": 0, "maximum": 1},
+                "roi_min": {"type": "number"}
+              }
+            }
+          }
+        },
+
+        "standard": {
+          "$ref": "#/properties/phases/properties/validation"
+        },
+
+        "full": {
+          "$ref": "#/properties/phases/properties/validation"
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "monitoring": {
+      "type": "object",
+      "description": "Configuração de monitoramento e alertas",
+
+      "properties": {
+        "alerts": {
+          "type": "object",
+          "properties": {
+            "stake_exceeded": {"type": "boolean"},
+            "daily_loss_warning": {"type": "number", "minimum": 0},
+            "daily_loss_critical": {"type": "number", "minimum": 0},
+            "consecutive_losses_warning": {"type": "integer", "minimum": 1},
+            "consecutive_losses_critical": {"type": "integer", "minimum": 1},
+            "weekly_drawdown_warning": {"type": "number", "minimum": 0},
+            "weekly_drawdown_critical": {"type": "number", "minimum": 0},
+            "monthly_drawdown_warning": {"type": "number", "minimum": 0},
+            "monthly_drawdown_critical": {"type": "number", "minimum": 0}
+          }
+        },
+
+        "dashboard": {
+          "type": "object",
+          "properties": {
+            "real_time": {
+              "type": "array",
+              "items": {"type": "string"}
+            },
+
+            "historical": {
+              "type": "array",
+              "items": {"type": "string"}
+            }
+          }
+        }
+      },
+
+      "additionalProperties": false
+    },
+
+    "metadata": {
+      "type": "object",
+      "description": "Metadados da configuração",
+
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date"
+        },
+
+        "updated_at": {
+          "type": "string",
+          "format": "date"
+        },
+
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+
+        "author": {
+          "type": "string"
+        },
+
+        "status": {
+          "type": "string",
+          "enum": ["DRAFT", "PENDING_REVIEW", "APPROVED", "DEPRECATED"]
+        },
+
+        "changelog": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["version", "date", "changes"],
+
+            "properties": {
+              "version": {"type": "string"},
+              "date": {"type": "string", "format": "date"},
+              "changes": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          }
+        }
+      },
+
+      "additionalProperties": false
+    }
+  },
+
+  "additionalProperties": false,
+
+  "examples": [
+    {
+      "strategy": {
+        "id": "TENNIS_FAV_30_0_COMEBACK",
+        "name": "Favorite 30-0 Comeback",
+        "version": "cfg-1.0.0"
+      },
+
+      "odds": {
+        "min": 1.70,
+        "max": 3.50,
+        "ideal": {
+          "min": 1.80,
+          "max": 2.50
+        }
+      },
+
+      "staking": {
+        "method": "percentage",
+        "value": 1.0,
+        "limits": {
+          "min": 0.25,
+          "max": 2.0
+        }
+      },
+
+      "bankroll": {
+        "initial": 10000,
+        "allocation": {
+          "active": 70,
+          "reserve": 20,
+          "emergency": 10
+        }
+      },
+
+      "exposure": {
+        "per_match": {
+          "max_bets": 3,
+          "max_stake": 3.0,
+          "stop_after_losses": 2
+        },
+        "per_day": {
+          "max_bets": 15,
+          "max_stake": 10.0,
+          "max_loss": 5.0,
+          "consecutive_loss_pause": 5
+        },
+        "per_week": {
+          "max_drawdown": 15.0,
+          "max_bets": 75
+        },
+        "per_month": {
+          "max_drawdown": 25.0,
+          "target_roi": 5.0
+        }
+      },
+
+      "circuit_breakers": {
+        "daily": {
+          "loss_stop": 5.0,
+          "consecutive_loss_pause_hours": 4,
+          "stake_reduction": {
+            "trigger_loss": 3.0,
+            "reduction_percent": 50
+          }
+        },
+        "weekly": {
+          "drawdown_stop": 15.0,
+          "roi_review_threshold": -5.0
+        },
+        "monthly": {
+          "drawdown_stop": 25.0,
+          "deactivate_after_negative_months": 3
+        }
+      },
+
+      "profiles": {
+        "conservative": {
+          "description": "Para fase de validação ou operadores conservadores",
+          "staking": {
+            "method": "percentage",
+            "value": 0.5,
+            "limits": {
+              "min": 0.25,
+              "max": 0.5
+            }
+          },
+          "exposure": {
+            "per_day": {
+              "max_bets": 5,
+              "max_loss": 3.0
+            }
+          },
+          "circuit_breakers": {
+            "daily": {
+              "loss_stop": 3.0
+            }
+          }
+        },
+        "moderate": {
+          "description": "Para operação padrão após validação",
+          "staking": {
+            "method": "percentage",
+            "value": 1.0,
+            "limits": {
+              "min": 0.5,
+              "max": 1.5
+            }
+          },
+          "exposure": {
+            "per_day": {
+              "max_bets": 15,
+              "max_loss": 5.0
+            }
+          },
+          "circuit_breakers": {
+            "daily": {
+              "loss_stop": 5.0
+            }
+          }
+        }
+      },
+
+      "phases": {
+        "validation": {
+          "min_bets": 0,
+          "max_bets": 100,
+          "profile": "conservative",
+          "criteria_graduation": {
+            "win_rate_min": 0.48,
+            "roi_min": 0.0
+          }
+        },
+        "standard": {
+          "min_bets": 101,
+          "max_bets": 500,
+          "profile": "moderate",
+          "criteria_graduation": {
+            "win_rate_min": 0.50,
+            "roi_min": 0.03
+          }
+        },
+        "full": {
+          "min_bets": 501,
+          "max_bets": null,
+          "profile": "moderate",
+          "criteria_graduation": null
+        }
+      },
+
+      "metadata": {
+        "created_at": "2026-02-17",
+        "updated_at": "2026-02-17",
+        "version": "1.0.0",
+        "author": "strategy-sports",
+        "status": "APPROVED"
+      }
+    }
+  ]
+}

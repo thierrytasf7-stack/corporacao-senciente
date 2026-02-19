@@ -1,0 +1,458 @@
+# Configuração de Gestão: Favorite 30-0 Comeback
+# 
+# ⚠️ IMPORTANTE: Este arquivo contém APENAS parâmetros de gestão matemática.
+# A lógica da estratégia está em: ../strategy/tennis-favorite-30-0-comeback.md
+#
+# PROPÓSITO: Esta configuração é INJETADA na estratégia em tempo de execução.
+# A mesma estratégia pode usar diferentes configs conforme perfil de risco.
+
+strategy:
+  id: TENNIS_FAV_30_0_COMEBACK
+  name: "Favorite 30-0 Comeback"
+  version: "2.0.0"
+
+# =============================================================================
+# 1. PARÂMETROS DE ODDS (Filtro de Mercado)
+# =============================================================================
+# Define quais odds são aceitáveis para entrada
+# Estes são filtros de qualidade da oportunidade, NÃO gestão de risco
+
+odds:
+  # Odd mínima para considerar entrada
+  # Abaixo disso, não há valor esperado suficiente
+  min: 1.70
+  
+  # Odd máxima para evitar situações de risco extremo
+  # Acima disso, o mercado indica probabilidade muito baixa
+  max: 3.50
+  
+  # Faixa ideal (para análise de performance)
+  ideal:
+    min: 1.80
+    max: 2.50
+
+# =============================================================================
+# 2. MÉTODO DE STAKE (Quanto Apostar)
+# =============================================================================
+# Define como calcular o valor de cada aposta
+# Este é o PRIMEIRO nível de gestão de risco
+
+staking:
+  # Método de cálculo da stake
+  # Opções: 'percentage', 'kelly', 'fixed'
+  method: percentage
+  
+  # Valor base conforme método:
+  # - percentage: % da bankroll por aposta
+  # - kelly: fração do Kelly (0.25 = quarter Kelly)
+  # - fixed: valor fixo em unidades monetárias
+  value: 1.0
+  
+  # Limites absolutos (override do método)
+  limits:
+    # Stake mínima (garante exposição mínima)
+    min: 0.25
+    
+    # Stake máxima (proteção contra risco excessivo)
+    max: 2.0
+
+# =============================================================================
+# 3. GESTÃO DE BANKROLL (Alocação de Capital)
+# =============================================================================
+# Define como o capital total é dividido e protegido
+
+bankroll:
+  # Bankroll inicial (para tracking)
+  initial: 10000
+  
+  # Alocação percentual do capital total
+  allocation:
+    # Capital ativo para apostas
+    active: 70
+    
+    # Reserva para drawdowns
+    reserve: 20
+    
+    # Emergência (não usar em operação normal)
+    emergency: 10
+  
+  # Quando rebalancear alocação
+  rebalance:
+    # Rebalancear se ativo cair abaixo de X% do total
+    active_threshold: 50
+    
+    # Rebalancear se reserva cair abaixo de X% do total
+    reserve_threshold: 10
+    
+    # Realizar lucros se bankroll crescer X%
+    take_profit_threshold: 50
+
+# =============================================================================
+# 4. LIMITES DE EXPOSIÇÃO (Controle de Risco)
+# =============================================================================
+# Define limites de quanto capital pode estar em risco
+
+exposure:
+  # Por partida
+  per_match:
+    # Número máximo de apostas na mesma partida
+    max_bets: 3
+    
+    # Stake total máxima na partida (% da bankroll)
+    max_stake: 3.0
+    
+    # Parar após X losses na mesma partida
+    stop_after_losses: 2
+  
+  # Por dia
+  per_day:
+    # Número máximo de apostas no dia
+    max_bets: 15
+    
+    # Stake total máxima no dia (% da bankroll)
+    max_stake: 10.0
+    
+    # Perda máxima no dia (% da bankroll) - STOP LOSS
+    max_loss: 5.0
+    
+    # Perda consecutiva para pausa (número de losses seguidos)
+    consecutive_loss_pause: 5
+  
+  # Por semana
+  per_week:
+    # Drawdown máximo na semana (% da bankroll)
+    max_drawdown: 15.0
+    
+    # Número máximo de apostas na semana
+    max_bets: 75
+  
+  # Por mês
+  per_month:
+    # Drawdown máximo no mês (% da bankroll)
+    max_drawdown: 25.0
+    
+    # Target de ROI mensal (% para planejamento)
+    target_roi: 5.0
+
+# =============================================================================
+# 5. CIRCUIT BREAKERS (Paradas de Emergência)
+# =============================================================================
+# Gatilhos automáticos que param a operação para proteção
+
+circuit_breakers:
+  # Diário
+  daily:
+    # Parar se perda atingir X% da bankroll
+    loss_stop: 5.0
+    
+    # Pausar por X horas após perda consecutiva
+    consecutive_loss_pause_hours: 4
+    
+    # Reduzir stake em X% após perda de Y%
+    stake_reduction:
+      trigger_loss: 3.0
+      reduction_percent: 50
+  
+  # Semanal
+  weekly:
+    # Parar semana se drawdown atingir X%
+    drawdown_stop: 15.0
+    
+    # Revisão obrigatória se ROI semanal < X%
+    roi_review_threshold: -5.0
+  
+  # Mensal
+  monthly:
+    # Parar mês se drawdown atingir X%
+    drawdown_stop: 25.0
+    
+    # Desativar estratégia se 3 meses consecutivos negativos
+    deactivate_after_negative_months: 3
+
+# =============================================================================
+# 6. AJUSTE DE RISCO POR CONDIÇÃO (Risk-Adjusted Staking)
+# =============================================================================
+# Multiplicadores de stake baseados no nível de risco da oportunidade
+
+risk_adjustment:
+  # Nível BAIXO: Aumentar stake
+  low_risk:
+    criteria:
+      # Favorito no Top 20
+      favorite_ranking_max: 20
+      
+      # Win rate na superfície >= 60%
+      surface_win_rate_min: 0.60
+      
+      # Sem preocupações de lesão
+      no_injury_concerns: true
+    
+    # Multiplicador da stake (1.25 = +25%)
+    stake_multiplier: 1.25
+    
+    # Stake máxima neste nível
+    max_stake: 1.25
+  
+  # Nível MÉDIO: Stake padrão
+  medium_risk:
+    criteria:
+      # Favorito no Top 50
+      favorite_ranking_max: 50
+      
+      # Win rate na superfície >= 50%
+      surface_win_rate_min: 0.50
+    
+    # Multiplicador da stake (1.0 = padrão)
+    stake_multiplier: 1.0
+    
+    # Stake máxima neste nível
+    max_stake: 1.0
+  
+  # Nível ALTO: Reduzir stake
+  high_risk:
+    criteria:
+      # Favorito no Top 100
+      favorite_ranking_max: 100
+      
+      # Win rate na superfície >= 45%
+      surface_win_rate_min: 0.45
+    
+    # Multiplicador da stake (0.5 = -50%)
+    stake_multiplier: 0.5
+    
+    # Stake máxima neste nível
+    max_stake: 0.5
+
+# =============================================================================
+# 7. RESPOSTA A DRAWDOWN (Proteção Progressiva)
+# =============================================================================
+# Ajustes automáticos conforme drawdown acumulado
+
+drawdown_response:
+  # Nível 1: Alerta
+  - threshold: 10
+    action: ALERT
+    description: "Enviar alerta para operadores"
+  
+  # Nível 2: Redução leve
+  - threshold: 15
+    action: REDUCE_STAKE_25
+    description: "Reduzir stakes em 25%"
+  
+  # Nível 3: Redução agressiva
+  - threshold: 20
+    action: REDUCE_STAKE_50
+    description: "Reduzir stakes em 50%"
+  
+  # Nível 4: Stop total
+  - threshold: 25
+    action: STOP
+    description: "Parar todas as novas entradas"
+
+# =============================================================================
+# 8. FILTROS DE MERCADO (Qualidade da Oportunidade)
+# =============================================================================
+# Condições que filtram oportunidades de baixa qualidade
+
+market_filters:
+  # Exclusões (NÃO apostar se:)
+  exclusions:
+    # Jogador tem timeout médico ativo
+    injury_timeout: true
+    
+    # Partida tem delay por clima
+    weather_delay: true
+    
+    # Jogador abandonou última partida
+    player_retired_last_match: true
+    
+    # Jogador está em 3ª partida em 2 dias (fadiga)
+    playing_third_match_in_two_days: true
+    
+    # Torneio é exibição (não conta ranking)
+    exhibition_tournament: true
+  
+  # Inclusões (apenas apostar se:)
+  inclusions:
+    # Níveis de torneio aceitáveis
+    tournament_tiers:
+      - ATP
+      - WTA
+      - GRAND_SLAM
+      - MASTERS
+      - CHALLENGER
+    
+    # Rodadas mínimas
+    min_round: R1
+    
+    # Superfície deve ser conhecida
+    surface_known: true
+
+# =============================================================================
+# 9. PARÂMETROS DE EXECUÇÃO (Operacional)
+# =============================================================================
+# Configurações operacionais para execução das apostas
+
+execution:
+  # Latência máxima aceitável (ms)
+  max_latency_ms: 3000
+  
+  # Slippage máximo (diferença entre signal e execução)
+  max_slippage: 0.10
+  
+  # Tentativas máximas de execução
+  max_retries: 3
+  
+  # Timeout para confirmação de aposta (segundos)
+  confirmation_timeout_sec: 30
+
+# =============================================================================
+# 10. PERFIS DE GESTÃO (Presets)
+# =============================================================================
+# Perfis prontos para diferentes tipos de operação
+# Ativar um perfil sobrescreve os parâmetros acima
+
+profiles:
+  # Perfil CONSERVADOR: Validação inicial
+  conservative:
+    description: "Para fase de validação ou operadores conservadores"
+    staking:
+      method: percentage
+      value: 0.5
+      limits:
+        min: 0.25
+        max: 0.5
+    exposure:
+      per_day:
+        max_bets: 5
+        max_loss: 3.0
+    circuit_breakers:
+      daily:
+        loss_stop: 3.0
+  
+  # Perfil MODERADO: Operação padrão
+  moderate:
+    description: "Para operação padrão após validação"
+    staking:
+      method: percentage
+      value: 1.0
+      limits:
+        min: 0.5
+        max: 1.5
+    exposure:
+      per_day:
+        max_bets: 15
+        max_loss: 5.0
+    circuit_breakers:
+      daily:
+        loss_stop: 5.0
+  
+  # Perfil AGRESSIVO: Máxima exposição (após validação completa)
+  aggressive:
+    description: "Para operadores experientes após longa validação"
+    staking:
+      method: kelly
+      value: 0.25  # Quarter Kelly
+      limits:
+        min: 0.5
+        max: 2.0
+    exposure:
+      per_day:
+        max_bets: 20
+        max_loss: 7.0
+    circuit_breakers:
+      daily:
+        loss_stop: 7.0
+
+# =============================================================================
+# 11. FASES DE OPERAÇÃO (Ramp-up Progressivo)
+# =============================================================================
+# Configuração automática conforme fase de maturidade da estratégia
+
+phases:
+  # Fase 1: Validação (primeiros 100 bets)
+  validation:
+    min_bets: 0
+    max_bets: 100
+    profile: conservative
+    criteria_graduation:
+      win_rate_min: 0.48
+      roi_min: 0.0
+  
+  # Fase 2: Standard (após validação)
+  standard:
+    min_bets: 101
+    max_bets: 500
+    profile: moderate
+    criteria_graduation:
+      win_rate_min: 0.50
+      roi_min: 0.03
+  
+  # Fase 3: Full (após validação completa)
+  full:
+    min_bets: 501
+    max_bets: null  # Ilimitado
+    profile: moderate
+    criteria_graduation: null
+
+# =============================================================================
+# 12. MONITORAMENTO E ALERTAS
+# =============================================================================
+# Configuração de alertas para monitoramento
+
+monitoring:
+  # Alertas em tempo real
+  alerts:
+    # Alerta quando stake exceder limite
+    stake_exceeded: true
+    
+    # Alerta quando daily loss atingir X%
+    daily_loss_warning: 3.0
+    daily_loss_critical: 5.0
+    
+    # Alerta após X losses consecutivas
+    consecutive_losses_warning: 3
+    consecutive_losses_critical: 5
+    
+    # Alerta de drawdown semanal
+    weekly_drawdown_warning: 10.0
+    weekly_drawdown_critical: 15.0
+    
+    # Alerta de drawdown mensal
+    monthly_drawdown_warning: 20.0
+    monthly_drawdown_critical: 25.0
+  
+  # Dashboard metrics
+  dashboard:
+    real_time:
+      - current_bankroll
+      - daily_pnl
+      - daily_bets_count
+      - open_exposure
+    
+    historical:
+      - daily_roi_chart
+      - drawdown_chart
+      - win_rate_trend
+      - stake_distribution
+
+# =============================================================================
+# HISTÓRICO DE REVISÕES
+# =============================================================================
+
+metadata:
+  created_at: 2026-02-17
+  updated_at: 2026-02-17
+  version: 2.0.0
+  author: strategy-sports
+  status: DRAFT
+  
+  changelog:
+    - version: 2.0.0
+      date: 2026-02-17
+      changes:
+        - "Separação arquitetural: estratégia pura vs gestão"
+        - "Remoção de parâmetros de gestão da especificação da estratégia"
+        - "Criação de config injetável com todos os parâmetros matemáticos"
+        - "Adição de perfis de gestão (conservador, moderado, agressivo)"
+        - "Adição de fases de operação com ramp-up automático"

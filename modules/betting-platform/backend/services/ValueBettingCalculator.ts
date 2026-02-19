@@ -1,88 +1,45 @@
-export interface ValueBet {
-  market: string;
-  selection: string;
-  bookmakerOdds: number;
-  trueOdds: number;
-  valuePct: number;
-  expectedValue: number;
-  isValueBet: boolean;
-}
-
-export interface CalculateValueParams {
-  bookmakerOdds: number;
-  trueProbability: number;
-  stake?: number;
-}
+import { Strategy, StrategyResult, Bankroll } from '../types/strategy-types';
+import { calculateValueBet } from '../utils/strategy-utils';
 
 export default class ValueBettingCalculator {
-  private minValueThreshold: number;
+  private threshold: number;
 
-  constructor(minValueThreshold: number = 0.05) {
-    this.minValueThreshold = minValueThreshold;
+  constructor(threshold: number = 0.05) {
+    this.threshold = threshold;
   }
 
-  public calculateValue(params: CalculateValueParams): ValueBet | null {
-    const { bookmakerOdds, trueProbability, stake = 100 } = params;
-
-    // Validate inputs
-    if (bookmakerOdds <= 1 || trueProbability <= 0 || trueProbability > 1) {
-      throw new Error('Invalid odds or probability');
-    }
-
-    // Calculate true odds from probability
-    const trueOdds = 1 / trueProbability;
-
-    // Calculate value percentage
-    const valuePct = (bookmakerOdds / trueOdds) - 1;
-
-    // Calculate expected value
-    const expectedValue = (stake * bookmakerOdds * trueProbability) - stake;
-
-    // Determine if it's a value bet
-    const isValueBet = valuePct >= this.minValueThreshold;
-
-    if (!isValueBet) {
-      return null;
-    }
-
-    return {
-      market: 'unknown',
-      selection: 'unknown',
-      bookmakerOdds,
-      trueOdds,
-      valuePct,
-      expectedValue,
-      isValueBet
-    };
+  calculateValue(input: {
+    bookmakerOdds: number;
+    trueProbability: number;
+  }): { expectedValue: number; edge: number } | null {
+    return calculateValueBet(input.bookmakerOdds, input.trueProbability);
   }
 
-  public findValueBets(
-    opportunities: Array<{ odds: number; probability: number; market: string; selection: string }>
-  ): ValueBet[] {
-    return opportunities
-      .map(opp => {
-        const result = this.calculateValue({
-          bookmakerOdds: opp.odds,
-          trueProbability: opp.probability
-        });
-
-        if (result) {
-          return {
-            ...result,
-            market: opp.market,
-            selection: opp.selection
-          };
-        }
-        return null;
-      })
-      .filter((bet): bet is ValueBet => bet !== null)
-      .sort((a, b) => b.valuePct - a.valuePct);
+  calculateExpectedValue(
+    bookmakerOdds: number,
+    trueProbability: number
+  ): number {
+    const valueBet = this.calculateValue({ bookmakerOdds, trueProbability });
+    return valueBet ? valueBet.expectedValue : 0;
   }
 
-  public setMinValueThreshold(threshold: number): void {
-    if (threshold < 0 || threshold > 1) {
-      throw new Error('Threshold must be between 0 and 1');
-    }
-    this.minValueThreshold = threshold;
+  isValueBet(
+    bookmakerOdds: number,
+    trueProbability: number
+  ): boolean {
+    const valueBet = this.calculateValue({ bookmakerOdds, trueProbability });
+    return valueBet !== null && valueBet.edge >= this.threshold;
+  }
+
+  calculateOptimalStake(
+    bankroll: Bankroll,
+    bookmakerOdds: number,
+    trueProbability: number
+  ): number {
+    const valueBet = this.calculateValue({ bookmakerOdds, trueProbability });
+    if (!valueBet) return 0;
+
+    const kelly = valueBet.edge / (bookmakerOdds - 1);
+    return bankroll.available * Math.min(0.05, kelly);
   }
 }

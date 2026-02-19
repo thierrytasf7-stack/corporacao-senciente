@@ -1,0 +1,148 @@
+{
+  "id": "bt-1771335507883-xn7scsmh9",
+  "strategyId": "live-over-points",
+  "config": {
+    "sport": "basketball",
+    "leagueId": "nba",
+    "targetTeam": "Portland Trail Blazers",
+    "bettingStrategy": "live-over-points",
+    "bettingParams": {
+      "thresholdPct": 0.85,
+      "minOdds": 1.7,
+      "lookbackGames": 10
+    },
+    "stakingStrategy": "fibonacci",
+    "dateRange": {
+      "start": "2026-01-01",
+      "end": "2026-02-15"
+    },
+    "initialBankroll": 1000
+  },
+  "metrics": {
+    "totalOpportunities": 2,
+    "wins": 1,
+    "losses": 1,
+    "winRate": 0.5,
+    "roi": 0.05,
+    "totalProfit": 2,
+    "finalBankroll": 1002,
+    "avgLiveOdds": 2.3,
+    "avgThreshold": 97.6,
+    "avgFinalPoints": 101,
+    "betCount": 2,
+    "matchesAnalysed": 15
+  },
+  "bets": [
+    {
+      "date": "2026-02-07",
+      "match": "Portland Trail Blazers vs Indiana Pacers",
+      "team": "Portland Trail Blazers",
+      "cleanScores": [
+        126,
+        114,
+        124,
+        118,
+        110,
+        109,
+        115,
+        110,
+        113,
+        115
+      ],
+      "outliersRemoved": 0,
+      "cleanAvg": 115.4,
+      "threshold": 98.1,
+      "halfPoints": 46,
+      "halfPace": 92,
+      "finalPoints": 95,
+      "liveOdds": 2.5,
+      "selection": "Over 98 pts",
+      "result": "L",
+      "margin": -3.1
+    },
+    {
+      "date": "2026-02-08",
+      "match": "Portland Trail Blazers vs Philadelphia 76ers",
+      "team": "Portland Trail Blazers",
+      "cleanScores": [
+        124,
+        118,
+        110,
+        109,
+        115,
+        110,
+        113,
+        115
+      ],
+      "outliersRemoved": 2,
+      "cleanAvg": 114.3,
+      "threshold": 97.1,
+      "halfPoints": 48,
+      "halfPace": 96,
+      "finalPoints": 107,
+      "liveOdds": 2.1,
+      "selection": "Over 97 pts",
+      "result": "W",
+      "margin": 9.9
+    }
+  ],
+  "equityCurve": [],
+  "engineVersion": "demo-v2",
+  "createdAt": "2026-02-17T13:38:27.889Z",
+  "opportunities": [
+    {
+      "date": "2026-02-07",
+      "match": "Portland Trail Blazers vs Indiana Pacers",
+      "team": "Portland Trail Blazers",
+      "cleanScores": [
+        126,
+        114,
+        124,
+        118,
+        110,
+        109,
+        115,
+        110,
+        113,
+        115
+      ],
+      "outliersRemoved": 0,
+      "cleanAvg": 115.4,
+      "threshold": 98.1,
+      "halfPoints": 46,
+      "halfPace": 92,
+      "finalPoints": 95,
+      "liveOdds": 2.5,
+      "selection": "Over 98 pts",
+      "result": "L",
+      "margin": -3.1
+    },
+    {
+      "date": "2026-02-08",
+      "match": "Portland Trail Blazers vs Philadelphia 76ers",
+      "team": "Portland Trail Blazers",
+      "cleanScores": [
+        124,
+        118,
+        110,
+        109,
+        115,
+        110,
+        113,
+        115
+      ],
+      "outliersRemoved": 2,
+      "cleanAvg": 114.3,
+      "threshold": 97.1,
+      "halfPoints": 48,
+      "halfPace": 96,
+      "finalPoints": 107,
+      "liveOdds": 2.1,
+      "selection": "Over 97 pts",
+      "result": "W",
+      "margin": 9.9
+    }
+  ],
+  "strategyType": "live-over-points",
+  "targetTeam": "Portland Trail Blazers"
+}

@@ -114,49 +114,241 @@ def get_milestones():
 
 
 def format_status_report(data, compact=False):
-    """Format ecosystem status as WhatsApp message"""
+    """Format ecosystem status as WhatsApp message - 3 ÁREAS SEPARADAS"""
     if not data:
         return "Ecosystem offline ou sem dados."
 
     bankroll = data.get("communityBankroll", 0)
     initial = data.get("communityInitial", 2500)
-    mult = (bankroll / initial) if initial > 0 else 0
+    roi_pct = ((bankroll - initial) / initial * 100) if initial > 0 else 0
+    pnl = bankroll - initial
     peak = data.get("peakBankroll", 0)
     dd = data.get("drawdownPercent", 0)
     cycle = data.get("cycle", 0)
     alive = data.get("aliveBots", 0)
     total = data.get("totalBots", 25)
+    groups = data.get("groups", [])
+    milestones = data.get("milestones", {})
+
+    # Aggregate real trade stats
+    all_bots = [b for g in groups for b in g.get('bots', [])]
+    total_trades = sum(b.get('trades', 0) for b in all_bots)
+    total_wins = sum(b.get('wins', 0) for b in all_bots)
+    total_losses = sum(b.get('losses', 0) for b in all_bots)
+    avg_wr = (total_wins / total_trades * 100) if total_trades > 0 else 0
 
     if compact:
         groups_str = " | ".join([
             f"{g['groupId'][:1]}:${g['bankroll']:.0f}(f{g['groupFitness']:.0f})"
-            for g in data.get("groups", [])
+            for g in groups
         ])
         return (
             f"DIANA ECOSYSTEM | Ciclo {cycle}\n"
-            f"${bankroll:.2f} ({mult:.2%}) | Peak ${peak:.2f} | DD {dd:.1f}%\n"
-            f"Bots: {alive}/{total} | {groups_str}"
+            f"${bankroll:.2f} ({roi_pct:+.2f}%) | Peak ${peak:.2f} | DD {dd:.1f}%\n"
+            f"Bots: {alive}/{total} | WR: {avg_wr:.1f}% | Trades: {total_trades} | {groups_str}"
         )
 
+    # ====================================================================
+    # ÁREA 1: DNA ARENA BOTS
+    # ====================================================================
     lines = [
-        f"DIANA CORPORACAO SENCIENTE",
-        f"Ecosystem Report - {datetime.now().strftime('%d/%m %H:%M')}",
-        f"{'='*35}",
-        f"Ciclo: {cycle}",
-        f"Bankroll: ${bankroll:.2f} / ${initial:.0f} ({mult:.2%})",
-        f"Peak: ${peak:.2f} | Drawdown: {dd:.1f}%",
-        f"Bots: {alive}/{total} vivos",
-        f"",
-        f"GRUPOS:",
+        "╔═══════════════════════════════════════════════════════════╗",
+        "║  🧬 DNA ARENA - BOTS (SIMULAÇÃO)                         ║",
+        "╚═══════════════════════════════════════════════════════════╝",
+        "",
+        f"🕐 *Data/Hora:* {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}",
+        f"🔖 *ID:* SENTINEL-{int(time.time())}",
+        "",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "📊 *VISÃO GERAL*",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        f"🤖 *Total Bots:* {alive}/{total} ({(alive/total*100):.0f}%)",
+        f"🔄 *Ciclo Atual:* {cycle:,}",
+        f"💰 *Capital:* ${bankroll:.2f} ({roi_pct:+.2f}%)" + (" ✅" if pnl >= 0 else " ⚠️"),
+        f"💵 *PnL:* ${pnl:+.2f}",
+        f"📉 *Drawdown:* {dd:.2f}% | Peak: ${peak:.2f}",
+        f"📊 *Trades:* {total_trades:,} | WR: {avg_wr:.1f}% ({total_wins}W/{total_losses}L)",
+        "",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "🏆 *GRUPOS - PERFORMANCE*",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
     ]
 
-    for g in data.get("groups", []):
-        emoji = "+" if g["bankroll"] >= 500 else "-"
+    # Sort groups by bankroll
+    sorted_groups = sorted(groups, key=lambda g: g.get('bankroll', 0), reverse=True)
+
+    for i, g in enumerate(sorted_groups):
+        medal = ["🥇", "🥈", "🥉", "📍", "⚡"][i] if i < 5 else "•"
+        gid = g.get('groupId', 'UNKNOWN')
+        gbank = g.get('bankroll', 0)
+        ginit = g.get('initialBankroll', 500)
+        groi = ((gbank - ginit) / ginit * 100) if ginit > 0 else 0
+        gpnl = gbank - ginit
+        gfit = g.get('groupFitness', 0)
+        galive = g.get('aliveBots', 0)
+        gtotal = g.get('totalBots', 5)
+        gstyle = g.get('style', 'Unknown')
+        gev = g.get('expectedValue', 0)
+
+        # Aggregate group trades
+        gbots = g.get('bots', [])
+        g_trades = sum(b.get('trades', 0) for b in gbots)
+        g_wins = sum(b.get('wins', 0) for b in gbots)
+        g_losses = sum(b.get('losses', 0) for b in gbots)
+        g_wr = (g_wins / g_trades * 100) if g_trades > 0 else 0
+
+        lines.extend([
+            "",
+            f"{medal} *{gid}* - {gstyle}",
+            f"   💵 ${gbank:.2f} ({groi:+.2f}%) | PnL: ${gpnl:+.2f}",
+            f"   📊 Trades: {g_trades} | WR: {g_wr:.1f}% ({g_wins}W/{g_losses}L)",
+            f"   🧬 Gen: {g.get('generation',0)} | Fitness: {gfit:.1f} | EV: {gev:.3f}",
+        ])
+
+        # Top bot
+        if gbots:
+            top_bot = max(gbots, key=lambda b: b.get('fitness', 0))
+            bname = top_bot.get('name', 'Unknown')
+            bfit = top_bot.get('fitness', 0)
+            bbank = top_bot.get('bankroll', 0)
+            bwr = top_bot.get('winRate', 0)
+            btrades = top_bot.get('trades', 0)
+            blev = top_bot.get('leverage', 0)
+            lines.append(f"   🏆 Top: {bname} (f:{bfit:.1f} ${bbank:.2f} WR:{bwr:.0f}% {btrades}t {blev}x)")
+
+    # ====================================================================
+    # ÁREA 2: TOP BOTS RANKING
+    # ====================================================================
+    # Sort all bots by fitness
+    ranked_bots = sorted(all_bots, key=lambda b: b.get('fitness', 0), reverse=True)
+    top10 = ranked_bots[:10]
+
+    lines.extend([
+        "",
+        "",
+        "╔═══════════════════════════════════════════════════════════╗",
+        "║  🏆 TOP 10 BOTS - RANKING GLOBAL                        ║",
+        "╚═══════════════════════════════════════════════════════════╝",
+        "",
+    ])
+
+    for i, bot in enumerate(top10):
+        medal = ["🥇", "🥈", "🥉"][i] if i < 3 else f"#{i+1}"
+        bname = bot.get('name', '?')
+        bfit = bot.get('fitness', 0)
+        bbank = bot.get('bankroll', 100)
+        binit = bot.get('initialBankroll', 100)
+        broi = ((bbank - binit) / binit * 100) if binit > 0 else 0
+        bwr = bot.get('winRate', 0)
+        btrades = bot.get('trades', 0)
+        blev = bot.get('leverage', 0)
+        bev = bot.get('expectedValue', 0)
+        bstrats = bot.get('activeStrategies', 0)
         lines.append(
-            f"  {emoji} {g['groupId']}: ${g['bankroll']:.2f} | "
-            f"Fit: {g['groupFitness']:.1f} | Gen: {g.get('generation', '?')} | "
-            f"{g.get('currentRegime', '?')}"
+            f"{medal} *{bname}* f:{bfit:.1f} ${bbank:.2f}({broi:+.1f}%) "
+            f"WR:{bwr:.0f}% {btrades}t {blev}x EV:{bev:.2f} s:{bstrats}"
         )
+
+    # ====================================================================
+    # ÁREA 3: FUTURES TESTNET
+    # ====================================================================
+    lines.extend([
+        "",
+        "",
+        "╔═══════════════════════════════════════════════════════════╗",
+        "║  📈 FUTURES TESTNET (VALIDAÇÃO REAL)                     ║",
+        "╚═══════════════════════════════════════════════════════════╝",
+        "",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "🔄 *CHAMPION SYNC STATUS*",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+    ])
+
+    # Try to fetch champion sync status
+    try:
+        sync_res = requests.get(f"{ECOSYSTEM_API}/champion-sync/status", timeout=3)
+        if sync_res.ok:
+            sync_data = sync_res.json().get('data', {})
+            lines.extend([
+                f"🔄 *Última Sync:* {sync_data.get('lastSyncTime', 'Aguardando...')}",
+                f"✅ *Syncs Realizados:* {sync_data.get('syncCount', 0)}",
+                f"⏰ *Próxima Sync:* {sync_data.get('nextSyncIn', 600):.0f}s",
+                f"📊 *Status:* {'✅ ONLINE' if sync_data.get('isRunning') else '⏳ AGUARDANDO'}",
+            ])
+        else:
+            lines.extend([
+                f"🔄 *Status:* ⏳ Aguardando primeira sincronização (10min)",
+                f"⏰ *Intervalo:* 10 minutos",
+                f"📊 *Campeões:* Top 5 da DNA Arena",
+            ])
+    except:
+        lines.extend([
+            f"🔄 *Status:* ⏳ Aguardando primeira sincronização (10min)",
+            f"⏰ *Intervalo:* 10 minutos",
+            f"📊 *Campeões:* Top 5 da DNA Arena",
+        ])
+
+    lines.extend([
+        "",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "📋 *ESTRATÉGIAS FUTURES*",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        f"📊 *Total Estratégias:* 5 campeãs",
+        f"🏆 *Fonte:* DNA Arena (top fitness)",
+        f"🔄 *Atualização:* Automática (10min)",
+        f"✅ *Validação:* 8 checks de qualidade",
+        "",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "🎯 *PRÓXIMA VALIDAÇÃO*",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        f"⏱️ *Primeira Sync:* 10 minutos",
+        f"📊 *Validação Inicial:* 30 minutos",
+        f"✅ *Produção:* 24h+",
+    ])
+
+    # ====================================================================
+    # RODAPÉ GERAL
+    # ====================================================================
+
+    # Calculate open positions across all bots
+    total_open = sum(b.get('openPositions', 0) for b in all_bots)
+
+    # DNA Memory stats
+    dna_stats = data.get('dnaMemoryStats', {})
+    evo_dims = data.get('evolutionDimensions', 0)
+
+    # Milestones
+    group_milestones = milestones.get('groupMilestones', {}) if milestones else {}
+    bot_milestones = milestones.get('botMilestones', {}) if milestones else {}
+    total_ms = sum(len(v) for v in group_milestones.values()) + sum(len(v) for v in bot_milestones.values())
+
+    lines.extend([
+        "",
+        "",
+        "╔═══════════════════════════════════════════════════════════╗",
+        "║  📊 RESUMO GERAL                                          ║",
+        "╚═══════════════════════════════════════════════════════════╝",
+        "",
+        f"🛡️ *Risk:* " + ("🟢 BAIXO" if dd < 5 else "🟡 MÉDIO" if dd < 10 else "🔴 ALTO") + f" | DD: {dd:.1f}%",
+        f"📊 *Posições Abertas:* {total_open}",
+        f"🧬 *DNA Seeds:* {evo_dims} dimensões evolutivas",
+        f"🏆 *Milestones:* {total_ms} atingidos",
+    ])
+
+    if total_ms > 0:
+        for gid, ms in group_milestones.items():
+            if ms:
+                lines.append(f"   • {gid}: {len(ms)} milestones")
+        for bid, ms in bot_milestones.items():
+            if ms:
+                lines.append(f"   • {bid}: {len(ms)} milestones")
+
+    lines.extend([
+        "",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        f"*Relatórios:* {cycle_count} enviados",
+        f"*Diana Corporação Senciente* 🏛️",
+    ])
 
     return "\n".join(lines)
 
@@ -200,7 +392,7 @@ def should_process(entry):
 
 
 def check_critical_events(data):
-    """Check for events that need immediate notification"""
+    """Check for events that need immediate notification - ENVIA RELATÓRIO COMPLETO 3 ÁREAS"""
     global last_bankroll, peak_bankroll, last_milestone_count
     alerts = []
 
@@ -212,27 +404,27 @@ def check_critical_events(data):
     total = data.get("totalBots", 25)
     dd = data.get("drawdownPercent", 0)
 
-    # Bot death
-    if alive < total and alive < 25:
-        alerts.append(f"BOT MORTO! {alive}/{total} vivos")
+    # Bot death - only alert if significant change (>2 bots)
+    if alive < total and alive < 23:  # Only alert if <23 bots alive (more than 2 dead)
+        alerts.append(f"⚠️ BOTS MORTOS! {alive}/{total} vivos")
 
     # Drawdown > 10%
     if dd > 10:
-        alerts.append(f"DRAWDOWN ALTO: {dd:.1f}%")
+        alerts.append(f"🚨 DRAWDOWN ALTO: {dd:.1f}%")
 
     # Bankroll change > 2% since last check
     if last_bankroll > 0:
         change = (bankroll - last_bankroll) / last_bankroll * 100
         if abs(change) > 2:
-            direction = "SUBIU" if change > 0 else "CAIU"
-            alerts.append(f"BANKROLL {direction} {abs(change):.1f}% (${bankroll:.2f})")
+            direction = "📈 SUBIU" if change > 0 else "📉 CAIU"
+            alerts.append(f"{direction} {abs(change):.1f}% (${bankroll:.2f})")
 
     # New peak
     if bankroll > peak_bankroll and peak_bankroll > 0:
         peak_bankroll = bankroll
         # Only alert on significant new peaks (>1% above initial)
         if bankroll > 2525:
-            alerts.append(f"NOVO PEAK: ${bankroll:.2f}")
+            alerts.append(f"🏆 NOVO PEAK: ${bankroll:.2f}")
 
     if bankroll > 0:
         last_bankroll = bankroll
@@ -247,12 +439,36 @@ def check_critical_events(data):
             new_events = events[last_milestone_count:]
             for evt in new_events:
                 alerts.append(
-                    f"MILESTONE {evt.get('level','?').upper()}: "
+                    f"🏆 MILESTONE {evt.get('level','?').upper()}: "
                     f"{evt.get('entityId','?')} atingiu {evt.get('milestone','?')}x!"
                 )
             last_milestone_count = len(events)
 
     return alerts
+
+
+def send_alert_message(alert):
+    """Send alert with full verbose 3-area report"""
+    data = get_ecosystem_status()
+    
+    # Get full verbose report
+    full_report = format_status_report(data, compact=False)
+    
+    # Prepend alert if any
+    if alert:
+        alert_header = (
+            "╔═══════════════════════════════════════════════════════════╗\n"
+            "║  🚨 ALERTA DIANA CORPORAÇÃO SENCIENTE                  ║\n"
+            "╚═══════════════════════════════════════════════════════════╝\n\n"
+            f"🕐 *Hora:* {datetime.now().strftime('%H:%M:%S')}\n"
+            f"⚠️ *Tipo:* ALERTA CRÍTICO\n\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            f"📋 *ALERTA:*\n{alert}\n"
+            "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        )
+        full_report = alert_header + full_report
+    
+    return full_report
 
 
 def dispatch_to_claude(prompt_data):
@@ -315,13 +531,33 @@ def main():
         peak_bankroll = data.get("peakBankroll", 0)
         safe_print(f"[*] Ecosystem: Ciclo {data.get('cycle',0)} | ${last_bankroll:.2f}")
 
-    # Send startup notification
-    send_whatsapp(
-        f"DIANA CORP SENTINEL ONLINE\n"
-        f"{datetime.now().strftime('%d/%m/%Y %H:%M')}\n"
-        f"Monitorando ecosystem + comandos remotos\n"
-        f"Comandos: /status /groups /milestones /leaderboard /help"
-    )
+    # Send startup notification - ULTRA VERBOSE 3 AREAS
+    safe_print("[STARTUP] Sending initial report...")
+    data = get_ecosystem_status()
+    if data:
+        last_bankroll = data.get("communityBankroll", 0)
+        peak_bankroll = data.get("peakBankroll", 0)
+        safe_print(f"[*] Ecosystem: Ciclo {data.get('cycle',0)} | ${last_bankroll:.2f}")
+        
+        # Send full verbose 3-area report
+        startup_report = format_status_report(data, compact=False)
+        send_whatsapp(startup_report)
+        safe_print("[STARTUP] Initial report sent via WhatsApp")
+    else:
+        # Fallback if no data
+        startup_msg = (
+            "╔═══════════════════════════════════════════════════════════╗\n"
+            "║  🚀 DIANA CORP SENTINEL ONLINE - INICIALIZAÇÃO         ║\n"
+            "╚═══════════════════════════════════════════════════════════╝\n\n"
+            f"🕐 *Data/Hora:* {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}\n"
+            f"📋 *Status:* Sentinel Conectado e Monitorando\n"
+            f"🔖 *Grupo:* {TARGET_GROUP}\n"
+            f"📱 *Meu Número:* {MY_NUMBER}\n\n"
+            "⚠️ *Aguardando dados do ecosystem...*\n\n"
+            "*Diana Corporação Senciente* 🏛️"
+        )
+        send_whatsapp(startup_msg)
+        safe_print("[STARTUP] Fallback message sent")
 
     critical_counter = 0
 
@@ -419,18 +655,24 @@ def main():
                 critical_counter = 0
                 data = get_ecosystem_status()
                 alerts = check_critical_events(data)
-                for alert in alerts:
-                    safe_print(f"\n[ALERT] {alert}")
-                    send_whatsapp(f"ALERTA DIANA:\n{alert}")
+                
+                # Only send alerts (no periodic status every minute)
+                if alerts:
+                    for alert in alerts:
+                        safe_print(f"\n[ALERT] {alert}")
+                        # Send full verbose 3-area report with alert header
+                        alert_msg = send_alert_message(alert)
+                        send_whatsapp(alert_msg)
 
             # === PERIODIC REPORT (every 30min) ===
             if time.time() - last_report_time >= REPORT_INTERVAL:
                 last_report_time = time.time()
                 data = get_ecosystem_status()
                 if data:
-                    report = format_status_report(data, compact=True)
+                    # Send ultra verbose 3-area report
+                    report = format_status_report(data, compact=False)
                     send_whatsapp(report)
-                    safe_print(f"\n[REPORT] Periodic report sent")
+                    safe_print(f"\n[REPORT] Periodic report sent (30min)")
 
             # Status line
             lock = " [BUSY]" if os.path.exists(LOCK_FILE) else ""

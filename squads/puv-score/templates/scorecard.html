@@ -3,141 +3,504 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1080, height=1920">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  /* ============================
+     DESIGN SYSTEM — WHITE ONLY
+     Prioridade: contraste funcional
+     WCAG AA mínimo em todo texto
+     ============================ */
+
+  :root {
+    /* Backgrounds */
+    --bg:         #F5F6F8;   /* página */
+    --surface:    #FFFFFF;   /* cards */
+    --surface-2:  #EEF0F4;   /* cards internos */
+
+    /* Texto — sempre dark sobre light */
+    --txt-1:  #111827;   /* títulos, dados principais    */
+    --txt-2:  #374151;   /* corpo, descrições            */
+    --txt-3:  #6B7280;   /* rótulos auxiliares, meta     */
+
+    /* Score colors — vivid enough on white */
+    --clr-low:   #C0392B;   /* vermelho      */
+    --clr-mid:   #C07A00;   /* âmbar escuro  */
+    --clr-good:  #0A7B8F;   /* teal escuro   */
+    --clr-great: #1A7A3C;   /* verde escuro  */
+
+    /* Accent neutro */
+    --accent:     #2B4E8C;
+    --accent-bg:  #EBF0FA;
+
+    /* Borders */
+    --line:   #D1D5DB;
+    --line-2: #E5E7EB;
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
     width: 1080px; height: 1920px;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #0a0a2e 0%, #1a1a4e 50%, #0a0a2e 100%);
-    color: #fff;
-    display: flex; flex-direction: column;
-    align-items: center; padding: 60px 40px;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--txt-1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
   }
-  .header { text-align: center; margin-bottom: 40px; }
-  .header h1 { font-size: 36px; color: #00d4ff; letter-spacing: 4px; text-transform: uppercase; }
-  .header .subtitle { font-size: 20px; color: #8899aa; margin-top: 8px; }
-  .alvo-nome { font-size: 28px; color: #ffd700; margin-bottom: 30px; text-align: center; }
 
-  .gauge-container { position: relative; width: 400px; height: 220px; margin: 0 auto 30px; }
-  .gauge-bg {
-    width: 400px; height: 200px;
-    border-radius: 200px 200px 0 0;
-    background: conic-gradient(from 180deg, #ff4444 0deg, #ff8800 60deg, #ffcc00 120deg, #44cc44 160deg, #00cc88 180deg);
-    position: relative; overflow: hidden;
+  .logo-header {
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    height: 80px;
+    z-index: 1000;
+    opacity: 0.9;
   }
-  .gauge-inner {
-    position: absolute; bottom: 0; left: 30px; right: 30px;
-    height: 170px; border-radius: 170px 170px 0 0;
-    background: #0a0a2e;
-  }
-  .gauge-score {
-    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
-    font-size: 72px; font-weight: 900; color: #ffd700;
-  }
-  .gauge-max { font-size: 28px; color: #8899aa; }
-  .gauge-class {
-    text-align: center; font-size: 24px; font-weight: 700;
-    padding: 8px 24px; border-radius: 20px; display: inline-block;
-    margin: 0 auto;
-  }
-  .class-fraco { background: #ff4444; }
-  .class-abaixo { background: #ff8800; }
-  .class-media { background: #ffcc00; color: #333; }
-  .class-forte { background: #44cc44; }
-  .class-excelente { background: #00cc88; }
 
-  .criterios { width: 100%; margin: 30px 0; }
-  .criterio {
-    display: flex; align-items: center;
-    margin: 12px 0; padding: 0 20px;
+  /* ===== HEADER ===== */
+  .hero-header {
+    background: linear-gradient(155deg, #1A243E 0%, #1E2D52 50%, #1C3060 100%);
+    padding: 52px 64px 46px;
+    text-align: center;
+    flex-shrink: 0;
   }
-  .criterio-nome { flex: 1; font-size: 18px; color: #ccc; }
+
+  .hero-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #A8BFDE;
+    border: 1px solid rgba(168,191,222,0.35);
+    padding: 4px 14px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+  }
+
+  .hero-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 44px;
+    font-weight: 700;
+    color: #FFFFFF;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .hero-alvo {
+    font-size: 24px;
+    font-weight: 600;
+    color: #D0DAF0;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .hero-url {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: #7A9ACC;
+    margin-bottom: 4px;
+  }
+
+  .hero-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: #5A7AA8;
+  }
+
+  /* ===== GAUGE ===== */
+  .gauge-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 64px 20px;
+    flex-shrink: 0;
+  }
+
+  .gauge-wrapper {
+    position: relative;
+    width: 320px;
+    height: 320px;
+  }
+
+  .gauge-svg {
+    width: 320px;
+    height: 320px;
+    transform: rotate(-90deg);
+  }
+
+  .gauge-bg-circle {
+    fill: none;
+    stroke: var(--surface-2);
+    stroke-width: 20;
+  }
+
+  .gauge-value-circle {
+    fill: none;
+    stroke-width: 20;
+    stroke-linecap: round;
+  }
+
+  .score-display {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .score-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+
+  .score-denom {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 26px;
+    color: var(--txt-3);
+  }
+
+  .score-subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--txt-3);
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+  }
+
+  /* ===== ALERT BOX ===== */
+  .alert-box {
+    margin: 4px 64px 24px;
+    padding: 18px 28px;
+    border-radius: 6px;
+    text-align: center;
+    border-left: 4px solid;
+    flex-shrink: 0;
+  }
+
+  .alert-box-critico { background: #FEF2F2; border-color: var(--clr-low);  }
+  .alert-box-atencao { background: #FFFBEB; border-color: var(--clr-mid);  }
+  .alert-box-bom     { background: #F0FDF4; border-color: var(--clr-great);}
+
+  .alert-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  /* título do alert: DARK sobre fundo pastel = alta legibilidade */
+  .alert-title-critico { color: #991B1B; }
+  .alert-title-atencao { color: #92400E; }
+  .alert-title-bom     { color: #14532D; }
+
+  .alert-desc {
+    font-size: 14px;
+    color: var(--txt-2);   /* #374151 — sempre legível */
+    line-height: 1.55;
+  }
+
+  /* ===== CRITERIOS ===== */
+  .criterios-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 64px 20px;
+    flex-shrink: 0;
+  }
+
+  .criterio-row {
+    background: var(--surface);
+    padding: 16px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--line-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .criterio-info { flex: 1; }
+
+  .criterio-nome {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--txt-2);   /* #374151 — contraste suficiente */
+    margin-bottom: 8px;
+    display: block;
+  }
+
   .criterio-bar-bg {
-    width: 300px; height: 16px; background: #1a1a4e;
-    border-radius: 8px; margin: 0 16px; overflow: hidden;
+    height: 5px;
+    background: var(--surface-2);
+    border-radius: 3px;
   }
+
   .criterio-bar {
-    height: 100%; border-radius: 8px;
-    background: linear-gradient(90deg, #00d4ff, #ffd700);
-  }
-  .criterio-score { font-size: 20px; font-weight: 700; color: #ffd700; width: 40px; text-align: right; }
-
-  .acoes { width: 100%; margin: 20px 0; padding: 20px 30px; background: rgba(255,255,255,0.05); border-radius: 16px; }
-  .acoes h3 { font-size: 22px; color: #00d4ff; margin-bottom: 16px; }
-  .acao { font-size: 17px; color: #ddd; margin: 10px 0; padding-left: 20px; border-left: 3px solid #ffd700; }
-
-  .qr-section {
-    margin-top: auto; text-align: center; padding: 20px;
-    background: rgba(255,215,0,0.1); border-radius: 16px; border: 1px solid #ffd700;
-  }
-  .qr-section p { font-size: 18px; color: #ffd700; font-weight: 700; margin-bottom: 10px; }
-  .qr-placeholder {
-    width: 120px; height: 120px; background: #fff; margin: 0 auto;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 12px; color: #333;
+    height: 100%;
+    border-radius: 3px;
   }
 
-  .footer { margin-top: 20px; font-size: 14px; color: #556; }
+  .criterio-bar-0 { background: #D1D5DB; }
+  .criterio-bar-1 { background: var(--clr-low);  }
+  .criterio-bar-2 { background: var(--clr-mid);  }
+  .criterio-bar-3 { background: var(--clr-good); }
+  .criterio-bar-4 { background: var(--clr-great);}
+
+  .criterio-score-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 24px;
+    min-width: 68px;
+  }
+
+  .criterio-score {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--txt-1);   /* #111827 — máximo contraste */
+  }
+
+  .criterio-level {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin-top: 2px;
+    font-weight: 700;
+  }
+
+  /* níveis: cores dark sobre fundo branco = legíveis */
+  .level-fraco    { color: var(--clr-low);   }
+  .level-medio    { color: var(--clr-mid);   }
+  .level-forte    { color: var(--clr-good);  }
+  .level-excelente{ color: var(--clr-great); }
+
+  /* ===== TOP 3 ===== */
+  .trinity-section {
+    background: var(--surface);
+    border-radius: 6px;
+    border: 1px solid var(--line-2);
+    padding: 22px 24px;
+    margin: 0 64px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .trinity-section h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);  /* #2B4E8C — escuro suficiente */
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+
+  .trinity-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .trinity-item {
+    background: var(--surface-2);
+    border: 1px solid var(--line-2);
+    border-radius: 5px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  .trinity-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .trinity-text {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--txt-2);   /* #374151 — contraste claro */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer-deliverables {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 16px 64px 32px;
+    border-top: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+
+  .qr-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .system-signature {
+    text-align: right;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--txt-3);   /* #6B7280 — legível, discreto */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  /* === score number color helpers === */
+  .sclr-low   { color: var(--clr-low);   }
+  .sclr-mid   { color: var(--clr-mid);   }
+  .sclr-good  { color: var(--clr-good);  }
+  .sclr-great { color: var(--clr-great); }
 </style>
 </head>
 <body>
-  <div class="header">
-    <h1>PUV Score</h1>
-    <div class="subtitle">Diagnostico de Proposta Unica de Valor</div>
+
+  <img class="logo-header" src="{{LOGO_PATH}}" alt="Logo" />
+
+  <div class="hero-header">
+    <div class="hero-tag">Diagnostico de Proposta de Valor</div>
+    <h1 class="hero-title">PUV Scorecard</h1>
+    <p class="hero-alvo">{{ALVO_NOME}}</p>
+    <p class="hero-url">{{ALVO_URL}}</p>
+    <p class="hero-date">{{DATA_AVALIACAO}}</p>
   </div>
 
-  <div class="alvo-nome" id="alvoNome">{{ALVO_NOME}}</div>
-
-  <div class="gauge-container">
-    <div class="gauge-bg">
-      <div class="gauge-inner"></div>
-      <div class="gauge-score"><span id="scoreTotal">{{SCORE_TOTAL}}</span><span class="gauge-max">/20</span></div>
-    </div>
-  </div>
-  <div style="text-align:center; margin-bottom: 20px;">
-    <span class="gauge-class {{CLASS_CSS}}" id="classificacao">{{CLASSIFICACAO}}</span>
-  </div>
-
-  <div class="criterios">
-    <div class="criterio">
-      <span class="criterio-nome">Diferenciacao</span>
-      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: {{C1_PCT}}%"></div></div>
-      <span class="criterio-score">{{C1}}/4</span>
-    </div>
-    <div class="criterio">
-      <span class="criterio-nome">Clareza</span>
-      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: {{C2_PCT}}%"></div></div>
-      <span class="criterio-score">{{C2}}/4</span>
-    </div>
-    <div class="criterio">
-      <span class="criterio-nome">Linguagem</span>
-      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: {{C3_PCT}}%"></div></div>
-      <span class="criterio-score">{{C3}}/4</span>
-    </div>
-    <div class="criterio">
-      <span class="criterio-nome">Credibilidade</span>
-      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: {{C4_PCT}}%"></div></div>
-      <span class="criterio-score">{{C4}}/4</span>
-    </div>
-    <div class="criterio">
-      <span class="criterio-nome">Jornada/CTA</span>
-      <div class="criterio-bar-bg"><div class="criterio-bar" style="width: {{C5_PCT}}%"></div></div>
-      <span class="criterio-score">{{C5}}/4</span>
+  <div class="gauge-section">
+    <div class="gauge-wrapper">
+      <svg class="gauge-svg" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%"   stop-color="{{GAUGE_COLOR_START}}" />
+            <stop offset="100%" stop-color="{{GAUGE_COLOR_END}}" />
+          </linearGradient>
+        </defs>
+        <circle class="gauge-bg-circle" cx="100" cy="100" r="80" />
+        <circle class="gauge-value-circle" cx="100" cy="100" r="80"
+                stroke="url(#g)"
+                stroke-dasharray="502.65" stroke-dashoffset="{{GAUGE_OFFSET}}" />
+      </svg>
+      <div class="score-display">
+        <div>
+          <span class="score-number {{SCORE_COLOR_CLASS}}">{{SCORE_TOTAL}}</span><span class="score-denom">/20</span>
+        </div>
+        <div class="score-subtitle">Score Total de<br>Proposta Unica de Valor</div>
+      </div>
     </div>
   </div>
 
-  <div class="acoes">
-    <h3>Top 3 Acoes Recomendadas</h3>
-    <div class="acao">1. {{ACAO1}}</div>
-    <div class="acao">2. {{ACAO2}}</div>
-    <div class="acao">3. {{ACAO3}}</div>
+  <div class="alert-box {{ALERT_BOX_CLASS}}">
+    <div class="alert-title {{ALERT_TITLE_CLASS}}">{{CLASSIFICACAO}} — {{ALERT_SUBTITLE}}</div>
+    <p class="alert-desc">{{ALERT_DESC}}</p>
   </div>
 
-  <div class="qr-section">
-    <p>DESBLOQUEAR RELATORIO COMPLETO</p>
-    <div class="qr-placeholder" id="qrCode">QR CODE</div>
+  <div class="criterios-grid">
+    <div class="criterio-row">
+      <div class="criterio-info">
+        <span class="criterio-nome">Diferenciacao e Posicionamento</span>
+        <div class="criterio-bar-bg"><div class="criterio-bar criterio-bar-{{C1}}" style="width:{{C1_PCT}}%"></div></div>
+      </div>
+      <div class="criterio-score-wrap">
+        <span class="criterio-score">{{C1}}/4</span>
+        <span class="criterio-level {{C1_LEVEL_CLASS}}">{{C1_LEVEL}}</span>
+      </div>
+    </div>
+    <div class="criterio-row">
+      <div class="criterio-info">
+        <span class="criterio-nome">Clareza da Proposta</span>
+        <div class="criterio-bar-bg"><div class="criterio-bar criterio-bar-{{C2}}" style="width:{{C2_PCT}}%"></div></div>
+      </div>
+      <div class="criterio-score-wrap">
+        <span class="criterio-score">{{C2}}/4</span>
+        <span class="criterio-level {{C2_LEVEL_CLASS}}">{{C2_LEVEL}}</span>
+      </div>
+    </div>
+    <div class="criterio-row">
+      <div class="criterio-info">
+        <span class="criterio-nome">Linguagem e Conexao</span>
+        <div class="criterio-bar-bg"><div class="criterio-bar criterio-bar-{{C3}}" style="width:{{C3_PCT}}%"></div></div>
+      </div>
+      <div class="criterio-score-wrap">
+        <span class="criterio-score">{{C3}}/4</span>
+        <span class="criterio-level {{C3_LEVEL_CLASS}}">{{C3_LEVEL}}</span>
+      </div>
+    </div>
+    <div class="criterio-row">
+      <div class="criterio-info">
+        <span class="criterio-nome">Credibilidade e Confianca</span>
+        <div class="criterio-bar-bg"><div class="criterio-bar criterio-bar-{{C4}}" style="width:{{C4_PCT}}%"></div></div>
+      </div>
+      <div class="criterio-score-wrap">
+        <span class="criterio-score">{{C4}}/4</span>
+        <span class="criterio-level {{C4_LEVEL_CLASS}}">{{C4_LEVEL}}</span>
+      </div>
+    </div>
+    <div class="criterio-row">
+      <div class="criterio-info">
+        <span class="criterio-nome">Jornada e CTA</span>
+        <div class="criterio-bar-bg"><div class="criterio-bar criterio-bar-{{C5}}" style="width:{{C5_PCT}}%"></div></div>
+      </div>
+      <div class="criterio-score-wrap">
+        <span class="criterio-score">{{C5}}/4</span>
+        <span class="criterio-level {{C5_LEVEL_CLASS}}">{{C5_LEVEL}}</span>
+      </div>
+    </div>
   </div>
 
-  <div class="footer">FNW - Freenat Work | Powered by Diana AIOS</div>
+  <section class="trinity-section">
+    <h3>Top 3 Acoes Imediatas</h3>
+    <div class="trinity-grid">
+      <div class="trinity-item">
+        <span class="trinity-number">01</span>
+        <p class="trinity-text">{{ACAO1}}</p>
+      </div>
+      <div class="trinity-item">
+        <span class="trinity-number">02</span>
+        <p class="trinity-text">{{ACAO2}}</p>
+      </div>
+      <div class="trinity-item">
+        <span class="trinity-number">03</span>
+        <p class="trinity-text">{{ACAO3}}</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-deliverables">
+    <div>
+      <p class="qr-label">Full Report</p>
+      <div id="qrCode">QR CODE</div>
+    </div>
+    <div class="system-signature">
+      Grupo FNW · PUV Score<br>Coorp. Diana Senciente
+    </div>
+  </footer>
+
 </body>
 </html>

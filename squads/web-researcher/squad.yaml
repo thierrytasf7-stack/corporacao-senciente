@@ -1,0 +1,94 @@
+name: web-researcher
+version: 1.0.0
+description: Squad de Pesquisa Web especializado em busca de repositórios GitHub/GitLab, pacotes npm/PyPI/crates.io, análise de projetos open-source, benchmarks de bibliotecas e síntese de informações técnicas da internet.
+author: Diana Corporacao Senciente
+license: MIT
+slashPrefix: Planejamento
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - scout.md
+  tasks:
+    # GitHub & Repositórios
+    - research-github-repos.md
+    - research-analyze-repo.md
+    - research-compare-repos.md
+    - research-find-alternatives.md
+    # Pacotes & Ecossistema
+    - research-packages.md
+    - research-tech-stack.md
+    # Web Research
+    - research-web-search.md
+    - research-synthesize.md
+    # Relatório
+    - research-report.md
+  workflows:
+    - find-best-library.yaml
+    - tech-stack-research.yaml
+  templates:
+    - research-report-tmpl.md
+    - repo-comparison-tmpl.md
+  tools:
+    - WebSearch
+    - WebFetch
+    - context7
+  scripts: []
+
+config:
+  platforms:
+    github:
+      api_base: "https://api.github.com"
+      search_url: "https://github.com/search"
+      topics_url: "https://github.com/topics"
+    gitlab:
+      search_url: "https://gitlab.com/explore"
+    npm:
+      api_base: "https://registry.npmjs.org"
+      search_url: "https://www.npmjs.com/search"
+    pypi:
+      api_base: "https://pypi.org/pypi"
+      search_url: "https://pypi.org/search"
+    crates_io:
+      api_base: "https://crates.io/api/v1"
+      search_url: "https://crates.io/search"
+    pkg_go_dev:
+      search_url: "https://pkg.go.dev/search"
+
+  quality_criteria:
+    min_stars: 100
+    active_within_months: 12
+    has_tests: true
+    has_docs: true
+    has_license: true
+    min_contributors: 3
+
+  report_format: markdown
+  max_results_per_search: 10
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+reports_to: ceo-planejamento
+triggered_by:
+  - "Usuário quer encontrar biblioteca/framework para resolver problema"
+  - "Precisa comparar soluções open-source"
+  - "Research de mercado técnico"
+  - "Busca de alternativas a uma tecnologia existente"
+  - "Análise de maturidade de projetos"
+  - "Tech stack research antes de arquitetar solução"
+
+tags:
+  - research
+  - github
+  - web-search
+  - repositories
+  - open-source
+  - packages
+  - benchmarks
+  - analysis

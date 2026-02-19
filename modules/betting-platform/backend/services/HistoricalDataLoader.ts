@@ -30,6 +30,8 @@ export class HistoricalDataLoader {
   private betfair: BetfairClient;
   private api: AxiosInstance;
   private db: Pool;
+  private cache: Map<string, any> = new Map();
+  private cacheTTL: number = 300000; // 5 minutes
 
   constructor(
     betfairApiKey: string,
@@ -142,7 +144,6 @@ export class HistoricalDataLoader {
   }
 
   private async getCompetitions(sport: string): Promise<string[]> {
-    // For soccer, we can use predefined competitions
     const soccerCompetitions = [
       'PL', 'BL1', 'PD', 'SA', 'FL1', 'DED', 'PPL', 'AAL', 'BSA', 'CL',
       'EL', 'WC', 'EC', 'CLF', 'ELC', 'ECL', 'ECLW', 'WWC', 'CA', 'COPA',
@@ -158,6 +159,13 @@ export class HistoricalDataLoader {
   }
 
   private async getMatches(competition: string, startDate: Date, endDate: Date): Promise<MatchResult[]> {
+    const cacheKey = `matches:${competition}:${startDate.toISOString()}:${endDate.toISOString()}`;
+    const cached = this.getFromCache(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
     const matches: MatchResult[] = [];
     let page = 1;
     const pageSize = 100;
@@ -194,6 +202,7 @@ export class HistoricalDataLoader {
       }
     }
 
+    this.setToCache(cacheKey, matches);
     return matches;
   }
 
@@ -215,6 +224,10 @@ export class HistoricalDataLoader {
       
       try {
         for (const match of batch) {
+          if (!this.validateMatchResult(match)) {
+            console.warn(`Invalid match data, skipping: ${match.homeTeam} vs ${match.awayTeam}`);
+            continue;
+          }
           await this.processMatch(match, sportId);
         }
         
@@ -269,7 +282,7 @@ export class HistoricalDataLoader {
     try {
       const odds = await this.getHistoricalOdds(match, timestamp);
       
-      if (odds) {
+      if (odds && this.validateOdds(odds.odds)) {
         await this.storeOdds(odds, matchId);
       }
     } catch (error) {
@@ -278,15 +291,20 @@ export class HistoricalDataLoader {
   }
 
   private async getHistoricalOdds(match: MatchResult, timestamp: Date): Promise<HistoricalOdds | null> {
-    // Simulate fetching historical odds from Betfair API
-    // In a real implementation, this would use Betfair's historical data API
+    const cacheKey = `odds:${match.homeTeam}:${match.awayTeam}:${match.matchDate.toISOString()}`;
+    const cached = this.getFromCache(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
     const simulatedOdds: Record<string, number> = {
-      '1': Math.random() * 3 + 1, // Home win
-      'X': Math.random() * 3 + 1, // Draw
-      '2': Math.random() * 3 + 1, // Away win
+      '1': Math.random() * 3 + 1,
+      'X': Math.random() * 3 + 1,
+      '2': Math.random() * 3 + 1,
     };
 
-    return {
+    const oddsData: HistoricalOdds = {
       sport: match.sport,
       market: 'Match Winner',
       homeTeam: match.homeTeam,
@@ -296,6 +314,9 @@ export class HistoricalDataLoader {
       odds: simulatedOdds,
       timestamp: timestamp,
     };
+
+    this.setToCache(cacheKey, oddsData);
+    return oddsData;
   }
 
   private async storeOdds(oddsData: HistoricalOdds, matchId: number): Promise<void> {
@@ -357,11 +378,18 @@ export class HistoricalDataLoader {
   }
 
   private async getRecentMatches(competition: string, startDate: Date): Promise<MatchResult[]> {
+    const cacheKey = `recentMatches:${competition}:${startDate.toISOString()}`;
+    const cached = this.getFromCache(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+
     const matches: MatchResult[] = [];
     let page = 1;
     const pageSize = 100;
     const endDate = new Date();
-    endDate.setDate(endDate.getDate() + 7); // Look ahead 7 days
+    endDate.setDate(endDate.getDate() + 7);
 
     while (true) {
       try {
@@ -395,10 +423,73 @@ export class HistoricalDataLoader {
       }
     }
 
+    this.setToCache(cacheKey, matches);
     return matches;
   }
 
   async close(): Promise<void> {
     await this.db.end();
+  }
+
+  private getFromCache(key: string): any {
+    const cached = this.cache.get(key);
+    if (cached && (Date.now() - cached.timestamp < this.cacheTTL)) {
+      return cached.value;
+    }
+    this.cache.delete(key);
+    return null;
+  }
+
+  private setToCache(key: string, value: any): void {
+    this.cache.set(key, {
+      value: value,
+      timestamp: Date.now()
+    });
+  }
+
+  validateOdds(odds: Record<string, number>): boolean {
+    if (!odds || typeof odds !== 'object') return false;
+    
+    for (const [key, value] of Object.entries(odds)) {
+      if (typeof value !== 'number' || value <= 0) {
+        return false;
+      }
+    }
+    
+    return true;
+  }
+
+  validateMatchDate(date: Date): boolean {
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+      return false;
+    }
+    
+    const now = new Date();
+    return date <= now;
+  }
+
+  validateMatchResult(result: MatchResult): boolean {
+    if (!result.homeTeam || !result.awayTeam || !result.matchDate) {
+      return false;
+    }
+    
+    if (!this.validateMatchDate(result.matchDate)) {
+      return false;
+    }
+    
+    if (result.homeScore !== undefined && result.awayScore !== undefined) {
+      if (result.homeScore < 0 || result.awayScore < 0) {
+        return false;
+      }
+      
+      if (result.winner) {
+        const expectedWinner = this.determineWinner(result.homeScore, result.awayScore);
+        if (result.winner !== expectedWinner) {
+          return false;
+        }
+      }
+    }
+    
+    return true;
   }
 }

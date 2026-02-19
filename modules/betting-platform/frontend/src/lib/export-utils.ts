@@ -18,7 +18,7 @@ export function exportToPDF(content: string, filename: string) {
   const doc = new jsPDF();
   
   const lines = content.split('\n');
-  lines.forEach((line, index) > {
+  lines.forEach((line, index) => {
     doc.text(line, 10, 10 + (index * 10));
   });
   

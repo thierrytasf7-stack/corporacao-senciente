@@ -21,9 +21,9 @@ SCAN_INTERVAL = 2
 # PUV Detection
 URL_REGEX = re.compile(r'https?://[^\s]+')
 PUV_KEYWORDS = ['analisa', 'puv', 'score', 'diagnostico', 'analise', 'avalia', 'avalie']
-# Regex para detectar selecao numerica: "1", "1,3", "1, 2, 3", "5", etc
-# Exige digitos 1-5 separados por virgula/espaco (nao aceita "12" como "1,2")
-SELECTION_REGEX = re.compile(r'^\s*[1-5](\s*[,\s]\s*[1-5])*\s*$')
+# Regex para detectar selecao numerica + tema opcional: "1,3 black", "5 white", "2", etc
+# Aceita digitos 1-5 separados por virgula/espaco, seguidos opcionalmente de "black"/"white"
+SELECTION_REGEX = re.compile(r'^\s*[1-5](\s*[,\s]\s*[1-5])*(\s+(black|white))?\s*$', re.IGNORECASE)
 
 BOT_PREFIXES = ["*PUV Score Bot"]
 
@@ -110,12 +110,16 @@ def detect_puv_request(text):
 
 
 def detect_selection(text):
-    """Detecta se a mensagem eh uma selecao numerica (1-5). Retorna lista de ints ou None."""
+    """Detecta selecao numerica (1-5) + tema opcional (black/white). Retorna dict ou None."""
     text = text.strip()
     if not SELECTION_REGEX.match(text):
         return None
     nums = [int(n) for n in re.findall(r'[1-5]', text)]
-    return list(set(nums)) if nums else None
+    if not nums:
+        return None
+    theme_match = re.search(r'\b(black|white)\b', text, re.IGNORECASE)
+    theme = theme_match.group(1).lower() if theme_match else "black"
+    return {"selection": list(set(nums)), "theme": theme}
 
 
 def has_pending():
@@ -238,15 +242,16 @@ def main():
                         safe_print(f"  [SKIP] Trigger pendente.")
                         continue
 
-                    # === PASSO 2: Selecao numerica + pending ===
-                    selection = detect_selection(text)
-                    if selection and has_pending():
+                    # === PASSO 2: Selecao numerica + tema + pending ===
+                    sel_result = detect_selection(text)
+                    if sel_result and has_pending():
                         pending = load_pending()
                         if pending:
-                            safe_print(f"  [SELECT] Opcoes: {selection}")
+                            safe_print(f"  [SELECT] Opcoes: {sel_result['selection']} | Tema: {sel_result['theme']}")
                             prompt_data = {
                                 "type": "puv_execute",
-                                "selection": selection,
+                                "selection": sel_result["selection"],
+                                "theme": sel_result["theme"],
                                 "url": pending["url"],
                                 "canal": pending.get("canal", "website"),
                                 "sender": sender,
@@ -255,7 +260,7 @@ def main():
                             }
                             clear_pending()
                             dispatch(prompt_data)
-                            safe_print(f"  [TRIGGER] PUV execute: {selection}")
+                            safe_print(f"  [TRIGGER] PUV execute: {sel_result['selection']} ({sel_result['theme']})")
                             continue
 
                     # === PASSO 1: URL detectada → Menu ===

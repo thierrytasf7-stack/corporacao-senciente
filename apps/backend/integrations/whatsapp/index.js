@@ -320,6 +320,33 @@ app.post('/api/send', async (req, res) => {
     }
 });
 
+// API para enviar imagens (usado pelo worker PUV - scorecard JPG)
+app.post('/api/send-image', async (req, res) => {
+    const { chat, filePath, caption } = req.body;
+    if (!isConnected || !globalSock) {
+        return res.status(503).json({ ok: false, error: 'not connected' });
+    }
+    if (!chat || !filePath) {
+        return res.status(400).json({ ok: false, error: 'chat and filePath required' });
+    }
+    try {
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({ ok: false, error: `file not found: ${filePath}` });
+        }
+        const jid = chat.includes('@') ? chat : `${chat}@g.us`;
+        const buffer = fs.readFileSync(filePath);
+        await globalSock.sendMessage(jid, {
+            image: buffer,
+            caption: caption || ''
+        });
+        console.log(`[WhatsApp] Imagem enviada: ${path.basename(filePath)} (${buffer.length} bytes)`);
+        res.json({ ok: true, size: buffer.length });
+    } catch (e) {
+        console.error(`[WhatsApp] Erro ao enviar imagem: ${e.message}`);
+        res.status(500).json({ ok: false, error: e.message });
+    }
+});
+
 // API para enviar documentos/PDFs (usado pelo worker PUV)
 app.post('/api/send-document', async (req, res) => {
     const { chat, filePath, fileName, mimetype, caption } = req.body;

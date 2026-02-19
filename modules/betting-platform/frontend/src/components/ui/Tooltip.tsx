@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@@/lib/utils';
+import { cn } from '@/lib/utils';
 
 export interface TooltipProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,7 +20,7 @@ export const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
     );
   }
 );
-Tooltip.displayName = 'Tooltip</Tooltip>
+Tooltip.displayName = 'Tooltip'
 
 export interface TooltipArrowProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -41,6 +41,6 @@ export const TooltipArrow = React.forwardRef<HTMLDivElement, TooltipArrowProps>(
     );
   }
 );
-TooltipArrow.displayName = 'TooltipArrow</TooltipArrow>
+TooltipArrow.displayName = 'TooltipArrow'
 
 export default Tooltip;

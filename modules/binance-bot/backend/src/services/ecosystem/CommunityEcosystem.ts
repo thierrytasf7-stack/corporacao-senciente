@@ -19,6 +19,7 @@ import { MilestoneTracker, MilestoneEvent } from './MilestoneTracker';
 import { DNAVectorMemory } from './DNAVectorMemory';
 import { ClaudeOracle, OracleContext } from './ClaudeOracle';
 import { EvolutionRegistry } from './EvolutionRegistry';
+import { BotStateV2 } from '../DNAArenaV2Engine';
 
 const CYCLE_INTERVAL_MS = 6000;
 const INTER_GROUP_EVOLUTION_INTERVAL = 200;
@@ -211,9 +212,9 @@ export class CommunityEcosystem {
             }
 
         } catch (err) {
-            // M4 fix: log first 5 errors always, then every 100
-            if (this.currentCycle <= 5 || this.currentCycle % 100 === 0) {
-                console.error(`⚠️ Ecosystem cycle ${this.currentCycle} error:`, err);
+            // Log first 10 errors always, then every 25 cycles (was every 100 - hid too many errors)
+            if (this.currentCycle <= 10 || this.currentCycle % 25 === 0) {
+                console.error(`⚠️ Ecosystem cycle ${this.currentCycle} error:`, err instanceof Error ? err.message : err);
             }
         } finally {
             this.cycleRunning = false;
@@ -242,6 +243,70 @@ export class CommunityEcosystem {
                     });
                 }
             }
+        }
+        
+        // Export champions for ChampionSync
+        this.exportChampions();
+    }
+    
+    /**
+     * Exporta campeões da DNA Arena para ChampionSync
+     */
+    private exportChampions(): void {
+        try {
+            // Caminho correto para o arquivo de campeões
+            const championsPath = path.join(__dirname, '../../../data/dna-arena/champions.json');
+            
+            // Coleta todos os bots de todos os grupos
+            const allBots: any[] = [];
+            
+            for (const [gId, group] of this.groups) {
+                const bots = group.getAllBots();
+                for (const bot of bots) {
+                    const fitness = group.calculateFitness(bot);
+                    allBots.push({
+                        botName: bot.genome.name,
+                        fitness: fitness,
+                        tpMultiplier: bot.genome.risk.atrMultiplierTP,
+                        slMultiplier: bot.genome.risk.atrMultiplierSL,
+                        trailingMultiplier: bot.genome.risk.trailingStopATR,
+                        leverage: bot.genome.risk.leverage,
+                        generation: bot.genome.generation,
+                        winRate: bot.totalTrades > 0 ? bot.wins / bot.totalTrades : 0,
+                        totalTrades: bot.totalTrades,
+                        groupId: gId,
+                        bankroll: bot.bankroll,
+                        exportedAt: new Date().toISOString()
+                    });
+                }
+            }
+            
+            // Ordena por fitness e pega top 10
+            const topChampions = allBots
+                .sort((a, b) => b.fitness - a.fitness)
+                .slice(0, 10);
+            
+            // Garante diretório existe
+            const dir = path.dirname(championsPath);
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir, { recursive: true });
+            }
+            
+            // Salva campeões
+            if (topChampions.length > 0) {
+                fs.writeFileSync(championsPath, JSON.stringify(topChampions, null, 2));
+                console.log(`🏆 [DNA Arena] Top ${topChampions.length} campeões exportados: ${championsPath}`);
+                
+                // Log dos campeões
+                topChampions.forEach((champ, i) => {
+                    console.log(`   ${i+1}. ${champ.botName}: fitness=${champ.fitness.toFixed(1)}, TP=${champ.tpMultiplier}x, SL=${champ.slMultiplier}x`);
+                });
+            } else {
+                console.warn('⚠️ [DNA Arena] Nenhum campeão para exportar');
+            }
+            
+        } catch (error) {
+            console.error('❌ [DNA Arena] Erro ao exportar campeões:', error);
         }
     }
 
@@ -621,7 +686,22 @@ export class CommunityEcosystem {
                 peakBankroll: this.peakBankroll,
                 consecutiveBankruptcies: this.consecutiveBankruptcies,
                 savedAt: new Date().toISOString(),
-                groups: GROUP_IDS.map(gId => this.groups.get(gId)!.serialize()),
+                groups: GROUP_IDS.map(gId => {
+                    const group = this.groups.get(gId)!;
+                    return {
+                        groupId: gId,
+                        bankroll: group.getGroupBankroll(),
+                        generation: group.getGroupBankroll(),
+                        cycle: group.currentCycle,
+                        bots: group.getAllBots().map(b => ({
+                            genome: b.genome,
+                            bankroll: b.bankroll,
+                            totalTrades: b.totalTrades,
+                            wins: b.wins,
+                            losses: b.losses
+                        }))
+                    };
+                }),
                 hallOfFame: this.hallOfFame
             };
             fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
@@ -650,9 +730,48 @@ export class CommunityEcosystem {
             this.consecutiveBankruptcies = state.consecutiveBankruptcies || 0;
             this.hallOfFame = state.hallOfFame || [];
 
+            // Restore bot states from persisted data
             for (const groupData of state.groups || []) {
                 const group = this.groups.get(groupData.groupId as GroupPersonality);
-                if (group) group.restore(groupData);
+                if (group && groupData.bots) {
+                    // Reconstruct bots from persisted data
+                    for (const botData of groupData.bots) {
+                        const botState: BotStateV2 = {
+                            genome: botData.genome,
+                            bankroll: botData.bankroll,
+                            initialBankroll: INITIAL_BOT_BANKROLL,
+                            totalTrades: botData.totalTrades || 0,
+                            wins: botData.wins || 0,
+                            losses: botData.losses || 0,
+                            consecutiveWins: 0,
+                            consecutiveLosses: 0,
+                            maxBankroll: Math.max(botData.bankroll, INITIAL_BOT_BANKROLL),
+                            minBankroll: Math.min(botData.bankroll, INITIAL_BOT_BANKROLL),
+                            maxDrawdown: 0,
+                            openPositions: new Map(),
+                            totalExposure: 0,
+                            tradeHistory: [],
+                            pnlHistory: [],
+                            isAlive: botData.bankroll > 0,
+                            startTime: new Date().toISOString(),
+                            lastTradeTime: null,
+                            deathCount: 0,
+                            sessionId: `eco_${groupData.groupId}_${Date.now()}`,
+                            currentBetPercent: botData.genome.betting.basePercent,
+                            symbolCooldowns: new Map(),
+                            // ===== ODDS TRACKING =====
+                            totalTakeProfitValue: 0,
+                            totalStopLossValue: 0,
+                            avgTakeProfitOdd: 0,
+                            avgStopLossOdd: 0,
+                            expectedValue: 0,
+                            // ===== STRATEGY METRICS =====
+                            strategyMetrics: {}
+                        };
+                        // Note: Using private access - would need reflection or public method in real impl
+                        (group as any).bots.set(botData.genome.id, botState);
+                    }
+                }
             }
 
             console.log(`🌐 Ecosystem state restored: cycle ${this.currentCycle}`);

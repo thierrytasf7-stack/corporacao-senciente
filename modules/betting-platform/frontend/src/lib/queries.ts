@@ -1,4 +1,4 @@
-import { trpc } from '../lib/trpc-client'';
+import { trpc } from '../lib/trpc-client';
 
 export const useExampleQuery = (id: string) =>
   trpc.example.query.useQuery({ id });

@@ -17,15 +17,14 @@ logging:
 
 # LLM Configuration
 llm:
-  default_model: "claude-3-sonnet-20240229"
-  providers: ["anthropic", "google", "openai"]
-  timeout: 30
+  default_model: "openrouter/arcee-ai/trinity-large-preview:free"
+  models: ["openrouter/arcee-ai/trinity-large-preview:free"]
+  providers: ["openrouter"]
+  timeout: 60
   max_tokens: 4096
   temperature: 0.7
-  budget:
-    daily: 100.0
-    monthly: 3000.0
-    alert_threshold: 0.8
+  api_keys:
+    openrouter_api_key: "${OPENROUTER_API_KEY}"
 
 # Task Configuration
 task:
@@ -38,20 +37,8 @@ task:
 cost:
   currency: "USD"
   pricing:
-    anthropic:
-      "claude-3-sonnet-20240229": 0.00003
-      "claude-3-haiku-20240307": 0.000015
-    google:
-      "gemini-1.5-pro": 0.00002
-      "gemini-1.5-flash": 0.000005
-    openai:
-      "gpt-4": 0.00006
-      "gpt-3.5-turbo": 0.000015
-    deepseek:
-      "deepseek-coder": 0.00001
-    ollama:
-      "llama2": 0.000001
-      "codellama": 0.0000015
+    openrouter:
+      "arcee-ai/trinity-large-preview:free": 0.0
 
 # Development Configuration
 development:
@@ -61,7 +48,7 @@ development:
 
 # Security Configuration
 security:
-  api_key_encryption: true
+  api_key_encryption: false
   token_expiration: 3600
   rate_limit: 100
 

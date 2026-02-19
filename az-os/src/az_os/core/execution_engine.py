@@ -1,8 +1,8 @@
 """Task execution engine for AZ-OS."""
 import asyncio
-import subprocess
+import time
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Dict, Any
 from pathlib import Path
 
 
@@ -30,7 +30,6 @@ class ExecutionEngine:
         cwd: Optional[Path] = None,
     ) -> ExecutionResult:
         """Execute a command and return result."""
-        import time
         start = time.time()
 
         try:
@@ -69,9 +68,17 @@ class ExecutionEngine:
                 elapsed_ms=elapsed_ms,
             )
 
-    def create_task(self, command: str, model: str = None, priority: str = "medium"):
-        """Create a task record (stub)."""
-        return {"command": command, "model": model, "priority": priority}
+    def create_task(self, command: str, model: str = None, priority: str = "medium") -> Dict[str, Any]:
+        """Create a task record."""
+        import uuid
+        task_id = str(uuid.uuid4())[:8]
+        return {
+            "id": task_id,
+            "command": command,
+            "model": model,
+            "priority": priority,
+            "status": "pending"
+        }
 
     def list_tasks(self, status=None, priority=None, limit=20, offset=0):
         """List tasks (stub)."""
@@ -81,6 +88,42 @@ class ExecutionEngine:
         """Pause a task (stub)."""
         return True
 
-    def execute_task(self, task):
-        """Execute a task (stub)."""
-        return {"status": "success"}
+    def execute_task(self, task: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute a task using the LLM client."""
+        if not self.llm_client:
+            return {"status": "error", "message": "LLM client not initialized"}
+        
+        # Run the async generation in the current event loop or a new one
+        try:
+            loop = asyncio.get_event_loop()
+        except RuntimeError:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+
+        if loop.is_running():
+            # If we are inside an existing loop (unlikely for this CLI but possible)
+            # we would need a different approach, but for Typer/CLI it's usually fine.
+            import threading
+            from queue import Queue
+            
+            q = Queue()
+            def run_in_thread():
+                new_loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(new_loop)
+                res = new_loop.run_until_complete(self.llm_client.generate_text(task["command"]))
+                q.put(res)
+            
+            t = threading.Thread(target=run_in_thread)
+            t.start()
+            t.join()
+            response = q.get()
+        else:
+            response = loop.run_until_complete(self.llm_client.generate_text(task["command"]))
+            
+        # Extract content from response (LiteLLM format)
+        try:
+            content = response.choices[0].message.content
+        except:
+            content = str(response)
+
+        return {"status": "success", "response": content}

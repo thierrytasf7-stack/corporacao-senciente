@@ -1,0 +1,209 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-17",
+  "sports": [
+    {
+      "id": "football",
+      "label": "Futebol",
+      "hasDrawMarket": true,
+      "markets": ["1X2", "over-under-25", "over-under-35", "btts", "asian-handicap"],
+      "leagues": [
+        {
+          "id": "premier-league",
+          "label": "Premier League (Inglaterra)",
+          "country": "England",
+          "season": "Ago–Mai",
+          "teams": [
+            "Arsenal","Aston Villa","Bournemouth","Brentford","Brighton",
+            "Burnley","Chelsea","Crystal Palace","Everton","Fulham",
+            "Liverpool","Luton","Man City","Man Utd","Newcastle",
+            "Nottm Forest","Sheffield Utd","Spurs","West Ham","Wolves"
+          ]
+        },
+        {
+          "id": "la-liga",
+          "label": "La Liga (Espanha)",
+          "country": "Spain",
+          "season": "Ago–Mai",
+          "teams": [
+            "Almeria","Alaves","Athletic","Atlético","Barcelona",
+            "Betis","Cadiz","Celta","Getafe","Girona",
+            "Granada","Las Palmas","Mallorca","Osasuna","Rayo",
+            "Real Madrid","Real Sociedad","Sevilla","Valencia","Villarreal"
+          ]
+        },
+        {
+          "id": "bundesliga",
+          "label": "Bundesliga (Alemanha)",
+          "country": "Germany",
+          "season": "Ago–Mai",
+          "teams": [
+            "Augsburg","Bayern","Bochum","Bremen","Cologne",
+            "Darmstadt","Dortmund","Frankfurt","Freiburg","Gladbach",
+            "Heidenheim","Hoffenheim","Leipzig","Leverkusen","Mainz",
+            "Stuttgart","Union Berlin","Wolfsburg"
+          ]
+        },
+        {
+          "id": "serie-a",
+          "label": "Serie A (Itália)",
+          "country": "Italy",
+          "season": "Ago–Mai",
+          "teams": [
+            "Atalanta","Bologna","Cagliari","Empoli","Fiorentina",
+            "Frosinone","Genoa","Inter","Juventus","Lecce",
+            "Lazio","Milan","Monza","Napoli","Roma",
+            "Salernitana","Sassuolo","Torino","Udinese","Verona"
+          ]
+        },
+        {
+          "id": "ligue-1",
+          "label": "Ligue 1 (França)",
+          "country": "France",
+          "season": "Ago–Mai",
+          "teams": [
+            "Brest","Clermont","Le Havre","Lens","Lille",
+            "Lorient","Lyon","Marseille","Metz","Monaco",
+            "Montpellier","Nantes","Nice","PSG","Reims",
+            "Rennes","Strasbourg","Toulouse"
+          ]
+        },
+        {
+          "id": "brasileirao",
+          "label": "Brasileirão Série A",
+          "country": "Brazil",
+          "season": "Abr–Dez",
+          "teams": [
+            "América-MG","Athletico-PR","Atlético-MG","Bahia","Botafogo",
+            "Corinthians","Cruzeiro","Coritiba","Cuiabá","Flamengo",
+            "Fluminense","Fortaleza","Goiás","Grêmio","Internacional",
+            "Palmeiras","RB Bragantino","Santos","São Paulo","Vasco"
+          ]
+        },
+        {
+          "id": "champions-league",
+          "label": "Champions League (UEFA)",
+          "country": "Europe",
+          "season": "Set–Jun",
+          "teams": [
+            "Arsenal","Atlético","Barcelona","Bayern","Benfica",
+            "Celtic","Chelsea","Dortmund","Inter","Juventus",
+            "Leverkusen","Liverpool","Man City","Marseille","Milan",
+            "Monaco","Napoli","PSG","Porto","Real Madrid",
+            "Real Sociedad","Salzburg","Sevilla","Shakhtar","Spurs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "basketball",
+      "label": "Basquete",
+      "hasDrawMarket": false,
+      "markets": ["money-line", "point-spread", "over-under-total"],
+      "leagues": [
+        {
+          "id": "nba",
+          "label": "NBA (EUA)",
+          "country": "USA",
+          "season": "Out–Jun",
+          "teams": [
+            "Atlanta Hawks","Boston Celtics","Brooklyn Nets","Charlotte Hornets","Chicago Bulls",
+            "Cleveland Cavaliers","Dallas Mavericks","Denver Nuggets","Detroit Pistons","Golden State Warriors",
+            "Houston Rockets","Indiana Pacers","LA Clippers","LA Lakers","Memphis Grizzlies",
+            "Miami Heat","Milwaukee Bucks","Minnesota Timberwolves","New Orleans Pelicans","New York Knicks",
+            "Oklahoma City Thunder","Orlando Magic","Philadelphia 76ers","Phoenix Suns","Portland Trail Blazers",
+            "Sacramento Kings","San Antonio Spurs","Toronto Raptors","Utah Jazz","Washington Wizards"
+          ]
+        },
+        {
+          "id": "euroleague",
+          "label": "EuroLeague",
+          "country": "Europe",
+          "season": "Out–Mai",
+          "teams": [
+            "Anadolu Efes","AS Monaco","Barcelona","Bayern Munich","CSKA Moscow",
+            "Fenerbahçe","Maccabi Tel Aviv","Olimpia Milan","Olympiacos","Panathinaikos",
+            "Partizan","Real Madrid","Red Star","Valencia","Virtus Bologna",
+            "Zalgiris"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tennis",
+      "label": "Tênis",
+      "hasDrawMarket": false,
+      "markets": ["match-winner", "set-handicap", "total-sets"],
+      "leagues": [
+        {
+          "id": "atp",
+          "label": "ATP (Masculino)",
+          "country": "Global",
+          "season": "Jan–Nov",
+          "teams": [
+            "Novak Djokovic","Carlos Alcaraz","Jannik Sinner","Daniil Medvedev","Alexander Zverev",
+            "Andrey Rublev","Holger Rune","Stefanos Tsitsipas","Casper Ruud","Taylor Fritz",
+            "Tommy Paul","Frances Tiafoe","Ben Shelton","Alex de Minaur","Hubert Hurkacz"
+          ]
+        },
+        {
+          "id": "wta",
+          "label": "WTA (Feminino)",
+          "country": "Global",
+          "season": "Jan–Nov",
+          "teams": [
+            "Iga Swiatek","Aryna Sabalenka","Coco Gauff","Elena Rybakina","Jessica Pegula",
+            "Caroline Wozniacki","Marketa Vondrousova","Ons Jabeur","Qinwen Zheng","Madison Keys",
+            "Beatriz Haddad Maia","Karolina Muchova","Daria Kasatkina","Mirra Andreeva","Emma Raducanu"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "american-football",
+      "label": "Futebol Americano",
+      "hasDrawMarket": false,
+      "markets": ["money-line", "against-the-spread", "over-under"],
+      "leagues": [
+        {
+          "id": "nfl",
+          "label": "NFL (EUA)",
+          "country": "USA",
+          "season": "Set–Jan",
+          "teams": [
+            "Arizona Cardinals","Atlanta Falcons","Baltimore Ravens","Buffalo Bills","Carolina Panthers",
+            "Chicago Bears","Cincinnati Bengals","Cleveland Browns","Dallas Cowboys","Denver Broncos",
+            "Detroit Lions","Green Bay Packers","Houston Texans","Indianapolis Colts","Jacksonville Jaguars",
+            "Kansas City Chiefs","Las Vegas Raiders","LA Chargers","LA Rams","Miami Dolphins",
+            "Minnesota Vikings","New England Patriots","New Orleans Saints","NY Giants","NY Jets",
+            "Philadelphia Eagles","Pittsburgh Steelers","San Francisco 49ers","Seattle Seahawks","Tampa Bay Buccaneers",
+            "Tennessee Titans","Washington Commanders"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hockey",
+      "label": "Hóquei no Gelo",
+      "hasDrawMarket": false,
+      "markets": ["money-line", "puck-line", "over-under-total"],
+      "leagues": [
+        {
+          "id": "nhl",
+          "label": "NHL (Canadá/EUA)",
+          "country": "North America",
+          "season": "Out–Jun",
+          "teams": [
+            "Anaheim Ducks","Arizona Coyotes","Boston Bruins","Buffalo Sabres","Calgary Flames",
+            "Carolina Hurricanes","Chicago Blackhawks","Colorado Avalanche","Columbus Blue Jackets","Dallas Stars",
+            "Detroit Red Wings","Edmonton Oilers","Florida Panthers","Los Angeles Kings","Minnesota Wild",
+            "Montreal Canadiens","Nashville Predators","New Jersey Devils","New York Islanders","New York Rangers",
+            "Ottawa Senators","Philadelphia Flyers","Pittsburgh Penguins","San Jose Sharks","Seattle Kraken",
+            "St. Louis Blues","Tampa Bay Lightning","Toronto Maple Leafs","Vancouver Canucks","Vegas Golden Knights",
+            "Washington Capitals","Winnipeg Jets"
+          ]
+        }
+      ]
+    }
+  ]
+}

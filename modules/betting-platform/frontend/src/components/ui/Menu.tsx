@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@@/lib/utils';
+import { cn } from '@/lib/utils';
 
 export interface MenuProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,7 +20,7 @@ export const Menu = React.forwardRef<HTMLDivElement, MenuProps>(
     );
   }
 );
-Menu.displayName = 'Menu</Menu>
+Menu.displayName = 'Menu'
 
 export interface MenuButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -41,7 +41,7 @@ export const MenuButton = React.forwardRef<HTMLButtonElement, MenuButtonProps>(
     );
   }
 );
-MenuButton.displayName = 'MenuButton</MenuButton>
+MenuButton.displayName = 'MenuButton'
 
 export interface MenuItemsProps
   extends React.HTMLAttributes<HTMLUListElement> {
@@ -62,7 +62,7 @@ export const MenuItems = React.forwardRef<HTMLUListElement, MenuItemsProps>(
     );
   }
 );
-MenuItems.displayName = 'MenuItems</MenuItems>
+MenuItems.displayName = 'MenuItems'
 
 export interface MenuItemProps
   extends React.LiHTMLAttributes<HTMLLIElement> {
@@ -83,7 +83,7 @@ export const MenuItem = React.forwardRef<HTMLLIElement, MenuItemProps>(
     );
   }
 );
-MenuItem.displayName = 'MenuItem</MenuItem>
+MenuItem.displayName = 'MenuItem'
 
 export interface MenuItemButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -104,7 +104,7 @@ export const MenuItemButton = React.forwardRef<HTMLButtonElement, MenuItemButton
     );
   }
 );
-MenuItemButton.displayName = 'MenuItemButton</MenuItemButton>
+MenuItemButton.displayName = 'MenuItemButton'
 
 export interface MenuGroupProps
   extends React.HTMLAttributes<HTMLLIElement> {
@@ -125,7 +125,7 @@ export const MenuGroup = React.forwardRef<HTMLLIElement, MenuGroupProps>(
     );
   }
 );
-MenuGroup.displayName = 'MenuGroup</MenuGroup>
+MenuGroup.displayName = 'MenuGroup'
 
 export interface MenuSeparatorProps
   extends React.HTMLAttributes<HTHROptGroupElement> {
@@ -146,6 +146,6 @@ export const MenuSeparator = React.forwardRef<HTHROptGroupElement, MenuSeparator
     );
   }
 );
-MenuSeparator.displayName = 'MenuSeparator</MenuSeparator>
+MenuSeparator.displayName = 'MenuSeparator'
 
 export default Menu;

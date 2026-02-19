@@ -1,0 +1,119 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-17",
+  "strategies": [
+    {
+      "id": "value-betting",
+      "label": "Value Betting",
+      "description": "Aposta quando o modelo detecta que a casa errou a precificação. Edge mínimo de 2.5% para apostar.",
+      "compatibleSports": ["football", "basketball", "tennis", "american-football", "hockey"],
+      "compatibleMarkets": ["1X2", "money-line", "match-winner"],
+      "riskLevel": "MEDIUM",
+      "expectedWinRate": "40–52%",
+      "expectedROI": "5–15%",
+      "parameters": {
+        "minEdge": { "default": 0.025, "min": 0.01, "max": 0.15, "description": "Edge mínimo para apostar (ex: 0.025 = 2.5%)" }
+      },
+      "notes": "Estratégia mais usada por apostadores profissionais. Requer modelo com vantagem sobre a casa."
+    },
+    {
+      "id": "back-favourite",
+      "label": "Back the Favourite",
+      "description": "Aposta sempre no favorito (menor odd). Alta taxa de acerto, ROI marginal.",
+      "compatibleSports": ["football", "basketball", "tennis", "american-football", "hockey"],
+      "compatibleMarkets": ["1X2", "money-line", "match-winner"],
+      "riskLevel": "LOW",
+      "expectedWinRate": "58–72%",
+      "expectedROI": "-5% a +3%",
+      "parameters": {
+        "maxFavouriteOdds": { "default": 1.90, "min": 1.20, "max": 2.50, "description": "Só aposta se o favorito tiver odds abaixo desse valor" }
+      },
+      "notes": "Muito popular, mas geralmente tem ROI negativo no longo prazo devido à margem da casa."
+    },
+    {
+      "id": "back-underdog",
+      "label": "Back the Underdog",
+      "description": "Aposta no azarão (maior odd). Taxa de acerto baixa mas retorno alto por vitória.",
+      "compatibleSports": ["football", "basketball", "tennis", "american-football", "hockey"],
+      "compatibleMarkets": ["1X2", "money-line", "match-winner"],
+      "riskLevel": "HIGH",
+      "expectedWinRate": "20–35%",
+      "expectedROI": "-8% a +8%",
+      "parameters": {
+        "minUnderdogOdds": { "default": 3.00, "min": 2.00, "max": 10.0, "description": "Só aposta se o azarão tiver odds acima desse valor" },
+        "maxUnderdogOdds": { "default": 8.00, "min": 3.00, "max": 20.0, "description": "Ignora azarões com odds acima desse limite" }
+      },
+      "notes": "Altamente volátil. Requer banca grande para suportar sequências negativas."
+    },
+    {
+      "id": "lay-draw",
+      "label": "Lay the Draw",
+      "description": "Aposta CONTRA o empate (Exchange). Ganha se houver resultado (casa ou visitante). Perde se empate.",
+      "compatibleSports": ["football"],
+      "compatibleMarkets": ["1X2"],
+      "riskLevel": "MEDIUM",
+      "expectedWinRate": "68–75%",
+      "expectedROI": "2–10%",
+      "parameters": {
+        "maxLiabilityPct": { "default": 0.05, "min": 0.02, "max": 0.15, "description": "% máximo da banca em risco por aposta (liability)" }
+      },
+      "notes": "Clássica estratégia de Exchange (Betfair). A liability = stake * (drawOdds - 1). Muito popular no futebol."
+    },
+    {
+      "id": "over-under-25",
+      "label": "Over/Under 2.5 Gols",
+      "description": "Aposta em mais ou menos de 2.5 gols no jogo. Baseado em modelo de gols esperados.",
+      "compatibleSports": ["football"],
+      "compatibleMarkets": ["over-under-25"],
+      "riskLevel": "MEDIUM",
+      "expectedWinRate": "48–56%",
+      "expectedROI": "3–10%",
+      "parameters": {
+        "preferOver": { "default": true, "description": "true = aposta Over 2.5 quando modelo projeta alta probabilidade; false = sempre Under" }
+      },
+      "notes": "Mercado muito líquido. Over 2.5 tem historicamente odds ao redor de 1.80 em jogos de alto ataque."
+    },
+    {
+      "id": "btts",
+      "label": "Ambas Marcam (BTTS)",
+      "description": "Aposta que ambas as equipes marcam pelo menos 1 gol. Sim ou Não.",
+      "compatibleSports": ["football"],
+      "compatibleMarkets": ["btts"],
+      "riskLevel": "MEDIUM",
+      "expectedWinRate": "50–60%",
+      "expectedROI": "2–8%",
+      "parameters": {
+        "direction": { "default": "yes", "options": ["yes", "no"], "description": "yes = aposta que ambas marcam; no = aposta que alguma não marca" }
+      },
+      "notes": "BTTS Yes tem historicamente ~52% de frequência na Premier League. Odds médias: 1.80–2.00."
+    },
+    {
+      "id": "asian-handicap",
+      "label": "Asian Handicap",
+      "description": "Handicap asiático elimina empate. Ex: -1 para o favorito significa que ele precisa ganhar por 2+.",
+      "compatibleSports": ["football"],
+      "compatibleMarkets": ["asian-handicap"],
+      "riskLevel": "MEDIUM",
+      "expectedWinRate": "47–55%",
+      "expectedROI": "3–12%",
+      "parameters": {
+        "handicapLine": { "default": 0, "options": [-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2], "description": "Linha do handicap (negativo = favorito recebe desvantagem)" }
+      },
+      "notes": "Mercado sem empate, odds próximas de 2.0. Usado para equilibrar jogos desequilibrados."
+    },
+    {
+      "id": "money-line-value",
+      "label": "Money Line Value (Basquete)",
+      "description": "Value betting aplicado ao mercado de Money Line (sem handicap) no basquete.",
+      "compatibleSports": ["basketball"],
+      "compatibleMarkets": ["money-line"],
+      "riskLevel": "MEDIUM",
+      "expectedWinRate": "48–56%",
+      "expectedROI": "4–12%",
+      "parameters": {
+        "minEdge": { "default": 0.03, "min": 0.01, "max": 0.10 }
+      },
+      "notes": "Basquete tem menos margem de erro que futebol — modelos de performance são mais precisos."
+    }
+  ]
+}

@@ -2,7 +2,7 @@ import openai
 import os
 import time
 from typing import List, Dict, Any, Optional
-from cache import LLMCache
+from cache import LLMCache, CacheInvalidationStrategy
 
 
 class LLMClient:
@@ -10,6 +10,8 @@ class LLMClient:
         self.api_key = self._get_api_key()
         self.client = openai.OpenAI(api_key=self.api_key)
         self.cache_enabled = cache_enabled
+        self._request_count = 0
+        self._hit_count = 0
         
         if cache_enabled:
             self.cache = LLMCache(max_size=max_cache_size, ttl=cache_ttl)
@@ -25,11 +27,14 @@ class LLMClient:
     
     async def complete(self, prompt: str, model: str = "gpt-3.5-turbo", **kwargs) -> str:
         """Send chat message with caching support"""
+        self._request_count += 1
+        
         # Try cache first
         if self.cache:
             cache_key = self.cache._generate_key(prompt, model, **kwargs)
             cached = self.cache.get(cache_key)
             if cached:
+                self._hit_count += 1
                 return cached  # Cache hit!
         
         # Cache miss - call API
@@ -89,41 +94,60 @@ class LLMClient:
         except Exception as e:
             raise RuntimeError(f"RAG chat failed: {e}")
     
-    async def batch_chat(self, messages: List[str], 
-                        model: str = "gpt-3.5-turbo") -> List[str]:
-        """Send batch of chat messages"""
-        try:
-            responses = []
-            for message in messages:
-                response = await self.complete(message, model)
-                responses.append(response)
-            
-            return responses
-            
-        except Exception as e:
-            raise RuntimeError(f"Batch chat failed: {e}")
+    def invalidate_cache(self, model: Optional[str] = None, pattern: Optional[str] = None) -> None:
+        """Invalidate cache entries"""
+        if not self.cache:
+            return
+        
+        if model:
+            CacheInvalidationStrategy.invalidate_by_model(self.cache, model)
+        elif pattern:
+            CacheInvalidationStrategy.invalidate_by_prompt_pattern(self.cache, pattern)
+        else:
+            CacheInvalidationStrategy.invalidate_all(self.cache)
     
     def get_cache_stats(self) -> Dict[str, Any]:
         """Get cache statistics"""
-        if self.cache:
-            return self.cache.get_stats()
-        return {"cache_enabled": False, "size": 0, "max_size": 0}
+        if not self.cache:
+            return {
+                "cache_enabled": False,
+                "size": 0,
+                "max_size": 0,
+                "ttl": 0,
+                "hit_rate": 0.0,
+                "requests": self._request_count,
+                "hits": self._hit_count
+            }
+        
+        stats = self.cache.get_stats()
+        stats["cache_enabled"] = True
+        stats["requests"] = self._request_count
+        stats["hits"] = self._hit_count
+        
+        if self._request_count > 0:
+            stats["hit_rate"] = self._hit_count / self._request_count
+        else:
+            stats["hit_rate"] = 0.0
+        
+        return stats
+
+
+# Legacy compatibility
+class Cache(LLMCache):
+    """Legacy cache class for backward compatibility"""
+    pass
+
+class CacheInvalidationStrategyLegacy:
+    """Legacy cache invalidation strategy for backward compatibility"""
     
-    def clear_cache(self):
-        """Clear the cache"""
-        if self.cache:
-            self.cache.clear()
+    @staticmethod
+    def invalidate_by_model(cache: LLMCache, model: str) -> None:
+        CacheInvalidationStrategy.invalidate_by_model(cache, model)
     
-    def invalidate_cache(self, prompt: str, model: str = "gpt-3.5-turbo", **kwargs):
-        """Invalidate specific cache entry"""
-        if self.cache:
-            cache_key = self.cache._generate_key(prompt, model, **kwargs)
-            self.cache.invalidate(cache_key)
+    @staticmethod
+    def invalidate_by_prompt_pattern(cache: LLMCache, pattern: str) -> None:
+        CacheInvalidationStrategy.invalidate_by_prompt_pattern(cache, pattern)
     
-    def set_cache_config(self, max_size: int = None, ttl: int = None):
-        """Configure cache settings"""
-        if self.cache:
-            if max_size is not None:
-                self.cache.max_size = max_size
-            if ttl is not None:
-                self.cache.ttl = ttl
+    @staticmethod
+    def invalidate_all(cache: LLMCache) -> None:
+        CacheInvalidationStrategy.invalidate_all(cache)

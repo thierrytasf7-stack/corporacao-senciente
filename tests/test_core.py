@@ -53,6 +53,7 @@ class TestCoreIntegration:
             
             assert response.code == 400
             assert response.category == "validation_error"
+            assert "Test error" in response.message
     
     def test_llm_client_cache_integration(self):
         """Test LLM client and cache integration"""

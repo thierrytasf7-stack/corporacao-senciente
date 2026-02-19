@@ -1,6 +1,6 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { trpcClient } from './trpc'';
+import { trpcClient } from './trpc';
 
 export const TRPCProvider: React.FC = ({ children }) => {
   const queryClient = new QueryClient({

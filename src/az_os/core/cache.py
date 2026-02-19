@@ -1,8 +1,7 @@
 import hashlib
 import json
 import time
-from typing import Optional, Dict, Any, Callable
-from functools import wraps
+from typing import Optional, Dict, Any, Tuple
 from collections import OrderedDict
 
 
@@ -12,8 +11,8 @@ class LLMCache:
     def __init__(self, max_size: int = 1000, ttl: int = 3600):
         self.max_size = max_size
         self.ttl = ttl  # seconds
-        self._cache: Dict[str, tuple[Any, float]] = {}
-        self._access_order = []
+        self._cache: Dict[str, Tuple[Any, float]] = {}
+        self._access_order = OrderedDict()
     
     def _generate_key(self, prompt: str, model: str, **kwargs) -> str:
         """Generate cache key from prompt + model + params."""
@@ -37,8 +36,7 @@ class LLMCache:
             return None
         
         # Update LRU order
-        self._access_order.remove(key)
-        self._access_order.append(key)
+        self._access_order.move_to_end(key)
         
         return value
     
@@ -46,17 +44,19 @@ class LLMCache:
         """Set cache value with current timestamp."""
         # Evict oldest if at max size
         if len(self._cache) >= self.max_size:
-            oldest_key = self._access_order.pop(0)
+            oldest_key = next(iter(self._access_order))
             del self._cache[oldest_key]
+            del self._access_order[oldest_key]
         
         self._cache[key] = (value, time.time())
-        self._access_order.append(key)
+        self._access_order[key] = None
+        self._access_order.move_to_end(key)
     
     def invalidate(self, key: str):
         """Remove key from cache."""
         if key in self._cache:
             del self._cache[key]
-            self._access_order.remove(key)
+            del self._access_order[key]
     
     def clear(self):
         """Clear all cache."""
@@ -68,36 +68,40 @@ class LLMCache:
         return {
             "size": len(self._cache),
             "max_size": self.max_size,
-            "ttl_seconds": self.ttl,
-            "hit_rate": 0.0  # Will be calculated by monitoring
+            "ttl": self.ttl,
+            "hit_rate": 0.0  # Will be calculated by LLMClient
         }
 
 
-class CacheDecorator:
-    """Decorator for caching function results."""
+class CacheInvalidationStrategy:
+    """Cache invalidation strategies."""
     
-    def __init__(self, cache: LLMCache):
-        self.cache = cache
-    
-    def __call__(self, func: Callable) -> Callable:
-        @wraps(func)
-        async def wrapper(*args, **kwargs):
-            # Generate cache key from function arguments
-            prompt = kwargs.get('prompt', '')
-            model = kwargs.get('model', 'gpt-3.5-turbo')
-            cache_key = self.cache._generate_key(prompt, model, **kwargs)
-            
-            # Try cache first
-            cached = self.cache.get(cache_key)
-            if cached:
-                return cached  # Cache hit!
-            
-            # Cache miss - call function
-            result = await func(*args, **kwargs)
-            
-            # Store in cache
-            self.cache.set(cache_key, result)
-            
-            return result
+    @staticmethod
+    def invalidate_by_model(cache: LLMCache, model: str) -> None:
+        """Invalidate all cache entries for a specific model."""
+        keys_to_invalidate = []
+        for key in cache._cache.keys():
+            # Parse key to extract model info (simplified implementation)
+            # In production, would need proper key parsing logic
+            if model in key:
+                keys_to_invalidate.append(key)
         
-        return wrapper
+        for key in keys_to_invalidate:
+            cache.invalidate(key)
+    
+    @staticmethod
+    def invalidate_by_prompt_pattern(cache: LLMCache, pattern: str) -> None:
+        """Invalidate cache entries matching a prompt pattern."""
+        keys_to_invalidate = []
+        for key in cache._cache.keys():
+            # Simplified pattern matching
+            if pattern in key:
+                keys_to_invalidate.append(key)
+        
+        for key in keys_to_invalidate:
+            cache.invalidate(key)
+    
+    @staticmethod
+    def invalidate_all(cache: LLMCache) -> None:
+        """Invalidate entire cache."""
+        cache.clear()

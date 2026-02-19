@@ -14,7 +14,7 @@ export const DEFAULT_STRATEGIES = [
     successRate: 52
   },
   {
-    id: 'd'alembert',
+    id: 'dalembert',
     name: 'D\'Alembert',
     description: 'Increase bet by one unit after loss, decrease after win',
     riskLevel: 'Low',

@@ -32,6 +32,8 @@ import { CommunityEcosystemController } from './controllers/CommunityEcosystemCo
 import { checkpointMonitor } from './services/checkpoint-monitor';
 import { whatsappReporter } from './services/whatsapp-reporter';
 import { periodicReporter } from './services/periodic-reporter';
+import { championSync } from './services/ChampionSync';
+import { productionBotTestnet, productionBotMainnet } from './services/ProductionBot';
 
 const app = express();
 const PORT = process.env.DIANA_BINANCE_BACKEND_PORT || process.env.PORT || 21341;
@@ -495,6 +497,11 @@ try {
   const configLoader = ConfigLoader.getInstance();
   const config = configLoader.loadConfig();
   const binanceConfig = config.binance;
+
+  // Debug: Log das credenciais (mascaradas)
+  const apiKeyMasked = binanceConfig.apiKey ? `${binanceConfig.apiKey.substring(0, 8)}...` : 'N/A';
+  const secretKeyMasked = binanceConfig.secretKey ? `${binanceConfig.secretKey.substring(0, 8)}...` : 'N/A';
+  console.log(`[DEBUG] Binance Config: apiKey=${apiKeyMasked}, secretKey=${secretKeyMasked}, useTestnet=${binanceConfig.useTestnet}`);
 
   if (binanceConfig.apiKey && binanceConfig.secretKey) {
     binanceService = new BinanceApiService({
@@ -1850,6 +1857,33 @@ app.listen(Number(PORT), '0.0.0.0', () => {
       periodicReporter.start();
       console.log('⚡ Periodic Reporter iniciado - updates ultra detalhados a cada 30min');
     }, 8000);
+
+    // Start Champion Sync (sync DNA Arena champions to Futures Testnet)
+    // Wait 60s for backend to fully initialize and DNA Arena to export first champions
+    setTimeout(() => {
+      championSync.start();
+      console.log('🔄 Champion Sync iniciado - sincroniza campeões DNA Arena → Futures Testnet');
+    }, 60000); // 60 segundos
+
+    // Start Production Bot TESTNET (Binance Testnet - dinheiro fictício)
+    // Wait 90s for all systems to be stable
+    setTimeout(() => {
+      productionBotTestnet.start();
+      console.log('🚀 Production Bot TESTNET iniciado - trading com dinheiro fictício');
+    }, 90000); // 90 segundos
+
+    // Start Production Bot MAINNET (Binance Mainnet - dinheiro real)
+    // Wait 120s for TESTNET to be stable first
+    setTimeout(() => {
+      productionBotMainnet.start();
+      console.log('🚀 Production Bot MAINNET iniciado - trading com dinheiro REAL');
+    }, 120000); // 120 segundos
+
+    // WhatsApp Reporter será implementado após compilação correta
+    // setTimeout(() => {
+    //   whatsappReporter.start();
+    //   console.log('📱 WhatsApp Reporter iniciado - relatórios 30min/4h/24h + alertas críticos');
+    // }, 9000);
   }
 });
 

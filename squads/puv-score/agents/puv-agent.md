@@ -60,6 +60,14 @@ INPUT (canal + link)
 | `slides-gen.js` | HTML → Puppeteer → PDF |
 | `document-gen.js` | Markdown → HTML → PDF |
 
+## 🌟 Regra de Ouro: Design System Modelo 3 (PUV-DS v1.0)
+Toda geração visual (scorecards, slides, documentos) DEVE seguir estritamente o **Modelo 3 (Sentient Executive Edition)**:
+- **Cores:** Carbono Profundo (#0A0A0A), Cyber Cyan (#00F5FF) para acentos.
+- **Heatmap:** 0-7: Critical (#FF3B30) | 8-14: Improving (#FFCC00) | 15-20: Dominant (#34C759).
+- **Tipografia:** JetBrains Mono (Headings), Inter (Body), Space Mono (Data).
+- **Componentes:** PUV Gauge (0-20), Trinity Card (3 ações), Rubric Grid (10 critérios).
+- **Vibe:** "Apple de Dados" + "Eficiência de Terminal".
+
 ## Rubrica PUV Score
 
 | Criterio | 0 | 1 | 2 | 3 | 4 |

@@ -89,6 +89,16 @@ export interface BotStateV2 {
     sessionId: string;
     currentBetPercent: number;
     symbolCooldowns: Map<string, number>;  // symbol -> cycle when cooldown expires
+    
+    // ===== ODDS TRACKING (CEO-BINANCE directive) =====
+    totalTakeProfitValue: number;   // Soma dos valores ganhos em TP
+    totalStopLossValue: number;     // Soma dos valores perdidos em SL
+    avgTakeProfitOdd: number;       // Média de odd do TP (quanto ganha quando acerta)
+    avgStopLossOdd: number;         // Média de odd do SL (quanto perde quando erra)
+    expectedValue: number;          // Expectativa matemática: (winRate * avgTP) - (lossRate * avgSL)
+    
+    // ===== STRATEGY METRICS (CEO-BINANCE directive) =====
+    strategyMetrics: { [key: string]: StrategyMetrics };  // Métricas por estratégia
 }
 
 export interface PositionV2 {
@@ -125,6 +135,27 @@ export interface TradeRecordV2 {
     bankrollAfter: number;
     timestamp: string;
     consensusSnapshot: { agreeingCount: number; opposingCount: number; weightedStrength: number; topStrategies: string[] };
+    // ===== STRATEGY METRICS (CEO-BINANCE directive) =====
+    activeStrategies: string[];           // Lista de estratégias ativas no trade
+    strategyStrengths: { [key: string]: number };  // Força de cada estratégia
+    topStrategy: string;                  // Estratégia com maior força
+    topStrategyStrength: number;          // Força da melhor estratégia
+}
+
+// ===== STRATEGY PERFORMANCE TRACKING =====
+export interface StrategyMetrics {
+    strategyId: string;
+    totalTrades: number;
+    wins: number;
+    losses: number;
+    winRate: number;
+    totalTakeProfitValue: number;
+    totalStopLossValue: number;
+    avgTakeProfitOdd: number;
+    avgStopLossOdd: number;
+    expectedValue: number;
+    avgSignalStrength: number;            // Força média do sinal quando esta estratégia participou
+    participationRate: number;            // % de trades que esta estratégia participou
 }
 
 interface DNASessionV2 {
@@ -157,6 +188,15 @@ const CYCLE_INTERVAL_MS = 6000;
 const STRATEGY_COUNT = 30;
 const EVOLUTION_CYCLE_INTERVAL = 50;  // Evolve every 50 cycles (~5 min)
 
+// ======================== CONSENSUS THRESHOLDS (TUNED) ========================
+// Adjusted based on performance analysis (win rate ~40% -> target 50%+)
+const CONSENSUS_DEFAULTS = {
+    MIN_AGREEING_SIGNALS: 5,        // Increased from 2-4 (stricter entry)
+    MAX_OPPOSING_SIGNALS: 2,        // Reduced from 3-4 (stricter confirmation)
+    MIN_WEIGHTED_STRENGTH: 50,      // Increased from 39-45 (higher quality signals)
+    PREFERRED_DIRECTION: 'ANY' as const
+};
+
 const BOT_NAMES = [
     'Hydra', 'Phoenix', 'Cerberus', 'Atlas', 'Kraken',
     'Titan', 'Nexus', 'Vortex', 'Zenith', 'Apex',
@@ -174,7 +214,7 @@ function createGenesisGenomes(): GenomeV2[] {
         id: 'v2-alpha-gen1', name: 'Hydra', generation: 1, parentIds: [],
         strategyMask: strategyIds.map((_, i) => i < 15), // First 15 (all trend + all momentum)
         strategyWeights: strategyIds.map((_, i) => i < 10 ? 1.5 : i < 20 ? 1.0 : 0.3),
-        consensus: { minAgreeingSignals: 4, maxOpposingSignals: 3, minWeightedStrength: 50, preferredDirection: 'ANY' },
+        consensus: { minAgreeingSignals: 5, maxOpposingSignals: 2, minWeightedStrength: 50, preferredDirection: 'ANY' },
         risk: { atrMultiplierTP: 2.0, atrMultiplierSL: 1.0, trailingStopATR: 1.5, flipExitThreshold: 8, leverage: 50, maxOpenPositions: 5, maxExposurePercent: 50 },
         betting: { basePercent: 5, winMultiplier: 1.3, lossMultiplier: 0.8, maxBetPercent: 15, resetAfterLosses: 4 },
         symbols: ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT']
@@ -185,7 +225,7 @@ function createGenesisGenomes(): GenomeV2[] {
         id: 'v2-beta-gen1', name: 'Phoenix', generation: 1, parentIds: [],
         strategyMask: strategyIds.map(() => true), // Listens to ALL 30
         strategyWeights: strategyIds.map(() => 1.0), // Equal weight
-        consensus: { minAgreeingSignals: 6, maxOpposingSignals: 2, minWeightedStrength: 55, preferredDirection: 'ANY' },
+        consensus: { minAgreeingSignals: 7, maxOpposingSignals: 2, minWeightedStrength: 55, preferredDirection: 'ANY' },
         risk: { atrMultiplierTP: 3.0, atrMultiplierSL: 1.5, trailingStopATR: 2.0, flipExitThreshold: 10, leverage: 30, maxOpenPositions: 3, maxExposurePercent: 30 },
         betting: { basePercent: 3, winMultiplier: 1.1, lossMultiplier: 0.9, maxBetPercent: 10, resetAfterLosses: 3 },
         symbols: ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT']
@@ -196,7 +236,7 @@ function createGenesisGenomes(): GenomeV2[] {
         id: 'v2-gamma-gen1', name: 'Cerberus', generation: 1, parentIds: [],
         strategyMask: strategyIds.map((_, i) => i >= 20 || i < 5), // Volatility (20-29) + first 5 trend
         strategyWeights: strategyIds.map((_, i) => i >= 20 ? 1.8 : i < 5 ? 1.0 : 0.2),
-        consensus: { minAgreeingSignals: 5, maxOpposingSignals: 4, minWeightedStrength: 45, preferredDirection: 'ANY' },
+        consensus: { minAgreeingSignals: 6, maxOpposingSignals: 2, minWeightedStrength: 50, preferredDirection: 'ANY' },
         risk: { atrMultiplierTP: 2.5, atrMultiplierSL: 1.2, trailingStopATR: 1.0, flipExitThreshold: 6, leverage: 40, maxOpenPositions: 4, maxExposurePercent: 40 },
         betting: { basePercent: 4, winMultiplier: 1.2, lossMultiplier: 0.85, maxBetPercent: 12, resetAfterLosses: 5 },
         symbols: ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT']
@@ -207,7 +247,7 @@ function createGenesisGenomes(): GenomeV2[] {
         id: 'v2-delta-gen1', name: 'Atlas', generation: 1, parentIds: [],
         strategyMask: strategyIds.map((_, i) => i >= 10 && i < 20), // Only momentum (10-19)
         strategyWeights: strategyIds.map((_, i) => (i >= 10 && i < 20) ? 1.5 : 0),
-        consensus: { minAgreeingSignals: 4, maxOpposingSignals: 2, minWeightedStrength: 55, preferredDirection: 'ANY' },
+        consensus: { minAgreeingSignals: 5, maxOpposingSignals: 2, minWeightedStrength: 55, preferredDirection: 'ANY' },
         risk: { atrMultiplierTP: 2.0, atrMultiplierSL: 0.8, trailingStopATR: 0.8, flipExitThreshold: 5, leverage: 45, maxOpenPositions: 4, maxExposurePercent: 35 },
         betting: { basePercent: 4, winMultiplier: 1.25, lossMultiplier: 0.85, maxBetPercent: 12, resetAfterLosses: 3 },
         symbols: ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'XRPUSDT']
@@ -229,6 +269,90 @@ function createGenesisGenomes(): GenomeV2[] {
     };
 
     return [aggressive, conservative, volHunter, momSpec, balanced];
+}
+
+// ======================== GENOME VALIDATION (INTEGRITY CHECK) ========================
+
+function validateGenome(genome: GenomeV2): { valid: boolean; errors: string[] } {
+    const errors: string[] = [];
+
+    // Check strategy arrays
+    if (genome.strategyMask.length !== STRATEGY_COUNT) {
+        errors.push(`strategyMask length ${genome.strategyMask.length} != ${STRATEGY_COUNT}`);
+    }
+    if (genome.strategyWeights.length !== STRATEGY_COUNT) {
+        errors.push(`strategyWeights length ${genome.strategyWeights.length} != ${STRATEGY_COUNT}`);
+    }
+
+    // Check weight bounds
+    for (let i = 0; i < genome.strategyWeights.length; i++) {
+        if (genome.strategyWeights[i] < 0 || genome.strategyWeights[i] > 2.5) {
+            errors.push(`strategyWeights[${i}] = ${genome.strategyWeights[i]} out of bounds [0, 2.5]`);
+        }
+    }
+
+    // Check consensus rules
+    if (genome.consensus.minAgreeingSignals < 2 || genome.consensus.minAgreeingSignals > 15) {
+        errors.push(`minAgreeingSignals ${genome.consensus.minAgreeingSignals} out of bounds [2, 15]`);
+    }
+    if (genome.consensus.maxOpposingSignals < 0 || genome.consensus.maxOpposingSignals > 10) {
+        errors.push(`maxOpposingSignals ${genome.consensus.maxOpposingSignals} out of bounds [0, 10]`);
+    }
+    if (genome.consensus.minWeightedStrength < 30 || genome.consensus.minWeightedStrength > 95) {
+        errors.push(`minWeightedStrength ${genome.consensus.minWeightedStrength} out of bounds [30, 95]`);
+    }
+    if (!['ANY', 'LONG_BIAS', 'SHORT_BIAS'].includes(genome.consensus.preferredDirection)) {
+        errors.push(`Invalid preferredDirection: ${genome.consensus.preferredDirection}`);
+    }
+
+    // Check risk parameters
+    if (genome.risk.atrMultiplierTP < 1.0 || genome.risk.atrMultiplierTP > 6.0) {
+        errors.push(`atrMultiplierTP ${genome.risk.atrMultiplierTP} out of bounds [1.0, 6.0]`);
+    }
+    if (genome.risk.atrMultiplierSL < 0.5 || genome.risk.atrMultiplierSL > 4.0) {
+        errors.push(`atrMultiplierSL ${genome.risk.atrMultiplierSL} out of bounds [0.5, 4.0]`);
+    }
+    if (genome.risk.trailingStopATR < 0 || genome.risk.trailingStopATR > 4.0) {
+        errors.push(`trailingStopATR ${genome.risk.trailingStopATR} out of bounds [0, 4.0]`);
+    }
+    if (genome.risk.flipExitThreshold < 0 || genome.risk.flipExitThreshold > 20) {
+        errors.push(`flipExitThreshold ${genome.risk.flipExitThreshold} out of bounds [0, 20]`);
+    }
+    if (genome.risk.leverage < 1 || genome.risk.leverage > 75) {
+        errors.push(`leverage ${genome.risk.leverage} out of bounds [1, 75]`);
+    }
+    if (genome.risk.maxOpenPositions < 1 || genome.risk.maxOpenPositions > 10) {
+        errors.push(`maxOpenPositions ${genome.risk.maxOpenPositions} out of bounds [1, 10]`);
+    }
+    if (genome.risk.maxExposurePercent < 10 || genome.risk.maxExposurePercent > 100) {
+        errors.push(`maxExposurePercent ${genome.risk.maxExposurePercent} out of bounds [10, 100]`);
+    }
+
+    // Check betting parameters
+    if (genome.betting.basePercent < 1 || genome.betting.basePercent > 15) {
+        errors.push(`basePercent ${genome.betting.basePercent} out of bounds [1, 15]`);
+    }
+    if (genome.betting.winMultiplier < 0.5 || genome.betting.winMultiplier > 3.0) {
+        errors.push(`winMultiplier ${genome.betting.winMultiplier} out of bounds [0.5, 3.0]`);
+    }
+    if (genome.betting.lossMultiplier < 0.3 || genome.betting.lossMultiplier > 1.5) {
+        errors.push(`lossMultiplier ${genome.betting.lossMultiplier} out of bounds [0.3, 1.5]`);
+    }
+    if (genome.betting.maxBetPercent < 5 || genome.betting.maxBetPercent > 25) {
+        errors.push(`maxBetPercent ${genome.betting.maxBetPercent} out of bounds [5, 25]`);
+    }
+
+    // Check symbols
+    if (!Array.isArray(genome.symbols) || genome.symbols.length === 0) {
+        errors.push('symbols array is empty or invalid');
+    }
+
+    // Ensure TP > SL (logical consistency)
+    if (genome.risk.atrMultiplierTP <= genome.risk.atrMultiplierSL * 0.8) {
+        errors.push(`TP multiplier (${genome.risk.atrMultiplierTP}) should be > SL multiplier (${genome.risk.atrMultiplierSL}) * 0.8`);
+    }
+
+    return { valid: errors.length === 0, errors };
 }
 
 // ======================== MAIN ENGINE V2 ========================
@@ -309,11 +433,16 @@ export class DNAArenaV2Engine {
             const raw = fs.readFileSync(this.STATE_FILE, 'utf8');
             const state = JSON.parse(raw);
 
-            // Check if state is too old (> 1 hour = stale)
+            // Accept persisted state up to 7 days old (was 1h - caused data loss on restarts)
             const savedAt = new Date(state.savedAt).getTime();
-            if (Date.now() - savedAt > 3600000) {
-                console.log('⚠️ Persisted state too old (>1h), starting fresh');
+            const stateAgeMs = Date.now() - savedAt;
+            const stateAgeHours = (stateAgeMs / 3600000).toFixed(1);
+            if (stateAgeMs > 7 * 24 * 3600000) {
+                console.log(`⚠️ Persisted state too old (${stateAgeHours}h), starting fresh`);
                 return false;
+            }
+            if (stateAgeMs > 3600000) {
+                console.log(`📦 Restoring state from ${stateAgeHours}h ago (gen ${state.generation}, cycle ${state.currentCycle})`);
             }
 
             this.generation = state.generation || 1;
@@ -342,7 +471,15 @@ export class DNAArenaV2Engine {
                     deathCount: botData.deathCount,
                     sessionId: botData.sessionId,
                     currentBetPercent: botData.currentBetPercent,
-                    symbolCooldowns: new Map()
+                    symbolCooldowns: new Map(),
+                    // ===== ODDS TRACKING =====
+                    totalTakeProfitValue: botData.totalTakeProfitValue || 0,
+                    totalStopLossValue: botData.totalStopLossValue || 0,
+                    avgTakeProfitOdd: botData.avgTakeProfitOdd || 0,
+                    avgStopLossOdd: botData.avgStopLossOdd || 0,
+                    expectedValue: botData.expectedValue || 0,
+                    // ===== STRATEGY METRICS =====
+                    strategyMetrics: botData.strategyMetrics || {}
                 };
                 // Migrate old genomes that have takeProfitPercent instead of atrMultiplierTP
                 if ((botState.genome.risk as any).takeProfitPercent !== undefined) {
@@ -446,7 +583,13 @@ export class DNAArenaV2Engine {
 
     // ======================== CYCLE LOGIC ========================
 
+    private cycleRunning = false;
+    private consecutiveErrors = 0;
+
     private async runCycle(): Promise<void> {
+        // Overlap guard: skip if previous cycle still running
+        if (this.cycleRunning) return;
+        this.cycleRunning = true;
         this.currentCycle++;
 
         try {
@@ -482,8 +625,15 @@ export class DNAArenaV2Engine {
             if (this.currentCycle % EVOLUTION_CYCLE_INTERVAL === 0 && this.currentCycle > 0) {
                 this.periodicEvolution();
             }
+            this.consecutiveErrors = 0;
         } catch (err) {
-            // Swallow to keep arena running
+            this.consecutiveErrors++;
+            // Log errors: always first 10, then every 50 cycles
+            if (this.consecutiveErrors <= 10 || this.consecutiveErrors % 50 === 0) {
+                console.error(`❌ Arena V2 cycle ${this.currentCycle} error (${this.consecutiveErrors} consecutive):`, err instanceof Error ? err.message : err);
+            }
+        } finally {
+            this.cycleRunning = false;
         }
     }
 
@@ -788,7 +938,12 @@ export class DNAArenaV2Engine {
             bankrollBefore: Math.round(bankrollBefore * 100) / 100,
             bankrollAfter: Math.round(botState.bankroll * 100) / 100,
             timestamp: new Date().toISOString(),
-            consensusSnapshot: pos.consensusSnapshot
+            consensusSnapshot: pos.consensusSnapshot,
+            // ===== STRATEGY METRICS =====
+            activeStrategies: pos.consensusSnapshot.topStrategies || [],
+            strategyStrengths: {},
+            topStrategy: pos.consensusSnapshot.topStrategies?.[0] || '',
+            topStrategyStrength: 0
         });
 
         if (botState.tradeHistory.length > 100) botState.tradeHistory = botState.tradeHistory.slice(-100);
@@ -1047,49 +1202,78 @@ export class DNAArenaV2Engine {
             ? parent1.betting.winMultiplier : parent2.betting.winMultiplier;
 
         // Apply mutation on top
-        return this.mutate(child);
+        const mutated = this.mutate(child);
+
+        // Validate genome integrity (INTEGRITY CHECK)
+        const validation = validateGenome(mutated);
+        if (!validation.valid) {
+            console.warn(`⚠️ Genome validation failed for ${mutated.name}, auto-correcting...`);
+            // Auto-correct critical issues
+            if (mutated.consensus.minAgreeingSignals < CONSENSUS_DEFAULTS.MIN_AGREEING_SIGNALS - 2) {
+                mutated.consensus.minAgreeingSignals = CONSENSUS_DEFAULTS.MIN_AGREEING_SIGNALS - 2;
+            }
+            if (mutated.risk.atrMultiplierTP < 1.5) mutated.risk.atrMultiplierTP = 1.5;
+            if (mutated.risk.leverage > 50) mutated.risk.leverage = 50;
+        }
+
+        return mutated;
     }
 
     private mutate(genome: GenomeV2): GenomeV2 {
         const child: GenomeV2 = JSON.parse(JSON.stringify(genome));
-        const mutationRate = 0.15; // 15% chance per gene
+        const mutationRate = 0.10; // Reduced from 0.15 to 0.10 (more stability, less chaos)
 
         // Mutate strategy mask (flip random bits)
         for (let i = 0; i < STRATEGY_COUNT; i++) {
             if (Math.random() < mutationRate) child.strategyMask[i] = !child.strategyMask[i];
         }
 
-        // Ensure at least 3 strategies active
+        // Ensure at least 5 strategies active (increased from 3 for better diversification)
         const activeCount = child.strategyMask.filter(m => m).length;
-        if (activeCount < 3) {
+        if (activeCount < 5) {
             const inactiveIndices = child.strategyMask.map((m, i) => m ? -1 : i).filter(i => i >= 0);
-            for (let i = 0; i < 3 - activeCount && i < inactiveIndices.length; i++) {
+            for (let i = 0; i < 5 - activeCount && i < inactiveIndices.length; i++) {
                 const idx = inactiveIndices[Math.floor(Math.random() * inactiveIndices.length)];
                 child.strategyMask[idx] = true;
             }
         }
 
-        // Mutate strategy weights
+        // Mutate strategy weights (with bounds to prevent extreme values)
         for (let i = 0; i < STRATEGY_COUNT; i++) {
             if (Math.random() < mutationRate) {
                 child.strategyWeights[i] = Math.max(0.1, Math.min(2.0, child.strategyWeights[i] + (Math.random() - 0.5) * 0.4));
             }
         }
 
-        // Mutate consensus rules
-        if (Math.random() < mutationRate) child.consensus.minAgreeingSignals = Math.max(2, Math.min(15, child.consensus.minAgreeingSignals + Math.round((Math.random() - 0.5) * 4)));
-        if (Math.random() < mutationRate) child.consensus.maxOpposingSignals = Math.max(0, Math.min(10, child.consensus.maxOpposingSignals + Math.round((Math.random() - 0.5) * 3)));
-        if (Math.random() < mutationRate) child.consensus.minWeightedStrength = Math.max(20, Math.min(90, child.consensus.minWeightedStrength + (Math.random() - 0.5) * 20));
+        // Mutate consensus rules (with improved defaults for better win rate)
+        if (Math.random() < mutationRate) {
+            child.consensus.minAgreeingSignals = Math.max(
+                CONSENSUS_DEFAULTS.MIN_AGREEING_SIGNALS - 2,
+                Math.min(15, child.consensus.minAgreeingSignals + Math.round((Math.random() - 0.5) * 4))
+            );
+        }
+        if (Math.random() < mutationRate) {
+            child.consensus.maxOpposingSignals = Math.max(
+                CONSENSUS_DEFAULTS.MAX_OPPOSING_SIGNALS - 1,
+                Math.min(10, child.consensus.maxOpposingSignals + Math.round((Math.random() - 0.5) * 3))
+            );
+        }
+        if (Math.random() < mutationRate) {
+            child.consensus.minWeightedStrength = Math.max(
+                CONSENSUS_DEFAULTS.MIN_WEIGHTED_STRENGTH - 10,
+                Math.min(90, child.consensus.minWeightedStrength + (Math.random() - 0.5) * 20)
+            );
+        }
 
-        // Mutate risk (ATR-based)
-        if (Math.random() < mutationRate) child.risk.atrMultiplierTP = Math.max(1.0, Math.min(5.0, child.risk.atrMultiplierTP + (Math.random() - 0.5) * 1.0));
-        if (Math.random() < mutationRate) child.risk.atrMultiplierSL = Math.max(0.5, Math.min(3.0, child.risk.atrMultiplierSL + (Math.random() - 0.5) * 0.6));
-        if (Math.random() < mutationRate) child.risk.trailingStopATR = Math.max(0, Math.min(3.0, child.risk.trailingStopATR + (Math.random() - 0.5) * 0.8));
-        if (Math.random() < mutationRate) child.risk.flipExitThreshold = Math.max(0, Math.min(15, Math.round(child.risk.flipExitThreshold + (Math.random() - 0.5) * 4)));
-        if (Math.random() < mutationRate) child.risk.leverage = Math.max(5, Math.min(75, child.risk.leverage + Math.round((Math.random() - 0.5) * 20)));
+        // Mutate risk (ATR-based) - tighter bounds for stability
+        if (Math.random() < mutationRate) child.risk.atrMultiplierTP = Math.max(1.5, Math.min(5.0, child.risk.atrMultiplierTP + (Math.random() - 0.5) * 1.0));
+        if (Math.random() < mutationRate) child.risk.atrMultiplierSL = Math.max(0.8, Math.min(3.0, child.risk.atrMultiplierSL + (Math.random() - 0.5) * 0.6));
+        if (Math.random() < mutationRate) child.risk.trailingStopATR = Math.max(0.5, Math.min(3.0, child.risk.trailingStopATR + (Math.random() - 0.5) * 0.8));
+        if (Math.random() < mutationRate) child.risk.flipExitThreshold = Math.max(3, Math.min(15, Math.round(child.risk.flipExitThreshold + (Math.random() - 0.5) * 4)));
+        if (Math.random() < mutationRate) child.risk.leverage = Math.max(5, Math.min(50, child.risk.leverage + Math.round((Math.random() - 0.5) * 20))); // Reduced max leverage from 75 to 50
 
-        // Mutate betting
-        if (Math.random() < mutationRate) child.betting.basePercent = Math.max(1, Math.min(10, child.betting.basePercent + (Math.random() - 0.5) * 2));
+        // Mutate betting (conservative adjustments)
+        if (Math.random() < mutationRate) child.betting.basePercent = Math.max(2, Math.min(8, child.betting.basePercent + (Math.random() - 0.5) * 2));
         if (Math.random() < mutationRate) child.betting.winMultiplier = Math.max(1.0, Math.min(2.0, child.betting.winMultiplier + (Math.random() - 0.5) * 0.3));
         if (Math.random() < mutationRate) child.betting.lossMultiplier = Math.max(0.5, Math.min(1.0, child.betting.lossMultiplier + (Math.random() - 0.5) * 0.2));
 
@@ -1099,6 +1283,17 @@ export class DNAArenaV2Engine {
     // ======================== HELPERS ========================
 
     private createBotState(genome: GenomeV2): BotStateV2 {
+        // Validate genome before creating bot (INTEGRITY CHECK)
+        const validation = validateGenome(genome);
+        if (!validation.valid) {
+            console.error(`❌ Invalid genome for ${genome.name}:`, validation.errors);
+            // Auto-correct where possible
+            if (genome.consensus.minAgreeingSignals < 3) genome.consensus.minAgreeingSignals = 3;
+            if (genome.risk.atrMultiplierTP < 1.5) genome.risk.atrMultiplierTP = 1.5;
+            if (genome.risk.atrMultiplierSL < 0.8) genome.risk.atrMultiplierSL = 0.8;
+            if (genome.risk.leverage > 50) genome.risk.leverage = 50;
+        }
+
         return {
             genome,
             bankroll: INITIAL_BANKROLL,
@@ -1117,7 +1312,15 @@ export class DNAArenaV2Engine {
             deathCount: 0,
             sessionId: `session_${Date.now()}`,
             currentBetPercent: genome.betting.basePercent,
-            symbolCooldowns: new Map()
+            symbolCooldowns: new Map(),
+            // ===== ODDS TRACKING =====
+            totalTakeProfitValue: 0,
+            totalStopLossValue: 0,
+            avgTakeProfitOdd: 0,
+            avgStopLossOdd: 0,
+            expectedValue: 0,
+            // ===== STRATEGY METRICS =====
+            strategyMetrics: {}
         };
     }
 

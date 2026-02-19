@@ -63,15 +63,23 @@ timeout /t 2 /nobreak >nul
 echo.
 echo ====================================================
 echo   SERVICOS ATIVOS:
-echo   Dashboard AIOS: http://localhost:21300
-echo   Backend API:    http://localhost:21301
-echo   Monitor WS:     ws://localhost:21302/stream
-echo   Corp Frontend:  http://localhost:21303
-echo   Binance Front:  http://localhost:21340
-echo   Binance Back:   http://localhost:21341
-echo   WhatsApp:       http://localhost:21350
-echo   Betting Front:  http://localhost:21371
-echo   Betting Back:   http://localhost:21370
+echo   Dashboard AIOS:    http://localhost:21300
+echo   Backend API:       http://localhost:21301
+echo   Monitor WS:        ws://localhost:21302/stream
+echo   Corp Frontend:     http://localhost:21303
+echo   Binance Front:     http://localhost:21340
+echo   Binance Back:      http://localhost:21341
+echo   WhatsApp:          http://localhost:21350
+echo   Betting Front:     http://localhost:21371
+echo   Betting Back:      http://localhost:21370
+echo.
+echo   DNA Arena V2:      (PM2 - WORKERS)
+echo.
+echo   [Executores Isolados - server-executor.js]
+echo   Testnet Futures:   http://localhost:21342/health
+echo   Testnet Spot:      http://localhost:21343/health
+echo   Mainnet Futures:   http://localhost:21344/health
+echo   Mainnet Spot:      http://localhost:21345/health
 echo ====================================================
 echo.
 echo   pm2 logs        = Ver logs em tempo real

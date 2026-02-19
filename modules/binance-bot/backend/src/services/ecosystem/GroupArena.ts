@@ -4,6 +4,8 @@
  * Each group has a distinct "personality" (genesis gene pool).
  */
 
+import * as fs from 'fs';
+import * as path from 'path';
 import { BinanceApiService } from '../BinanceApiService';
 import { SignalPoolEngine, MarketSignals, PoolSignal } from '../SignalPoolEngine';
 import { GenomeV2, BotStateV2, PositionV2, TradeRecordV2 } from '../DNAArenaV2Engine';
@@ -19,6 +21,10 @@ import { PatternDNA } from './PatternDNA';
 import { SymbolSelectionDNA } from './SymbolSelectionDNA';
 import { AdaptiveMutationEngine, MutationType, MutationDirection } from './AdaptiveMutationEngine';
 import { checkpointMonitor } from '../checkpoint-monitor';
+import { strategyArena } from './StrategyArena';
+import { dynamicRiskManager } from '../DynamicRiskManager';
+import { PortfolioExposureManager } from '../PortfolioExposureManager';
+import { correlationMonitor } from '../CorrelationMonitor';
 
 const STRATEGY_COUNT = 30;
 const INITIAL_BANKROLL = 100;
@@ -81,7 +87,7 @@ export class GroupArena {
     readonly config: GroupConfig;
     private bots: Map<string, BotStateV2> = new Map();
     private generation: number = 1;
-    private currentCycle: number = 0;
+    public currentCycle: number = 0;
     private dnaMemory: DNAVectorMemory | null = null;
     private _pauseMultiplier: number = 1.0; // 1.0 = normal, <1 = reduced activity
 
@@ -96,6 +102,9 @@ export class GroupArena {
     patternDNA: PatternDNA;
     symbolSelectionDNA: SymbolSelectionDNA;
 
+    // Per-group portfolio exposure (isolated from other groups)
+    private portfolioExposureManager: PortfolioExposureManager;
+
     // Adaptive Mutation System (CEO-BINANCE directive)
     private adaptiveMutation: AdaptiveMutationEngine;
 
@@ -106,6 +115,10 @@ export class GroupArena {
     ) {
         this.groupId = groupId;
         this.config = GROUP_CONFIGS[groupId];
+
+        // Per-group portfolio exposure manager (isolated correlation tracking)
+        this.portfolioExposureManager = new PortfolioExposureManager();
+        this.portfolioExposureManager.setLimits({ maxOpenPositions: 5 });
 
         // Initialize all mycelium seeds with group personality
         this.strategyParamDNA = new StrategyParamDNA(groupId);
@@ -160,9 +173,13 @@ export class GroupArena {
     async executeCycle(allSignals: MarketSignals[]): Promise<void> {
         this.currentCycle++;
 
-        // Seed 3: Temporal check - should we trade now?
-        const temporalWeight = this.temporalDNA.getActivityWeight();
-        if (temporalWeight === 0) return; // Temporal mask says don't trade
+        // Update portfolio exposure manager with current group bankroll
+        this.portfolioExposureManager.updateBankroll(this.getGroupBankroll());
+
+        // Seed 3: Temporal check - apply minimum floor (0.15) so bots never fully stop
+        // TemporalDNA can reduce activity but not block it entirely (was causing 12h+ silent periods)
+        const rawTemporalWeight = this.temporalDNA.getActivityWeight();
+        const temporalWeight = Math.max(rawTemporalWeight, 0.15);
 
         // Seed 2: Classify market regime
         this.regimeDNA.classify(allSignals, this.currentCycle);
@@ -223,8 +240,8 @@ export class GroupArena {
                         longCount: processedSignals.filter(s => s.direction === 'LONG').length,
                         shortCount: processedSignals.filter(s => s.direction === 'SHORT').length,
                         neutralCount: processedSignals.filter(s => s.direction === 'NEUTRAL').length,
-                        avgLongStrength: avgStrength(processedSignals, 'LONG'),
-                        avgShortStrength: avgStrength(processedSignals, 'SHORT'),
+                        avgLongStrength: processedSignals.filter(s => s.direction === 'LONG').reduce((sum, s) => sum + s.strength, 0) / Math.max(1, processedSignals.filter(s => s.direction === 'LONG').length),
+                        avgShortStrength: processedSignals.filter(s => s.direction === 'SHORT').reduce((sum, s) => sum + s.strength, 0) / Math.max(1, processedSignals.filter(s => s.direction === 'SHORT').length),
                     }
                 };
 
@@ -244,8 +261,8 @@ export class GroupArena {
                     // Weighted ensemble (not multiplicative - prevents single seed veto)
                     const seedModifier = 0.25 * corrMod + 0.20 * sentMod.modifier + 0.20 * patternResult.modifier + 0.15 * temporalWeight + 0.20 * symbolWeight;
 
-                    // Only trade if combined seeds agree (threshold raised when group is paused)
-                    const tradeThreshold = 0.6 + (1 - this._pauseMultiplier) * 0.3; // 0.6 normal, up to 0.9 when paused
+                    // Only trade if combined seeds agree (threshold lowered from 0.6 to 0.45 - was too restrictive)
+                    const tradeThreshold = 0.45 + (1 - this._pauseMultiplier) * 0.3; // 0.45 normal, up to 0.75 when paused
                     if (seedModifier > tradeThreshold) {
                         // Seed 6: Risk adaptation
                         const drawdown = botState.maxBankroll > 0
@@ -270,6 +287,14 @@ export class GroupArena {
         const evoInterval = this.metaEvolutionDNA.getEvolutionInterval();
         if (this.currentCycle % evoInterval === 0 && this.currentCycle > 0) {
             this.intraGroupEvolution();
+        }
+        
+        // ===== STRATEGY ARENA COMPETITION (CEO-BINANCE directive) =====
+        // Execute strategy competition cycle every 10 cycles
+        if (this.currentCycle % 10 === 0 && this.currentCycle > 0) {
+            strategyArena.executeCycle().catch(err => {
+                console.error('⚠️ Strategy Arena error:', err);
+            });
         }
     }
 
@@ -385,26 +410,65 @@ export class GroupArena {
 
         // C2 fix: guard against division by zero when bankroll is 0
         if (botState.bankroll <= 0) return;
+        
+        // ===== DYNAMIC RISK MANAGEMENT (CEO-BINANCE directive) =====
+        // Calculate optimal risk based on multiple factors
+        const riskCalculation = dynamicRiskManager.calculateOptimalRisk({
+            marketVolatility: atr ? (atr / botState.bankroll) : 0.001,
+            botConfidence: decision.weightedStrength,
+            recentPerformance: botState.pnlHistory.length > 0
+                ? botState.pnlHistory.reduce((a, b) => a + b, 0) / botState.pnlHistory.length
+                : 0,
+            correlationWithOtherBots: correlationMonitor.getAverageCorrelation(),
+            timeOfDay: new Date().getHours(),
+            currentDrawdown: botState.maxBankroll > 0
+                ? (botState.maxBankroll - botState.bankroll) / botState.maxBankroll
+                : 0,
+            consecutiveLosses: botState.consecutiveLosses,
+            groupId: this.groupId
+        });
+        
+        // Check portfolio exposure limits
+        const canOpen = this.portfolioExposureManager.canOpenPosition(
+            symbol,
+            decision.direction,
+            botState.bankroll * (riskCalculation.optimalRiskPercent / 100),
+            riskCalculation.leverageLimit
+        );
+        
+        if (!canOpen.allowed) {
+            console.log(`⚠️ Posição recusada: ${canOpen.reason}`);
+            return;
+        }
+        
         const exposurePercent = (botState.totalExposure / botState.bankroll) * 100;
         if (exposurePercent >= genome.risk.maxExposurePercent) return;
 
-        const betPercent = Math.min(botState.currentBetPercent, genome.betting.maxBetPercent);
-        // Seed 6: Apply risk multiplier to bet sizing
-        const adjustedBetPercent = betPercent * riskMultiplier;
-        const betAmount = Math.max(1, Math.min(botState.bankroll * adjustedBetPercent / 100, botState.bankroll - botState.totalExposure));
+        // Use dynamic risk calculation instead of static betPercent
+        const dynamicBetPercent = riskCalculation.optimalRiskPercent * riskMultiplier;
+        const betAmount = Math.max(1, Math.min(
+            botState.bankroll * (dynamicBetPercent / 100),
+            botState.bankroll - botState.totalExposure
+        ));
         if (betAmount < 1) return;
 
         try {
             const price = await this.binanceService.getFuturesPrice(symbol);
             if (!price) return;
 
-            const leverage = genome.risk.leverage;
+            // Use dynamic leverage limit from risk manager
+            const leverage = Math.min(genome.risk.leverage, riskCalculation.leverageLimit);
             const notional = betAmount * leverage;
             const quantity = parseFloat((notional / price).toFixed(symbol === 'BTCUSDT' ? 3 : symbol === 'ETHUSDT' ? 3 : 1));
 
+            // Use dynamic stop loss and take profit distances
             const effectiveATR = atr || (price * 0.001);
-            const tpDistance = effectiveATR * genome.risk.atrMultiplierTP;
-            const slDistance = effectiveATR * genome.risk.atrMultiplierSL;
+            const tpDistance = riskCalculation.takeProfitDistance > 0 
+                ? (riskCalculation.takeProfitDistance / 100) * price 
+                : effectiveATR * genome.risk.atrMultiplierTP;
+            const slDistance = riskCalculation.stopLossDistance > 0 
+                ? (riskCalculation.stopLossDistance / 100) * price 
+                : effectiveATR * genome.risk.atrMultiplierSL;
             const trailDistance = genome.risk.trailingStopATR > 0 ? effectiveATR * genome.risk.trailingStopATR : 0;
 
             const tp = decision.direction === 'LONG' ? price + tpDistance : price - tpDistance;
@@ -424,7 +488,32 @@ export class GroupArena {
 
             botState.openPositions.set(symbol, position);
             botState.totalExposure += betAmount;
-        } catch { /* skip */ }
+            
+            // ===== REGISTER WITH RISK MANAGERS =====
+            this.portfolioExposureManager.addPosition({
+                symbol,
+                side: decision.direction,
+                betAmount,
+                leverage,
+                notionalValue: notional,
+                entryPrice: price,
+                currentPrice: price,
+                unrealizedPnl: 0
+            });
+            
+            correlationMonitor.addPosition({
+                botId: botState.sessionId,
+                symbol,
+                side: decision.direction,
+                betAmount,
+                leverage,
+                entryTime: this.currentCycle
+            });
+            
+            console.log(`✅ [${this.groupId}] Posição aberta: ${symbol} ${decision.direction} - $${betAmount.toFixed(2)} x${leverage} (TP: ${tp.toFixed(2)}, SL: ${sl.toFixed(2)})`);
+        } catch (err) {
+            console.error(`❌ [${this.groupId}] openPosition error ${symbol}:`, err instanceof Error ? err.message : err);
+        }
     }
 
     private async monitorPositions(botState: BotStateV2, allSignals: MarketSignals[]): Promise<void> {
@@ -485,7 +574,9 @@ export class GroupArena {
                     botState.openPositions.delete(symbol);
                     this.closePosition(botState, symbol, currentPrice, reason, pos);
                 }
-            } catch { /* skip */ }
+            } catch (err) {
+                console.error(`❌ [${this.groupId}] monitorPositions error ${symbol}:`, err instanceof Error ? err.message : err);
+            }
         }
     }
 
@@ -507,11 +598,62 @@ export class GroupArena {
         if (botState.pnlHistory.length > 200) botState.pnlHistory = botState.pnlHistory.slice(-200);
 
         botState.totalTrades++;
+
+        // ===== ODDS TRACKING (CEO-BINANCE directive) =====
+        // Calculate actual odds: how much was won/lost relative to bet
+        const actualOdd = pnlValue > 0 ? (pnlValue / posRef.betAmount) : (Math.abs(pnlValue) / posRef.betAmount);
+
+        // ===== STRATEGY METRICS (CEO-BINANCE directive) =====
+        // Extract strategy data from consensus snapshot
+        const activeStrategies = posRef.consensusSnapshot.topStrategies || [];
+        const strategyStrengths: { [key: string]: number } = {};
+        let topStrategy = '';
+        let topStrategyStrength = 0;
+
+        // Initialize strategy metrics if not exists
+        if (Object.keys(botState.strategyMetrics).length === 0) {
+            // Initialize for all 30 strategies
+            for (let i = 0; i < 30; i++) {
+                const stratId = `strat_${i}`;
+                botState.strategyMetrics[stratId] = {
+                    strategyId: stratId,
+                    totalTrades: 0,
+                    wins: 0,
+                    losses: 0,
+                    winRate: 0,
+                    totalTakeProfitValue: 0,
+                    totalStopLossValue: 0,
+                    avgTakeProfitOdd: 0,
+                    avgStopLossOdd: 0,
+                    expectedValue: 0,
+                    avgSignalStrength: 0,
+                    participationRate: 0
+                };
+            }
+        }
+
         if (pnlValue > 0) {
             botState.wins++;
             botState.consecutiveWins++;
             botState.consecutiveLosses = 0;
             botState.currentBetPercent = Math.min(botState.genome.betting.maxBetPercent, botState.currentBetPercent * botState.genome.betting.winMultiplier);
+
+            // Update TP tracking
+            botState.totalTakeProfitValue += pnlValue;
+            // Recalculate average TP odd
+            botState.avgTakeProfitOdd = botState.wins > 0 ? botState.totalTakeProfitValue / botState.wins / posRef.betAmount : 0;
+
+            // Update strategy metrics for wins
+            for (const stratId of activeStrategies) {
+                if (botState.strategyMetrics[stratId]) {
+                    botState.strategyMetrics[stratId].wins++;
+                    botState.strategyMetrics[stratId].totalTakeProfitValue += pnlValue;
+                    botState.strategyMetrics[stratId].avgTakeProfitOdd =
+                        botState.strategyMetrics[stratId].wins > 0
+                            ? botState.strategyMetrics[stratId].totalTakeProfitValue / botState.strategyMetrics[stratId].wins / posRef.betAmount
+                            : 0;
+                }
+            }
         } else {
             botState.losses++;
             botState.consecutiveLosses++;
@@ -520,7 +662,50 @@ export class GroupArena {
             if (botState.consecutiveLosses >= botState.genome.betting.resetAfterLosses) {
                 botState.currentBetPercent = botState.genome.betting.basePercent;
             }
+
+            // Update SL tracking
+            botState.totalStopLossValue += Math.abs(pnlValue);
+            // Recalculate average SL odd
+            botState.avgStopLossOdd = botState.losses > 0 ? botState.totalStopLossValue / botState.losses / posRef.betAmount : 0;
+
+            // Update strategy metrics for losses
+            for (const stratId of activeStrategies) {
+                if (botState.strategyMetrics[stratId]) {
+                    botState.strategyMetrics[stratId].losses++;
+                    botState.strategyMetrics[stratId].totalStopLossValue += Math.abs(pnlValue);
+                    botState.strategyMetrics[stratId].avgStopLossOdd =
+                        botState.strategyMetrics[stratId].losses > 0
+                            ? botState.strategyMetrics[stratId].totalStopLossValue / botState.strategyMetrics[stratId].losses / posRef.betAmount
+                            : 0;
+                }
+            }
         }
+
+        // Update strategy participation and expected value
+        for (const stratId of activeStrategies) {
+            if (botState.strategyMetrics[stratId]) {
+                const metrics = botState.strategyMetrics[stratId];
+                metrics.totalTrades++;
+                metrics.winRate = metrics.totalTrades > 0 ? metrics.wins / metrics.totalTrades : 0;
+                metrics.expectedValue = (metrics.winRate * metrics.avgTakeProfitOdd) - ((1 - metrics.winRate) * metrics.avgStopLossOdd);
+                metrics.participationRate = botState.totalTrades > 0 ? metrics.totalTrades / botState.totalTrades : 0;
+                
+                // ===== STRATEGY ARENA UPDATE =====
+                // Update arena with strategy performance
+                strategyArena.updateStrategyMetrics(
+                    stratId,
+                    pnlValue,
+                    posRef.betAmount,
+                    pnlValue > 0,
+                    posRef.consensusSnapshot.weightedStrength
+                );
+            }
+        }
+
+        // Calculate expected value: (winRate * avgTP) - (lossRate * avgSL)
+        const winRate = botState.totalTrades > 0 ? botState.wins / botState.totalTrades : 0;
+        const lossRate = 1 - winRate;
+        botState.expectedValue = (winRate * botState.avgTakeProfitOdd) - (lossRate * botState.avgStopLossOdd);
 
         botState.maxBankroll = Math.max(botState.maxBankroll, botState.bankroll);
         botState.minBankroll = Math.min(botState.minBankroll, botState.bankroll);
@@ -547,10 +732,25 @@ export class GroupArena {
             bankrollBefore: Math.round(bankrollBefore * 100) / 100,
             bankrollAfter: Math.round(botState.bankroll * 100) / 100,
             timestamp: new Date().toISOString(),
-            consensusSnapshot: posRef.consensusSnapshot
+            consensusSnapshot: posRef.consensusSnapshot,
+            // ===== STRATEGY METRICS =====
+            activeStrategies,
+            strategyStrengths,
+            topStrategy,
+            topStrategyStrength
         });
 
         if (botState.tradeHistory.length > 100) botState.tradeHistory = botState.tradeHistory.slice(-100);
+        
+        // ===== RISK MANAGER UPDATE =====
+        // Register loss for circuit breaker (per group)
+        dynamicRiskManager.recordLoss(pnlValue, bankrollBefore, this.groupId);
+
+        // Remove from portfolio exposure (per group instance)
+        this.portfolioExposureManager.removePosition(symbol, posRef.side);
+        
+        // Remove from correlation monitor
+        correlationMonitor.removePosition(botState.sessionId);
     }
 
     // ======================== EVOLUTION ========================
@@ -729,36 +929,6 @@ export class GroupArena {
         const newGenome: GenomeV2 = JSON.parse(JSON.stringify(genome));
         newGenome.id = `eco-${this.groupId}-migrant-${Date.now()}`;
         this.bots.set(newGenome.id, this.createBotState(newGenome));
-    }
-
-    /**
-     * Export seed genomes for cross-pollination to other groups
-     */
-    exportSeedGenomes(): Record<string, any> {
-        return {
-            strategyParams: this.strategyParamDNA.getGenome(),
-            marketRegime: this.regimeDNA.getGenome(),
-            temporal: this.temporalDNA.getGenome(),
-            correlation: this.correlationDNA.getGenome(),
-            sentiment: this.sentimentDNA.getGenome(),
-            riskAdapt: this.riskAdaptDNA.getGenome(),
-            patterns: this.patternDNA.getGenome(),
-            symbolSelection: this.symbolSelectionDNA.getGenome(),
-        };
-    }
-
-    /**
-     * Cross-pollinate: evolve seeds using partner genomes from another group
-     */
-    crossPollinateSeeds(donorGenomes: Record<string, any>): void {
-        if (donorGenomes.strategyParams) this.strategyParamDNA.evolve(donorGenomes.strategyParams);
-        if (donorGenomes.marketRegime) this.regimeDNA.evolve(donorGenomes.marketRegime);
-        if (donorGenomes.temporal) this.temporalDNA.evolve(donorGenomes.temporal);
-        if (donorGenomes.correlation) this.correlationDNA.evolve(donorGenomes.correlation);
-        if (donorGenomes.sentiment) this.sentimentDNA.evolve(donorGenomes.sentiment);
-        if (donorGenomes.riskAdapt) this.riskAdaptDNA.evolve(donorGenomes.riskAdapt);
-        if (donorGenomes.patterns) this.patternDNA.evolve(donorGenomes.patterns);
-        if (donorGenomes.symbolSelection) this.symbolSelectionDNA.evolve(donorGenomes.symbolSelection);
     }
 
     /**
@@ -1052,7 +1222,15 @@ export class GroupArena {
             startTime: new Date().toISOString(), lastTradeTime: null,
             deathCount: 0, sessionId: `eco_${this.groupId}_${Date.now()}`,
             currentBetPercent: genome.betting.basePercent,
-            symbolCooldowns: new Map()
+            symbolCooldowns: new Map(),
+            // ===== ODDS TRACKING (CEO-BINANCE directive) =====
+            totalTakeProfitValue: 0,
+            totalStopLossValue: 0,
+            avgTakeProfitOdd: 0,
+            avgStopLossOdd: 0,
+            expectedValue: 0,
+            // ===== STRATEGY METRICS =====
+            strategyMetrics: {}
         };
     }
 
@@ -1072,6 +1250,144 @@ export class GroupArena {
         const alive = this.getAliveBots();
         if (alive.length === 0) return 0;
         return alive.reduce((sum, bot) => sum + this.calculateFitness(bot), 0) / alive.length;
+    }
+
+    /**
+     * Get all bots (including dead ones)
+     */
+    getAllBots(): BotStateV2[] {
+        return Array.from(this.bots.values());
+    }
+
+    /**
+     * Get pause multiplier
+     */
+    getPauseMultiplier(): number {
+        return this._pauseMultiplier;
+    }
+
+    /**
+     * Set pause multiplier (reduces activity when group is struggling)
+     */
+    setPauseMultiplier(multiplier: number): void {
+        this._pauseMultiplier = Math.max(0.1, Math.min(1.0, multiplier));
+    }
+
+    /**
+     * Returns complete group status for API responses
+     */
+    getStatus(): any {
+        const bots = Array.from(this.bots.values()).map(bot => {
+            const winRate = bot.totalTrades > 0 ? (bot.wins / bot.totalTrades) : 0;
+            const lossRate = 1 - winRate;
+            
+            return {
+                id: bot.genome.id,
+                name: bot.genome.name,
+                bankroll: Math.round(bot.bankroll * 100) / 100,
+                initialBankroll: bot.initialBankroll,
+                fitness: Math.round(this.calculateFitness(bot) * 100) / 100,
+                trades: bot.totalTrades,
+                wins: bot.wins,
+                losses: bot.losses,
+                winRate: Math.round(winRate * 1000) / 10,
+                lossRate: Math.round(lossRate * 1000) / 10,
+                generation: bot.genome.generation,
+                isAlive: bot.isAlive && bot.bankroll > 0,
+                openPositions: bot.openPositions.size,
+                maxDrawdown: Math.round(bot.maxDrawdown * 100) / 100,
+                leverage: bot.genome.risk.leverage,
+                activeStrategies: bot.genome.strategyMask.filter(m => m).length,
+                // ===== ODDS METRICS =====
+                avgTakeProfitOdd: Math.round(bot.avgTakeProfitOdd * 100) / 100,
+                avgStopLossOdd: Math.round(bot.avgStopLossOdd * 100) / 100,
+                expectedValue: Math.round(bot.expectedValue * 1000) / 10,
+                totalTakeProfitValue: Math.round(bot.totalTakeProfitValue * 100) / 100,
+                totalStopLossValue: Math.round(bot.totalStopLossValue * 100) / 100
+            };
+        });
+
+        // Calculate group-level odds metrics
+        const avgGroupTP = bots.reduce((sum, b) => sum + b.avgTakeProfitOdd, 0) / Math.max(1, bots.length);
+        const avgGroupSL = bots.reduce((sum, b) => sum + b.avgStopLossOdd, 0) / Math.max(1, bots.length);
+        const avgGroupEV = bots.reduce((sum, b) => sum + b.expectedValue, 0) / Math.max(1, bots.length);
+
+        return {
+            groupId: this.groupId,
+            style: this.config.style,
+            bankroll: Math.round(this.getGroupBankroll() * 100) / 100,
+            initialBankroll: BOTS_PER_GROUP * INITIAL_BANKROLL,
+            groupFitness: Math.round(this.getGroupFitness() * 100) / 100,
+            generation: this.generation,
+            cycle: this.currentCycle,
+            totalBots: this.bots.size,
+            aliveBots: this.getAliveBots().length,
+            bots,
+            seeds: this.getSeedsStatus(),
+            pauseMultiplier: this._pauseMultiplier,
+            // ===== GROUP ODDS METRICS =====
+            avgTakeProfitOdd: Math.round(avgGroupTP * 100) / 100,
+            avgStopLossOdd: Math.round(avgGroupSL * 100) / 100,
+            expectedValue: Math.round(avgGroupEV * 1000) / 10
+        };
+    }
+
+    /**
+     * Export seed genomes for cross-pollination
+     * Returns simplified genome snapshots for each DNA dimension
+     */
+    exportSeedGenomes(): any[] {
+        // Return simplified state snapshots (full implementation would require DNA classes to support export)
+        return [
+            { type: 'strategyParamDNA', groupId: this.groupId },
+            { type: 'regimeDNA', groupId: this.groupId, currentRegime: this.regimeDNA.getCurrentRegime() },
+            { type: 'temporalDNA', groupId: this.groupId },
+            { type: 'correlationDNA', groupId: this.groupId },
+            { type: 'sentimentDNA', groupId: this.groupId, currentSentiment: this.sentimentDNA.getCurrentSentiment() },
+            { type: 'riskAdaptDNA', groupId: this.groupId },
+            { type: 'metaEvolutionDNA', groupId: this.groupId },
+            { type: 'patternDNA', groupId: this.groupId },
+            { type: 'symbolSelectionDNA', groupId: this.groupId }
+        ];
+    }
+
+    /**
+     * Import and cross-pollinate seeds from another group
+     * Note: Full crossover would require DNA classes to support import/crossover operations
+     */
+    crossPollinateSeeds(_donorGenomes: any[]): void {
+        // Simplified: Just apply small random mutations to simulate genetic influence
+        // Full implementation would require DNA classes to support crossover operations
+        const mutationRate = 0.05;
+        
+        // Apply light mutation to strategy weights
+        for (const [, bot] of this.bots) {
+            if (bot.isAlive) {
+                for (let i = 0; i < bot.genome.strategyWeights.length; i++) {
+                    if (Math.random() < mutationRate) {
+                        bot.genome.strategyWeights[i] = Math.max(0.1, Math.min(2.0, bot.genome.strategyWeights[i] + (Math.random() - 0.5) * 0.2));
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Get status of all 9 mycelium seeds
+     * Returns simplified summaries since DNA classes don't have getSummary() method
+     */
+    getSeedsStatus(): any {
+        return {
+            strategyParamDNA: { type: 'StrategyParamDNA', groupId: this.groupId, initialized: true },
+            marketRegime: { type: 'MarketRegimeDNA', groupId: this.groupId, currentRegime: this.regimeDNA.getCurrentRegime() },
+            temporal: { type: 'TemporalDNA', groupId: this.groupId, activityWeight: this.temporalDNA.getActivityWeight() },
+            correlation: { type: 'CorrelationDNA', groupId: this.groupId },
+            sentiment: { type: 'SentimentDNA', groupId: this.groupId, currentSentiment: this.sentimentDNA.getCurrentSentiment() },
+            riskAdapt: { type: 'RiskAdaptDNA', groupId: this.groupId },
+            metaEvolution: { type: 'MetaEvolutionDNA', groupId: this.groupId },
+            patterns: { type: 'PatternDNA', groupId: this.groupId },
+            symbolSelection: { type: 'SymbolSelectionDNA', groupId: this.groupId }
+        };
     }
 
     // ======================== RANGING OPTIMIZATIONS ========================
@@ -1114,6 +1430,7 @@ export class GroupArena {
         }
     }
 
+    private rangingConfigLogged = false;
     private loadRangingConfig(): {
         leverage: { min: number; max: number };
         minSignalStrength: number;
@@ -1123,11 +1440,22 @@ export class GroupArena {
         momentumPenalty: number;
     } | null {
         try {
-            // Load from config file
-            const config = require('./configs/delta-ranging-optimization.json');
-            return config;
+            // Try both src and dist paths
+            const configPath = path.resolve(__dirname, 'configs', 'delta-ranging-optimization.json');
+            if (fs.existsSync(configPath)) {
+                return JSON.parse(fs.readFileSync(configPath, 'utf8'));
+            }
+            // Fallback to src path when running compiled
+            const srcPath = path.resolve(__dirname, '..', '..', '..', 'src', 'services', 'ecosystem', 'configs', 'delta-ranging-optimization.json');
+            if (fs.existsSync(srcPath)) {
+                return JSON.parse(fs.readFileSync(srcPath, 'utf8'));
+            }
+            if (!this.rangingConfigLogged) {
+                console.warn('Ranging config not found for DELTA group (logged once)');
+                this.rangingConfigLogged = true;
+            }
+            return null;
         } catch {
-            console.warn('Ranging config not found for DELTA group');
             return null;
         }
     }

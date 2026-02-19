@@ -3,10 +3,11 @@
 $METRICS_FILE = "C:/AIOS/metrics_history.json"
 $MAX_ENTRIES = 1000
 
-Write-Host "📈 Exporting system metrics..." -ForegroundColor Cyan
+Write-Host "[METRICS] Exporting system metrics..." -ForegroundColor Cyan
 
 try {
-    $pm2Data = pm2 jlist | ConvertFrom-Json
+    $pm2Json = pm2 jlist | Out-String
+    $pm2Data = $pm2Json | ConvertFrom-Json -ErrorAction Stop
     $timestamp = Get-Date -Format "o"
     
     $currentMetrics = @()
@@ -43,8 +44,9 @@ try {
     }
     
     $history | ConvertTo-Json -Depth 10 | Set-Content $METRICS_FILE -Encoding UTF8
-    Write-Host "✅ Metrics persisted to $METRICS_FILE" -ForegroundColor Green
+    Write-Host "[OK] Metrics persisted to $METRICS_FILE" -ForegroundColor Green
 }
 catch {
-    Write-Error "Failed to export metrics: $($_.Exception.Message)"
+    # Silently ignore errors - metrics export is non-critical
+    Write-Host "[WARN] Failed to export metrics (non-critical)" -ForegroundColor Yellow
 }

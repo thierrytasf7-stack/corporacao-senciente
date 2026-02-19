@@ -15,18 +15,40 @@ function parseArgs() {
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--analysis' && args[i+1]) parsed.analysis = args[++i];
     else if (args[i] === '--output' && args[i+1]) parsed.output = args[++i];
+    else if (args[i] === '--theme' && args[i+1]) parsed.theme = args[++i];
   }
   return parsed;
 }
 
 function getScoreColor(score) {
-  if (score <= 1) return '#ff4444';
-  if (score <= 2) return '#ff8800';
-  if (score <= 3) return '#44cc44';
-  return '#00cc88';
+  if (score <= 1) return '#C0392B';    // Vermelho escuro (alto contraste)
+  if (score <= 2) return '#B45F00';    // Laranja escuro (alto contraste)
+  if (score <= 3) return '#0A7B8F';    // Teal escuro (alto contraste)
+  return '#1A7A3C';                    // Verde escuro (alto contraste)
 }
 
-function generateSlidesHTML(analysis) {
+function getLogoBase64() {
+  try {
+    const logoPath = path.resolve(__dirname, '../assets/fnw-logo.png');
+    const buffer = fs.readFileSync(logoPath);
+    return `data:image/png;base64,${buffer.toString('base64')}`;
+  } catch (e) {
+    console.error('[SLIDES] Erro ao carregar logo:', e.message);
+    return '';
+  }
+}
+
+function generateSlidesHTML(analysis, theme, logoBase64) {
+  const isWhite = theme === 'white';
+  const BG = isWhite ? '#FFFFFF' : '#0A0A0A';
+  const BG_SURFACE = isWhite ? '#F4F4F5' : '#161616';
+  const TEXT = isWhite ? '#111827' : '#FFFFFF';
+  const TEXT_MUTED = isWhite ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.8)';
+  const TEXT_DIM = isWhite ? 'rgba(0,0,0,0.4)' : 'rgba(255,255,255,0.2)';
+  const ACCENT = isWhite ? '#0891B2' : '#00F5FF';
+  const BORDER = isWhite ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.05)';
+  const BAR_BG = isWhite ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.05)';
+  const logoImg = logoBase64 ? `<img class="logo-header" src="${logoBase64}" alt="Logo" />` : '';
   const alvo = analysis.alvo?.nome || 'Analise PUV';
   const url = analysis.alvo?.url || '';
   const canal = analysis.alvo?.canal || '';
@@ -40,54 +62,68 @@ function generateSlidesHTML(analysis) {
 
   const slideStyle = `
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@600&family=Space+Mono&display=swap');
       @page { size: landscape; margin: 0; }
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font-family: 'Segoe UI', Arial, sans-serif; }
+      body { font-family: 'Inter', sans-serif; background: ${BG}; color: ${TEXT}; }
       .slide {
         width: 1280px; height: 720px;
         padding: 60px 80px;
         page-break-after: always;
         position: relative;
         overflow: hidden;
+        background-color: ${BG};
       }
       .slide:last-child { page-break-after: avoid; }
-      .dark { background: linear-gradient(135deg, #0a0a2e, #1a1a4e); color: #fff; }
-      .light { background: #f8f9fa; color: #1a1a2e; }
-      .accent { background: linear-gradient(135deg, #1a1a4e, #2a1a6e); color: #fff; }
-      h1 { font-size: 42px; margin-bottom: 20px; }
-      h2 { font-size: 36px; margin-bottom: 24px; color: #00d4ff; }
-      h3 { font-size: 28px; margin-bottom: 16px; }
-      p { font-size: 20px; line-height: 1.6; }
-      .score-big { font-size: 96px; font-weight: 900; color: #ffd700; }
-      .score-label { font-size: 28px; color: #8899aa; }
-      .footer { position: absolute; bottom: 20px; right: 40px; font-size: 14px; color: #556; }
+      .logo-header {
+        position: absolute;
+        top: 30px; left: 40px;
+        height: 60px;
+        z-index: 100;
+      }
+      .dark { background: ${BG}; color: ${TEXT}; }
+      .light { background: ${BG_SURFACE}; color: ${TEXT}; border: 0.5px solid ${BORDER}; }
+      .accent { background: ${BG}; color: ${TEXT}; border-left: 10px solid ${ACCENT}; }
+
+      h1 { font-family: 'JetBrains Mono', monospace; font-size: 48px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: -2px; }
+      h2 { font-family: 'JetBrains Mono', monospace; font-size: 36px; margin-bottom: 24px; color: ${ACCENT}; text-transform: uppercase; }
+      h3 { font-family: 'JetBrains Mono', monospace; font-size: 24px; margin-bottom: 16px; color: ${TEXT}; text-transform: uppercase; }
+      p { font-size: 20px; line-height: 1.6; color: ${TEXT_MUTED}; }
+
+      .score-big { font-family: 'JetBrains Mono', monospace; font-size: 120px; font-weight: 900; color: ${TEXT}; }
+      .score-label { font-family: 'Space Mono', monospace; font-size: 28px; color: ${ACCENT}; opacity: 0.6; }
+      .footer { position: absolute; bottom: 40px; right: 40px; font-family: 'Space Mono', monospace; font-size: 12px; color: ${TEXT_DIM}; text-transform: uppercase; }
+
       .badge {
-        display: inline-block; padding: 8px 20px; border-radius: 20px;
-        font-size: 20px; font-weight: 700;
+        display: inline-block; padding: 12px 32px; border-radius: 4px;
+        font-size: 20px; font-weight: 700; color: ${isWhite ? '#FFF' : '#000'}; font-family: 'Space Mono', monospace;
       }
       .criterio-row {
-        display: flex; align-items: center; margin: 14px 0;
-        font-size: 20px;
+        display: flex; align-items: center; margin: 18px 0;
+        font-size: 18px;
       }
-      .criterio-name { width: 300px; }
+      .criterio-name { width: 350px; color: ${TEXT_MUTED}; }
       .criterio-bar-bg {
-        flex: 1; height: 24px; background: rgba(255,255,255,0.1);
-        border-radius: 12px; margin: 0 16px; overflow: hidden;
+        flex: 1; height: 8px; background: ${BAR_BG};
+        border-radius: 0; margin: 0 16px; overflow: hidden;
       }
       .criterio-bar {
-        height: 100%; border-radius: 12px;
+        height: 100%; border-radius: 0;
+        background: ${ACCENT};
         transition: width 0.3s;
       }
-      .criterio-val { width: 60px; text-align: right; font-weight: 700; color: #ffd700; }
+      .criterio-val { width: 60px; text-align: right; font-weight: 700; color: ${ACCENT}; font-family: 'Space Mono', monospace; }
+
       .action-item {
-        padding: 16px 20px; margin: 12px 0;
-        background: rgba(255,255,255,0.05); border-radius: 12px;
-        border-left: 4px solid #ffd700; font-size: 19px;
+        padding: 24px; margin: 16px 0;
+        background: ${BG_SURFACE}; border-radius: 4px;
+        border: 0.5px solid ${BORDER};
+        border-left: 4px solid ${ACCENT}; font-size: 19px;
       }
       .two-col { display: flex; gap: 40px; }
       .col { flex: 1; }
-      .highlight { color: #ffd700; }
-      .subtitle { font-size: 22px; color: #8899aa; margin-bottom: 30px; }
+      .highlight { color: ${ACCENT}; }
+      .subtitle { font-family: 'Space Mono', monospace; font-size: 18px; color: ${TEXT_DIM}; margin-bottom: 30px; }
     </style>
   `;
 
@@ -96,22 +132,24 @@ function generateSlidesHTML(analysis) {
   // Slide 1: Capa
   slides.push(`
     <div class="slide dark">
+      ${logoImg}
       <div style="display:flex;flex-direction:column;justify-content:center;height:100%;text-align:center;">
-        <p style="font-size:18px;color:#00d4ff;letter-spacing:6px;margin-bottom:20px;">DIAGNOSTICO DE POSICIONAMENTO</p>
+        <p style="font-size:18px;color:${ACCENT};letter-spacing:6px;margin-bottom:20px;">DIAGNOSTICO DE POSICIONAMENTO</p>
         <h1 style="font-size:52px;margin-bottom:16px;">${alvo}</h1>
         <p class="subtitle">${canal.toUpperCase()} | ${url}</p>
         <div style="margin-top:40px;">
           <span class="score-big">${score}</span><span class="score-label">/20</span>
         </div>
-        <p style="margin-top:16px;"><span class="badge" style="background:${score>=14?'#44cc44':score>=10?'#ffcc00;color:#333':'#ff8800'}">${classificacao}</span></p>
+        <p style="margin-top:16px;"><span class="badge" style="background:${score>=14?'#1A7A3C':score>=10?'#B45F00':'#C0392B'}">${classificacao}</span></p>
       </div>
-      <div class="footer">FNW - Freenat Work | Powered by Diana AIOS</div>
+      <div class="footer">- Grupo FNW - PUV SCORE - Coorp.Diana Senciente.</div>
     </div>
   `);
 
   // Slide 2: Score Overview
   slides.push(`
     <div class="slide dark">
+      ${logoImg}
       <h2>Score Overview</h2>
       <div style="display:flex;gap:40px;margin-top:20px;">
         <div style="flex:1;">
@@ -128,10 +166,10 @@ function generateSlidesHTML(analysis) {
         <div style="width:250px;text-align:center;padding-top:20px;">
           <div class="score-big">${score}</div>
           <div class="score-label">/20</div>
-          <div style="margin-top:16px;"><span class="badge" style="background:${score>=14?'#44cc44':score>=10?'#ffcc00;color:#333':'#ff8800'}">${classificacao}</span></div>
+          <div style="margin-top:16px;"><span class="badge" style="background:${score>=14?'#1A7A3C':score>=10?'#B45F00':'#C0392B'}">${classificacao}</span></div>
         </div>
       </div>
-      <div class="footer">FNW - Freenat Work</div>
+      <div class="footer">- Grupo FNW - PUV SCORE - Coorp.Diana Senciente.</div>
     </div>
   `);
 
@@ -141,23 +179,24 @@ function generateSlidesHTML(analysis) {
     const salto = c.oportunidade_salto || 'Buscar melhoria continua neste criterio';
     slides.push(`
       <div class="slide ${i % 2 === 0 ? 'dark' : 'accent'}">
+        ${logoImg}
         <h2>Criterio ${i+1}: ${c.nome || ''}</h2>
         <div style="display:flex;gap:40px;">
           <div style="flex:2;">
             <p style="margin-bottom:20px;">${c.justificativa || ''}</p>
-            <h3 style="color:#ffd700;font-size:22px;">Evidencias encontradas:</h3>
-            <p style="color:#ccc;">${exemplos}</p>
-            <div style="margin-top:30px;padding:20px;background:rgba(255,215,0,0.1);border-radius:12px;border:1px solid rgba(255,215,0,0.3);">
-              <h3 style="color:#ffd700;font-size:20px;">Oportunidade de Salto (${c.score || 0} → ${Math.min((c.score||0)+1, 4)})</h3>
-              <p style="color:#eee;margin-top:8px;">${salto}</p>
+            <h3 style="color:${ACCENT};font-size:22px;">Evidencias encontradas:</h3>
+            <p style="color:${TEXT_MUTED};">${exemplos}</p>
+            <div style="margin-top:30px;padding:20px;background:rgba(0,212,255,0.1);border-radius:12px;border:1px solid ${ACCENT};">
+              <h3 style="color:${ACCENT};font-size:20px;">Oportunidade de Salto (${c.score || 0} → ${Math.min((c.score||0)+1, 4)})</h3>
+              <p style="color:${TEXT_MUTED};margin-top:8px;">${salto}</p>
             </div>
           </div>
           <div style="width:200px;text-align:center;padding-top:30px;">
             <div style="font-size:72px;font-weight:900;color:${getScoreColor(c.score||0)}">${c.score || 0}</div>
-            <div style="font-size:20px;color:#8899aa;">/4</div>
+            <div style="font-size:20px;color:${TEXT_DIM};">/4</div>
           </div>
         </div>
-        <div class="footer">FNW - Freenat Work</div>
+        <div class="footer">- Grupo FNW - PUV SCORE - Coorp.Diana Senciente.</div>
       </div>
     `);
   });
@@ -165,51 +204,54 @@ function generateSlidesHTML(analysis) {
   // Slide 8: Oportunidades de Salto
   slides.push(`
     <div class="slide dark">
+      ${logoImg}
       <h2>Onde Podemos Escalar</h2>
       <p class="subtitle">O salto de 3 para 4 em cada criterio</p>
       ${criterios.map((c, i) => {
         const salto = c.oportunidade_salto || oportunidades[i] || '';
         if (!salto) return '';
-        return `<div class="action-item"><strong style="color:#00d4ff;">${c.nome}:</strong> ${salto}</div>`;
+        return `<div class="action-item" style="border-left-color:${ACCENT}"><strong style="color:${ACCENT};">${c.nome}:</strong> ${salto}</div>`;
       }).join('')}
-      <div class="footer">FNW - Freenat Work</div>
+      <div class="footer">- Grupo FNW - PUV SCORE - Coorp.Diana Senciente.</div>
     </div>
   `);
 
   // Slide 9: Top Acoes
   slides.push(`
     <div class="slide accent">
+      ${logoImg}
       <h2>Top ${acoes.length || 3} Acoes Priorizadas</h2>
       ${acoes.map((a, i) => `
-        <div class="action-item" style="border-left-color:${i===0?'#ff4444':i===1?'#ff8800':'#ffd700'}">
-          <strong style="color:#ffd700;">${i+1}.</strong> ${a}
+        <div class="action-item" style="border-left-color:${i===0?'#C0392B':i===1?'#B45F00':'#0A7B8F'}">
+          <strong style="color:${ACCENT};">${i+1}.</strong> ${a}
         </div>
       `).join('')}
       ${persona.primaria ? `
         <div style="margin-top:30px;padding:20px;background:rgba(0,212,255,0.1);border-radius:12px;">
-          <h3 style="color:#00d4ff;font-size:20px;">Persona Primaria</h3>
+          <h3 style="color:${ACCENT};font-size:20px;">Persona Primaria</h3>
           <p>${persona.primaria}</p>
-          ${persona.conflito ? `<p style="color:#ff8800;margin-top:8px;">Conflito: ${persona.conflito}</p>` : ''}
+          ${persona.conflito ? `<p style="color:#B45F00;margin-top:8px;">Conflito: ${persona.conflito}</p>` : ''}
         </div>
       ` : ''}
-      <div class="footer">FNW - Freenat Work</div>
+      <div class="footer">- Grupo FNW - PUV SCORE - Coorp.Diana Senciente.</div>
     </div>
   `);
 
   // Slide 10: Proximos Passos
   slides.push(`
     <div class="slide dark">
+      ${logoImg}
       <div style="display:flex;flex-direction:column;justify-content:center;height:100%;text-align:center;">
         <h2 style="font-size:40px;">Proximos Passos</h2>
-        <p style="font-size:24px;color:#ccc;margin:20px 0 40px;">
+        <p style="font-size:24px;color:${TEXT_MUTED};margin:20px 0 40px;">
           Implemente as acoes recomendadas e acompanhe a evolucao do seu PUV Score.
         </p>
-        <div style="padding:30px;background:rgba(255,215,0,0.1);border-radius:16px;border:1px solid #ffd700;display:inline-block;margin:0 auto;">
-          <p style="font-size:22px;color:#ffd700;font-weight:700;">DESBLOQUEAR RELATORIO COMPLETO</p>
-          <p style="font-size:16px;color:#ccc;margin-top:8px;">Plano detalhado com 6 secoes de recomendacoes</p>
+        <div style="padding:30px;background:rgba(0,212,255,0.1);border-radius:16px;border:1px solid ${ACCENT};display:inline-block;margin:0 auto;">
+          <p style="font-size:22px;color:${ACCENT};font-weight:700;">DESBLOQUEAR RELATORIO COMPLETO</p>
+          <p style="font-size:16px;color:${TEXT_MUTED};margin-top:8px;">Plano detalhado com 6 secoes de recomendacoes</p>
           <div style="width:120px;height:120px;background:#fff;margin:16px auto 0;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#333;font-size:14px;">QR CODE</div>
         </div>
-        <p style="margin-top:40px;color:#556;font-size:16px;">FNW - Freenat Work | contato@fnw.com.br</p>
+        <p style="margin-top:40px;color:${TEXT_DIM};font-size:16px;">- Grupo FNW - PUV SCORE - Coorp.Diana Senciente.</p>
       </div>
     </div>
   `);
@@ -233,9 +275,11 @@ async function main() {
   try {
     const puppeteer = require(path.resolve(__dirname, '../node_modules/puppeteer'));
     const analysis = JSON.parse(fs.readFileSync(args.analysis, 'utf-8'));
+    const logoBase64 = getLogoBase64();
 
-    console.error('[SLIDES] Gerando apresentacao...');
-    const html = generateSlidesHTML(analysis);
+    const theme = args.theme || 'black';
+    console.error(`[SLIDES] Gerando apresentacao (${theme})...`);
+    const html = generateSlidesHTML(analysis, theme, logoBase64);
 
     const browser = await puppeteer.launch({ headless: 'new' });
     const page = await browser.newPage();

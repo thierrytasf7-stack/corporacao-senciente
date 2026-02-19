@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+// --- Generic Models (Legacy/Internal) ---
+
 export const SportSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -167,3 +169,76 @@ export const BetfairErrorSchema = z.object({
 });
 
 export type BetfairError = z.infer<typeof BetfairErrorSchema>;
+
+// --- Pinnacle Specific Models (from betsapi-oas.yaml) ---
+
+export type OddsFormat = 'AMERICAN' | 'DECIMAL' | 'HONGKONG' | 'INDONESIAN' | 'MALAY';
+export type WinRiskStake = 'WIN' | 'RISK';
+export type FillType = 'NORMAL' | 'FILLANDKILL' | 'FILLMAXLIMIT';
+export type BetType = 'MONEYLINE' | 'TEAM_TOTAL_POINTS' | 'SPREAD' | 'TOTAL_POINTS' | 'SPECIAL' | 'PARLAY' | 'TEASER' | 'MANUAL';
+export type TeamType = 'TEAM1' | 'TEAM2' | 'DRAW';
+export type SideType = 'OVER' | 'UNDER';
+export type BetStatus = 'ACCEPTED' | 'CANCELLED' | 'LOSE' | 'PENDING_ACCEPTANCE' | 'REFUNDED' | 'NOT_ACCEPTED' | 'WON';
+
+export interface PlaceStraightBetRequest {
+  oddsFormat: OddsFormat;
+  uniqueRequestId: string;
+  acceptBetterLine: boolean;
+  stake: number;
+  winRiskStake: WinRiskStake;
+  lineId: number;
+  altLineId?: number;
+  pitcher1MustStart?: boolean;
+  pitcher2MustStart?: boolean;
+  fillType: FillType;
+  sportId: number;
+  eventId: number;
+  periodNumber: number;
+  betType: BetType;
+  team?: TeamType;
+  side?: SideType;
+}
+
+export interface PlaceBetResponse {
+  status: string; // 'ACCEPTED' | 'PENDING_ACCEPTANCE' | 'PROCESSED_WITH_ERROR'
+  errorCode?: string;
+  uniqueRequestId?: string;
+  straightBet?: {
+    betId: number;
+    betStatus: BetStatus;
+    betType: BetType;
+    oddsFormat: OddsFormat;
+    placedAt: string;
+    risk: number;
+    win: number;
+    price: number;
+    sportId: number;
+    eventId: number;
+    // ... other fields
+  };
+}
+
+export interface GetBetsRequest {
+  betlist?: 'SETTLED' | 'RUNNING' | 'ALL';
+  betStatuses?: BetStatus[];
+  fromDate?: string; // ISO8601
+  toDate?: string;   // ISO8601
+  sortDir?: 'ASC' | 'DESC';
+  pageSize?: number;
+  fromRecord?: number;
+  betids?: number[];
+  uniqueRequestIds?: string[];
+  betType?: BetType[];
+}
+
+export interface GetBetsResponse {
+  moreAvailable: boolean;
+  pageSize: number;
+  fromRecord: number;
+  toRecord: number;
+  straightBets: any[]; // Typed more specifically in real impl
+  parlayBets: any[];
+  teaserBets: any[];
+  specialBets: any[];
+  manualBets: any[];
+}

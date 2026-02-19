@@ -102,8 +102,8 @@ export default class StrategyService {
       timestamp: new Date(),
       profitPotential: kelly.expectedGrowth * bankroll.available,
       riskLevel: kelly.riskLevel,
-      recommendedStake: kelly.recommendedStake,
-      confidence: 0.80,
+      recommendedStake: kelly.stake,
+      confidence: kelly.confidence,
       metadata: { kelly }
     };
   }
@@ -113,7 +113,19 @@ export default class StrategyService {
     bankroll: Bankroll,
     marketData: any
   ): StrategyResult | null {
-    // Similar to arbitrage but with different thresholds
-    return this.executeArbitrage(strategy, bankroll, marketData);
+    const sureBet = this.arbitrage.detectSureBet(marketData.odds || []);
+
+    if (!sureBet) return null;
+
+    return {
+      strategyId: strategy.id,
+      strategyType: 'SURE_BETTING',
+      timestamp: new Date(),
+      profitPotential: sureBet.profit,
+      riskLevel: 'LOW',
+      recommendedStake: sureBet.totalStake,
+      confidence: 0.98,
+      metadata: { sureBet }
+    };
   }
 }

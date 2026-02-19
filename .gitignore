@@ -162,6 +162,23 @@ tools/supabase.exe
 tools/game-interface/
 deployments/cloud/cf.exe
 
+# Windows reserved filenames
+$null
+nul
+
+# Embedded git repos (scrapers)
+modules/betting-platform/scrapers/
+
+# DNA Arena V2 session data (hundreds of temp files)
+modules/binance-bot/backend/data/DNA-ARENA-V2/sessions/
+
+# Binance bot markdown status files (temp)
+modules/binance-bot/*.md
+
+# Playwright reports and test results
+**/playwright-report/
+**/test-results/
+
 # Git backup
 .git.backup/
 

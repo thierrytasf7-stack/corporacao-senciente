@@ -1,4 +1,4 @@
-import { apiClient } from './trpc'';
+import { apiClient } from './trpc';
 
 export const api = {
   health: () => apiClient.health.query(),

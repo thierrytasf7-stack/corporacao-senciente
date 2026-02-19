@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUV Scorecard - OLX Brasil</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #6e45e2 0%, #88d3ce 100%); padding: 40px; text-align: center; color: white; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .header p { font-size: 1.2em; opacity: 0.9; }
+        .header .url { background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; display: inline-block; margin-top: 15px; font-size: 0.9em; }
+        .score-section { padding: 40px; text-align: center; background: #f8f9fa; }
+        .score-circle { width: 180px; height: 180px; border-radius: 50%; background: conic-gradient(#10b981 0deg 252deg, #e5e7eb 252deg 360deg); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .score-circle::before { content: ''; position: absolute; width: 140px; height: 140px; background: #f8f9fa; border-radius: 50%; }
+        .score-value { position: relative; font-size: 3.5em; font-weight: bold; color: #10b981; }
+        .score-label { font-size: 1.1em; color: #6b7280; margin-top: 10px; }
+        .score-max { font-size: 0.7em; color: #9ca3af; }
+        .criteria-section { padding: 40px; }
+        .criteria-section h2 { font-size: 1.5em; color: #1f2937; margin-bottom: 25px; border-bottom: 3px solid #6e45e2; padding-bottom: 10px; display: inline-block; }
+        .criterion { margin-bottom: 20px; }
+        .criterion-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .criterion-name { font-weight: 600; color: #374151; font-size: 1.05em; }
+        .criterion-score { font-weight: bold; padding: 4px 12px; border-radius: 12px; font-size: 0.9em; }
+        .score-high { background: #d1fae5; color: #065f46; }
+        .score-medium { background: #fef3c7; color: #92400e; }
+        .score-low { background: #fee2e2; color: #991b1b; }
+        .bar-container { height: 12px; background: #e5e7eb; border-radius: 6px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 6px; transition: width 0.5s ease; }
+        .bar-high { background: linear-gradient(90deg, #10b981, #34d399); }
+        .bar-medium { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+        .bar-low { background: linear-gradient(90deg, #ef4444, #f87171); }
+        .criterion-obs { font-size: 0.85em; color: #6b7280; margin-top: 6px; font-style: italic; }
+        .radar-section { padding: 40px; background: #f8f9fa; text-align: center; }
+        .radar-section h2 { font-size: 1.5em; color: #1f2937; margin-bottom: 25px; }
+        .radar-container { display: flex; justify-content: center; margin-top: 20px; }
+        .footer { padding: 30px; text-align: center; background: #1f2937; color: #9ca3af; font-size: 0.9em; }
+        .footer strong { color: white; }
+        @media (max-width: 600px) { .header h1 { font-size: 1.8em; } .score-circle { width: 140px; height: 140px; } .score-circle::before { width: 110px; height: 110px; } .score-value { font-size: 2.5em; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 PUV Scorecard</h1>
+            <p>OLX Brasil</p>
+            <div class="url">📍 https://olx.com.br</div>
+        </div>
+
+        <div class="score-section">
+            <div class="score-circle">
+                <div>
+                    <div class="score-value">14</div>
+                    <div class="score-max">de 20 pts</div>
+                </div>
+            </div>
+            <div class="score-label">Score Total</div>
+        </div>
+
+        <div class="criteria-section">
+            <h2>📊 Avaliação por Critério</h2>
+            
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">Clareza PUV</span>
+                    <span class="criterion-score score-high">2/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-high" style="width: 100%;"></div>
+                </div>
+                <div class="criterion-obs">Proposta clara: "Compre e venda online" - fácil de entender em segundos</div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">Diferenciação</span>
+                    <span class="criterion-score score-medium">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-medium" style="width: 50%;"></div>
+                </div>
+                <div class="criterion-obs">Anúncio grátis e chat integrado são comuns; Garantia OLX e Data OLX Autos são diferenciais reais mas pouco destacados</div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">Público-alvo</span>
+                    <span class="criterion-score score-high">2/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-high" style="width: 100%;"></div>
+                </div>
+                <div class="criterion-obs">Segmentação clara: particulares, profissionais, autos, imóveis, eletrônicos, pets</div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">Benefícios</span>
+                    <span class="criterion-score score-high">2/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-high" style="width: 100%;"></div>
+                </div>
+                <div class="criterion-obs">Múltiplos benefícios comunicados: gratuidade, segurança, logística, financiamento, sustentabilidade</div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">Prova Social</span>
+                    <span class="criterion-score score-low">0/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-low" style="width: 0%;"></div>
+                </div>
+                <div class="criterion-obs">Ausente - sem depoimentos, números de usuários, avaliações ou casos de sucesso visíveis</div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">CTA</span>
+                    <span class="criterion-score score-high">2/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-high" style="width: 100%;"></div>
+                </div>
+                <div class="criterion-obs">Múltiplos CTAs claros e variados: "Criar conta", "Anuncie grátis", "Simule parcelas", "Desapegar"</div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">Marca</span>
+                    <span class="criterion-score score-medium">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-medium" style="width: 50%;"></div>
+                </div>
+                <div class="criterion-obs">Marca reconhecida (Grupo OLX) mas comunicação visual genérica; pouco storytelling emocional</div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">Presença Digital</span>
+                    <span class="criterion-score score-high">2/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-high" style="width: 100%;"></div>
+                </div>
+                <div class="criterion-obs">Forte: 118M visitas, redes sociais ativas (Facebook, YouTube, TikTok, Instagram, Twitter, LinkedIn)</div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">UX</span>
+                    <span class="criterion-score score-medium">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-medium" style="width: 50%;"></div>
+                </div>
+                <div class="criterion-obs">Funcional mas poluída; muitas categorias e anúncios competindo; ferramenta Libras é diferencial positivo</div>
+            </div>
+
+            <div class="criterion">
+                <div class="criterion-header">
+                    <span class="criterion-name">Conversão</span>
+                    <span class="criterion-score score-medium">1/2</span>
+                </div>
+                <div class="bar-container">
+                    <div class="bar-fill bar-medium" style="width: 50%;"></div>
+                </div>
+                <div class="criterion-obs">CTAs presentes mas falta urgência e prova social; funil de anúncio poderia ser mais guiado</div>
+            </div>
+        </div>
+
+        <div class="radar-section">
+            <h2>🕸️ Radar Chart</h2>
+            <div class="radar-container">
+                <svg width="400" height="400" viewBox="0 0 400 400">
+                    <defs>
+                        <style>
+                            .radar-grid { stroke: #e5e7eb; stroke-width: 1; fill: none; }
+                            .radar-axis { stroke: #9ca3af; stroke-width: 1; }
+                            .radar-label { font-size: 11px; fill: #374151; font-family: Segoe UI, sans-serif; }
+                            .radar-value { font-size: 10px; fill: #6b7280; font-family: Segoe UI, sans-serif; }
+                            .radar-polygon { fill: rgba(110, 69, 226, 0.3); stroke: #6e45e2; stroke-width: 2; }
+                        </style>
+                    </defs>
+                    
+                    <!-- Grid circles -->
+                    <circle cx="200" cy="200" r="150" class="radar-grid"/>
+                    <circle cx="200" cy="200" r="120" class="radar-grid"/>
+                    <circle cx="200" cy="200" r="90" class="radar-grid"/>
+                    <circle cx="200" cy="200" r="60" class="radar-grid"/>
+                    <circle cx="200" cy="200" r="30" class="radar-grid"/>
+                    
+                    <!-- Axis lines -->
+                    <line x1="200" y1="50" x2="200" y2="350" class="radar-axis"/>
+                    <line x1="350" y1="200" x2="50" y2="200" class="radar-axis"/>
+                    <line x1="306" y1="94" x2="94" y2="306" class="radar-axis"/>
+                    <line x1="306" y1="306" x2="94" y2="94" class="radar-axis"/>
+                    
+                    <!-- Labels -->
+                    <text x="200" y="35" text-anchor="middle" class="radar-label">Clareza</text>
+                    <text x="365" y="205" text-anchor="start" class="radar-label">Diferenciação</text>
+                    <text x="200" y="375" text-anchor="middle" class="radar-label">Público</text>
+                    <text x="35" y="205" text-anchor="end" class="radar-label">Benefícios</text>
+                    <text x="320" y="85" text-anchor="start" class="radar-label">Prova Social</text>
+                    <text x="320" y="325" text-anchor="start" class="radar-label">CTA</text>
+                    <text x="80" y="325" text-anchor="end" class="radar-label">Marca</text>
+                    <text x="80" y="85" text-anchor="end" class="radar-label">Presença Digital</text>
+                    <text x="200" y="320" text-anchor="middle" class="radar-label">UX</text>
+                    <text x="200" y="90" text-anchor="middle" class="radar-label">Conversão</text>
+                    
+                    <!-- Data polygon (scores normalized to 0-2 scale, radius 150) -->
+                    <!-- Scores: Clareza=2, Diferenciação=1, Público=2, Benefícios=2, Prova Social=0, CTA=2, Marca=1, Presença Digital=2, UX=1, Conversão=1 -->
+                    <polygon class="radar-polygon" points="
+                        200,50
+                        275,200
+                        200,350
+                        125,200
+                        200,200
+                        275,275
+                        162.5,237.5
+                        125,125
+                        200,260
+                        200,125
+                    "/>
+                    
+                    <!-- Data points -->
+                    <circle cx="200" cy="50" r="4" fill="#6e45e2"/>
+                    <circle cx="275" cy="200" r="4" fill="#6e45e2"/>
+                    <circle cx="200" cy="350" r="4" fill="#6e45e2"/>
+                    <circle cx="125" cy="200" r="4" fill="#6e45e2"/>
+                    <circle cx="200" cy="200" r="4" fill="#6e45e2"/>
+                    <circle cx="275" cy="275" r="4" fill="#6e45e2"/>
+                    <circle cx="162.5" cy="237.5" r="4" fill="#6e45e2"/>
+                    <circle cx="125" cy="125" r="4" fill="#6e45e2"/>
+                    <circle cx="200" cy="260" r="4" fill="#6e45e2"/>
+                    <circle cx="200" cy="125" r="4" fill="#6e45e2"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>PUV Score Analysis</strong> | 18 de Fevereiro de 2026</p>
+            <p style="margin-top: 8px;">Score: 14/20 (70%) - <strong>Bom</strong></p>
+        </div>
+    </div>
+</body>
+</html>

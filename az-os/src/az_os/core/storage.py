@@ -5,6 +5,35 @@ from typing import Optional, List, Dict, Any
 from datetime import datetime
 
 
+from enum import Enum
+
+
+class TaskStatus(str, Enum):
+    """Status of a task."""
+    PENDING = 'pending'
+    RUNNING = 'running'
+    PAUSED = 'paused'
+    COMPLETED = 'completed'
+    FAILED = 'failed'
+    CANCELLED = 'cancelled'
+
+
+class TaskPriority(str, Enum):
+    """Priority level of a task."""
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+    CRITICAL = 'critical'
+
+
+class LogLevel(str, Enum):
+    """Log level for task logging."""
+    INFO = 'info'
+    WARNING = 'warning'
+    ERROR = 'error'
+    DEBUG = 'debug'
+
+
 class Database:
     """SQLite database for task management."""
 

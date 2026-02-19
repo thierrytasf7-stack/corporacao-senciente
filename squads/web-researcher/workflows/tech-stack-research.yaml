@@ -1,0 +1,30 @@
+name: tech-stack-research
+description: Workflow completo de research de tech stack para um domínio
+version: 1.0.0
+
+steps:
+  - id: web_search
+    task: research-web-search.md
+    description: Pesquisa tendências e práticas atuais do domínio
+
+  - id: tech_stack
+    task: research-tech-stack.md
+    description: Research do stack recomendado
+    depends_on: [web_search]
+
+  - id: analyze_frameworks
+    task: research-analyze-repo.md
+    description: Análise dos frameworks principais do stack
+    depends_on: [tech_stack]
+
+  - id: compare
+    task: research-compare-repos.md
+    description: Comparação das principais opções
+    depends_on: [analyze_frameworks]
+
+  - id: report
+    task: research-report.md
+    description: Relatório final com stack recomendado e justificativa
+    depends_on: [compare]
+
+output: Tech stack completo justificado com evidências

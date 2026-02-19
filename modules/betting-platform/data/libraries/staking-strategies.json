@@ -1,0 +1,111 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-02-17",
+  "strategies": [
+    {
+      "id": "fixed",
+      "label": "Flat / Fixed (2% da banca inicial)",
+      "description": "Stake fixo de 2% da banca INICIAL em todas as apostas. Não muda com ganhos/perdas.",
+      "riskLevel": "LOW",
+      "volatility": "VERY_LOW",
+      "ruinResistance": "VERY_HIGH",
+      "bestFor": ["iniciantes", "estratégias com alta variância de odds"],
+      "parameters": {
+        "stakePct": { "default": 0.02, "min": 0.005, "max": 0.10, "description": "% da banca inicial por aposta" }
+      },
+      "formula": "stake = initialBankroll * stakePct",
+      "notes": "O mais simples e seguro. Não cresce a stake com ganhos, mas também não se expõe mais com perdas.",
+      "exampleWith1000": "R$20 por aposta sempre"
+    },
+    {
+      "id": "percentage",
+      "label": "Percentage (3% da banca atual)",
+      "description": "Stake de 3% da banca ATUAL. Cresce quando ganha, reduz quando perde. Responsivo.",
+      "riskLevel": "LOW",
+      "volatility": "LOW",
+      "ruinResistance": "HIGH",
+      "bestFor": ["estratégias de value betting", "longo prazo"],
+      "parameters": {
+        "stakePct": { "default": 0.03, "min": 0.01, "max": 0.10, "description": "% da banca atual por aposta" }
+      },
+      "formula": "stake = currentBankroll * stakePct",
+      "notes": "Nunca pode ir a zero (teoricamente). Cresce de forma geométrica com lucro.",
+      "exampleWith1000": "R$30 inicialmente, cresce/reduz com a banca"
+    },
+    {
+      "id": "kelly",
+      "label": "Quarter Kelly (Kelly ÷ 4)",
+      "description": "Kelly Criterion dividido por 4. Maximiza crescimento da banca a longo prazo com proteção.",
+      "riskLevel": "MEDIUM",
+      "volatility": "MEDIUM",
+      "ruinResistance": "HIGH",
+      "bestFor": ["value betting com edge calculado", "apostadores avançados"],
+      "parameters": {
+        "fraction": { "default": 0.25, "options": [0.25, 0.5, 1.0], "description": "Fração do Kelly: 0.25=Quarter, 0.5=Half, 1.0=Full" },
+        "maxStakePct": { "default": 0.08, "min": 0.03, "max": 0.20, "description": "Cap máximo do stake como % da banca" }
+      },
+      "formula": "kelly = (odds * prob - 1) / (odds - 1); stake = bankroll * kelly * fraction",
+      "notes": "Full Kelly é matematicamente ótimo mas muito agressivo. Quarter Kelly é o padrão profissional.",
+      "exampleWith1000": "Varia por aposta: R$5–R$80 dependendo do edge"
+    },
+    {
+      "id": "dalembert",
+      "label": "D'Alembert",
+      "description": "Aumenta 1 unidade após derrota, diminui 1 após vitória. Progressão moderada.",
+      "riskLevel": "MEDIUM",
+      "volatility": "MEDIUM",
+      "ruinResistance": "MEDIUM",
+      "bestFor": ["mercados com ~50% win rate", "BTTS", "Over/Under"],
+      "parameters": {
+        "baseUnit": { "default": 0.01, "min": 0.005, "max": 0.05, "description": "Unidade base como % da banca inicial" },
+        "maxLevel": { "default": 10, "min": 5, "max": 20, "description": "Nível máximo (cap de segurança)" }
+      },
+      "formula": "stake = baseUnit * level; level += 1 se perda, level = max(1, level-1) se vitória",
+      "notes": "Mais seguro que Martingale. Recupera perdas gradualmente sem duplicar exponencialmente.",
+      "exampleWith1000": "Nível 1 = R$10, Nível 2 = R$20, máx nível 10 = R$100"
+    },
+    {
+      "id": "fibonacci",
+      "label": "Fibonacci",
+      "description": "Segue sequência de Fibonacci após derrotas. Retorna 2 posições após vitória.",
+      "riskLevel": "HIGH",
+      "volatility": "HIGH",
+      "ruinResistance": "MEDIUM",
+      "bestFor": ["mercados de baixo risco", "favoritos"],
+      "parameters": {
+        "baseUnit": { "default": 0.01, "min": 0.005, "max": 0.03, "description": "Unidade base como % da banca inicial" },
+        "maxIndex": { "default": 8, "min": 5, "max": 12, "description": "Posição máxima na sequência (cap)" }
+      },
+      "formula": "sequence=[1,1,2,3,5,8,13,21,34,55,89,144]; stake=sequence[idx]*baseUnit; idx++ se perda, idx=max(0,idx-2) se vitória",
+      "notes": "Sequência: 1, 1, 2, 3, 5, 8, 13, 21... Cresce mais devagar que Martingale.",
+      "exampleWith1000": "1ª: R$10, 2ª: R$10, 3ª: R$20, 4ª: R$30, 5ª: R$50..."
+    },
+    {
+      "id": "martingale",
+      "label": "Martingale (dobrar após derrota)",
+      "description": "Dobra o stake após cada derrota. Reset após vitória. Extremamente arriscado.",
+      "riskLevel": "VERY_HIGH",
+      "volatility": "VERY_HIGH",
+      "ruinResistance": "VERY_LOW",
+      "bestFor": ["testes de estresse", "demonstração de risco"],
+      "parameters": {
+        "baseStakePct": { "default": 0.01, "min": 0.005, "max": 0.02, "description": "Stake inicial como % da banca" },
+        "maxMultiplier": { "default": 8, "options": [4, 8, 16, 32], "description": "Cap do multiplicador (4=3 perdas seguidas max, 8=4, 16=5, 32=6)" }
+      },
+      "formula": "stake = baseStake * 2^losses; reset após vitória",
+      "notes": "⚠️ PERIGO: 10 derrotas seguidas = 1024x o stake inicial. Causa ruína frequente.",
+      "exampleWith1000": "R$10 → R$20 → R$40 → R$80 → R$160... cap em R$80 (8x)"
+    }
+  ],
+  "comparison": {
+    "note": "Comparativo de risco vs. crescimento esperado com edge de 5% e win rate 50%",
+    "table": [
+      { "id": "fixed",       "riskScore": 1, "growthScore": 2, "ruinRisk": "~0%" },
+      { "id": "percentage",  "riskScore": 2, "growthScore": 3, "ruinRisk": "~0%" },
+      { "id": "kelly",       "riskScore": 3, "growthScore": 5, "ruinRisk": "<1%" },
+      { "id": "dalembert",   "riskScore": 4, "growthScore": 3, "ruinRisk": "5–15%" },
+      { "id": "fibonacci",   "riskScore": 6, "growthScore": 4, "ruinRisk": "10–25%" },
+      { "id": "martingale",  "riskScore": 10, "growthScore": 2, "ruinRisk": "40–80%" }
+    ]
+  }
+}

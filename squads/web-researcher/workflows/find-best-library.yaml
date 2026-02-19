@@ -1,0 +1,33 @@
+name: find-best-library
+description: Workflow completo para encontrar a melhor biblioteca - busca, compara e recomenda
+version: 1.0.0
+
+steps:
+  - id: search
+    task: research-github-repos.md
+    description: Busca repositórios candidatos
+    output: candidate_repos
+
+  - id: packages
+    task: research-packages.md
+    description: Verifica nos registries (npm/PyPI/crates)
+    depends_on: []
+    parallel: true
+
+  - id: analyze_top3
+    task: research-analyze-repo.md
+    description: Análise profunda dos top 3 candidatos
+    depends_on: [search, packages]
+    repeat_for: top_3
+
+  - id: compare
+    task: research-compare-repos.md
+    description: Comparação final lado-a-lado
+    depends_on: [analyze_top3]
+
+  - id: report
+    task: research-report.md
+    description: Relatório final com recomendação
+    depends_on: [compare]
+
+output: Relatório com recomendação clara e justificada

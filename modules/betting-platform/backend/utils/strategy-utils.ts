@@ -1,76 +1,103 @@
-import { RiskLevel, Bankroll } from '../types/strategy-types';
-import { RISK_THRESHOLDS, BANKROLL_LIMITS } from '../config/strategy-config';
-
-export function calculateMaxStake(bankroll: Bankroll, riskLevel: RiskLevel): number {
-  const threshold = RISK_THRESHOLDS[riskLevel];
-  const maxStake = bankroll.available * threshold.maxStake;
-  
-  return Math.min(
-    maxStake,
-    bankroll.available * BANKROLL_LIMITS.MAX_SINGLE_STAKE_PERCENT
-  );
-}
-
-export function validateBankroll(bankroll: Bankroll): boolean {
-  if (bankroll.total < BANKROLL_LIMITS.MIN_BANKROLL) {
-    return false;
-  }
-
-  const minAvailable = bankroll.total * BANKROLL_LIMITS.MIN_AVAILABLE_PERCENT;
-  if (bankroll.available < minAvailable) {
-    return false;
-  }
-
-  return bankroll.allocated <= bankroll.total;
-}
+import { Bankroll } from '../types/strategy-types';
 
 export function calculateRecommendedStake(
   bankroll: Bankroll,
-  riskLevel: RiskLevel,
+  riskLevel: 'LOW' | 'MEDIUM' | 'HIGH',
   confidence: number
 ): number {
-  const maxStake = calculateMaxStake(bankroll, riskLevel);
-  const threshold = RISK_THRESHOLDS[riskLevel];
-
-  // Reduce stake if confidence is below threshold
-  if (confidence < threshold.minConfidence) {
-    const confidenceRatio = confidence / threshold.minConfidence;
-    return maxStake * confidenceRatio;
+  const baseStake = bankroll.available * 0.01;
+  
+  let multiplier = 1;
+  switch (riskLevel) {
+    case 'LOW':
+      multiplier = 0.5;
+      break;
+    case 'MEDIUM':
+      multiplier = 1;
+      break;
+    case 'HIGH':
+      multiplier = 1.5;
+      break;
   }
 
-  return maxStake;
+  const confidenceMultiplier = Math.min(2, Math.max(0.5, confidence));
+  
+  return Math.min(bankroll.available, baseStake * multiplier * confidenceMultiplier);
 }
 
-export function decimalToAmericanOdds(decimal: number): number {
-  if (decimal >= 2.0) {
-    return Math.round((decimal - 1) * 100);
-  } else {
-    return Math.round(-100 / (decimal - 1));
+export function calculateKellyCriterion(
+  bankroll: number,
+  odds: number,
+  probability: number
+): number {
+  const edge = (probability * (odds - 1)) - (1 - probability);
+  return edge / (odds - 1);
+}
+
+export function calculateValueBet(
+  bookmakerOdds: number,
+  trueProbability: number
+): { expectedValue: number; edge: number } | null {
+  const trueOdds = 1 / trueProbability;
+  const edge = (trueOdds / bookmakerOdds) - 1;
+  
+  if (edge <= 0) {
+    return null;
   }
+
+  const expectedValue = edge * bookmakerOdds;
+  return { expectedValue, edge };
 }
 
-export function americanToDecimalOdds(american: number): number {
-  if (american > 0) {
-    return (american / 100) + 1;
-  } else {
-    return (100 / Math.abs(american)) + 1;
+export function detectArbitrage(odds: number[]): { profit: number; totalStake: number } | null {
+  const inverseOdds = odds.map(odd => 1 / odd);
+  const sumInverse = inverseOdds.reduce((sum, val) => sum + val, 0);
+  
+  if (sumInverse >= 1) {
+    return null;
   }
+
+  const totalStake = 100;
+  const stakes = inverseOdds.map(inverse => (totalStake * inverse) / sumInverse);
+  const totalReturn = stakes.reduce((sum, stake, index) => sum + (stake * odds[index]), 0);
+  
+  const profit = totalReturn - totalStake;
+  return { profit, totalStake };
 }
 
-export function impliedProbability(decimalOdds: number): number {
-  return 1 / decimalOdds;
+export function detectSureBet(odds: number[]): { profit: number; totalStake: number } | null {
+  return detectArbitrage(odds);
 }
 
-export function oddsToMargin(odds: number[]): number {
-  const totalImplied = odds.reduce((sum, odd) => sum + impliedProbability(odd), 0);
-  return totalImplied - 1;
+export function calculateSharpeRatio(returns: number[]): number {
+  if (returns.length < 2) return 0;
+
+  const avgReturn = returns.reduce((sum, r) => sum + r, 0) / returns.length;
+  const variance = returns.reduce((sum, r) => sum + Math.pow(r - avgReturn, 2), 0) / returns.length;
+  
+  return variance > 0 ? avgReturn / Math.sqrt(variance) : 0;
 }
 
-export function removeMargin(odds: number[]): number[] {
-  const margin = oddsToMargin(odds);
-  return odds.map(odd => {
-    const impliedProb = impliedProbability(odd);
-    const trueProb = impliedProb / (1 + margin);
-    return 1 / trueProb;
-  });
+export function calculateMaxDrawdown(equityCurve: number[]): number {
+  let maxDrawdown = 0;
+  let peak = equityCurve[0];
+
+  for (let i = 1; i < equityCurve.length; i++) {
+    peak = Math.max(peak, equityCurve[i]);
+    maxDrawdown = Math.max(maxDrawdown, peak - equityCurve[i]);
+  }
+
+  return maxDrawdown;
+}
+
+export function calculateWinRate(wins: number, total: number): number {
+  return total > 0 ? wins / total : 0;
+}
+
+export function calculateROI(totalProfit: number, totalStake: number): number {
+  return totalStake > 0 ? totalProfit / totalStake : 0;
+}
+
+export function calculateAverageOdds(odds: number[]): number {
+  return odds.length > 0 ? odds.reduce((sum, odd) => sum + odd, 0) / odds.length : 0;
 }

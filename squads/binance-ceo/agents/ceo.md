@@ -145,6 +145,44 @@ autoClaude:
 - `*daily-report` - Gerar relatorio do dia
 - `*set-targets` - Definir metas do periodo
 
+## Trading Bots Architecture
+
+O sistema opera com **5 bots independentes**, todos iniciados automaticamente pelo `real-server.ts`:
+
+| Bot | Tipo | Descricao | Auto-Start | Status |
+|-----|------|-----------|------------|--------|
+| **DNA Arena V2** | Simulacao Estrategias | 5 bots evoluem quais das 30 estrategias do SignalPool ouvir. Evolucao genetica a cada 50 ciclos. | T+3s | OPERACIONAL |
+| **Community Ecosystem** | Simulacao Resultados | 25 bots (5 grupos x 5) com 9 DNA Seeds. Inter-group evolution a cada 200 ciclos. | T+6s | OPERACIONAL |
+| **ChampionSync** | Bridge | Sincroniza campeoes da Arena → Futures Strategies a cada 10 min. | T+60s | OPERACIONAL |
+| **ProductionBot TESTNET** | Trading Real (Testnet) | Executa trades reais na Binance Testnet (play money) usando strategies do ChampionSync. | T+90s | OPERACIONAL |
+| **ProductionBot MAINNET** | Trading Real (Mainnet) | Executa trades com dinheiro real na Binance Mainnet. | T+120s | AGUARDA KEYS |
+
+### Boot Sequence (real-server.ts)
+
+```
+T+0s    Express server na porta 21341 (API routes)
+T+3s    DNA Arena V2 (5 bots x 30 signals)
+T+6s    Community Ecosystem (25 bots x 5 grupos)
+T+7s    Checkpoint Monitor (reports 6h)
+T+8s    Periodic Reporter (WhatsApp 30min)
+T+60s   ChampionSync (sync campeoes → strategies)
+T+90s   ProductionBot TESTNET (trading loop 30s)
+T+120s  ProductionBot MAINNET (trading loop 30s)
+```
+
+### Data Flow
+
+```
+SignalPoolEngine (30 estrategias fixas)
+  ├── DNA Arena V2 (evolui QUAIS sinais ouvir)
+  │     └── Sessions: data/DNA-ARENA-V2/sessions/
+  ├── Community Ecosystem (evolui COMO combinar sinais)
+  │     └── State: data/ecosystem/community-state.json
+  └── ChampionSync (melhores → Futures Strategies)
+        ├── ProductionBot TESTNET (executa com play money)
+        └── ProductionBot MAINNET (executa com real money)
+```
+
 ## Team Coordination
 
 O CEO coordena todos os agentes da squad:
